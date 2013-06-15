@@ -1,0 +1,118 @@
+/* ****************************************************************************************************************** */
+/* Formatierungsangaben für die Seite                                                                                 */
+/* ****************************************************************************************************************** */
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  }
+   
+#page
+   {
+   width: 900px;
+   height: 600px;
+   
+   border-top: solid 5px #009900;
+   border-left: solid 5px #009900;
+   border-right: solid 5px #009900;
+   
+   margin: 20px auto;
+   
+   font-family: Georgia,'Times New Roman',serif;
+   font-size: 16px;
+   }  
+   
+/* ****************************************************************************************************************** */
+/* Formatierungsangaben für den Seitenkopf                                                                            */
+/* ****************************************************************************************************************** */
+   
+#kopf
+   {
+   height: 50px;
+   
+   background-color: #00cc00;
+   }
+   
+a.titellink
+   {
+   padding-left: 10px;
+   
+   color: #ffffff;
+   font-size: 30px;
+   line-height: 50px;
+   text-decoration: none;
+   }  
+   
+/* ****************************************************************************************************************** */
+/* Formatierungsangaben für die Menüleiste                                                                            */
+/* ****************************************************************************************************************** */
+   
+#menue
+   {
+   height: 25px;
+   
+   padding-left: 10px;
+   
+   background-color: #009900;
+   
+   line-height: 25px;
+   }
+   
+div#menue li 
+   {
+   list-style: none;
+   
+   display: inline;
+   }
+   
+div#menue a
+   {
+   padding-right: 5px;
+   
+   color: #ffffff;
+   text-decoration: none;
+   }
+   
+/* ****************************************************************************************************************** */
+/* Formatierungsangaben für den Inhaltsbereich                                                                        */
+/* ****************************************************************************************************************** */
+
+#inhalt
+   {
+   height: 480px;
+   
+   padding: 10px;
+   
+   overflow: auto;
+   }
+ 
+/* ****************************************************************************************************************** */
+/* Formatierungsangaben für die Fusszeile                                                                             */
+/* ****************************************************************************************************************** */ 
+   
+#fusszeile
+   {
+   height: 25px;
+   
+   padding-left: 10px;
+   
+   background-color: #009900;
+   
+   line-height: 25px;
+   }
+   
+div#fusszeile li 
+   {
+   list-style: none;
+   
+   display: inline;
+   }
+   
+div#fusszeile a
+   {
+   padding-right: 5px;
+   
+   color: #ffffff;
+   text-decoration: none;
+   }
+   
