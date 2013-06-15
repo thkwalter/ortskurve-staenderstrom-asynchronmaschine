@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" 
+   xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+   <h:outputStylesheet library="css" name="stylesheet.css"/>
+   <title>Ortskurve</title>
+</h:head>
+    
+<h:body>
+   <div id="page">
+      <div id="kopf">
+         <h:link value="Ortskurve" outcome="startseite" styleClass="titellink"/>
+      </div> 
+      
+      <div id="menue">  
+         <ul>
+            <li>
+               <h:link value="Startseite" outcome="startseite"/>
+            </li>
+         </ul>
+      </div> 
+      
+      <div id="inhalt">
+         <ui:insert name="inhalt">Inhalt</ui:insert>   
+      </div>   
+      
+      <div id="fusszeile">
+         <ul>
+            <li>
+               <h:link value="Impressum" outcome="impressum"/>
+            </li>
+            <li>
+               <h:link value="Nutzungsbedingungen" outcome="nutzungsbedingungen"/>
+            </li>
+         </ul>
+      </div>
+   </div>
+</h:body>
+
+</html>
