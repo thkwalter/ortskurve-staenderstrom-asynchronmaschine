@@ -21,6 +21,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import org.apache.commons.math3.analysis.MultivariateVectorFunction;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.optim.InitialGuess;
 import org.apache.commons.math3.optim.MaxEval;
 import org.apache.commons.math3.optim.PointVectorValuePair;
@@ -31,8 +32,8 @@ import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
 
 /**
- * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius zu 
- * einer vorgegebenen Menge von Punkten.
+ * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
+ * Kreises zu einer vorgegebenen Menge von Punkten.
  *
  * @author Th. Walter
  */
@@ -42,14 +43,15 @@ public class Ausgleichsproblem
 {
 private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName());
 
-private double x[] = {1.1, 0.0, -1.1, 0.0};
-private double y[] = {0.0, 1.1, 0.0, -1.1};
+// TWA Die Punkte müssen aus der Oberfläche gelesen werden.
+private Vector2D[] punkte = 
+   new Vector2D[]{new Vector2D(-0.1, 0.0), new Vector2D(1.0, 0.9), new Vector2D(1.0, 2.1), new Vector2D(1.0, -0.9)};
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode löst das Ausgleichsproblem und berechnet den Mittelpunkt und des Radius der Ortskurve.
+ * Diese Methode löst das Ausgleichsproblem und berechnet den Mittelpunkt und den Radius des Kreises.
  * 
  * @return <tt>null</tt>
  */
@@ -57,33 +59,37 @@ public String problemLoesen()
    {
    Ausgleichsproblem.logger.entering("Ausgleichsproblem", "problemLoesen");
    
-//   // Ein Objekt der Klasse, die den Lösungsalgorithmus kapselt wird erzeugt. 
-//   GaussNewtonOptimizer gaussNewtonOptimizer = 
-//         new GaussNewtonOptimizer(false, new SimpleVectorValueChecker(0.05, -1.0, 500));
-//   
-//   // Das Feld für die Gewichte der einzelnen Messpun
-//   double[] gewichte = new double[this.x.length];
-//   double[] zielwerte = new double[this.x.length];
-//   
-//   for (int i = 0; i < this.x.length; i++)
-//      {
-//      // Allen Messpunkten wird das gleiche Gewicht zugewiesen.
-//      gewichte[i] = 1.0;
-//      
-//      // Die Zielwerte haben alle den Wert Null.
-//      zielwerte[i] = 0.0;
-//      }
-//   
-//   // Der Startpunkt der Iteration.
-//   InitialGuess startpunkt = new  InitialGuess(new double[]{0,0,1.1});
-//   
-//   // 
-//   MultivariateVectorFunction kreismodell = null;// new Strommesswerte(this.x, this.y);
-//   
-//   // Das Ausgleichsproblem wird gelöst.
-//   PointVectorValuePair endwerte = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
-//      startpunkt, new MaxEval(100), new ModelFunction(kreismodell));
-//   
+   // Ein Objekt der Klasse, die den Lösungsalgorithmus kapselt wird erzeugt. 
+   GaussNewtonOptimizer gaussNewtonOptimizer = 
+         new GaussNewtonOptimizer(false, new SimpleVectorValueChecker(0.05, -1.0, 500));
+   
+   // Das Feld für die Gewichte der einzelnen Punkte wird deklariert.
+   double[] gewichte = new double[this.punkte.length];
+   
+   // Das folgende Feld enthält die Werte, welche die parametrisierte Modellgleichung ergeben sollte.
+   double[] zielwerte = new double[this.punkte.length];
+   
+   // In der folgenden Schleife über alle Punkte werden die oben deklarierten Felder initialisiert.
+   for (int i = 0; i < this.punkte.length; i++)
+      {
+      // Allen Punkten wird das gleiche Gewicht zugewiesen.
+      gewichte[i] = 1.0;
+      
+      // Die Zielwerte haben alle den Wert Null, da die Kreisgleichung für alle Punkte diesen Wert ergeben sollte.
+      zielwerte[i] = 0.0;
+      }
+   
+   // TWA Die Startparameter müssen aus drei Punkten ermittelt werden.
+   InitialGuess startparameter = new  InitialGuess(new double[]{1.1, 0.1, 1.1});
+   
+   // Ein Objekte der Klasse, welche die in verschiedenen Betriebspunkten gemessenen Ständerstromwerte repräsentiert, 
+   // wird erzeugt.
+   Strommesswerte strommesswerte = new Strommesswerte(this.punkte);
+   
+   // Das Ausgleichsproblem wird gelöst.
+   PointVectorValuePair endParameter = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
+      startparameter, new MaxEval(100), new ModelFunction(strommesswerte));
+   
    return null;
    }
 
