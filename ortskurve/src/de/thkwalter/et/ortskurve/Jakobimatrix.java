@@ -84,10 +84,8 @@ public double[][] value(double[] kreisparameter)
       // Falls der Messpunkt mit dem Mittelpunkt identisch ist wird eine RuntimeException geworfen.
       if (abstandMesspunktMittelpunkt == 0.0)
          {
-         String fehlermeldung = "Der Algorithmus zur Lösung des Ausgleichsproblems konnte nicht ausgeführt werden." +
-            "\n\nUrsache: Während eines Iterationsschrittes ist der Messpunkt mit den Koordinaten " + 
-            this.messpunkte[i] + " mit dem momentanten Näherungswert für den Kreismittelpunkt identisch. Dadurch " +
-            "wird ein Element einer Jakobi-Matrix unendlich groß.";
+         String fehlermeldung = "Die Berechnung des Ausgleichskreises musste abgebrochen werden.\n\n" +
+            "Ursache: Eine berechnete Zwischengröße hatte den Wert unendlich.";
 
          Jakobimatrix.logger.severe("Der Messpunkt " + this.messpunkte[i] + " ist mit dem Kreismittelpunkt identisch.");
 
