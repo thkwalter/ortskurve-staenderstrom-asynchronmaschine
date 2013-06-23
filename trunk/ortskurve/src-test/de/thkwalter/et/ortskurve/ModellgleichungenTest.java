@@ -17,6 +17,7 @@ package de.thkwalter.et.ortskurve;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.Field;
 
@@ -25,11 +26,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Diese Klasse enthält Tests für die Klasse {@link Jakobimatrix}.
+ * Diese Klasse enthält Tests für die Klasse {@link Modellgleichungen}.
  *
  * @author Th. K. Walter
  */
-public class JakobimatrixTest
+public class ModellgleichungenTest
 {
 /**
  * Die Messpunkte, die für den Test verwendet werden.
@@ -42,7 +43,7 @@ private Vector2D[] testMesspunkte;
 /**
  * Das Objekt, das für die Tests verwendet wird.
  */
-private Jakobimatrix jakobimatrix;
+private Modellgleichungen modellgleichungen;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -58,15 +59,15 @@ public void setUp() throws Exception
    // Die Messpunkte werden erzeugt.
    this.testMesspunkte = new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(2.0, 1.0)};
    
-   // Das Objekt, das für die Tests verwendet wird, wird erzeugt.
-   this.jakobimatrix = new Jakobimatrix(this.testMesspunkte);
+   // Ein Objekt der zu testenden Klasse wird erzeugt.
+   this.modellgleichungen = new Modellgleichungen(this.testMesspunkte);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für den Konstruktor {@link Jakobimatrix(Vector2D[])}.
+ * Test für den Konstruktor {@link Modellgleichungen(Vector2D[])}.
  * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
@@ -74,13 +75,13 @@ public void setUp() throws Exception
  * @throws IllegalArgumentException 
  */
 @Test
-public void testJakobimatrix() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+public void testModellgleichungen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
    {
    // Der Wert des Attributs messwerte wird gelesen.   
-   Field messpunkteFeld = Jakobimatrix.class.getDeclaredField("messpunkte");
+   Field messpunkteFeld = Modellgleichungen.class.getDeclaredField("messpunkte");
    messpunkteFeld.setAccessible(true);
-   Vector2D[] messpunkte = (Vector2D[]) messpunkteFeld.get(this.jakobimatrix);
+   Vector2D[] messpunkte = (Vector2D[]) messpunkteFeld.get(this.modellgleichungen);
    
    // Die Messpunkte werden überprüft.
    assertArrayEquals(messpunkte, this.testMesspunkte);  
@@ -90,38 +91,20 @@ public void testJakobimatrix() throws SecurityException, NoSuchFieldException, I
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Jakobimatrix#value(double[])}.
+ * Dieser Test überprüft die Methode {@link Modellgleichungen#value(double[])}.
  */
 @Test
-public void testValue1()
+public void testValue()
    {
-   // Die Jakobimatrix wird berechnet.
-   double[][] jmatrix = this.jakobimatrix.value(new double[]{1.0, 0.0, 1.0});
+   // Die zu testende Methode wird ausgeführt.
+   double[] abstaende = this.modellgleichungen.value(new double[]{1.0, 0.0, 1.0});
    
-   // Die Dimensionen der Jakobimatrix werden überprüft.
-   assertEquals(3, jmatrix[0].length);
-   assertEquals(3, jmatrix[1].length);
-   assertEquals(2, jmatrix.length);
+   // Es wird überprüft, ob das Feld, das die Methode zurückgibt, die korrekte Dimension hat.
+   assertEquals(2, abstaende.length);
    
-   // Die Elemente der Jakobimatrix werden überprüft.
-   assertEquals(1.0, jmatrix[0][0], 0.0);
-   assertEquals(0.0, jmatrix[0][1], 0.0);
-   assertEquals(-1.0, jmatrix[0][2], 0.0);
-   assertEquals(-0.7071, jmatrix[1][0], 0.7071/1000);
-   assertEquals(-0.7071, jmatrix[1][1], 0.7071/1000);
-   assertEquals(-1.0, jmatrix[1][2], 0.0);
+   // Es wird überprüft, ob die Methode die korrekten Werte zurückgibt.
+   assertEquals(0.0, abstaende[0], 0.0);
+   assertEquals(0.4142, abstaende[1], 0.4142/10000);
    }
 
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Jakobimatrix#value(double[])}.
- */
-@Test(expected=RuntimeException.class)
-public void testValue2()
-   {
-   // Es wird getestet, ob eine RuntimeException geworfen wird, wenn ein Messpunkt und der Mittelpunkt übereinstimmen.
-   this.jakobimatrix.value(new double[]{2.0, 1.0, 1.0});
-   }
 }

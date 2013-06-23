@@ -19,65 +19,62 @@ import org.apache.commons.math3.analysis.MultivariateVectorFunction;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
- * Diese Klasse repräsentiert die in verschiedenen Betriebspunkten gemessenen Ständerstromwerte.
+ * Diese Klasse repräsentiert die Modellgleichungen (der Kreisgleichungen).
  *
  * @author Th. K. Walter
  */
-public class Strommesswerte implements MultivariateVectorFunction
+public class Modellgleichungen implements MultivariateVectorFunction
 {
-
 /**
- * Dieses Feld enthält einen zweidimensionalen Vektor für jeden Betriebspunkt. Die x-Komponente dieses Vektors ist das 
- * Negative des Imaginärteils des Ständerstroms, die y-Komponente der Realteil des Ständerstroms.
+ * Dieses Feld enthält die Messpunkte.
  */
-private Vector2D[] stromvektoren;
+private Vector2D[] messpunkte;
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Dieser Konstruktor initialisiert die Stromvektoren.
+ * Dieser Konstruktor initialisiert das Feld der Messpunkte.
  * 
- * @param stromvektoren Dieses Feld enthält einen zweidimensionalen Vektor für jeden Betriebspunkt. Die x-Komponente 
- * dieses Vektors ist das Negative des Imaginärteils des Ständerstroms, die y-Komponente der Realteil des Ständerstroms.
+ * @param messpunkte Das Feld der Messpunkte.
  */
-public Strommesswerte(Vector2D[] stromvektoren)
+public Modellgleichungen(Vector2D[] messpunkte)
    {
-   this.stromvektoren = stromvektoren;
+   this.messpunkte = messpunkte;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode brechnet für einen gegebenen Parametersatz der Ortskurve (Mittelpunkt, Radius des Kreises) und für 
- * jeden Strommesswert (Betriebspunkt) den Abstand des entsprechenden Messpunktes von der Ortskurve.
+ * Diese Methode brechnet die Werte der Modellgleichungen (der Kreisgleichungen).
  * 
- * @param point Die Parameterwerte der Kreisgleichung der Ortskurve. Das 0-te Element ist die x-Koordinate des 
- * Kreismittelpunkts, das 1-te Element ist die y-Koordinate des Kreismittelpunkts, das 2-te Element ist der Radius des
- * Kreises.
+ * @param kreisparameter Die Parameterwerte der Kreisgleichungen. Das 0-te Element ist die x-Koordinate des
+ *        Kreismittelpunkts, das 1-te Element ist die y-Koordinate des Kreismittelpunkts, das 2-te Element ist der
+ *        Radius des Kreises.
  * 
- * @return Dieses Feld enthält für jeden Betriebspunkt den Abstand des entsprechenden Messpunktes von der Ortskurve.
+ * @return Die Werte der Modellgleichungen. Der Index des Feldes läuft über die Gleichungen.
+ * 
+ * @see org.apache.commons.math3.analysis.MultivariateVectorFunction#value(double[])
  */
 @Override
-public double[] value(double[] point) throws IllegalArgumentException
+public double[] value(double[] kreisparameter)
    {
    // Der Vektor für den Mittelpunkt der Ortskurve wird erzeugt.
-   Vector2D mittelpunkt = new Vector2D(point[0], point[1]);
+   Vector2D mittelpunkt = new Vector2D(kreisparameter[0], kreisparameter[1]);
 
    // Der Radius des Kreises wird gelesen.
-   double radius = point[2];
+   double radius = kreisparameter[2];
    
    // Dieses Feld enthält für jeden Betriebspunkt den Abstand des entsprechenden Messpunktes von der Ortskurve.
-   double[] abstaende = new double[this.stromvektoren.length]; 
+   double[] abstaende = new double[this.messpunkte.length]; 
    
    // Die Abstände der Stromkoordinaten vom Kreis wird für die verschiedenen Betriebspunkte berechnet.
-   for (int i = 0; i < this.stromvektoren.length; i++)
+   for (int i = 0; i < this.messpunkte.length; i++)
       {
-      abstaende[i] = this.stromvektoren[i].distance(mittelpunkt) - radius;
+      abstaende[i] = this.messpunkte[i].distance(mittelpunkt) - radius;
       }
    
    return abstaende;
    }
-
 }
