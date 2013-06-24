@@ -16,3 +16,9 @@ Folgende Bibliotheken müssen in das Verzeichnis projekt-wurzel/war/WEB-INF/lib 
   * jdo-api-3.0.1.jar
   * jsr107cache-1.1.jar
   * jta-1.1.jar
+
+  * el-api-1.1.jar
+
+  * javax.faces-2.2.0.jar
+
+  * commons-math3-3.2.jar
