@@ -47,6 +47,8 @@ private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName(
 private Vector2D[] punkte = 
    new Vector2D[]{new Vector2D(-0.1, 0.0), new Vector2D(1.0, 0.9), new Vector2D(2.1, 0.0), new Vector2D(1.0, -0.9)};
 
+public String eingabefeld;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -95,11 +97,16 @@ public String problemLoesen()
    return null;
    }
 
-// =====================================================================================================================
-// =====================================================================================================================
-
-public static void main(String[] args)
+public String getEingabefeld()
    {
-   (new Ausgleichsproblem()).problemLoesen();
+   return eingabefeld;
    }
+
+public void setEingabefeld(String eingabefeld)
+   {
+   this.eingabefeld = eingabefeld;
+   Ausgleichsproblem.logger.info(this.eingabefeld);
+   }
+
+
 }
