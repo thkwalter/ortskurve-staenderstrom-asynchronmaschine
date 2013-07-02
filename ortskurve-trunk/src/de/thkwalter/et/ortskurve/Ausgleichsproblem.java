@@ -43,11 +43,7 @@ public class Ausgleichsproblem
 {
 private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName());
 
-// TWA Die Punkte müssen aus der Oberfläche gelesen werden.
-private Vector2D[] punkte = 
-   new Vector2D[]{new Vector2D(-0.1, 0.0), new Vector2D(1.0, 0.9), new Vector2D(2.1, 0.0), new Vector2D(1.0, -0.9)};
-
-public String eingabefeld;
+private Vector2D[] punkte = null;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -94,19 +90,49 @@ public String problemLoesen()
    PointVectorValuePair endParameter = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
       startparameter, new MaxEval(100), new ModelFunction(strommesswerte), new ModelFunctionJacobian(jakobiMatrix));
    
+   
+   double mx = endParameter.getPoint()[0];
+   double my = endParameter.getPoint()[1];
+   double r = endParameter.getPoint()[2];
+   
+   Ausgleichsproblem.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
+   
    return null;
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+
 public String getEingabefeld()
    {
-   return eingabefeld;
+   return "";
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
 
 public void setEingabefeld(String eingabefeld)
-   {
-   this.eingabefeld = eingabefeld;
-   Ausgleichsproblem.logger.info(this.eingabefeld);
+   {   
+   String[] zeilen = eingabefeld.split("\n");
+   String[] datenfelder = null;
+   this.punkte = new Vector2D[zeilen.length];
+   
+   double x = Double.NaN;
+   double y = Double.NaN;
+   
+   for (int i = 0; i < zeilen.length; i++)
+      {
+      datenfelder = zeilen[i].split(",");
+      
+      x = Double.parseDouble(datenfelder[0].trim());
+      y = Double.parseDouble(datenfelder[1].trim());
+      
+      this.punkte[i] = new Vector2D(x, y);
+      Ausgleichsproblem.logger.info(this.punkte[i].toString());
+      }
+   
+   
    }
-
-
 }
