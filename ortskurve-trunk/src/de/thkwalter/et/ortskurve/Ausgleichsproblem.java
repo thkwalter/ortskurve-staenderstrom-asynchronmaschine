@@ -77,8 +77,12 @@ public String problemLoesen()
       zielwerte[i] = 0.0;
       }
    
+   // Die Startparameter werden bestimmt.
+   Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(this.punkte);
+   double[] startpunkt = startpunktbestimmung.startpunktBestimmen();
+   
    // TWA Die Startparameter müssen aus drei Punkten ermittelt werden.
-   InitialGuess startparameter = new  InitialGuess(new double[]{1.1, 0.1, 1.1});
+   InitialGuess startparameter = new  InitialGuess(startpunkt);
    
    // Ein Objekte der Klasse, welche die in verschiedenen Betriebspunkten gemessenen Ständerstromwerte repräsentiert, 
    // wird erzeugt.
