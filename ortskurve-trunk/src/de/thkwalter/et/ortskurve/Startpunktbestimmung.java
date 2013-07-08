@@ -37,78 +37,96 @@ public class Startpunktbestimmung
  */
 private Vector2D[] messpunkte;
 
+/*
+ * Der Logger dieser Klasse.
+ */
 private static Logger logger = Logger.getLogger(Startpunktbestimmung.class.getName());
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Dieser Konstruktor initialisiert das Feld der Messpunkte.
+ * Dieser Konstruktor initialisiert das Feld der Messpunkte und berechnet den Startpunkt.
  * 
  * @param messpunkte Das Feld der Messpunkte.
  */
 public Startpunktbestimmung(Vector2D[] messpunkte)
    {
    this.messpunkte = messpunkte;
-   
-   this.startpunktBestimmen();
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Der Startpunkt wird bestimmt.
+ * Diese Methode berechnet den Startpunkt aus den ersten drei Messpunkten.
+ * 
+ * @return Der Startpunkt. Die erste Komponente des Feldes repräsentiert die x-Komponente des Mittelpunktes, die zweite
+ * Komponente die y-Komponente, die dritte Komponente den Radius.
  */
 public double[] startpunktBestimmen()
    {
-   // Die Koeffizienten der Koeffizientenmatrix werden zusammengestellt.
+   // Falls weniger als drei Messpunkte existieren, wird eine Ausnahme geworfen.
+   if (this.messpunkte.length < 3)
+      {
+      String fehlermeldung = "Die Berechnung des Startpunktes kann nicht durchgeführt werden.\n\n" +
+               "Ursache: Es existieren weniger als drei Messpunkte.";
+      
+      Startpunktbestimmung.logger.severe("Es existieren weniger als drei Messpunkte.");
+      
+      throw new RuntimeException(fehlermeldung);
+      }
+   
+   // Die Felder für die Koeffizientenmatrix und die Inhomogenität werden definiert.
    double[][] koeffizienten = new double[3][];
-   double[] zeile = null;
    double[] inhomogenitaet = new double[3];
+   
+   // Einige Hilfsgrößen werden deklariert.
+   double[] zeile = null;
    double x = Double.NaN;
    double y = Double.NaN;
+   
+   // In der folgenden Schleife werden die Koeffizientenmatrix und die Inhomogenität initialisiert.
    for (int i = 0; i < 3; i++)
       {
-      zeile = new double[3];
-      
+      // Die x- und y-Komponente eines Punktes werden gelesen.
       x = this.messpunkte[i].getX();
       y = this.messpunkte[i].getY();
       
+      // Eine Zeile der Koeffizientenmatrix wird initialisiert
+      zeile = new double[3];
       zeile[0] = 1;
       zeile[1] = - x;
       zeile[2] = - y;
-      
-      inhomogenitaet[i] = - (x*x + y*y);
-      
       koeffizienten[i] = zeile;
+      
+      // Eine Komponente des Inhomogenitätsvektors wird initialisiert.
+      inhomogenitaet[i] = - (x*x + y*y);
       }
  
-   // Die Koeffizientenmatrix wird erstellt.
+   // Die Koeffizientenmatrix wird erzeugt.
    RealMatrix koeffizientenmatrix = new Array2DRowRealMatrix(koeffizienten);
+   
+   // Der Inhomogenitätsvektor wird erzeugt.
+   RealVector inhomogenitaetsvektor = new ArrayRealVector(inhomogenitaet, false);
    
    // Der Lösungsalgorithmus für das lineare Gleichungssystem wird erzeugt.
    DecompositionSolver alorithmus = new LUDecomposition(koeffizientenmatrix).getSolver();
    
-   RealVector inhomogenitaetsvektor = new ArrayRealVector(inhomogenitaet, false);
+   // Das inhomogene Gleichungssystem wird gelöst.
    RealVector loesung = alorithmus.solve(inhomogenitaetsvektor);
    
-   
+   // Der Startpunkt wird aus der Läsung des linearen Gleichungssystems bestimmt.
    double xMittelpunkt = 0.5 * loesung.getEntry(1);
    double yMittelpunkt = 0.5 * loesung.getEntry(2);
    double radius = xMittelpunkt * xMittelpunkt + yMittelpunkt * yMittelpunkt - loesung.getEntry(0);
    
-   Startpunktbestimmung.logger.info("x: " + xMittelpunkt);
-   Startpunktbestimmung.logger.info("y" + yMittelpunkt);
-   Startpunktbestimmung.logger.info("r" + radius);
+   // Der Startpunkt wird protokolliert.
+   Startpunktbestimmung.logger.finer("x: " + xMittelpunkt);
+   Startpunktbestimmung.logger.finer("y: " + yMittelpunkt);
+   Startpunktbestimmung.logger.finer("r: " + radius);
    
+   // Der Startpunkt wird zurückgegeben.
    return new double[]{xMittelpunkt, yMittelpunkt, radius};
-   }
-
-
-public static void main(String[] args)
-   {
-  Startpunktbestimmung start =  new Startpunktbestimmung(new Vector2D[]{new Vector2D(0,0), new Vector2D(1,1), new Vector2D(2,0)});
-  start.startpunktBestimmen();
    }
 }
