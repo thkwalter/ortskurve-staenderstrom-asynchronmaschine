@@ -122,9 +122,9 @@ public double[] startpunktBestimmen()
    double radius = xMittelpunkt * xMittelpunkt + yMittelpunkt * yMittelpunkt - loesung.getEntry(0);
    
    // Der Startpunkt wird protokolliert.
-   Startpunktbestimmung.logger.finer("x: " + xMittelpunkt);
-   Startpunktbestimmung.logger.finer("y: " + yMittelpunkt);
-   Startpunktbestimmung.logger.finer("r: " + radius);
+   Startpunktbestimmung.logger.fine("x: " + xMittelpunkt);
+   Startpunktbestimmung.logger.fine("y: " + yMittelpunkt);
+   Startpunktbestimmung.logger.fine("r: " + radius);
    
    // Der Startpunkt wird zurückgegeben.
    return new double[]{xMittelpunkt, yMittelpunkt, radius};
