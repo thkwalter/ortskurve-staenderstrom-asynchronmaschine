@@ -72,7 +72,7 @@ public void setUp() throws Exception
  * @throws IllegalArgumentException 
  */
 @Test
-public void test() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException
+public void testStartpunktbestimmung() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException
    {
    // Der Wert des Attributs messwerte wird gelesen.   
    Field messpunkteFeld = Startpunktbestimmung.class.getDeclaredField("messpunkte");
@@ -90,7 +90,7 @@ public void test() throws SecurityException, NoSuchFieldException, IllegalArgume
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
  */
 @Test
-public void testStartpunktBestimmen()
+public void testStartpunktBestimmen1()
    {
    // Der Startpunkt wird berechnet.
    double[] startpunkt = this.startpunktbestimmung.startpunktBestimmen();
@@ -98,5 +98,22 @@ public void testStartpunktBestimmen()
    assertEquals(1.0, startpunkt[0], 1.0/1000);
    assertEquals(0.0, startpunkt[1], 0.0);
    assertEquals(1.0, startpunkt[2], 1.0/1000);
+   }
+
+//=====================================================================================================================
+//=====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
+ */
+@Test(expected=RuntimeException.class)
+public void testStartpunktBestimmen2()
+   {   
+   // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
+   Startpunktbestimmung lokaleStartpunktbestimmung = 
+      new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0)});
+   
+   //Es wird getestet, ob eine RuntimeException geworfen wird, wenn ein Messpunkt und der Mittelpunkt übereinstimmen.
+   lokaleStartpunktbestimmung.startpunktBestimmen();
    }
 }
