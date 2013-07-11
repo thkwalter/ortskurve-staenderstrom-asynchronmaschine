@@ -18,7 +18,8 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" 
+   xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:body>
    <ui:composition template="./template.xhtml">
@@ -30,7 +31,20 @@
             <p:inputTextarea value="#{ausgleichsproblem.eingabefeld}" />
             <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}"/>
          </h:form> 
-                   
+           
+         <h:panelGrid columns="2">
+            <f:facet name="header">
+               <h:outputText value="Der berechnete Ausgleichskreis besitzt folgende Parameter:"/>
+            </f:facet>
+         
+            <h:outputText value="Mittelpunkt:"/>
+            <h:outputText value="(#{ausgleichsproblem.mx}, #{ausgleichsproblem.my})"/>
+            
+            <h:outputText value="Radius:"/>
+            <h:outputText value="#{ausgleichsproblem.r}"/>
+         </h:panelGrid>    
+         
+
       </ui:define>
    </ui:composition>
 </h:body>
