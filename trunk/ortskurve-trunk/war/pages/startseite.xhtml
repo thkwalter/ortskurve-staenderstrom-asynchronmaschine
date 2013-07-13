@@ -23,14 +23,22 @@
 
 <h:body>
    <ui:composition template="./template.xhtml">
-      <ui:define name="inhalt">
-         <h2>Startseite</h2>
-         <br/><br/>   
+      <ui:define name="inhalt">   
          
          <h:form>
-            <p:inputTextarea value="#{ausgleichsproblem.eingabefeld}" />
+            <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
+               <h:panelGroup>
+                  <p>
+                  <h:outputText value="Geben Sie die Messpunkte bitte im folgenden Format ein:"/>
+                  </p>
+               </h:panelGroup>
+               <p:inputTextarea value="#{ausgleichsproblem.eingabefeld}" autoResize="false" styleClass="eingabefeld"/>
+               
+            </h:panelGrid>
             <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}"/>
          </h:form> 
+         
+         <br/>
            
          <h:panelGrid columns="2">
             <f:facet name="header">

@@ -102,6 +102,33 @@ div#menue a
    
    overflow: auto;
    }
+   
+.eingabe
+   {
+   width: 880px;
+   border-collapse: collapse;
+   }
+   
+.eingabe-column-0
+   {
+   width: 580px;
+   padding-right: 20px
+   }
+   
+.eingabe-column-1
+   {
+   width: 280px;
+   }
+   
+.eingabehilfe
+   {
+   }
+   
+.eingabefeld
+   {
+   font-family: 'Courier New', monospace;
+   font-size: 14px;
+   }
  
 /* ****************************************************************************************************************** */
 /* Formatierungsangaben für die Fusszeile                                                                             */
@@ -112,15 +139,11 @@ div#menue a
    height: 25px;
    
    padding-left: 10px;
+   padding-right: 10px;
    
    background-color: #009900;
    
    line-height: 25px;
-   }
-   
-div#fusszeile ul
-   {
-   display: inline;
    }
    
 div#fusszeile li 
@@ -142,5 +165,6 @@ span.copyright
    {
    font-family: Georgia,'Times New Roman',serif;
    color: #ffffff;
+   float: right;
    }
    
