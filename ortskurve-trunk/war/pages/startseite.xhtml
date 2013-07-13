@@ -28,11 +28,11 @@
          <h:form>
             <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
                <h:panelGroup>
-                  <p>
-                  <h:outputText value="Geben Sie die Messpunkte bitte im folgenden Format ein:"/>
+                  <p id="eingabehilfe">
+                     <h:outputText value="Geben Sie die Messpunkte bitte im folgenden Format ein:"/>
                   </p>
                </h:panelGroup>
-               <p:inputTextarea value="#{ausgleichsproblem.eingabefeld}" autoResize="false" styleClass="eingabefeld"/>
+               <h:inputTextarea value="#{ausgleichsproblem.eingabefeld}" styleClass="eingabefeld"/>
                
             </h:panelGrid>
             <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}"/>
