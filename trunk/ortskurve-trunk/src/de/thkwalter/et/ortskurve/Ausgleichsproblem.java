@@ -15,6 +15,7 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
@@ -65,6 +66,11 @@ private double my;
  * Der Radius des Kreises.
  */
 private double r;
+
+/**
+ * Dieses Flag zeigt an, ob die Lösung des Ausgleichsproblems angezeigt werden soll. 
+ */
+private boolean loesungAnzeigen;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -121,6 +127,9 @@ public String problemLoesen()
    this.my = endParameter.getPoint()[1];
    this.r = endParameter.getPoint()[2];
    Ausgleichsproblem.logger.fine("Mittelpunkt: (" + this.mx + ", " + this.my + "); Radius: " + this.r);
+   
+   // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
+   this.loesungAnzeigen = true;
    
    Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "problemLoesen");
    
@@ -186,9 +195,9 @@ public void setEingabefeld(String eingabefeld)
  * 
  * @return Die x-Komponente des Mittelpunkts des Kreises.
  */
-public double getMx()
+public String getMx()
    {
-   return this.mx;
+   return String.format(Locale.US, "%1$.2f", this.mx);
    }
 
 // =====================================================================================================================
@@ -199,9 +208,9 @@ public double getMx()
  * 
  * @return Die y-Komponente des Mittelpunkts des Kreises.
  */
-public double getMy()
+public String getMy()
    {
-   return this.my;
+   return String.format(Locale.US, "%1$.2f", this.my);
    }
 
 // =====================================================================================================================
@@ -212,8 +221,22 @@ public double getMy()
  * 
  * @return Der Radius des Kreises.
  */
-public double getR()
+public String getR()
    {
-   return this.r;
+   return String.format(Locale.US, "%1$.2f", this.r);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt zurück, ob die Lösung des Ausgleichsproblems angezeigt werden soll.
+ * 
+ * @return <tt>true</tt>, falls die Lösung des Ausgleichsproblems angezeigt werden soll; <tt>false</tt>, falls die 
+ * Lösung des Ausgleichsproblems nicht angezeigt werden soll.
+ */
+public boolean isLoesungAnzeigen()
+   {
+   return this.loesungAnzeigen;
    }
 }

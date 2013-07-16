@@ -118,8 +118,8 @@ public void testProblemLoesen()
    this.ausgleichsproblem.problemLoesen();
    
    // Die berechneten Kreisparameter werden überprüft.
-   assertEquals(1.0, this.ausgleichsproblem.getMx(), 1.0/1000);
-   assertEquals(0.0, this.ausgleichsproblem.getMy(), 1.0/1000);
-   assertEquals(1.0, this.ausgleichsproblem.getR(), 1.0/1000);
+   assertEquals("1.00", this.ausgleichsproblem.getMx());
+   assertEquals("0.00", this.ausgleichsproblem.getMy());
+   assertEquals("1.00", this.ausgleichsproblem.getR());
    }
 }
