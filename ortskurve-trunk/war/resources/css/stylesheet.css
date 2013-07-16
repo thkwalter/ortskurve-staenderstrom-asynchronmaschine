@@ -126,6 +126,12 @@ div#menue a
    height: 206px;
    }
    
+#eingabehilfe-beispiel
+   {
+   font-family: 'Courier New', monospace;
+   font-size: 14px;
+   }
+   
 .eingabefeld
    {
    width: 278px;
@@ -173,5 +179,30 @@ span.copyright
    font-family: Georgia,'Times New Roman',serif;
    color: #ffffff;
    float: right;
+   }
+   
+/* ****************************************************************************************************************** */
+/* Allgemeine Formatierungsangaben                                                                                    */
+/* ****************************************************************************************************************** */
+
+.zeiger
+   {
+   text-decoration: underline;
+   }
+   
+.knopfzeile
+   {
+   width: 880px;
+   
+   margin-top: 20px;
+   margin-bottom: 20px;
+   }
+   
+.knopf
+   {
+   float: right;
+   
+   font-family: Georgia,'Times New Roman',serif;
+   font-size: 16px;
    }
    

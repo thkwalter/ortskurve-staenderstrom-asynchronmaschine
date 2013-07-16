@@ -29,18 +29,33 @@
             <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
                <h:panelGroup>
                   <p id="eingabehilfe">
-                     <h:outputText value="Geben Sie die Messpunkte bitte im folgenden Format ein:"/>
+                     Geben Sie bitte einen Messpunkt pro Zeile ein, die beiden Komponenten eines Messpunktes jeweils 
+                     durch ein Komma getrennt, also im Format: -Im <span class="zeiger">I</span><sub>1</sub>, 
+                     Re <span class="zeiger">I</span><sub>1</sub>
+                     <br/><br/>
+                     
+                     Beispiel:
+                     <br/><br/>
+                     
+                     <span id="eingabehilfe-beispiel">
+                     0.1, 0.0<br/>
+                     1.0, 1.1<br/>
+                     1.9, 0.0<br/>
+                     1.0, -1.1<br/>
+                     </span>
                   </p>
                </h:panelGroup>
                <h:inputTextarea value="#{ausgleichsproblem.eingabefeld}" styleClass="eingabefeld"/>
                
             </h:panelGrid>
-            <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}"/>
+            
+            <h:panelGroup class="knopfzeile" layout="block">
+               <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}" class="knopf"/>
+               <p:spacer width="1" height="21" />
+            </h:panelGroup>    
          </h:form> 
-         
-         <br/>
            
-         <h:panelGrid columns="2">
+         <h:panelGrid columns="2" rendered="#{ausgleichsproblem.loesungAnzeigen}">
             <f:facet name="header">
                <h:outputText value="Der berechnete Ausgleichskreis besitzt folgende Parameter:"/>
             </f:facet>
@@ -51,8 +66,6 @@
             <h:outputText value="Radius:"/>
             <h:outputText value="#{ausgleichsproblem.r}"/>
          </h:panelGrid>    
-         
-
       </ui:define>
    </ui:composition>
 </h:body>
