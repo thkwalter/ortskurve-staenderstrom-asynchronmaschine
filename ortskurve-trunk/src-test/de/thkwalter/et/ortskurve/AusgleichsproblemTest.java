@@ -16,6 +16,7 @@
 package de.thkwalter.et.ortskurve;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 
@@ -107,9 +108,14 @@ public void testGetEingabefeld()
 
 /**
  * Test für die Methode {@link Ausgleichsproblem#problemLoesen()}.
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test
-public void testProblemLoesen()
+public void testProblemLoesen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Das Feld der Messpunkte wird initialisiert.
    this.ausgleichsproblem.setEingabefeld(this.eingabefeld);
@@ -117,9 +123,22 @@ public void testProblemLoesen()
    // Die zu testende Methode wird ausgeführt.
    this.ausgleichsproblem.problemLoesen();
    
-   // Die berechneten Kreisparameter werden überprüft.
-   assertEquals("1.00", this.ausgleichsproblem.getMx());
-   assertEquals("0.00", this.ausgleichsproblem.getMy());
-   assertEquals("1.00", this.ausgleichsproblem.getR());
+   // Die berechnete x-Komponente des Mittelpunkts wird überprüft.
+   Field mxAttribut = Ausgleichsproblem.class.getDeclaredField("mx");
+   mxAttribut.setAccessible(true);
+   assertEquals(1.0, mxAttribut.getDouble(this.ausgleichsproblem), 1.0/1000);
+   
+   // Die berechnete y-Komponente des Mittelpunkts wird überprüft.
+   Field myAttribut = Ausgleichsproblem.class.getDeclaredField("my");
+   myAttribut.setAccessible(true);
+   assertEquals(0.0, myAttribut.getDouble(this.ausgleichsproblem), 1.0/1000);
+   
+   // Der berechnete Radius wird überprüft.
+   Field rAttribut = Ausgleichsproblem.class.getDeclaredField("r");
+   rAttribut.setAccessible(true);
+   assertEquals(1.0, rAttribut.getDouble(this.ausgleichsproblem), 1.0/1000);
+   
+   // Es wird überprüft, ob das Flag korrekt gesetzt ist.
+   assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
    }
 }
