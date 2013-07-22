@@ -66,10 +66,12 @@ public Startpunktbestimmung(Vector2D[] messpunkte)
  */
 public double[] startpunktBestimmen()
    {
+   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "startpunktBestimmen");
+   
    // Falls weniger als drei Messpunkte existieren, wird eine Ausnahme geworfen.
    if (this.messpunkte.length < 3)
       {
-      String fehlermeldung = "Die Berechnung des Startpunktes kann nicht durchgeführt werden.\n\n" +
+      String fehlermeldung = "Die Berechnung des Startpunktes kann nicht durchgeführt werden. " +
                "Ursache: Es existieren weniger als drei Messpunkte.";
       
       Startpunktbestimmung.logger.severe("Es existieren weniger als drei Messpunkte.");
@@ -125,6 +127,8 @@ public double[] startpunktBestimmen()
    Startpunktbestimmung.logger.fine("x: " + xMittelpunkt);
    Startpunktbestimmung.logger.fine("y: " + yMittelpunkt);
    Startpunktbestimmung.logger.fine("r: " + radius);
+   
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "startpunktBestimmen");
    
    // Der Startpunkt wird zurückgegeben.
    return new double[]{xMittelpunkt, yMittelpunkt, radius};
