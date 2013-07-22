@@ -18,8 +18,10 @@ package de.thkwalter.et.ortskurve;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.optim.InitialGuess;
@@ -72,6 +74,11 @@ private double r;
  */
 private boolean loesungAnzeigen;
 
+/**
+ * Dieses Flag zeigt an, ob Meldungen angezeigt werden sollen. 
+ */
+private boolean meldungenAnzeigen;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -84,52 +91,64 @@ public String problemLoesen()
    {
    Ausgleichsproblem.logger.entering("Ausgleichsproblem", "problemLoesen");
    
-   // Ein Objekt der Klasse, die den Lösungsalgorithmus kapselt wird erzeugt. Es wird festgelegt, dass der Algorithmus
-   // QR-Zerlegung zur Lösung des linearen Problems benutzen soll. Die Lösung des Ausgleichsproblems gilt als gefunden,
-   // wenn sich kein Residuum zwischen zwei Iterationsschritten um mehr als 1 Prozent ändert.
-   GaussNewtonOptimizer gaussNewtonOptimizer = 
-         new GaussNewtonOptimizer(false, new SimpleVectorValueChecker(0.01, -1.0));
-   
-   // Das Feld für die Gewichte der einzelnen Punkte wird deklariert.
-   double[] gewichte = new double[this.messpunkte.length];
-   
-   // Das folgende Feld enthält die Werte, welche die Modellgleichungen ergeben sollten.
-   double[] zielwerte = new double[this.messpunkte.length];
-   
-   // In der folgenden Schleife über alle Messpunkte werden die oben deklarierten Felder initialisiert.
-   for (int i = 0; i < this.messpunkte.length; i++)
+   try
       {
-      // Allen Punkten wird das gleiche Gewicht zugewiesen.
-      gewichte[i] = 1.0;
+      // Ein Objekt der Klasse, die den Lösungsalgorithmus kapselt wird erzeugt. Es wird festgelegt, dass der 
+      // Algorithmus QR-Zerlegung zur Lösung des linearen Problems benutzen soll. Die Lösung des Ausgleichsproblems gilt 
+      // als gefunden, wenn sich kein Residuum zwischen zwei Iterationsschritten um mehr als 1 Prozent ändert.
+      GaussNewtonOptimizer gaussNewtonOptimizer = 
+            new GaussNewtonOptimizer(false, new SimpleVectorValueChecker(0.01, -1.0));
       
-      // Die Zielwerte haben alle den Wert Null, da die Kreisgleichung für alle Punkte diesen Wert ergeben sollte.
-      zielwerte[i] = 0.0;
+      // Das Feld für die Gewichte der einzelnen Punkte wird deklariert.
+      double[] gewichte = new double[this.messpunkte.length];
+      
+      // Das folgende Feld enthält die Werte, welche die Modellgleichungen ergeben sollten.
+      double[] zielwerte = new double[this.messpunkte.length];
+      
+      // In der folgenden Schleife über alle Messpunkte werden die oben deklarierten Felder initialisiert.
+      for (int i = 0; i < this.messpunkte.length; i++)
+         {
+         // Allen Punkten wird das gleiche Gewicht zugewiesen.
+         gewichte[i] = 1.0;
+         
+         // Die Zielwerte haben alle den Wert Null, da die Kreisgleichung für alle Punkte diesen Wert ergeben sollte.
+         zielwerte[i] = 0.0;
+         }
+      
+      // Die Startparameter werden bestimmt.
+      Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(this.messpunkte);
+      double[] startpunkt = startpunktbestimmung.startpunktBestimmen();
+      
+      // Ein Objekte der Klasse, welche die Modellgleichungen (der Kreisgleichungen) repräsentiert, wird erzeugt.
+      Modellgleichungen strommesswerte = new Modellgleichungen(this.messpunkte);
+      
+      // Ein Objekt der Klasse, welche die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen) repräsentiert, 
+      // wird erzeugt.
+      Jakobimatrix jakobiMatrix = new Jakobimatrix(this.messpunkte);
+      
+      // Das Ausgleichsproblem wird gelöst, wobei höchstens 200 Iterationsschritte durchgeführt werden.
+      PointVectorValuePair endParameter = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
+         new  InitialGuess(startpunkt), new MaxEval(200), new ModelFunction(strommesswerte), 
+         new ModelFunctionJacobian(jakobiMatrix));
+      
+      // Die Kreisparameter werden gelesen und protokolliert.
+      this.mx = endParameter.getPoint()[0];
+      this.my = endParameter.getPoint()[1];
+      this.r = endParameter.getPoint()[2];
+      Ausgleichsproblem.logger.fine("Mittelpunkt: (" + this.mx + ", " + this.my + "); Radius: " + this.r);
+      
+      // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
+      this.loesungAnzeigen = true;
       }
    
-   // Die Startparameter werden bestimmt.
-   Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(this.messpunkte);
-   double[] startpunkt = startpunktbestimmung.startpunktBestimmen();
-   
-   // Ein Objekte der Klasse, welche die Modellgleichungen (der Kreisgleichungen) repräsentiert, wird erzeugt.
-   Modellgleichungen strommesswerte = new Modellgleichungen(this.messpunkte);
-   
-   // Ein Objekt der Klasse, welche die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen) repräsentiert, wird
-   // erzeugt.
-   Jakobimatrix jakobiMatrix = new Jakobimatrix(this.messpunkte);
-   
-   // Das Ausgleichsproblem wird gelöst, wobei höchstens 200 Iterationsschritte durchgeführt werden.
-   PointVectorValuePair endParameter = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
-      new  InitialGuess(startpunkt), new MaxEval(200), new ModelFunction(strommesswerte), 
-      new ModelFunctionJacobian(jakobiMatrix));
-   
-   // Die Kreisparameter werden gelesen und protokolliert.
-   this.mx = endParameter.getPoint()[0];
-   this.my = endParameter.getPoint()[1];
-   this.r = endParameter.getPoint()[2];
-   Ausgleichsproblem.logger.fine("Mittelpunkt: (" + this.mx + ", " + this.my + "); Radius: " + this.r);
-   
-   // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
-   this.loesungAnzeigen = true;
+   // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
+   catch (Exception exception)
+      {
+      this.meldungenAnzeigen = true;
+      
+      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+         exception.getMessage(), ""));
+      }
    
    Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "problemLoesen");
    
@@ -238,5 +257,19 @@ public String getR()
 public boolean isLoesungAnzeigen()
    {
    return this.loesungAnzeigen;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt zurück, ob Meldungen angezeigt werden sollen.
+ * 
+ * @return <tt>true</tt>, falls Meldungen angezeigt werden sollen; <tt>false</tt>, falls die Meldungen nicht angezeigt 
+ * werden sollen.
+ */
+public boolean isMeldungenAnzeigen()
+   {
+   return this.meldungenAnzeigen;
    }
 }

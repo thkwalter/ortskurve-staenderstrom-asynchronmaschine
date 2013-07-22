@@ -206,3 +206,25 @@ span.copyright
    font-size: 16px;
    }
    
+/* ****************************************************************************************************************** */
+/* Nachrichten                                                                                                        */
+/* ****************************************************************************************************************** */
+
+.nachrichten
+   {
+   margin-bottom: 20px;
+   
+   border-width: 2px;
+   border-color: #ff0000;
+   border-style: solid;
+   
+   padding: 10px;
+   
+   color: #ff0000;
+   }
+
+.error-messages
+   {
+   list-style-position: inside;
+   }
+   

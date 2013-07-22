@@ -24,6 +24,12 @@
 <h:body>
    <ui:composition template="./template.xhtml">
       <ui:define name="inhalt">   
+         <h:panelGroup rendered="#{ausgleichsproblem.meldungenAnzeigen}" styleClass="nachrichten" layout="block">
+            Folgende Fehler sind bei der Berechnung aufgetreten:
+            <br/><br/>
+            
+            <h:messages errorClass="error-messages"/>
+         </h:panelGroup>
          
          <h:form>
             <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
