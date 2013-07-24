@@ -23,6 +23,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
@@ -33,6 +34,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  *
  * @author Th. K. Walter
  */
+@FacesConverter("CSVConverter")
 public class CSVConverter implements Converter
 {
 /*
@@ -52,7 +54,7 @@ private static Logger logger = Logger.getLogger(CSVConverter.class.getName());
  * @param uiComponent Die UI-Komponente, welche die Quelle der Zeichenkette ist.
  * @param eingabe Die Zeichenkette, die konvertiert werden soll.
  * 
- * @return Ein Feld {@link Vector2D}-Objekten.
+ * @return Ein Feld von {@link Vector2D}-Objekten.
  *  
  * @see javax.faces.convert.Converter#getAsObject(javax.faces.context.FacesContext, javax.faces.component.UIComponent, 
  * java.lang.String)
@@ -62,23 +64,23 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
    {
    CSVConverter.logger.entering("CSVConverter", "getAsObject");
    
-   // Das Feld, das die Punkte speichern soll, wird deklariert.
-   Vector2D[] punkte = null;
+   // Das Feld, das die Vektoren speichern soll, wird deklariert.
+   Vector2D[] vektoren = null;
    
    try
       {
       // Die Zeichenkette wird in Zeilen zerlegt.
-      String[] zeilen = eingabe.split("\n");
+      String[] zeilen = eingabe.trim().split("\n");
       
-      // Das Feld, das die Punkte speichern soll, wird erzeugt.
-      punkte = new Vector2D[zeilen.length];
+      // Das Feld, das die Vektoren speichern soll, wird erzeugt.
+      vektoren = new Vector2D[zeilen.length];
       
       // Einige Variablen und Referenzen werden deklariert.
       String[] datenfelder = null;
       double x = Double.NaN;
       double y = Double.NaN;
       
-      // In dieser Schleife werden die einzelnen Zeilen in Punkte umgewandelt.
+      // In dieser Schleife werden die einzelnen Zeilen in Vektoren umgewandelt.
       for (int i = 0; i < zeilen.length; i++)
          {
          // Die einzelnen Zeilen werden in Datenfelder zerlegt.
@@ -88,32 +90,34 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
          x = Double.parseDouble(datenfelder[0].trim());
          y = Double.parseDouble(datenfelder[1].trim());
          
-         // Ein Messpunkt wird erzeugt, dem Feld der Messpunkte hinzugefügt und protokolliert.
-         punkte[i] = new Vector2D(x, y);
+         // Ein Vektor wird erzeugt und dem Feld der Vektoren hinzugefügt.
+         vektoren[i] = new Vector2D(x, y);
          
-         CSVConverter.logger.fine(punkte[i].toString());
+         // Der Vektor wird protokolliert.
+         CSVConverter.logger.fine(vektoren[i].toString());
          }
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese behandelt.
    catch (Exception exception)
       {
-      // Die Fehlermeldung wird erstellt.
-      String fehlermeldung = "Die eingegebene Zeichenkette besitzt nicht das richtige Format! " + eingabe;
-      
+      // Die Fehlermeldung wird erstellt und protokolliert.
+      String fehlermeldung = "Die eingegebene Zeichenkette ("+ eingabe 
+         + ") besitzt nicht das richtige Format! Fehlertext: " + exception.getMessage();
       CSVConverter.logger.log(Level.SEVERE, fehlermeldung);
       
+      // Eine Fehlermeldung für die Oberfläche wird erstellt.
       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
           "Ihre Eingabe besitzt leider nicht das richtige Format!", exception.getMessage()));
       
       // Eine ConverterException wird geworfen.
-      throw new ConverterException(fehlermeldung);
+      throw new ConverterException(exception.getMessage());
       }
    
    CSVConverter.logger.exiting("CSVConverter", "getAsObject");
    
-   // Das Feld, das die Punkte speichert, wird zurückgegeben.
-   return punkte;
+   // Das Feld, das die Vektoren speichert, wird zurückgegeben.
+   return vektoren;
    }
 
 // =====================================================================================================================
@@ -125,8 +129,8 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
  * durch ein Komma getrennt sind. Jedes Datenfeld besteht aus einem double-Wert.
  *  
  * @param facesContext Das Kontext-Objekt
- * @param uiComponent Die UI-Komponente, welche die Quelle der Zeichenkette ist.
- * @param object Ein Feld {@link Vector2D}-Objekten.
+ * @param uiComponent Die UI-Komponente, welche das Ziel der Zeichenkette ist.
+ * @param vektoren Das übergebene Feld von {@link Vector2D}-Objekten.
  * 
  * @return Eine Zeichenketten im CSV-Format.
  * 
@@ -134,42 +138,52 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
  * java.lang.Object)
  */
 @Override
-public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object object)
+public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object vektoren)
    {
    CSVConverter.logger.entering("CSVConverter", "getAsString");
    
-   // Der StringBuffer für die Zeichenkette wird deklariert.
-   StringBuffer stringBuffer = new StringBuffer();
+   // Der StringBuffer wird mit einer leeren Zeichenkette initialisiert.
+   StringBuffer stringBuffer = new StringBuffer("");
    
    try
       {
-      // Das übergebene Object wird in ein Feld von Vector2D-Objekten umgewandelt.
-      Vector2D[] punkte = (Vector2D[]) object;
-      
-      // In dieser Schleife werden alle Punkte zu einer Zeichenkette verknüpft.
-      for (Vector2D punkt : punkte)
+      // Falls das Feld nicht null ist, wird es konvertiert.
+      if (vektoren != null)
          {
-         stringBuffer.append(punkt.getX()).append(",").append(punkt.getY()).append("\n");
+         // Das übergebene Object wird in ein Feld von Vector2D-Objekten umgewandelt.
+         Vector2D[] punkte = (Vector2D[]) vektoren;
+         
+         // In dieser Schleife werden alle Vektoren zu einer Zeichenkette verknüpft.
+         for (Vector2D punkt : punkte)
+            {
+            stringBuffer.append(punkt.getX()).append(",").append(punkt.getY()).append("\n");
+            }
          }
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese behandelt.
    catch (Exception exception)
       {
-      // Die Fehlermeldung wird erstellt.
-      String fehlermeldung = "Das Feld der Punkte kann nicht konvertiert werden!";
-      
+      // Die Fehlermeldung wird erstellt und protokolliert.
+      String fehlermeldung = "Das Feld der Vektoren kann nicht konvertiert werden! Fehlertext: " + 
+         exception.getMessage();
       CSVConverter.logger.log(Level.SEVERE, fehlermeldung);
             
-      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, fehlermeldung, 
-         exception.getMessage()));
+      // Eine Fehlermeldung für die Oberfläche wird erstellt.
+      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+         "Leider ist ein Fehler im Programm aufgetreten!", exception.getMessage()));
             
       // Eine ConverterException wird geworfen.
-      throw new ConverterException(fehlermeldung);
+      throw new ConverterException(exception.getMessage());
       }
    
-   CSVConverter.logger.exiting("CSVConverter", "getAsObject");
+   // Die zusammengebaute Zeichenkette wird protokolliert.
+   String ausgabe = stringBuffer.toString();
+   CSVConverter.logger.fine(ausgabe);
    
+   CSVConverter.logger.exiting("CSVConverter", "getAsString");
+   
+   // Die zusammengebaute Zeichenkette wird zurückgegeben.
    return stringBuffer.toString();
    }
 
