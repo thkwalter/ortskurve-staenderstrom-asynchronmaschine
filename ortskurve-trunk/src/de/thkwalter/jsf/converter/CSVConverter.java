@@ -107,7 +107,7 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
       CSVConverter.logger.log(Level.SEVERE, fehlermeldung);
       
       // Eine Fehlermeldung für die Oberfläche wird erstellt.
-      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+      facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
           "Ihre Eingabe besitzt leider nicht das richtige Format!", exception.getMessage()));
       
       // Eine ConverterException wird geworfen.
@@ -168,10 +168,6 @@ public String getAsString(FacesContext facesContext, UIComponent uiComponent, Ob
       String fehlermeldung = "Das Feld der Vektoren kann nicht konvertiert werden! Fehlertext: " + 
          exception.getMessage();
       CSVConverter.logger.log(Level.SEVERE, fehlermeldung);
-            
-      // Eine Fehlermeldung für die Oberfläche wird erstellt.
-      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-         "Leider ist ein Fehler im Programm aufgetreten!", exception.getMessage()));
             
       // Eine ConverterException wird geworfen.
       throw new ConverterException(exception.getMessage());
