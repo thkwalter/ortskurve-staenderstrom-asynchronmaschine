@@ -32,13 +32,7 @@ import org.junit.Test;
 public class AusgleichsproblemTest
 {
 /**
- * Die Zeichenkette, welche die Messpunkte enthält.
- */
-String eingabefeld;
-
-
-/**
- * Das Objekt, das für die Tests verwendet wird.
+ * Ein Objekt der zu testenden Klasse.
  */
 private Ausgleichsproblem ausgleichsproblem;
 
@@ -52,55 +46,9 @@ private Ausgleichsproblem ausgleichsproblem;
  */
 @Before
 public void setUp() throws Exception
-   {
-   // Die Zeichenkette, welche die Messpunkte enthält, wird erzeugt.
-   this.eingabefeld = "-0.1, 0.0\n1.0, 0.9\n2.1, 0.0\n1.0, -0.9";
-   
-   // Das Objekt, das für die Tests verwendet wird, wird erzeugt.
+   {   
+   // Das Objekt der zu testenden Klasse wird erzeugt.
    this.ausgleichsproblem = new Ausgleichsproblem();
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#setEingabefeld(String)}.
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- */
-@Test
-public void testSetEingabefeld() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException
-   {
-   // Die zu testende Methode wird aufgerufen.
-   this.ausgleichsproblem.setEingabefeld(this.eingabefeld);
-   
-   // Das Feld der Messpunkte wird gelesen.
-   // Der Wert des Attributs messwerte wird gelesen.   
-   Field messpunkteFeld = Ausgleichsproblem.class.getDeclaredField("messpunkte");
-   messpunkteFeld.setAccessible(true);
-   Vector2D[] messpunkte = (Vector2D[]) messpunkteFeld.get(this.ausgleichsproblem);
-   
-   // Es wir überprüft, ob das Feld der Messpunkte korrekt erzeugt worden ist.
-   assertEquals(4, messpunkte.length);
-   assertEquals(new Vector2D(-0.1, 0.0), messpunkte[0]);
-   assertEquals(new Vector2D(1.0, 0.9), messpunkte[1]);
-   assertEquals(new Vector2D(2.1, 0.0), messpunkte[2]);
-   assertEquals(new Vector2D(1.0, -0.9), messpunkte[3]);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#getEingabefeld()}.
- */
-@Test
-public void testGetEingabefeld()
-   {
-   assertEquals("", this.ausgleichsproblem.getEingabefeld());
    }
 
 // =====================================================================================================================
@@ -114,11 +62,12 @@ public void testGetEingabefeld()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testProblemLoesen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+public void testProblemLoesen1() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
    {
    // Das Feld der Messpunkte wird initialisiert.
-   this.ausgleichsproblem.setEingabefeld(this.eingabefeld);
+   this.ausgleichsproblem.setMesspunkte(new Vector2D[]{new Vector2D(0.1, 0.0), new Vector2D(1.0, 1.1), 
+      new Vector2D(1.9, 0.0), new Vector2D(1.0, -1.1)});
    
    // Die zu testende Methode wird ausgeführt.
    this.ausgleichsproblem.problemLoesen();
@@ -137,6 +86,46 @@ public void testProblemLoesen() throws SecurityException, NoSuchFieldException, 
    Field rAttribut = Ausgleichsproblem.class.getDeclaredField("r");
    rAttribut.setAccessible(true);
    assertEquals(1.0, rAttribut.getDouble(this.ausgleichsproblem), 1.0/1000);
+   
+   // Es wird überprüft, ob das Flag korrekt gesetzt ist.
+   assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Ausgleichsproblem#problemLoesen()}.
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testProblemLoesen2() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Das Feld der Messpunkte wird initialisiert.
+   this.ausgleichsproblem.setMesspunkte(new Vector2D[]{new Vector2D(-5.0, 0.0), new Vector2D(0.0, 5.0), 
+      new Vector2D(5.0, 0.0)});
+   
+   // Die zu testende Methode wird ausgeführt.
+   this.ausgleichsproblem.problemLoesen();
+   
+   // Die berechnete x-Komponente des Mittelpunkts wird überprüft.
+   Field mxAttribut = Ausgleichsproblem.class.getDeclaredField("mx");
+   mxAttribut.setAccessible(true);
+   assertEquals(0.0, mxAttribut.getDouble(this.ausgleichsproblem), 1.0/1000);
+   
+   // Die berechnete y-Komponente des Mittelpunkts wird überprüft.
+   Field myAttribut = Ausgleichsproblem.class.getDeclaredField("my");
+   myAttribut.setAccessible(true);
+   assertEquals(0.0, myAttribut.getDouble(this.ausgleichsproblem), 1.0/1000);
+   
+   // Der berechnete Radius wird überprüft.
+   Field rAttribut = Ausgleichsproblem.class.getDeclaredField("r");
+   rAttribut.setAccessible(true);
+   assertEquals(5.0, rAttribut.getDouble(this.ausgleichsproblem), 5.0/1000);
    
    // Es wird überprüft, ob das Flag korrekt gesetzt ist.
    assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
