@@ -36,7 +36,7 @@ import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptim
 
 /**
  * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
- * Kreises zu einer vorgegebenen Menge von Punkten.
+ * Kreises zu einer vorgegebenen Menge von Messpunkten.
  *
  * @author Th. Walter
  */
@@ -74,11 +74,6 @@ private double r;
  */
 private boolean loesungAnzeigen;
 
-/**
- * Dieses Flag zeigt an, ob Meldungen angezeigt werden sollen. 
- */
-private boolean meldungenAnzeigen;
-
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -108,7 +103,7 @@ public String problemLoesen()
       // In der folgenden Schleife über alle Messpunkte werden die oben deklarierten Felder initialisiert.
       for (int i = 0; i < this.messpunkte.length; i++)
          {
-         // Allen Punkten wird das gleiche Gewicht zugewiesen.
+         // Allen Messpunkten wird das gleiche Gewicht zugewiesen.
          gewichte[i] = 1.0;
          
          // Die Zielwerte haben alle den Wert Null, da die Kreisgleichung für alle Punkte diesen Wert ergeben sollte.
@@ -144,8 +139,6 @@ public String problemLoesen()
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
    catch (Exception exception)
       {
-      this.meldungenAnzeigen = true;
-      
       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
          exception.getMessage(), ""));
       }
@@ -160,50 +153,27 @@ public String problemLoesen()
 // =====================================================================================================================
 
 /**
- * Diese Methode leert bei jedem Aufruf der Startseite das Texteingabefeld.
+ * Diese Methode übergibt den Inhalt des Texteingabefeldes (nach der Konvertierung in ein Feld von 
+ * {@link Vector2D}-Messpunkten) an die Geschäftslogik.
  * 
- * @return Eine leere Zeichenkette.
+ * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
  */
-public String getEingabefeld()
-   {
-   return "";
+public void setMesspunkte(Vector2D[] messpunkte)
+   {      
+   this.messpunkte = messpunkte;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode übergibt den Inhalt des Texteingabefeldes an die Geschäftslogik.
+ * Diese Methode übergibt die Messpunkte (nach der Konvertierung in eine Zeichenkette) an das Texteingabefeld.
  * 
- * @param eingabefeld Die Zeichenkette, die im Texteingabefeld eingegeben wurde.
+ * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
  */
-public void setEingabefeld(String eingabefeld)
-   {   
-   // Die Zeichenkette wird in Zeilen zerlegt.
-   String[] zeilen = eingabefeld.split("\n");
-   
-   // Das Feld, das die Messpunkte enthält, wird erzeugt.
-   this.messpunkte = new Vector2D[zeilen.length];
-   
-   // Einige Variablen und Referenzen werden deklariert.
-   String[] datenfelder = null;
-   double x = Double.NaN;
-   double y = Double.NaN;
-   
-   // In dieser Schleife werden die einzelnen Zeilen in Messpunkte umgewandelt.
-   for (int i = 0; i < zeilen.length; i++)
-      {
-      // Die einzelnen Zeilen werden in Datenfelder zerlegt.
-      datenfelder = zeilen[i].split(",");
-      
-      // Die Zeichenketten der Datenfelder werden in double-Werte umgewandelt.
-      x = Double.parseDouble(datenfelder[0].trim());
-      y = Double.parseDouble(datenfelder[1].trim());
-      
-      // Ein Messpunkt wird erzeugt, dem Feld der Messpunkte hinzugefügt und protokolliert.
-      this.messpunkte[i] = new Vector2D(x, y);
-      Ausgleichsproblem.logger.fine(this.messpunkte[i].toString());
-      }
+public Vector2D[] getMesspunkte()
+   {
+   return this.messpunkte;
    }
 
 // =====================================================================================================================
@@ -270,6 +240,6 @@ public boolean isLoesungAnzeigen()
  */
 public boolean isMeldungenAnzeigen()
    {
-   return this.meldungenAnzeigen;
+   return FacesContext.getCurrentInstance().getMessageList(null).size() > 0;
    }
 }
