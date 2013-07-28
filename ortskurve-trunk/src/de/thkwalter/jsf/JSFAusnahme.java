@@ -20,7 +20,7 @@ package de.thkwalter.jsf;
  *
  * @author Th. K. Walter
  */
-public class JSFAusnahme extends Exception
+public class JSFAusnahme extends RuntimeException
 {
 /**
  * Der Text zur Erzeugung einer JSF-Meldung.

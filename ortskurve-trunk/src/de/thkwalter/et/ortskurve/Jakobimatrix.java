@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 import org.apache.commons.math3.analysis.MultivariateMatrixFunction;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import de.thkwalter.jsf.JSFAusnahme;
+
 /**
  * Diese Klasse repräsentiert die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen).
  * 
@@ -68,6 +70,8 @@ public Jakobimatrix(Vector2D[] messpunkte)
 @Override
 public double[][] value(double[] kreisparameter)
    {
+   Jakobimatrix.logger.entering("Jakobimatrix", "value");
+   
    // Der Vektor für den Mittelpunkt der Ortskurve wird erzeugt.
    Vector2D mittelpunkt = new Vector2D(kreisparameter[0], kreisparameter[1]);
 
@@ -81,15 +85,13 @@ public double[][] value(double[] kreisparameter)
       // Der Abstand des Messpunktes vom Mittelpunkt wird berechnet.
       abstandMesspunktMittelpunkt = this.messpunkte[i].distance(mittelpunkt);
 
-      // Falls der Messpunkt mit dem Mittelpunkt identisch ist wird eine RuntimeException geworfen.
+      // Falls der Messpunkt mit dem Mittelpunkt identisch ist wird eine JSFAusnahme geworfen.
       if (abstandMesspunktMittelpunkt == 0.0)
          {
-         String fehlermeldung = "Die Berechnung des Ausgleichskreises musste abgebrochen werden.\n\n" +
-            "Ursache: Eine berechnete Zwischengröße hatte den Wert unendlich.";
+         String fehlermeldung = "Der Punkt " + this.messpunkte[i].toString() + "ist identisch mit dem Mittelpunkt.";
 
-         Jakobimatrix.logger.severe("Der Messpunkt " + this.messpunkte[i] + " ist mit dem Kreismittelpunkt identisch.");
-
-         throw new RuntimeException(fehlermeldung);
+         throw new JSFAusnahme(fehlermeldung, 
+            "da im Fall der eingegebenen Messpunkte der numerische Algorithmus versagt");
          }
 
       // Das Inverse des Abstands des Messpunkts vom Mittelpunkt wird berechnet.
@@ -100,6 +102,8 @@ public double[][] value(double[] kreisparameter)
       jakobiMatrix[i][1] = inverserAbstandMesspunktMittelpunkt * (mittelpunkt.getY() - this.messpunkte[i].getY());
       jakobiMatrix[i][2] = -1.0;
       }
+   
+   Jakobimatrix.logger.exiting("Jakobimatrix", "value");
 
    return jakobiMatrix;
    }
