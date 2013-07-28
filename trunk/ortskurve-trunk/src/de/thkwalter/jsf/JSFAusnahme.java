@@ -20,8 +20,13 @@ package de.thkwalter.jsf;
  *
  * @author Th. K. Walter
  */
-public class BehandelbareAusnahme extends Exception
+public class JSFAusnahme extends Exception
 {
+/**
+ * Der Text zur Erzeugung einer JSF-Meldung.
+ */
+private String jsfMeldungstext;
+
 /**
  * Die Serialisierungs-Id.
  */
@@ -31,43 +36,79 @@ private static final long serialVersionUID = 8982555710277296332L;
 // =====================================================================================================================
 
 /**
+ * Dieser Konstruktor erzeugt eine neue Ausnahme.
+ * 
+ * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
+ * 
  * @see Exception#Exception() 
  */
-public BehandelbareAusnahme()
+public JSFAusnahme(String jsfMeldungstext)
    {
+   this.jsfMeldungstext = jsfMeldungstext;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
+ * Dieser Konstruktor erzeugt eine neue Ausnahme.
+ * 
+ * @param message Der Text der Ausnahme.
+ * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
+ * 
  * @see Exception#Exception(String)
  */
-public BehandelbareAusnahme(String message)
+public JSFAusnahme(String message, String jsfMeldungstext)
    {
    super(message);
+   this.jsfMeldungstext = jsfMeldungstext;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
+ * Dieser Konstruktor erzeugt eine neue Ausnahme.
+ * 
+ * @param cause Die Ausnahme, welche die Ursache dieser Ausnahme ist.
+ * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
+ * 
  * @see Exception#Exception(Throwable)
  */
-public BehandelbareAusnahme(Throwable cause)
+public JSFAusnahme(Throwable cause, String jsfMeldungstext)
    {
    super(cause);
+   this.jsfMeldungstext = jsfMeldungstext;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
+ * Dieser Konstruktor erzeugt eine neue Ausnahme.
+ * 
+ * @param message Der Text der Ausnahme.
+ * @param cause Die Ausnahme, welche die Ursache dieser Ausnahme ist.
+ * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
+ * 
  * @see Exception#Exception(String, Throwable)
  */
-public BehandelbareAusnahme(String message, Throwable cause)
+public JSFAusnahme(String message, Throwable cause, String jsfMeldungstext)
    {
    super(message, cause);
+   this.jsfMeldungstext = jsfMeldungstext;
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Text zur Erzeugung einer JSF-Meldung zurück.
+ * 
+ * @return Der Text zur Erzeugung einer JSF-Meldung.
+ */
+public String getJSFMeldungstext()
+   {
+   return this.jsfMeldungstext;
+   }
 }

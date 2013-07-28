@@ -108,10 +108,10 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
       
       // Eine Fehlermeldung für die Oberfläche wird erstellt.
       facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-          "Ihre Eingabe besitzt leider nicht das richtige Format!", exception.getMessage()));
+          "die Messpunkte nicht im richtigen Format eingegeben worden sind", exception.getMessage()));
       
       // Eine ConverterException wird geworfen.
-      throw new ConverterException(exception.getMessage());
+      throw new ConverterException(exception);
       }
    
    CSVConverter.logger.exiting("CSVConverter", "getAsObject");

@@ -17,6 +17,9 @@ package de.thkwalter.et.ortskurve;
 
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -24,6 +27,8 @@ import org.apache.commons.math3.linear.DecompositionSolver;
 import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+
+import de.thkwalter.jsf.JSFAusnahme;
 
 /**
  * Diese Klasse berechnet aus drei Punkten den Startpunkt für das Ausgleichsproblem. 
@@ -63,20 +68,20 @@ public Startpunktbestimmung(Vector2D[] messpunkte)
  * 
  * @return Der Startpunkt. Die erste Komponente des Feldes repräsentiert die x-Komponente des Mittelpunktes, die zweite
  * Komponente die y-Komponente, die dritte Komponente den Radius.
+ * 
+ * @throws JSFAusnahme 
  */
-public double[] startpunktBestimmen()
+public double[] startpunktBestimmen() throws JSFAusnahme
    {
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "startpunktBestimmen");
    
    // Falls weniger als drei Messpunkte existieren, wird eine Ausnahme geworfen.
    if (this.messpunkte.length < 3)
       {
-      String fehlermeldung = "Die Berechnung des Startpunktes kann nicht durchgeführt werden. " +
-               "Ursache: Es existieren weniger als drei Messpunkte.";
+      String fehlermeldung = "Um den Startpunkt berechnen zu können, werden mindestens drei Messpunkte benötigt. " +
+         "Es stehen jedoch nur " + this.messpunkte.length + "zur Verfügung.";
       
-      Startpunktbestimmung.logger.severe("Es existieren weniger als drei Messpunkte.");
-      
-      throw new RuntimeException(fehlermeldung);
+      throw new JSFAusnahme(fehlermeldung, "mindestens drei Messpunkte benötigt werden");
       }
    
    // Die Felder für die Koeffizientenmatrix und die Inhomogenität werden definiert.

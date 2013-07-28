@@ -23,6 +23,8 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.thkwalter.jsf.JSFAusnahme;
+
 /**
  * Diese Klasse enthält Tests für die Klasse {@link Startpunktbestimmung}.
  *
@@ -88,9 +90,10 @@ public void testStartpunktbestimmung() throws SecurityException, NoSuchFieldExce
 
 /**
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
+ * @throws JSFAusnahme 
  */
 @Test
-public void testStartpunktBestimmen1()
+public void testStartpunktBestimmen1() throws JSFAusnahme
    {
    // Der Startpunkt wird berechnet.
    double[] startpunkt = this.startpunktbestimmung.startpunktBestimmen();
@@ -105,15 +108,18 @@ public void testStartpunktBestimmen1()
 
 /**
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
+ * 
+ * @throws JSFAusnahme 
  */
-@Test(expected=RuntimeException.class)
-public void testStartpunktBestimmen2()
+@Test(expected=JSFAusnahme.class)
+public void testStartpunktBestimmen2() throws JSFAusnahme
    {   
    // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
    Startpunktbestimmung lokaleStartpunktbestimmung = 
       new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0)});
    
-   //Es wird getestet, ob eine RuntimeException geworfen wird, wenn ein Messpunkt und der Mittelpunkt übereinstimmen.
+   // Es wird getestet, ob eine BehandelbareAusnahme geworfen wird, wenn ein Messpunkt und der Mittelpunkt 
+   // übereinstimmen.
    lokaleStartpunktbestimmung.startpunktBestimmen();
    }
 }
