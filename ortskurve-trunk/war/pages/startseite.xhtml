@@ -26,7 +26,7 @@
       <ui:define name="inhalt">   
          <h:form>
             <h:panelGroup rendered="#{ausgleichsproblem.meldungenAnzeigen}" styleClass="nachrichten" layout="block">
-               Folgende Fehler sind bei der Berechnung aufgetreten:
+               Die Ortskurve konnte leider nicht berechnet werden, da
                <br/><br/>
             
                <h:messages errorClass="error-messages" globalOnly="true" tooltip="true"/>
@@ -44,10 +44,10 @@
                      <br/><br/>
                      
                      <span id="eingabehilfe-beispiel">
-                     0.1, 0.0<br/>
-                     1.0, 1.1<br/>
-                     1.9, 0.0<br/>
-                     1.0, -1.1<br/>
+                     0.1,0.0<br/>
+                     1.0,1.1<br/>
+                     1.9,0.0<br/>
+                     1.0,-1.1<br/>
                      </span>
                   </p>
                </h:panelGroup>
