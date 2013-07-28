@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package de.thk.jsf.converter;
+package de.thkwalter.jsf.converter;
 
 import java.util.Iterator;
 
