@@ -17,9 +17,6 @@ package de.thkwalter.et.ortskurve;
 
 import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -68,14 +65,12 @@ public Startpunktbestimmung(Vector2D[] messpunkte)
  * 
  * @return Der Startpunkt. Die erste Komponente des Feldes repräsentiert die x-Komponente des Mittelpunktes, die zweite
  * Komponente die y-Komponente, die dritte Komponente den Radius.
- * 
- * @throws JSFAusnahme 
  */
-public double[] startpunktBestimmen() throws JSFAusnahme
+public double[] startpunktBestimmen()
    {
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "startpunktBestimmen");
    
-   // Falls weniger als drei Messpunkte existieren, wird eine Ausnahme geworfen.
+   // Falls weniger als drei Messpunkte existieren, wird eine JSFAusnahme geworfen.
    if (this.messpunkte.length < 3)
       {
       String fehlermeldung = "Um den Startpunkt berechnen zu können, werden mindestens drei Messpunkte benötigt. " +

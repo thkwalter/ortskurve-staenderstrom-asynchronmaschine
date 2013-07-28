@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.math3.analysis.MultivariateVectorFunction;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
@@ -29,6 +31,11 @@ public class Modellgleichungen implements MultivariateVectorFunction
  * Dieses Feld enthält die Messpunkte.
  */
 private Vector2D[] messpunkte;
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger(Startpunktbestimmung.class.getName());
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -60,6 +67,8 @@ public Modellgleichungen(Vector2D[] messpunkte)
 @Override
 public double[] value(double[] kreisparameter)
    {
+   Modellgleichungen.logger.entering("Modellgleichungen", "value");
+   
    // Der Vektor für den Mittelpunkt der Ortskurve wird erzeugt.
    Vector2D mittelpunkt = new Vector2D(kreisparameter[0], kreisparameter[1]);
 
@@ -74,6 +83,8 @@ public double[] value(double[] kreisparameter)
       {
       abstaende[i] = this.messpunkte[i].distance(mittelpunkt) - radius;
       }
+   
+   Modellgleichungen.logger.exiting("Modellgleichungen", "value");
    
    return abstaende;
    }
