@@ -24,6 +24,8 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.thkwalter.jsf.JSFAusnahme;
+
 /**
  * Diese Klasse enthält Tests für die Klasse {@link Jakobimatrix}.
  *
@@ -118,10 +120,10 @@ public void testValue1()
 /**
  * Test für die Methode {@link Jakobimatrix#value(double[])}.
  */
-@Test(expected=RuntimeException.class)
+@Test(expected=JSFAusnahme.class)
 public void testValue2()
    {
    // Es wird getestet, ob eine RuntimeException geworfen wird, wenn ein Messpunkt und der Mittelpunkt übereinstimmen.
-   this.jakobimatrix.value(new double[]{2.0, 1.0, 1.0});
+   this.jakobimatrix.value(new double[]{2.0, 1.009, 1.0});
    }
 }
