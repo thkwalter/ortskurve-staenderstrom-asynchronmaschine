@@ -85,10 +85,13 @@ public double[][] value(double[] kreisparameter)
       // Der Abstand des Messpunktes vom Mittelpunkt wird berechnet.
       abstandMesspunktMittelpunkt = this.messpunkte[i].distance(mittelpunkt);
 
-      // Falls der Messpunkt mit dem Mittelpunkt identisch ist wird eine JSFAusnahme geworfen.
-      if (abstandMesspunktMittelpunkt == 0.0)
+      // Falls der Messpunkt mit dem Mittelpunkt identisch ist wird eine JSFAusnahme geworfen, da sonst das Inverse
+      // des Abstands unendlich groß wird. Da der Vergleich zweier double-Wert jedoch sinnlos ist, wird der Abstand mit 
+      // einem Prozent des aktuell vermuteten Radius verglichen.
+      if (abstandMesspunktMittelpunkt < 0.01 * kreisparameter[2])
          {
-         String fehlermeldung = "Der Punkt " + this.messpunkte[i].toString() + "ist identisch mit dem Mittelpunkt.";
+         String fehlermeldung = "Der Punkt " + this.messpunkte[i].toString() + " ist fast identisch mit dem " +
+            " Mittelpunkt " + mittelpunkt.toString() + ".";
 
          throw new JSFAusnahme(fehlermeldung, 
             "da im Fall der eingegebenen Messpunkte der numerische Algorithmus versagt");
