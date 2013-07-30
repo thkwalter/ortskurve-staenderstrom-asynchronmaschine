@@ -15,6 +15,9 @@
  */
 package de.thkwalter.jsf;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
@@ -78,15 +81,38 @@ public void handle() throws FacesException
    {
    Iterator<ExceptionQueuedEvent> itr = getUnhandledExceptionQueuedEvents().iterator();
    
+   
    while (itr.hasNext())
       {
+      FacesContext fc = FacesContext.getCurrentInstance();
+      NavigationHandler nav = fc.getApplication().getNavigationHandler();
+      
       ExceptionQueuedEvent event = itr.next();
       ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
       Throwable thr = context.getException();
 
-      ETExceptionHandler.logger.severe("OK, der ExceptionHandler arbeitet");
+      try
+         {
+         StringWriter sw = new StringWriter();
+         PrintWriter pw = new PrintWriter(sw);
+         thr.printStackTrace(pw);
+         String stackTrace = sw.toString();
+         
+         Date date = new Date();
+         
+         ETExceptionHandler.logger.severe(thr.getMessage());
+         fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, date.toString() + ": " + stackTrace, ""));
+      
+         nav.handleNavigation(fc, null, "/pages/fehlerseite.xhtml");
+         fc.renderResponse();
+         }
+      finally
+         {
+         itr.remove();
+         }
+      getWrapped().handle();
       }
-   getWrapped().handle();
+   
    }
 
 }
