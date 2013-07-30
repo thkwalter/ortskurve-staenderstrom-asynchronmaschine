@@ -1,0 +1,28 @@
+<!-- ===================================================================================================================
+     Copyright 2013 Th. K. Walter, Nürnberg.
+==================================================================================================================== -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+   <ui:composition template="./template.xhtml">
+      <ui:define name="inhalt">
+         <h2 id="ueberschrift-fehlerseite">Leider ist bei der Ausführung des Programms ein Fehler aufgetreten!</h2>
+         <br/><br/>
+         
+         <p>
+            Ich benötige Ihre Mithilfe, um das Programm zu verbessern. Bitte senden Sie mir eine Email mit dem 
+            nachfolgenden Text an die Adresse <a href="mailto:th.k.walter@googlemail.com">th.k.walter@googlemail.com</a>
+            <br/><br/>
+            
+            <h:messages errorClass="stacktrace" globalOnly="true" tooltip="true"/>
+         </p>       
+      </ui:define>
+   </ui:composition>
+</h:body>
+
+</html>
