@@ -35,7 +35,7 @@ import javax.faces.event.ExceptionQueuedEventContext;
  * 
  * @author Th. K. Walter
  */
-public class ETExceptionHandler extends ExceptionHandlerWrapper
+public class ApplicationExceptionHandler extends ExceptionHandlerWrapper
 {
 /**
  * 
@@ -45,7 +45,7 @@ private ExceptionHandler wrapped;
 /**
  * Der Logger dieser Klasse.
  */
-private static Logger logger = Logger.getLogger(ETExceptionHandler.class.getName());
+private static Logger logger = Logger.getLogger(ApplicationExceptionHandler.class.getName());
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -53,7 +53,7 @@ private static Logger logger = Logger.getLogger(ETExceptionHandler.class.getName
 /**
  * 
  */
-public ETExceptionHandler(ExceptionHandler wrapped)
+public ApplicationExceptionHandler(ExceptionHandler wrapped)
    {
    this.wrapped = wrapped;
    }
@@ -100,7 +100,7 @@ public void handle() throws FacesException
          
          Date date = new Date();
          
-         ETExceptionHandler.logger.severe(thr.getMessage());
+         ApplicationExceptionHandler.logger.severe(thr.getMessage());
          fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, date.toString() + ": " + stackTrace, ""));
       
          nav.handleNavigation(fc, null, "/pages/fehlerseite.xhtml");
