@@ -31,14 +31,14 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 
 /**
- * 
+ * Diese Klasse bestimmt, wie mit nicht gefangenen Ausnahmen umgegangen wird.
  * 
  * @author Th. K. Walter
  */
 public class ApplicationExceptionHandler extends ExceptionHandlerWrapper
 {
 /**
- * 
+ * Der umwickelte {@link ExceptionHandler}.
  */
 private ExceptionHandler wrapped;
 
@@ -51,7 +51,9 @@ private static Logger logger = Logger.getLogger(ApplicationExceptionHandler.clas
 // =====================================================================================================================
 
 /**
+ * Dieser Konstruktor initialisiert das Attribut für den umwickelten {@link ExceptionHandler}.
  * 
+ * @param wrapped Der {@link ExceptionHandler}, der umwickelt werden soll.
  */
 public ApplicationExceptionHandler(ExceptionHandler wrapped)
    {
@@ -62,7 +64,9 @@ public ApplicationExceptionHandler(ExceptionHandler wrapped)
 // =====================================================================================================================
 
 /**
- *
+ * Diese Methode gibt den umwickelten {@link ExceptionHandler} zurück.
+ * 
+ * @return Der umwickelte {@link ExceptionHandler}.
  */
 @Override
 public ExceptionHandler getWrapped()
@@ -74,45 +78,72 @@ public ExceptionHandler getWrapped()
 // =====================================================================================================================
 
 /**
- *
+ * Diese Methode behandelt die nicht-gefangenen Ausnahmen.
  */
 @Override
 public void handle() throws FacesException
    {
-   Iterator<ExceptionQueuedEvent> itr = getUnhandledExceptionQueuedEvents().iterator();
+   // Ein Iterator auf die Queue der Ausnahmeereignisse wird gelesen.
+   Iterator<ExceptionQueuedEvent> itr = this.getUnhandledExceptionQueuedEvents().iterator();
    
+   // Der FacesContext und der NavigationHandler werden gelesen.
+   FacesContext facesContext = FacesContext.getCurrentInstance();
+   NavigationHandler nav = facesContext.getApplication().getNavigationHandler();  
    
+   // Einige Referenzen werden deklariert.
+   ExceptionQueuedEvent event = null;
+   ExceptionQueuedEventContext context = null;
+   Throwable throwable = null;
+   StringWriter stringWriter = null;
+   PrintWriter printWriter = null;
+   String stackTrace = null;
+   
+   // Das aktuelle Datum wird gelesen.
+   Date date = new Date();
+   
+   // Eine Schleife über die Ausnahmeereignisse.
    while (itr.hasNext())
       {
-      FacesContext fc = FacesContext.getCurrentInstance();
-      NavigationHandler nav = fc.getApplication().getNavigationHandler();
+      // Das Ausnahmeereignis und sein Kontext werden gelesen.
+      event = itr.next();
+      context = (ExceptionQueuedEventContext) event.getSource();
       
-      ExceptionQueuedEvent event = itr.next();
-      ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
-      Throwable thr = context.getException();
+      // Die Ausnahme wird gelesen
+      throwable = context.getException();
 
       try
          {
-         StringWriter sw = new StringWriter();
-         PrintWriter pw = new PrintWriter(sw);
-         thr.printStackTrace(pw);
-         String stackTrace = sw.toString();
+         // Ein PrintWiter, der in einen StringWriter schreibt, wird erzeugt.
+         stringWriter = new StringWriter();
+         printWriter = new PrintWriter(stringWriter);
          
-         Date date = new Date();
+         // Der StackTrace wird in den PrintWriter geschrieben und dieser gibt sie an den StringWriter weiter.
+         throwable.printStackTrace(printWriter);
          
-         ApplicationExceptionHandler.logger.severe(thr.getMessage());
-         fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, date.toString() + ": " + stackTrace, ""));
+         // Der StackTrace wird aus dem StringWriter gelesen.
+         stackTrace = stringWriter.toString();
+         
+         // Der StackTrace wird protokolliert.
+         ApplicationExceptionHandler.logger.severe(throwable.getMessage());
+         
+         // Eine FacesMessage wird erzeugt und in den FacesContext geschrieben.
+         facesContext.addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, date.toString() + ": " + stackTrace, ""));
       
-         nav.handleNavigation(fc, null, "/pages/fehlerseite.xhtml");
-         fc.renderResponse();
+         // Die Kontrolle wird an die Fehlerseite weitergeleitet.
+         nav.handleNavigation(facesContext, null, "/pages/fehlerseite.xhtml");
+         facesContext.renderResponse();
          }
+      
+      // Das Ausnahmeereignis wird auf alle Fälle aus der Queue entfernt.
       finally
          {
          itr.remove();
-         }
-      getWrapped().handle();
+         }   
       }
    
+   // Der umwickelte ExceptionHandler behandelt ebenfalls noch die Ausnahmen.
+   getWrapped().handle();
    }
 
 }
