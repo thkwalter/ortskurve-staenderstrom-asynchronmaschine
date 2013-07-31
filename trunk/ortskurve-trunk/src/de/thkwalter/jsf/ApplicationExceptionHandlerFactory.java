@@ -23,7 +23,7 @@ import javax.faces.context.ExceptionHandlerFactory;
  *
  * @author Th. K. Walter
  */
-public class ETExceptionHandlerFactory extends ExceptionHandlerFactory 
+public class ApplicationExceptionHandlerFactory extends ExceptionHandlerFactory 
 {
 /**
  * 
@@ -36,7 +36,7 @@ private ExceptionHandlerFactory parent;
 /**
  * 
  */
-public ETExceptionHandlerFactory(ExceptionHandlerFactory parent) 
+public ApplicationExceptionHandlerFactory(ExceptionHandlerFactory parent) 
    {
    this.parent = parent;
    }
@@ -50,6 +50,6 @@ public ETExceptionHandlerFactory(ExceptionHandlerFactory parent)
 @Override
 public ExceptionHandler getExceptionHandler() 
    {
-   return new ETExceptionHandler(parent.getExceptionHandler());
+   return new ApplicationExceptionHandler(parent.getExceptionHandler());
    }
 }
