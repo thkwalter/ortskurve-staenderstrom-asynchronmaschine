@@ -19,14 +19,14 @@ import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 
 /**
- * 
+ * Diese {@link ExceptionHandlerFactory} liefert den programmspezifischen {@link ExceptionHandler}.
  *
  * @author Th. K. Walter
  */
 public class ApplicationExceptionHandlerFactory extends ExceptionHandlerFactory 
 {
 /**
- * 
+ * Die umwickelte {@link ExceptionHandlerFactory}.
  */
 private ExceptionHandlerFactory parent;
 
@@ -34,7 +34,9 @@ private ExceptionHandlerFactory parent;
 // =====================================================================================================================
 
 /**
+ * Dieser Konstruktor initialisiert das Attribut für die umwickelte {@link ExceptionHandlerFactory}.
  * 
+ * @param wrapped Die {@link ExceptionHandlerFactory}, die umwickelt werden soll.
  */
 public ApplicationExceptionHandlerFactory(ExceptionHandlerFactory parent) 
    {
@@ -45,11 +47,15 @@ public ApplicationExceptionHandlerFactory(ExceptionHandlerFactory parent)
 // =====================================================================================================================
 
 /**
- *
+ * Diese Methode gibt den programmspezifischen ExceptionHandler zurück.
+ * 
+ * @return Der programmspezifische ExceptionHandler.
  */
 @Override
 public ExceptionHandler getExceptionHandler() 
    {
+   // Der programmspezifische ExceptionHandler wird erzeugt, wobei der ExceptionHandler übergeben wird, welchen die 
+   // umwickelte ExceptionHandlerFactory zurückgibt.
    return new ApplicationExceptionHandler(parent.getExceptionHandler());
    }
 }
