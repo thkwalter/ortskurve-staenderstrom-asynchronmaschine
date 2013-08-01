@@ -16,17 +16,13 @@
 package de.thkwalter.jsf;
 
 /**
- * Diese Klasse repräsentiert eine Ausnahme, die im Programm behandelbar ist.
+ * Diese Klasse repräsentiert eine Ausnahme, die vom Programm und nicht von einer eingebundenen Bibliothek geworfen wird
+ * und behandelt werden kann.
  *
  * @author Th. K. Walter
  */
-public class JSFAusnahme extends RuntimeException
+public class ApplicationRuntimeException extends RuntimeException
 {
-/**
- * Der Text zur Erzeugung einer JSF-Meldung.
- */
-private String jsfMeldungstext;
-
 /**
  * Die Serialisierungs-Id.
  */
@@ -38,30 +34,13 @@ private static final long serialVersionUID = 8982555710277296332L;
 /**
  * Dieser Konstruktor erzeugt eine neue Ausnahme.
  * 
- * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
- * 
- * @see Exception#Exception() 
- */
-public JSFAusnahme(String jsfMeldungstext)
-   {
-   this.jsfMeldungstext = jsfMeldungstext;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Dieser Konstruktor erzeugt eine neue Ausnahme.
- * 
  * @param message Der Text der Ausnahme.
- * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
  * 
  * @see Exception#Exception(String)
  */
-public JSFAusnahme(String message, String jsfMeldungstext)
+public ApplicationRuntimeException(String message)
    {
    super(message);
-   this.jsfMeldungstext = jsfMeldungstext;
    }
 
 // =====================================================================================================================
@@ -71,14 +50,12 @@ public JSFAusnahme(String message, String jsfMeldungstext)
  * Dieser Konstruktor erzeugt eine neue Ausnahme.
  * 
  * @param cause Die Ausnahme, welche die Ursache dieser Ausnahme ist.
- * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
  * 
  * @see Exception#Exception(Throwable)
  */
-public JSFAusnahme(Throwable cause, String jsfMeldungstext)
+public ApplicationRuntimeException(Throwable cause)
    {
    super(cause);
-   this.jsfMeldungstext = jsfMeldungstext;
    }
 
 // =====================================================================================================================
@@ -89,26 +66,11 @@ public JSFAusnahme(Throwable cause, String jsfMeldungstext)
  * 
  * @param message Der Text der Ausnahme.
  * @param cause Die Ausnahme, welche die Ursache dieser Ausnahme ist.
- * @param jsfMeldungstext Der Text zur Erzeugung einer JSF-Meldung.
  * 
  * @see Exception#Exception(String, Throwable)
  */
-public JSFAusnahme(String message, Throwable cause, String jsfMeldungstext)
+public ApplicationRuntimeException(String message, Throwable cause)
    {
    super(message, cause);
-   this.jsfMeldungstext = jsfMeldungstext;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt den Text zur Erzeugung einer JSF-Meldung zurück.
- * 
- * @return Der Text zur Erzeugung einer JSF-Meldung.
- */
-public String getJSFMeldungstext()
-   {
-   return this.jsfMeldungstext;
    }
 }

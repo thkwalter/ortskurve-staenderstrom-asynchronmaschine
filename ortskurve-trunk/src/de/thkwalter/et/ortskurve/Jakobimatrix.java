@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import org.apache.commons.math3.analysis.MultivariateMatrixFunction;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import de.thkwalter.jsf.JSFAusnahme;
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse repräsentiert die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen).
@@ -90,11 +90,20 @@ public double[][] value(double[] kreisparameter)
       // einem Prozent des aktuell vermuteten Radius verglichen.
       if (abstandMesspunktMittelpunkt < 0.01 * kreisparameter[2])
          {
+         // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
          String fehlermeldung = "Der Punkt " + this.messpunkte[i].toString() + " ist fast identisch mit dem " +
-            " Mittelpunkt " + mittelpunkt.toString() + ".";
-
-         throw new JSFAusnahme(fehlermeldung, 
-            "da im Fall der eingegebenen Messpunkte der numerische Algorithmus versagt");
+            " Mittelpunkt " + mittelpunkt.toString() + "!";
+         Jakobimatrix.logger.severe(fehlermeldung);
+         
+         // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+         String jsfMeldung = "Der Punkt " + this.messpunkte[i].toString() + 
+            " scheint in der Nähe des Kreismittelpunktes zu liegen! Bitte überprüfen Sie diesen Punkt.";
+         ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+         
+         // Das vorzeitige Verlassen dieser Methode wird protokolliert.
+         Jakobimatrix.logger.throwing("Jakobimatrix", "value", applicationRuntimeException);
+         
+         throw applicationRuntimeException;
          }
 
       // Das Inverse des Abstands des Messpunkts vom Mittelpunkt wird berechnet.

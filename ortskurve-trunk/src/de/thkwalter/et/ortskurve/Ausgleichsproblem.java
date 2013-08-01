@@ -34,7 +34,7 @@ import org.apache.commons.math3.optim.nonlinear.vector.Target;
 import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
 
-import de.thkwalter.jsf.JSFAusnahme;
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
@@ -139,13 +139,14 @@ public String problemLoesen()
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
-   catch (JSFAusnahme exception)
+   catch (ApplicationRuntimeException exception)
       {
       // Eine Fehlermeldung für die Oberfläche wird erstellt.
       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-         exception.getJSFMeldungstext(), ""));
+         exception.getMessage(), ""));
       
-      Ausgleichsproblem.logger.severe(exception.getMessage());
+      // Der Nachrichtentext der Ausnahme wird protokolliert.
+      Ausgleichsproblem.logger.info(exception.getMessage());
       }
    
    Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "problemLoesen");
