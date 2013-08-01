@@ -25,7 +25,7 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import de.thkwalter.jsf.JSFAusnahme;
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse berechnet aus drei Punkten den Startpunkt für das Ausgleichsproblem. 
@@ -73,10 +73,20 @@ public double[] startpunktBestimmen()
    // Falls weniger als drei Messpunkte existieren, wird eine JSFAusnahme geworfen.
    if (this.messpunkte.length < 3)
       {
-      String fehlermeldung = "Um den Startpunkt berechnen zu können, werden mindestens drei Messpunkte benötigt. " +
-         "Es stehen jedoch nur " + this.messpunkte.length + "zur Verfügung.";
+      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+      String fehlermeldung = "Es existieren nur " + this.messpunkte.length + " Messpunkte!";
+      Startpunktbestimmung.logger.severe(fehlermeldung);
       
-      throw new JSFAusnahme(fehlermeldung, "mindestens drei Messpunkte benötigt werden");
+      // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+      String jsfMeldung = "Um einen Kreis berechnen zu können, werden mindestens drei Messpunkte benötigt. " +
+         "Es stehen jedoch nur " + this.messpunkte.length + " Messpunkte zur Verfügung! " +
+         "Bitte fügen Sie weitere Messpunkte hinzu.";
+      ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+      
+      // Das vorzeitige Verlassen dieser Methode wird protokolliert.
+      Startpunktbestimmung.logger.throwing("Startpunktbestimmung", "startpunktBestimmen", applicationRuntimeException);
+      
+      throw applicationRuntimeException;
       }
    
    // Die Felder für die Koeffizientenmatrix und die Inhomogenität werden definiert.

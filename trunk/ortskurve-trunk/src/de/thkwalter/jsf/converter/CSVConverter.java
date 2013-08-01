@@ -101,17 +101,22 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
    // Falls eine Ausnahme geworfen worden ist, wird diese behandelt.
    catch (Exception exception)
       {
-      // Die Fehlermeldung wird erstellt und protokolliert.
-      String fehlermeldung = "Die eingegebene Zeichenkette ("+ eingabe 
-         + ") besitzt nicht das richtige Format! Fehlertext: " + exception.getMessage();
+      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+      String fehlermeldung = "Die eingegebene Zeichenkette ("+ eingabe + ") besitzt nicht das richtige Format!";
       CSVConverter.logger.log(Level.SEVERE, fehlermeldung);
       
-      // Eine Fehlermeldung für die Oberfläche wird erstellt.
-      facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-          "die Messpunkte nicht im richtigen Format eingegeben worden sind", exception.getMessage()));
+      // Die Meldung für die Oberfläche und eine Ausnahme werden erzeugt und mit der Fehlermeldung für den Benutzer
+      // initialisiert.
+      String jsfMeldung = "Die Messpunkte wurden nicht im korrekten Format eingegeben! " +
+         "Bitte korrigieren Sie das Format ihrer Eingabe.";
+      facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, jsfMeldung, ""));
+      ConverterException converterException = new ConverterException(jsfMeldung);
       
-      // Eine ConverterException wird geworfen.
-      throw new ConverterException(exception);
+      // Das vorzeitige Verlassen dieser Methode wird protokolliert.
+      CSVConverter.logger.throwing("CSVConverter", "getAsObject", converterException);
+      
+      // Die ConverterException wird geworfen.
+      throw converterException;
       }
    
    CSVConverter.logger.exiting("CSVConverter", "getAsObject");

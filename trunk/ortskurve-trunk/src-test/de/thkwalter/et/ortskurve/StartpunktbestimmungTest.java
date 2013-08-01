@@ -23,7 +23,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.thkwalter.jsf.JSFAusnahme;
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link Startpunktbestimmung}.
@@ -90,10 +90,10 @@ public void testStartpunktbestimmung() throws SecurityException, NoSuchFieldExce
 
 /**
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
- * @throws JSFAusnahme 
+ * @throws ApplicationRuntimeException 
  */
 @Test
-public void testStartpunktBestimmen1() throws JSFAusnahme
+public void testStartpunktBestimmen1() throws ApplicationRuntimeException
    {
    // Der Startpunkt wird berechnet.
    double[] startpunkt = this.startpunktbestimmung.startpunktBestimmen();
@@ -109,10 +109,10 @@ public void testStartpunktBestimmen1() throws JSFAusnahme
 /**
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
  * 
- * @throws JSFAusnahme 
+ * @throws ApplicationRuntimeException 
  */
-@Test(expected=JSFAusnahme.class)
-public void testStartpunktBestimmen2() throws JSFAusnahme
+@Test(expected=ApplicationRuntimeException.class)
+public void testStartpunktBestimmen2() throws ApplicationRuntimeException
    {   
    // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
    Startpunktbestimmung lokaleStartpunktbestimmung = 
