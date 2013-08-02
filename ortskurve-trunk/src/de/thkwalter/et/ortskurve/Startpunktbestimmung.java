@@ -81,7 +81,7 @@ public double[] startpunktBestimmen()
       // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
       String jsfMeldung = "Um einen Kreis berechnen zu können, werden mindestens drei Messpunkte benötigt. " +
          "Es stehen jedoch nur " + this.messpunkte.length + " Messpunkte zur Verfügung! " +
-         "Bitte fügen Sie weitere Messpunkte hinzu.";
+         "Fügen Sie bitte weitere Messpunkte hinzu.";
       ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
       
       // Das vorzeitige Verlassen dieser Methode wird protokolliert.
@@ -142,7 +142,7 @@ public double[] startpunktBestimmen()
       
       // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
       String jsfMeldung = "Eine von den ersten drei Messpunkten abhängige Matrix ist singuär. Der " +
-         "Berechnungsalgorithmus benötigt jedoch eine reguläre Matrix! Bitte sortieren Sie ihre eingegebenen " +
+         "Berechnungsalgorithmus benötigt jedoch eine reguläre Matrix! Sortieren Sie bitte die eingegebenen " +
          "Messpunkte so um, dass in den ersten drei Zeilen andere Werte stehen.";
       ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
       

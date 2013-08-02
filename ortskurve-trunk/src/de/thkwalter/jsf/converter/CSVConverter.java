@@ -108,7 +108,7 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
       // Die Meldung für die Oberfläche und eine Ausnahme werden erzeugt und mit der Fehlermeldung für den Benutzer
       // initialisiert.
       String jsfMeldung = "Die Messpunkte wurden nicht im korrekten Format eingegeben! " +
-         "Bitte korrigieren Sie das Format ihrer Eingabe.";
+         "Korrigieren Sie bitte das Format ihrer Eingabe.";
       facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, jsfMeldung, ""));
       ConverterException converterException = new ConverterException(jsfMeldung);
       

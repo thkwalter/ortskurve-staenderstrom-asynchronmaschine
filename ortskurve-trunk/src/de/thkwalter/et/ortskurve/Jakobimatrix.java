@@ -97,7 +97,7 @@ public double[][] value(double[] kreisparameter)
          
          // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
          String jsfMeldung = "Der Punkt " + this.messpunkte[i].toString() + 
-            " scheint in der Nähe des Kreismittelpunktes zu liegen! Bitte überprüfen Sie diesen Punkt.";
+            " scheint in der Nähe des Kreismittelpunktes zu liegen! Überprüfen Sie bitte diesen Punkt.";
          ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
          
          // Das vorzeitige Verlassen dieser Methode wird protokolliert.
