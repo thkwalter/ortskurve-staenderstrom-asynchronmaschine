@@ -24,6 +24,7 @@ import org.apache.commons.math3.linear.DecompositionSolver;
 import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import org.apache.commons.math3.linear.SingularMatrixException;
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
@@ -125,8 +126,31 @@ public double[] startpunktBestimmen()
    // Der Lösungsalgorithmus für das lineare Gleichungssystem wird erzeugt.
    DecompositionSolver alorithmus = new LUDecomposition(koeffizientenmatrix).getSolver();
    
+   
    // Das inhomogene Gleichungssystem wird gelöst.
-   RealVector loesung = alorithmus.solve(inhomogenitaetsvektor);
+   RealVector loesung = null;
+   try
+      {
+      loesung = alorithmus.solve(inhomogenitaetsvektor);
+      }
+   catch (SingularMatrixException singularMatrixException)
+      {
+      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+      String fehlermeldung = "Die Matrix aus den Punkten " + this.messpunkte[0] + ", " + this.messpunkte[1] + " und " +
+         this.messpunkte[2] + " ist singulär.";
+      Startpunktbestimmung.logger.severe(fehlermeldung);
+      
+      // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+      String jsfMeldung = "Eine von den ersten drei Messpunkten abhängige Matrix ist singuär. Der " +
+         "Berechnungsalgorithmus benötigt jedoch eine reguläre Matrix! Bitte sortieren Sie ihre eingegebenen " +
+         "Messpunkte so um, dass in den ersten drei Zeilen andere Werte stehen.";
+      ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+      
+      // Das vorzeitige Verlassen dieser Methode wird protokolliert.
+      Startpunktbestimmung.logger.throwing("Startpunktbestimmung", "startpunktBestimmen", applicationRuntimeException);
+      
+      throw applicationRuntimeException;
+      }
    
    // Der Startpunkt wird aus der Läsung des linearen Gleichungssystems bestimmt.
    double xMittelpunkt = 0.5 * loesung.getEntry(1);
