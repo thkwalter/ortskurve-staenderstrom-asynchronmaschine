@@ -57,7 +57,7 @@ private Startpunktbestimmung startpunktbestimmung;
 public void setUp() throws Exception
    {
    // Die Messpunkte werden erzeugt.
-   this.testMesspunkte = new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0), new Vector2D(2.0, 0.0)};
+   this.testMesspunkte = new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0)};
    
    // Das Objekt, das für die Tests verwendet wird, wird erzeugt.
    this.startpunktbestimmung = new Startpunktbestimmung(this.testMesspunkte);
@@ -98,13 +98,13 @@ public void testStartpunktBestimmen1() throws ApplicationRuntimeException
    // Der Startpunkt wird berechnet.
    double[] startpunkt = this.startpunktbestimmung.startpunktBestimmen();
    
-   assertEquals(1.0, startpunkt[0], 1.0/1000);
-   assertEquals(0.0, startpunkt[1], 0.0);
-   assertEquals(1.0, startpunkt[2], 1.0/1000);
+   assertEquals(2.0, startpunkt[0], 2.0/1000);
+   assertEquals(0.0, startpunkt[1], 2.0/1000);
+   assertEquals(2.0, startpunkt[2], 2.0/1000);
    }
 
-//=====================================================================================================================
-//=====================================================================================================================
+// =====================================================================================================================
+// =====================================================================================================================
 
 /**
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
@@ -117,6 +117,26 @@ public void testStartpunktBestimmen2() throws ApplicationRuntimeException
    // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
    Startpunktbestimmung lokaleStartpunktbestimmung = 
       new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0)});
+   
+   // Es wird getestet, ob eine BehandelbareAusnahme geworfen wird, wenn ein Messpunkt und der Mittelpunkt 
+   // übereinstimmen.
+   lokaleStartpunktbestimmung.startpunktBestimmen();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
+ * 
+ * @throws ApplicationRuntimeException 
+ */
+@Test(expected=ApplicationRuntimeException.class)
+public void testStartpunktBestimmen3() throws ApplicationRuntimeException
+   {   
+   // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
+   Startpunktbestimmung lokaleStartpunktbestimmung = 
+      new Startpunktbestimmung(new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(2.0, 0.0), new Vector2D(3.0, 0.0)});
    
    // Es wird getestet, ob eine BehandelbareAusnahme geworfen wird, wenn ein Messpunkt und der Mittelpunkt 
    // übereinstimmen.

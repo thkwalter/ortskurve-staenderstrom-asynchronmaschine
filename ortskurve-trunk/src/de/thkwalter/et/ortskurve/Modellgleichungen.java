@@ -78,15 +78,13 @@ public double[] value(double[] kreisparameter)
    // Dieses Feld enthält für jeden Betriebspunkt den Abstand des entsprechenden Messpunktes von der Ortskurve.
    double[] abstaende = new double[this.messpunkte.length]; 
    
-   // Die Abstände der Stromkoordinaten vom Kreis wird für die verschiedenen Betriebspunkte berechnet.
+   // Die Abstände der Messpunkte vom Kreis werden berechnet und protokolliert.
    for (int i = 0; i < this.messpunkte.length; i++)
       {
       abstaende[i] = this.messpunkte[i].distance(mittelpunkt) - radius;
+      
+      Modellgleichungen.logger.finest("Abstand Messpunkt Nr. " + i + " vom Mittelpunkt: " + abstaende[0]);
       }
-   
-   Modellgleichungen.logger.finest("x-Abstand: " + abstaende[0]);
-   Modellgleichungen.logger.finest("y-Abstand: " + abstaende[1]);
-   Modellgleichungen.logger.finest("r-Abstand: " + abstaende[2]);
    
    Modellgleichungen.logger.exiting("Modellgleichungen", "value");
    
