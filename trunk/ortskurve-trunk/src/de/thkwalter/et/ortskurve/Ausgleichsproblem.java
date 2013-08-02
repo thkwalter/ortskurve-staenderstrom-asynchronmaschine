@@ -23,6 +23,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.optim.InitialGuess;
 import org.apache.commons.math3.optim.MaxEval;
@@ -136,9 +137,29 @@ public String problemLoesen()
          Jakobimatrix jakobiMatrix = new Jakobimatrix(this.messpunkte);
          
          // Das Ausgleichsproblem wird gelöst, wobei höchstens 200 Iterationsschritte durchgeführt werden.
-         PointVectorValuePair endParameter = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
-            new  InitialGuess(startpunkt), new MaxEval(200), new ModelFunction(strommesswerte), 
-            new ModelFunctionJacobian(jakobiMatrix));
+         PointVectorValuePair endParameter = null;
+         try
+            {
+            endParameter = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
+               new  InitialGuess(startpunkt), new MaxEval(200), new ModelFunction(strommesswerte), 
+               new ModelFunctionJacobian(jakobiMatrix));
+            }
+         catch (TooManyEvaluationsException e)
+            {
+            // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+            String fehlermeldung = "Der Gauss-Newton-Algorithmus konvergiert nicht!";
+            Ausgleichsproblem.logger.severe(fehlermeldung);
+            
+            // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+            String jsfMeldung = "Der Gauss-Newton-Algorithmus zur Berechnung der Ortskurve konvergiert nicht! " +
+               "Überprüfen Sie bitte, ob die eingegebenen Punkte annähernd auf einem Kreis liegen.";
+            ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+            
+            // Das vorzeitige Verlassen dieser Methode wird protokolliert.
+            Ausgleichsproblem.logger.throwing("Ausgleichsproblem", "problemLoesen", applicationRuntimeException);
+            
+            throw applicationRuntimeException;
+            }
          
          // Die Lösung wird gelesen.
          this.mx = endParameter.getPoint()[0];
