@@ -155,7 +155,7 @@ public double[] startpunktBestimmen()
    // Der Startpunkt wird aus der Läsung des linearen Gleichungssystems bestimmt.
    double xMittelpunkt = 0.5 * loesung.getEntry(1);
    double yMittelpunkt = 0.5 * loesung.getEntry(2);
-   double radius = xMittelpunkt * xMittelpunkt + yMittelpunkt * yMittelpunkt - loesung.getEntry(0);
+   double radius = Math.sqrt(xMittelpunkt * xMittelpunkt + yMittelpunkt * yMittelpunkt - loesung.getEntry(0));
    
    // Der Startpunkt wird protokolliert.
    Startpunktbestimmung.logger.fine("x: " + xMittelpunkt);

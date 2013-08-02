@@ -84,6 +84,10 @@ public double[] value(double[] kreisparameter)
       abstaende[i] = this.messpunkte[i].distance(mittelpunkt) - radius;
       }
    
+   Modellgleichungen.logger.finest("x-Abstand: " + abstaende[0]);
+   Modellgleichungen.logger.finest("y-Abstand: " + abstaende[1]);
+   Modellgleichungen.logger.finest("r-Abstand: " + abstaende[2]);
+   
    Modellgleichungen.logger.exiting("Modellgleichungen", "value");
    
    return abstaende;
