@@ -1,0 +1,3 @@
+ # [ImpressumUeberpruefen Impressum überprüfen]
+ # [NutzungsbedingungenUeberpruefen Nutzungsbedingungen überprüfen]
+ # [LinksAufDieBerechnungUeberpruefen Links auf die Berechnung überprüfen]
