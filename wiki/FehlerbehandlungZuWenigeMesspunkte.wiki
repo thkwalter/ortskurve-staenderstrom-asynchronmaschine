@@ -1,0 +1,8 @@
+=Fehlerbehandlung bei einer Eingabe von zu wenigen Messpunkten überprüfen=
+
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Zwei Messpunkte eingeben und den Knopf "Ortskurve berechnen" drücken -> Eine Fehlermeldung wird angezeigt
+ # Die Fehlermeldung kontrollieren -> Die Fehlermeldung ist korrekt.
+
+ 
