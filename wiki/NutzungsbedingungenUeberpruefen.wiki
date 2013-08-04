@@ -1,0 +1,5 @@
+=Nutzungsbedingungen überprüfen=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Den Link Nutzungsbedingungen drücken -> Die Nutzungsbedingungen werden angezeigt
+ # Die Nutzungsbedingungen überprüfen -> Die Nutzungsbedingungen sind korrekt
