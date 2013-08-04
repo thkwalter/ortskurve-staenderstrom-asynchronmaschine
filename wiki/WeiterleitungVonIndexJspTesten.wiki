@@ -1,7 +1,7 @@
 =Weiterleitung durch die index.jsp testen=
 
 
- # Die Seite http://192.168.178.183:8888 aufrufen -> Die Berechnungsseite wird angezeigt
- # Die Seite http://192.168.178.183:8888/ aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Seite http://ortskurve.appspot.com/ aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
 
  
