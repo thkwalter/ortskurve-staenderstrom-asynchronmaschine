@@ -1,1 +1,5 @@
-=Testausführung=
+=Impressum überprüfen=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Den Link Impressum drücken -> Das Impressum wird angezeigt
+ # Das Impressum überprüfen -> Das Impressum ist korrekt
