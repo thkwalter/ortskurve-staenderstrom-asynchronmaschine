@@ -1,0 +1,6 @@
+=Fehlerbehandlung bei Punkt in der Nähe des Mittelpunkts überprüfen=
+
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte (-1, 0), (0, 1), (1, 0) und (0, 0.005) eingeben und den Knopf "Ortskurve berechnen" drücken -> Eine Fehlermeldung wird angezeigt
+ # Die Fehlermeldung kontrollieren -> Die Fehlermeldung ist korrekt
