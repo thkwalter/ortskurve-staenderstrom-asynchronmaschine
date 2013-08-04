@@ -1,0 +1,5 @@
+=Berechnung der Ortskurve mit acht Punkten überprüfen=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte (-11, 0), (-8, 6), (0, 9), (6, 8), (11, 0), (8, -6), (0, -9) und (-6, -8) eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
+ # Das Resultat kontrollieren -> Mittelpunkt (0, 0) und Radius 10
