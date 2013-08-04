@@ -1,0 +1,8 @@
+=Fehlerbehandlung bei Auftreten einer singulären Matrix überprüfen=
+
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte (1, 0), (2, 0) und (3, 0) eingeben und den Knopf "Ortskurve berechnen" drücken -> Eine Fehlermeldung wird angezeigt
+ # Die Fehlermeldung kontrollieren -> Die Fehlermeldung ist korrekt
+
+ 
