@@ -15,9 +15,12 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
@@ -74,7 +77,7 @@ public void setUp() throws Exception
  * @throws IllegalArgumentException 
  */
 @Test
-public void testStartpunktbestimmung() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException
+public void testStartpunktbestimmung1() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException
    {
    // Der Wert des Attributs messwerte wird gelesen.   
    Field messpunkteFeld = Startpunktbestimmung.class.getDeclaredField("messpunkte");
@@ -83,6 +86,36 @@ public void testStartpunktbestimmung() throws SecurityException, NoSuchFieldExce
    
    // Die Messpunkte werden überprüft.
    assertArrayEquals(messpunkte, this.testMesspunkte);  
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
+ * 
+ * @throws ApplicationRuntimeException 
+ */
+@Test(expected=ApplicationRuntimeException.class)
+public void testStartpunktbestimmung2() throws ApplicationRuntimeException
+   {   
+   // Es wird überprüft, ob der Konstruktor eine Ausnahme wirft, wenn weniger als drei Messpunkte übergeben werden.
+   new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0)});
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
+ * 
+ * @throws ApplicationRuntimeException 
+ */
+@Test(expected=ApplicationRuntimeException.class)
+public void testStartpunktbestimmung3() throws ApplicationRuntimeException
+   {   
+   // Es wird überprüft, ob der Konstruktor eine Ausnahme wirft, wenn null übergeben wird.
+   new Startpunktbestimmung(null);
    }
 
 // =====================================================================================================================
@@ -112,11 +145,11 @@ public void testStartpunktBestimmen1() throws ApplicationRuntimeException
  * @throws ApplicationRuntimeException 
  */
 @Test(expected=ApplicationRuntimeException.class)
-public void testStartpunktBestimmen2() throws ApplicationRuntimeException
+public void testStartpunktBestimmen4() throws ApplicationRuntimeException
    {   
    // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
    Startpunktbestimmung lokaleStartpunktbestimmung = 
-      new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0)});
+      new Startpunktbestimmung(new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(2.0, 0.0), new Vector2D(3.0, 0.0)});
    
    // Es wird getestet, ob eine BehandelbareAusnahme geworfen wird, wenn ein Messpunkt und der Mittelpunkt 
    // übereinstimmen.
@@ -127,19 +160,75 @@ public void testStartpunktBestimmen2() throws ApplicationRuntimeException
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
+ * Test für die Methode {@link Startpunktbestimmung#mittlerenMesspunktHinzufuegen(double)}.
  * 
- * @throws ApplicationRuntimeException 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ * @throws NoSuchFieldException 
  */
-@Test(expected=ApplicationRuntimeException.class)
-public void testStartpunktBestimmen3() throws ApplicationRuntimeException
-   {   
+@Test
+public void testMittlerenMesspunktHinzufuegen1() throws SecurityException, NoSuchMethodException, 
+   IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
+   {
+   // Der Messpunkt, der von der Methode gefunden werden soll.
+   Vector2D mittlererMesspunkt = new Vector2D(0.0, 0.1);
+   
    // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
    Startpunktbestimmung lokaleStartpunktbestimmung = 
-      new Startpunktbestimmung(new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(2.0, 0.0), new Vector2D(3.0, 0.0)});
+      new Startpunktbestimmung(new Vector2D[]{new Vector2D(1.0, 1.0), new Vector2D(1.0, -1.0), mittlererMesspunkt});
    
-   // Es wird getestet, ob eine BehandelbareAusnahme geworfen wird, wenn ein Messpunkt und der Mittelpunkt 
-   // übereinstimmen.
-   lokaleStartpunktbestimmung.startpunktBestimmen();
+   // Die zu testende Methode wird aufgerufen
+   Method methode = Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktHinzufuegen", double.class);
+   methode.setAccessible(true);
+   methode.invoke(lokaleStartpunktbestimmung, 0.0);
+   
+   // Das Feld der Messpunkte, die zur Startpunktbestimmung verwendet werden, wird gelesen.
+   Field feld = Startpunktbestimmung.class.getDeclaredField("messpunkteStartpunktbestimmung");
+   feld.setAccessible(true);
+   Vector2D[] messpunkteStartpunktbestimmung = (Vector2D[]) feld.get(lokaleStartpunktbestimmung);
+   
+   // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
+   assertEquals(mittlererMesspunkt, messpunkteStartpunktbestimmung[2]);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#mittlerenMesspunktHinzufuegen(double)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ * @throws NoSuchFieldException 
+ */
+@Test
+public void testMittlerenMesspunktHinzufuegen2() throws SecurityException, NoSuchMethodException, 
+   IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
+   {
+   // Der Messpunkt, der von der Methode gefunden werden soll.
+   Vector2D mittlererMesspunkt = new Vector2D(0.0, -0.1);
+   
+   // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
+   Startpunktbestimmung lokaleStartpunktbestimmung = 
+      new Startpunktbestimmung(new Vector2D[]{mittlererMesspunkt, new Vector2D(1.0, 1.0), new Vector2D(1.0, -1.0)});
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktHinzufuegen", double.class);
+   methode.setAccessible(true);
+   methode.invoke(lokaleStartpunktbestimmung, 0.0);
+   
+   // Das Feld der Messpunkte, die zur Startpunktbestimmung verwendet werden, wird gelesen.
+   Field feld = Startpunktbestimmung.class.getDeclaredField("messpunkteStartpunktbestimmung");
+   feld.setAccessible(true);
+   Vector2D[] messpunkteStartpunktbestimmung = (Vector2D[]) feld.get(lokaleStartpunktbestimmung);
+   
+   // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
+   assertEquals(mittlererMesspunkt, messpunkteStartpunktbestimmung[2]);
    }
 }
