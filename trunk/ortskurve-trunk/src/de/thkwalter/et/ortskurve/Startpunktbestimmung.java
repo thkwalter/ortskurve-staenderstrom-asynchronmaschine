@@ -40,6 +40,11 @@ public class Startpunktbestimmung
  */
 private Vector2D[] messpunkte;
 
+/**
+ * Dieses Feld enthält die Messpunkte, welche für die Startpunktbestimmung benutzt werden.
+ */
+private Vector2D[] messpunkteStartpunktbestimmung;
+
 /*
  * Der Logger dieser Klasse.
  */
@@ -49,13 +54,45 @@ private static Logger logger = Logger.getLogger(Startpunktbestimmung.class.getNa
 // =====================================================================================================================
 
 /**
- * Dieser Konstruktor initialisiert das Feld der Messpunkte und berechnet den Startpunkt.
+ * Dieser Konstruktor bestimmt aus den Messpunkten den Startpunkt für die nichtlineare Ausgleichsrechnung.
  * 
- * @param messpunkte Das Feld der Messpunkte.
+ * @param messpunkte Das Feld der Messpunkte
  */
 public Startpunktbestimmung(Vector2D[] messpunkte)
    {
+   // Der Einsprung in die Methode wird protokolliert.
+   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "Startpunktbestimmung");
+   
+   // Falls weniger als drei Messpunkte existieren, wird eine JSFAusnahme geworfen.
+   if (messpunkte == null || messpunkte.length < 3)
+      {
+      // Die Anzahl der Messpunkte wird bestimmt.
+      int anzahlMesspunkte = messpunkte == null ? 0 : messpunkte.length;
+      
+      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+      String fehlermeldung = "Es existieren nur " + anzahlMesspunkte + " Messpunkte!";
+      Startpunktbestimmung.logger.severe(fehlermeldung);
+      
+      // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+      String jsfMeldung = "Um einen Kreis berechnen zu können, werden mindestens drei Messpunkte benötigt. " +
+         "Es stehen jedoch nur " + anzahlMesspunkte + " Messpunkte zur Verfügung! " +
+         "Fügen Sie bitte weitere Messpunkte hinzu.";
+      ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+      
+      // Das vorzeitige Verlassen dieser Methode wird protokolliert.
+      Startpunktbestimmung.logger.throwing("Startpunktbestimmung", "Startpunktbestimmung", applicationRuntimeException);
+      
+      throw applicationRuntimeException;
+      }
+   
+   // Die Messpunkte werden initialisiert.
    this.messpunkte = messpunkte;
+   
+   // Das Feld der Messpunkte, welche für die Startpunktbestimmung verwendet werden, wird initialisiert.
+   this.messpunkteStartpunktbestimmung = new Vector2D[3];
+  
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "Startpunktbestimmung");
    }
 
 // =====================================================================================================================
@@ -70,25 +107,6 @@ public Startpunktbestimmung(Vector2D[] messpunkte)
 public double[] startpunktBestimmen()
    {
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "startpunktBestimmen");
-   
-   // Falls weniger als drei Messpunkte existieren, wird eine JSFAusnahme geworfen.
-   if (this.messpunkte.length < 3)
-      {
-      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
-      String fehlermeldung = "Es existieren nur " + this.messpunkte.length + " Messpunkte!";
-      Startpunktbestimmung.logger.severe(fehlermeldung);
-      
-      // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
-      String jsfMeldung = "Um einen Kreis berechnen zu können, werden mindestens drei Messpunkte benötigt. " +
-         "Es stehen jedoch nur " + this.messpunkte.length + " Messpunkte zur Verfügung! " +
-         "Fügen Sie bitte weitere Messpunkte hinzu.";
-      ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
-      
-      // Das vorzeitige Verlassen dieser Methode wird protokolliert.
-      Startpunktbestimmung.logger.throwing("Startpunktbestimmung", "startpunktBestimmen", applicationRuntimeException);
-      
-      throw applicationRuntimeException;
-      }
    
    // Die Felder für die Koeffizientenmatrix und die Inhomogenität werden definiert.
    double[][] koeffizienten = new double[3][];
@@ -125,7 +143,6 @@ public double[] startpunktBestimmen()
    
    // Der Lösungsalgorithmus für das lineare Gleichungssystem wird erzeugt.
    DecompositionSolver alorithmus = new LUDecomposition(koeffizientenmatrix).getSolver();
-   
    
    // Das inhomogene Gleichungssystem wird gelöst.
    RealVector loesung = null;
@@ -166,5 +183,129 @@ public double[] startpunktBestimmen()
    
    // Der Startpunkt wird zurückgegeben.
    return new double[]{xMittelpunkt, yMittelpunkt, radius};
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode fügt die beiden Messpunkte mit der größten bzw. kleinsten y-Komponente zu dem Feld der Messpunkte
+ * hinzu, die zur Startpunktbestimmung verwendet werden.
+ */
+private void minUndMaxMesspunktHinzufuegen()
+   {
+   // Der Einsprung in die Methode wird protokolliert.
+   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "minUndMaxMesspunktHinzufuegen");
+   
+   // Die gesuchten Messpunkte.
+   Vector2D messpunktMinRealteil = null;
+   Vector2D messpunktMaxRealteil = null;
+   
+   // Die y-Komponente eines Messwertes.
+   double realteil = Double.NaN;
+   
+   // Der minimale und der maximale Wert der y-Komponente.
+   double minRealteil = Double.MAX_VALUE;
+   double maxRealteil = Double.MIN_VALUE;
+   
+   // Eine Schleife über alle Messpunkte.
+   for (Vector2D messpunkt : this.messpunkte)
+      {
+      // Die y-Komponente des Messpunktes wird gelesen.
+      realteil = messpunkt.getY();
+      
+      // Falls die y-Komponente des Messpunkts größer als die bisherige maximale y-Komponente ist, ...
+      if (realteil > maxRealteil)
+         {
+         // Die maximale y-Komponente eines Messpunkts wird aktualisiert.  
+         maxRealteil = realteil;
+         
+         // Der Messpunkt mit der maximalen y-Komponente wird aktualisiert.
+         messpunktMaxRealteil = messpunkt;
+         }
+      
+      
+      // Falls die y-Komponente des Messpunkts kleiner als die bisherige minimale y-Komponente ist, ...
+      if (realteil < minRealteil)
+         {
+         // Die minimale y-Komponente eines Messpunkts wird aktualisiert.
+         minRealteil = realteil;
+         
+         // Der Messpunkt mit der minimalen y-Komponente wird aktualisiert.
+         messpunktMinRealteil = messpunkt;
+         }
+      }
+   
+   // Die gesuchten Messpunkte werden protokolliert.
+   Startpunktbestimmung.logger.finer("Messpunkt mit maximalem Realteil: " + messpunktMaxRealteil.toString());
+   Startpunktbestimmung.logger.finer("Messpunkt mit minimalem Realteil: " + messpunktMinRealteil.toString());
+   
+   // Der gesuchten Messpunkte werden zu dem Feld der Messpunkte, welche für die Startpunktbestimmung benutzt werden, 
+   // hinzugefügt.
+   this.messpunkteStartpunktbestimmung[0] = messpunktMaxRealteil;
+   this.messpunkteStartpunktbestimmung[1] = messpunktMinRealteil;
+   
+   // Der Mittelwert des Wertebereichs der y-Komponenten aller Messpunkte wird bestimmt.
+   double mittelwert = 0.5 * (minRealteil + maxRealteil);
+   
+   // Der Messpunkt, dessen y-Komponente am nähesten zum Mittelwert des Wertebereichs der y-Komponenten aller 
+   // Messpunkte liegt, wird bestimmt. Dieser Messpunkt wird dann zu dem Feld der Messpunkte, die zur 
+   // Startpunktbestimmung verwendet werden, hinzugefügt.
+   this.mittlerenMesspunktHinzufuegen(mittelwert);
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "minUndMaxMesspunktHinzufuegen");
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode bestimmt den Messpunkt, dessen y-Komponente am nähesten zum Mittelwert des Wertebereichs der 
+ * y-Komponenten aller Messpunkte liegt. Dieser Messpunkt wird dann zu dem Feld der Messpunkte, die zur 
+ * Startpunktbestimmung verwendet werden, hinzugefügt.
+ * 
+ * @param mittelwert Der Mittelwert des Wertebereichs der y-Komponenten aller Messpunkte
+ */
+private void mittlerenMesspunktHinzufuegen(double mittelwert)
+   {
+   // Der Einsprung in die Methode wird protokolliert.
+   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "mittlerenMesspunktBestimmen");
+   
+   // Der gesuchte Messpunkt.
+   Vector2D messpunktMittlererRealteil = null;
+   
+   // Der minimale Abstand eines Messpunkts zum Mittelwert.
+   double minAbstandZumMittelwert = Double.MAX_VALUE;
+   
+   // Der Abstand eines Messpunkts zum Mittelwert.
+   double abstandZumMittelwert = Double.NaN;
+   
+   // Eine Schleife über alle Messpunkte.
+   for (Vector2D messpunkt : this.messpunkte)
+      {
+      // Der Abstand des aktuellen Messpunkts zum Mittelwert wird berechnet.
+      abstandZumMittelwert = Math.abs(messpunkt.getY() - mittelwert);
+      
+      // Falls der Abstand des aktuellen Messpunkts zum Mittelwert kleiner als das bisherige Minimum ist, ...
+      if (abstandZumMittelwert < minAbstandZumMittelwert)
+         {
+         // Der minimale Abstand eines Messpunkts zum Mittelwert wird aktualisiert.
+         minAbstandZumMittelwert = abstandZumMittelwert;
+         
+         // Der gesuchte Punkt wird aktualisiert.
+         messpunktMittlererRealteil = messpunkt;
+         }
+      }
+   
+   // Der gesuchte Messpunkt wird protokolliert.
+   Startpunktbestimmung.logger.finer("Messpunkt mit mittlerem Realteil: " + messpunktMittlererRealteil.toString());
+   
+   // Der gesuchte Messpunkt wird zu dem Feld der Messpunkte, welche für die Startpunktbestimmung benutzt werden, 
+   // hinzugefügt.
+   this.messpunkteStartpunktbestimmung[2] = messpunktMittlererRealteil;
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "mittlerenMesspunktBestimmen");
    }
 }
