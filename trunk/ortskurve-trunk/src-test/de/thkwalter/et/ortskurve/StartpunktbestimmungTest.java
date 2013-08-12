@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
@@ -271,5 +272,77 @@ public void testMesspunkteAuswaehlen() throws SecurityException, NoSuchMethodExc
    assertEquals(messpunkte[0], messpunkteZurStartpunktbestimmung[0]);
    assertEquals(messpunkte[1], messpunkteZurStartpunktbestimmung[1]);
    assertEquals(messpunkte[2], messpunkteZurStartpunktbestimmung[2]);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#maxMesspunktBestimmen(ArrayList)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testMaxMesspunktBestimmen1() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException 
+   {
+   // Die Testdaten werden erzeugt.
+   Vector2D messpunkt1 = new Vector2D(1.0, 0.0);
+   Vector2D messpunkt2 = new Vector2D(2.0, 0.0);
+   ArrayList<XKomponenteMesspunkt> xListe = new ArrayList<XKomponenteMesspunkt>();
+   xListe.add(new XKomponenteMesspunkt(messpunkt1));
+   xListe.add(new XKomponenteMesspunkt(messpunkt2));
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = Startpunktbestimmung.class.getDeclaredMethod("maxMesspunktBestimmen", ArrayList.class);
+   methode.setAccessible(true);
+   Vector2D maxXMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
+   assertEquals(messpunkt2, maxXMesspunkt);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt aus der Liste entfernt worden ist.
+   assertEquals(1, xListe.size());
+   assertEquals(messpunkt1, xListe.get(0).getMesspunkt());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#maxMesspunktBestimmen(ArrayList)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testMaxMesspunktBestimmen2() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException 
+   {
+   // Die Testdaten werden erzeugt.
+   Vector2D messpunkt1 = new Vector2D(0.0, 2.0);
+   Vector2D messpunkt2 = new Vector2D(0.0, 1.0);
+   ArrayList<XKomponenteMesspunkt> xListe = new ArrayList<XKomponenteMesspunkt>();
+   xListe.add(new XKomponenteMesspunkt(messpunkt1));
+   xListe.add(new XKomponenteMesspunkt(messpunkt2));
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = Startpunktbestimmung.class.getDeclaredMethod("maxMesspunktBestimmen", ArrayList.class);
+   methode.setAccessible(true);
+   Vector2D maxXMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
+   assertEquals(messpunkt1, maxXMesspunkt);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt aus der Liste entfernt worden ist.
+   assertEquals(1, xListe.size());
+   assertEquals(messpunkt2, xListe.get(0).getMesspunkt());
    }
 }
