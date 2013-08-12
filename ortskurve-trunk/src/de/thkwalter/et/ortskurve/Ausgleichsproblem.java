@@ -93,7 +93,7 @@ public String problemLoesen()
       {
       // Die Startparameter werden bestimmt.
       Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(this.messpunkte);
-      double[] startpunkt = startpunktbestimmung.startpunktBestimmen();
+      double[] startpunkt = startpunktbestimmung.getStartpunkt();
       
       // Falls nur drei Messpunkte eingegeben worden sind, entspricht der Startpunkt der Lösung.
       if (this.messpunkte.length == 3)
