@@ -36,9 +36,10 @@ import de.thkwalter.jsf.ApplicationRuntimeException;
 public class Startpunktbestimmung
 {
 /**
- * Dieses Feld enthält die Messpunkte.
+ * Der berechnete Startpunkt, ein Feld aus drei double-Elementen. Das erste Element ist die x-Komponente des 
+ * Mittelpunkts, das zweite Element die y-Komponente des Mittelpunkts, das dritte Element der Radius.
  */
-private Vector2D[] messpunkte;
+private double[] startpunkt;
 
 /*
  * Der Logger dieser Klasse.
@@ -80,11 +81,25 @@ public Startpunktbestimmung(Vector2D[] messpunkte)
       throw applicationRuntimeException;
       }
    
-   // Die Messpunkte werden initialisiert.
-   this.messpunkte = messpunkte;
+   // Die Messpunkte, die zur Startpunktbestimmung verwendet werden
+   Vector2D[] messpunkteZurStartpunktbestimmung = null;
    
-   // Die Messpunkte, die zur Startpunktbestimmung verwendet werden, werden ausgewählt.
-   this.messpunkteAuswaehlen(messpunkte);
+   // Falls nur drei Messpunkte existieren, werden diese zur Startpunktbestimmung verwendet.
+   if (messpunkte.length == 3)
+      {
+      messpunkteZurStartpunktbestimmung = messpunkte;
+      }
+   
+   // Falls mehr als drei Messpunkte existieren, wird bestimmt, welche davon zur Startpunktbestimmung verwendet werden.
+   else
+      {
+      // Die Messpunkte, die zur Startpunktbestimmung verwendet werden, werden ausgewählt.
+      messpunkteZurStartpunktbestimmung = this.messpunkteAuswaehlen(messpunkte);    
+      }
+   
+   
+   // Der Startpunkt wird bestimmt.
+   this.startpunkt = this.startpunktBestimmen(messpunkteZurStartpunktbestimmung);
   
    // Der Rücksprung aus der Methode wird protokolliert.
    Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "Startpunktbestimmung");
@@ -99,7 +114,7 @@ public Startpunktbestimmung(Vector2D[] messpunkte)
  * @return Der Startpunkt. Die erste Komponente des Feldes repräsentiert die x-Komponente des Mittelpunktes, die zweite
  * Komponente die y-Komponente, die dritte Komponente den Radius.
  */
-public double[] startpunktBestimmen()
+private double[] startpunktBestimmen(Vector2D[] messpunkteZurStartpunktbestimmung)
    {
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "startpunktBestimmen");
    
@@ -116,8 +131,8 @@ public double[] startpunktBestimmen()
    for (int i = 0; i < 3; i++)
       {
       // Die x- und y-Komponente eines Punktes werden gelesen.
-      x = this.messpunkte[i].getX();
-      y = this.messpunkte[i].getY();
+      x = messpunkteZurStartpunktbestimmung[i].getX();
+      y = messpunkteZurStartpunktbestimmung[i].getY();
       
       // Eine Zeile der Koeffizientenmatrix wird initialisiert
       zeile = new double[3];
@@ -148,8 +163,8 @@ public double[] startpunktBestimmen()
    catch (SingularMatrixException singularMatrixException)
       {
       // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
-      String fehlermeldung = "Die Matrix aus den Punkten " + this.messpunkte[0] + ", " + this.messpunkte[1] + " und " +
-         this.messpunkte[2] + " ist singulär.";
+      String fehlermeldung = "Die Matrix aus den Punkten " + messpunkteZurStartpunktbestimmung[0] + ", " + 
+         messpunkteZurStartpunktbestimmung[1] + " und " + messpunkteZurStartpunktbestimmung[2] + " ist singulär.";
       Startpunktbestimmung.logger.severe(fehlermeldung);
       
       // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
@@ -232,8 +247,8 @@ private Vector2D[] messpunkteAuswaehlen(Vector2D[] messpunkte)
       }
    
    // Die Messpunkte mit der größten und der kleinsten y-Komponente werden protokolliert.
-   Startpunktbestimmung.logger.finer("Messpunkt mit maximalem Realteil: " + messpunktMaxRealteil.toString());
-   Startpunktbestimmung.logger.finer("Messpunkt mit minimalem Realteil: " + messpunktMinRealteil.toString());
+   Startpunktbestimmung.logger.info("Messpunkt mit maximalem Realteil: " + messpunktMaxRealteil.toString());
+   Startpunktbestimmung.logger.info("Messpunkt mit minimalem Realteil: " + messpunktMinRealteil.toString());
    
    // Der Mittelwert aus der größten und der kleinsten y-Komponenten wird bestimmt.
    double mittelwert = 0.5 * (minRealteil + maxRealteil);
@@ -294,12 +309,26 @@ private Vector2D mittlerenMesspunktAuswaehlen(Vector2D[] messpunkte, double mitt
       }
    
    // Der gesuchte Messpunkt wird protokolliert.
-   Startpunktbestimmung.logger.finer("Messpunkt mit mittlerem Realteil: " + messpunktMittlererRealteil.toString());
+   Startpunktbestimmung.logger.info("Messpunkt mit mittlerem Realteil: " + messpunktMittlererRealteil.toString());
    
    // Der Rücksprung aus der Methode wird protokolliert.
    Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "mittlerenMesspunktAuswaehlen");
    
    // Der gesuchte Messpunkt wird zurückgegeben.
    return messpunktMittlererRealteil;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den berechneten Startpunkt zurück.
+ * 
+ * @return Ein Feld aus drei double-Elementen. Das erste Element ist die x-Komponente des Mittelpunkts, das zweite 
+ * Element die y-Komponente des Mittelpunkts, das dritte Element der Radius.
+ */
+public double[] getStartpunkt()
+   {
+   return this.startpunkt;
    }
 }

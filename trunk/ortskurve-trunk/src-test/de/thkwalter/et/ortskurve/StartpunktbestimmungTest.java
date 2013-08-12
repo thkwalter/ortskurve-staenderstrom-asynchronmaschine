@@ -15,10 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -70,29 +68,22 @@ public void setUp() throws Exception
 // =====================================================================================================================
 
 /**
- * Test für den Konstruktor {@link Startpunktbestimmung(Vector2D[])}.
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
+ * Test für den Konstruktor {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
+ * 
+ * @throws ApplicationRuntimeException 
  */
-@Test
-public void testStartpunktbestimmung1() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException
-   {
-   // Der Wert des Attributs messwerte wird gelesen.   
-   Field messpunkteFeld = Startpunktbestimmung.class.getDeclaredField("messpunkte");
-   messpunkteFeld.setAccessible(true);
-   Vector2D[] messpunkte = (Vector2D[]) messpunkteFeld.get(this.startpunktbestimmung);
-   
-   // Die Messpunkte werden überprüft.
-   assertArrayEquals(messpunkte, this.testMesspunkte);  
+@Test(expected=ApplicationRuntimeException.class)
+public void testStartpunktbestimmung1() throws ApplicationRuntimeException
+   {   
+   // Es wird überprüft, ob der Konstruktor eine Ausnahme wirft, wenn null übergeben wird.
+   new Startpunktbestimmung(null);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
+ * Test für den Konstruktor {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
  * 
  * @throws ApplicationRuntimeException 
  */
@@ -107,29 +98,47 @@ public void testStartpunktbestimmung2() throws ApplicationRuntimeException
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
- * 
- * @throws ApplicationRuntimeException 
+ * Test für den Konstruktor {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
  */
-@Test(expected=ApplicationRuntimeException.class)
-public void testStartpunktbestimmung3() throws ApplicationRuntimeException
-   {   
-   // Es wird überprüft, ob der Konstruktor eine Ausnahme wirft, wenn null übergeben wird.
-   new Startpunktbestimmung(null);
+@Test
+public void testStartpunktbestimmung3() 
+   {
+   // Die Startpunktbestimmung wird mit genau drei Messpunkten durchgeführt.
+   Startpunktbestimmung startpunktbestimmung = 
+      new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0)});
+   
+   // Es wird überprüft, ob der Startpunkt korrekt bestimmt worden ist.
+   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[0], 2.0/1000);
+   assertEquals(0.0, startpunktbestimmung.getStartpunkt()[1], 2.0/1000);
+   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[2], 2.0/1000); 
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
+ * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen(Vector2D[])}.
+ * 
  * @throws ApplicationRuntimeException 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test
-public void testStartpunktBestimmen1() throws ApplicationRuntimeException
+public void testStartpunktBestimmen1() throws ApplicationRuntimeException, SecurityException, NoSuchMethodException, 
+   IllegalArgumentException, IllegalAccessException, InvocationTargetException
    {
-   // Der Startpunkt wird berechnet.
-   double[] startpunkt = this.startpunktbestimmung.startpunktBestimmen();
+   Vector2D[] messpunkteZurStartpunktbestimmung = 
+      new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0)};
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = 
+      Startpunktbestimmung.class.getDeclaredMethod("startpunktBestimmen", Vector2D[].class);
+   methode.setAccessible(true);
+   double[] startpunkt = 
+      (double[]) methode.invoke(this.startpunktbestimmung, (Object) messpunkteZurStartpunktbestimmung);
    
    assertEquals(2.0, startpunkt[0], 2.0/1000);
    assertEquals(0.0, startpunkt[1], 2.0/1000);
@@ -143,16 +152,30 @@ public void testStartpunktBestimmen1() throws ApplicationRuntimeException
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen()}.
  * 
  * @throws ApplicationRuntimeException 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test(expected=ApplicationRuntimeException.class)
-public void testStartpunktBestimmen4() throws ApplicationRuntimeException
+public void testStartpunktBestimmen4() throws Throwable
    {   
-   // Das Objekt, das für diesen Test verwendet wird, wird erzeugt.
-   Startpunktbestimmung lokaleStartpunktbestimmung = 
-      new Startpunktbestimmung(new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(2.0, 0.0), new Vector2D(3.0, 0.0)});
-   
-   // Es wird getestet, ob eine ApplicationRuntimeException geworfen wird, falls die Matrix
-   lokaleStartpunktbestimmung.startpunktBestimmen();
+   Vector2D[] messpunkteZurStartpunktbestimmung = 
+      new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(2.0, 0.0), new Vector2D(3.0, 0.0)};
+         
+   // Die zu testende Methode wird aufgerufen
+   Method methode = 
+      Startpunktbestimmung.class.getDeclaredMethod("startpunktBestimmen", Vector2D[].class);
+   methode.setAccessible(true);
+   try
+      {
+      methode.invoke(this.startpunktbestimmung, (Object) messpunkteZurStartpunktbestimmung);
+      }
+   catch (InvocationTargetException invocationTargetException)
+      {
+      throw invocationTargetException.getCause();
+      }
    }
 
 // =====================================================================================================================
