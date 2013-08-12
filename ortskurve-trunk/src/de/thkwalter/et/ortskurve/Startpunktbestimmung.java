@@ -15,6 +15,7 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -208,6 +209,17 @@ private Vector2D[] messpunkteAuswaehlen(Vector2D[] messpunkte)
    // Der Einsprung in die Methode wird protokolliert.
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "messpunkteAuswaehlen");
    
+   // Zwei Listen mit den Messpunkten werden erstellt.
+   ArrayList<XKomponenteMesspunkt> xListe = new ArrayList<XKomponenteMesspunkt>();
+   ArrayList<YKomponenteMesspunkt> yListe = new ArrayList<YKomponenteMesspunkt>();
+   
+   // Die Listen werden mit den Messpunkten initialisiert.
+   for (Vector2D messpunkt : messpunkte)
+      {
+      xListe.add(new XKomponenteMesspunkt(messpunkt));
+      yListe.add(new YKomponenteMesspunkt(messpunkt));
+      }
+   
    // Die Messpunkte mit der größten und kleinsten y-Komponente.
    Vector2D messpunktMinRealteil = null;
    Vector2D messpunktMaxRealteil = null;
@@ -222,18 +234,6 @@ private Vector2D[] messpunkteAuswaehlen(Vector2D[] messpunkte)
    // Eine Schleife über alle Messpunkte.
    for (Vector2D messpunkt : messpunkte)
       {
-      // Die y-Komponente des Messpunktes wird gelesen.
-      realteil = messpunkt.getY();
-      
-      // Falls die y-Komponente des Messpunkts größer als die bisher größte y-Komponente ist, ...
-      if (realteil > maxRealteil)
-         {
-         // Die größte y-Komponente eines Messpunkts wird aktualisiert.  
-         maxRealteil = realteil;
-         
-         // Der Messpunkt mit der größten y-Komponente wird aktualisiert.
-         messpunktMaxRealteil = messpunkt;
-         }
       
       // Falls die y-Komponente des Messpunkts kleiner als die bisher kleinste y-Komponente ist, ...
       if (realteil < minRealteil)
@@ -316,6 +316,57 @@ private Vector2D mittlerenMesspunktAuswaehlen(Vector2D[] messpunkte, double mitt
    
    // Der gesuchte Messpunkt wird zurückgegeben.
    return messpunktMittlererRealteil;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode bestimmt den Messpunkt mit dem größten Wert der x- bzw. y-Komponente.
+ * 
+ * @param liste Eine Liste der x- bzw. y-Komponenten der Messpunkte
+ * 
+ * @return Der Messpunkt mit dem größten Wert der x- bzw. y-Komponente
+ */
+public Vector2D maxMesspunktBestimmen(ArrayList<XKomponenteMesspunkt> liste)
+   {
+   // Der Einsprung in die Methode wird protokolliert.
+   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "maxMesspunktBestimmen");
+   
+   // Die Messpunkte mit der größten x-Komponente.
+   XKomponenteMesspunkt maxXKomponenteMesspunkt = null;
+   
+   // Die x-Komponente eines Messwertes.
+   double xWert = Double.NaN;
+   
+   // Die größte bisher gefundene x-Komponente.
+   double maxXWert = Double.NEGATIVE_INFINITY;
+   
+   // Eine Schleife über alle Messpunkte in der Liste
+   for (XKomponenteMesspunkt xKomponenteMesspunkt : liste)
+      {
+      // Die x-Komponente des Messpunktes wird gelesen.
+      xWert = xKomponenteMesspunkt.getWert();
+      
+      // Falls die x-Komponente des Messpunkts größer als die größte bisher gefundene x-Komponente, ...
+      if (xWert > maxXWert)
+         {
+         // Die größte bisher gefundene x-Komponente wird aktualisiert.  
+         maxXWert = xWert;
+         
+         // Der Messpunkt mit der größten y-Komponente wird aktualisiert.
+         maxXKomponenteMesspunkt = xKomponenteMesspunkt;
+         } 
+      }
+   
+   // Der Messpunkt mit der größten x-Komponente wird aus der Liste entfernt.
+   liste.remove(maxXKomponenteMesspunkt);
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "maxMesspunktBestimmen");
+   
+   // Der Messpunkt mit der größten x-Komponente wird zurückgegeben.
+   return maxXKomponenteMesspunkt.getMesspunkt();
    }
 
 // =====================================================================================================================
