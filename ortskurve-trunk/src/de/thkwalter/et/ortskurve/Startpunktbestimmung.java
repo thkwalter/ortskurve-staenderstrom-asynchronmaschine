@@ -220,48 +220,30 @@ private Vector2D[] messpunkteAuswaehlen(Vector2D[] messpunkte)
       yListe.add(new YKomponenteMesspunkt(messpunkt));
       }
    
-   // Die Messpunkte mit der größten und kleinsten y-Komponente.
-   Vector2D messpunktMinRealteil = null;
-   Vector2D messpunktMaxRealteil = null;
+   // Die Messpunkte mit der größten x- bzw. der größten y-Komponente werden bestimmt.
+   Vector2D maxXMesspunkt = this.maxMesspunktBestimmen(xListe);
+   Vector2D maxYMesspunkt = this.maxMesspunktBestimmen(yListe);
    
-   // Die y-Komponente eines Messwertes.
-   double realteil = Double.NaN;
+   // Die Messpunkte mit der kleinsten x- bzw. der kleinsten y-Komponente werden bestimmt.
+   Vector2D minXMesspunkt = this.minMesspunktBestimmen(xListe);
+   Vector2D minYMesspunkt = this.minMesspunktBestimmen(yListe);
    
-   // Die kleinste und die größte y-Komponente.
-   double minRealteil = Double.POSITIVE_INFINITY;
-   double maxRealteil = Double.NEGATIVE_INFINITY;
-   
-   // Eine Schleife über alle Messpunkte.
-   for (Vector2D messpunkt : messpunkte)
-      {
-      
-      // Falls die y-Komponente des Messpunkts kleiner als die bisher kleinste y-Komponente ist, ...
-      if (realteil < minRealteil)
-         {
-         // Die kleinste y-Komponente eines Messpunkts wird aktualisiert.
-         minRealteil = realteil;
-         
-         // Der Messpunkt mit der kleinsten y-Komponente wird aktualisiert.
-         messpunktMinRealteil = messpunkt;
-         }
-      }
-   
-   // Die Messpunkte mit der größten und der kleinsten y-Komponente werden protokolliert.
-   Startpunktbestimmung.logger.info("Messpunkt mit maximalem Realteil: " + messpunktMaxRealteil.toString());
-   Startpunktbestimmung.logger.info("Messpunkt mit minimalem Realteil: " + messpunktMinRealteil.toString());
-   
-   // Der Mittelwert aus der größten und der kleinsten y-Komponenten wird bestimmt.
-   double mittelwert = 0.5 * (minRealteil + maxRealteil);
-   
-   // den Messpunkt, dessen y-Komponente (Realteil des Stroms) am nähesten zum Mittelwert aus der größten und der 
-   // kleinsten auftreteten y-Komponente liegt, wird bestimmt.
-   Vector2D mittlererMesspunkt = this.mittlerenMesspunktAuswaehlen(messpunkte, mittelwert);
-   
-   // Der Rücksprung aus der Methode wird protokolliert.
-   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "messpunkteAuswaehlen");
+//   // Die Messpunkte mit der größten und der kleinsten y-Komponente werden protokolliert.
+//   Startpunktbestimmung.logger.info("Messpunkt mit maximalem Realteil: " + messpunktMaxRealteil.toString());
+//   Startpunktbestimmung.logger.info("Messpunkt mit minimalem Realteil: " + messpunktMinRealteil.toString());
+//   
+//   // Der Mittelwert aus der größten und der kleinsten y-Komponenten wird bestimmt.
+//   double mittelwert = 0.5 * (minRealteil + maxRealteil);
+//   
+//   // den Messpunkt, dessen y-Komponente (Realteil des Stroms) am nähesten zum Mittelwert aus der größten und der 
+//   // kleinsten auftreteten y-Komponente liegt, wird bestimmt.
+//   Vector2D mittlererMesspunkt = this.mittlerenMesspunktAuswaehlen(messpunkte, mittelwert);
+//   
+//   // Der Rücksprung aus der Methode wird protokolliert.
+//   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "messpunkteAuswaehlen");
    
    // Die Messpunkte, die zur Startpunktbestimmung verwendet werden, werden zurückgegeben.
-   return new Vector2D[]{messpunktMaxRealteil, messpunktMinRealteil, mittlererMesspunkt};
+   return null; // new Vector2D[]{messpunktMaxRealteil, messpunktMinRealteil, mittlererMesspunkt};
    }
 
 // =====================================================================================================================
@@ -328,45 +310,96 @@ private Vector2D mittlerenMesspunktAuswaehlen(Vector2D[] messpunkte, double mitt
  * 
  * @return Der Messpunkt mit dem größten Wert der x- bzw. y-Komponente
  */
-public Vector2D maxMesspunktBestimmen(ArrayList<XKomponenteMesspunkt> liste)
+public Vector2D maxMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> liste)
    {
    // Der Einsprung in die Methode wird protokolliert.
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "maxMesspunktBestimmen");
    
-   // Die Messpunkte mit der größten x-Komponente.
-   XKomponenteMesspunkt maxXKomponenteMesspunkt = null;
+   // Die Messpunkte mit der größten x- bzw. y-Komponente.
+   KomponenteMesspunkt maxKomponenteMesspunkt = null;
    
-   // Die x-Komponente eines Messwertes.
-   double xWert = Double.NaN;
+   // Die x- bzw. y-Komponente eines Messwertes.
+   double wert = Double.NaN;
    
-   // Die größte bisher gefundene x-Komponente.
-   double maxXWert = Double.NEGATIVE_INFINITY;
+   // Die größte bisher gefundene x- bzw. y-Komponente.
+   double maxWert = Double.NEGATIVE_INFINITY;
    
    // Eine Schleife über alle Messpunkte in der Liste
-   for (XKomponenteMesspunkt xKomponenteMesspunkt : liste)
+   for (KomponenteMesspunkt komponenteMesspunkt : liste)
       {
-      // Die x-Komponente des Messpunktes wird gelesen.
-      xWert = xKomponenteMesspunkt.getWert();
+      // Die x- bzw. y-Komponente des Messpunktes wird gelesen.
+      wert = komponenteMesspunkt.getWert();
       
-      // Falls die x-Komponente des Messpunkts größer als die größte bisher gefundene x-Komponente, ...
-      if (xWert > maxXWert)
+      // Falls die x- bzw. y-Komponente des Messpunkts größer als die größte bisher gefundene x- bzw. y-Komponente, ...
+      if (wert > maxWert)
          {
-         // Die größte bisher gefundene x-Komponente wird aktualisiert.  
-         maxXWert = xWert;
+         // Die größte bisher gefundene x- bzw. y-Komponente wird aktualisiert.  
+         maxWert = wert;
          
-         // Der Messpunkt mit der größten y-Komponente wird aktualisiert.
-         maxXKomponenteMesspunkt = xKomponenteMesspunkt;
+         // Der Messpunkt mit der größten x- bzw. y-Komponente wird aktualisiert.
+         maxKomponenteMesspunkt = komponenteMesspunkt;
          } 
       }
    
-   // Der Messpunkt mit der größten x-Komponente wird aus der Liste entfernt.
-   liste.remove(maxXKomponenteMesspunkt);
+   // Der Messpunkt mit der größten x- bzw. y-Komponente wird aus der Liste entfernt.
+   liste.remove(maxKomponenteMesspunkt);
    
    // Der Rücksprung aus der Methode wird protokolliert.
    Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "maxMesspunktBestimmen");
    
-   // Der Messpunkt mit der größten x-Komponente wird zurückgegeben.
-   return maxXKomponenteMesspunkt.getMesspunkt();
+   // Der Messpunkt mit der größten x- bzw. y-Komponente wird zurückgegeben.
+   return maxKomponenteMesspunkt.getMesspunkt();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode bestimmt den Messpunkt mit dem kleinsten Wert der x- bzw. y-Komponente.
+ * 
+ * @param liste Eine Liste der x- bzw. y-Komponenten der Messpunkte
+ * 
+ * @return Der Messpunkt mit dem kleinstenbgh Wert der x- bzw. y-Komponente
+ */
+public Vector2D minMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> liste)
+   {
+   // Der Einsprung in die Methode wird protokolliert.
+   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "minMesspunktBestimmen");
+   
+   // Die Messpunkte mit der kleinsten x- bzw. y-Komponente.
+   KomponenteMesspunkt minKomponenteMesspunkt = null;
+   
+   // Die x- bzw. y-Komponente eines Messwertes.
+   double wert = Double.NaN;
+   
+   // Die kleinste bisher gefundene x- bzw. y-Komponente.
+   double minWert = Double.POSITIVE_INFINITY;
+   
+   // Eine Schleife über alle Messpunkte in der Liste
+   for (KomponenteMesspunkt komponenteMesspunkt : liste)
+      {
+      // Die x- bzw. y-Komponente des Messpunktes wird gelesen.
+      wert = komponenteMesspunkt.getWert();
+      
+      // Falls die x- bzw. y-Komponente des Messpunkts kleiner als die kleinste bisher gefundene x- bzw. y-Komponente, ...
+      if (wert < minWert)
+         {
+         // Die größte bisher gefundene x- bzw. y-Komponente wird aktualisiert.  
+         minWert = wert;
+         
+         // Der Messpunkt mit der kleinsten x- bzw. y-Komponente wird aktualisiert.
+         minKomponenteMesspunkt = komponenteMesspunkt;
+         } 
+      }
+   
+   // Der Messpunkt mit der kleinsten x- bzw. y-Komponente wird aus der Liste entfernt.
+   liste.remove(minKomponenteMesspunkt);
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "minMesspunktBestimmen");
+   
+   // Der Messpunkt mit der größten x- bzw. y-Komponente wird zurückgegeben.
+   return minKomponenteMesspunkt.getMesspunkt();
    }
 
 // =====================================================================================================================
