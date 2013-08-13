@@ -329,20 +329,93 @@ public void testMaxMesspunktBestimmen2() throws SecurityException, NoSuchMethodE
    // Die Testdaten werden erzeugt.
    Vector2D messpunkt1 = new Vector2D(0.0, 2.0);
    Vector2D messpunkt2 = new Vector2D(0.0, 1.0);
+   ArrayList<YKomponenteMesspunkt> yListe = new ArrayList<YKomponenteMesspunkt>();
+   yListe.add(new YKomponenteMesspunkt(messpunkt1));
+   yListe.add(new YKomponenteMesspunkt(messpunkt2));
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = Startpunktbestimmung.class.getDeclaredMethod("maxMesspunktBestimmen", ArrayList.class);
+   methode.setAccessible(true);
+   Vector2D maxYMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, yListe);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
+   assertEquals(messpunkt1, maxYMesspunkt);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt aus der Liste entfernt worden ist.
+   assertEquals(1, yListe.size());
+   assertEquals(messpunkt2, yListe.get(0).getMesspunkt());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#minMesspunktBestimmen(ArrayList)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testMinMesspunktBestimmen1() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException 
+   {
+   // Die Testdaten werden erzeugt.
+   Vector2D messpunkt1 = new Vector2D(1.0, 0.0);
+   Vector2D messpunkt2 = new Vector2D(2.0, 0.0);
    ArrayList<XKomponenteMesspunkt> xListe = new ArrayList<XKomponenteMesspunkt>();
    xListe.add(new XKomponenteMesspunkt(messpunkt1));
    xListe.add(new XKomponenteMesspunkt(messpunkt2));
    
    // Die zu testende Methode wird aufgerufen
-   Method methode = Startpunktbestimmung.class.getDeclaredMethod("maxMesspunktBestimmen", ArrayList.class);
+   Method methode = Startpunktbestimmung.class.getDeclaredMethod("minMesspunktBestimmen", ArrayList.class);
    methode.setAccessible(true);
-   Vector2D maxXMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe);
+   Vector2D minXMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe);
    
    // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
-   assertEquals(messpunkt1, maxXMesspunkt);
+   assertEquals(messpunkt1, minXMesspunkt);
    
    // Es wird überprüft, ob der korrekte Messpunkt aus der Liste entfernt worden ist.
    assertEquals(1, xListe.size());
    assertEquals(messpunkt2, xListe.get(0).getMesspunkt());
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#minMesspunktBestimmen(ArrayList)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testMinMesspunktBestimmen2() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException 
+   {
+   // Die Testdaten werden erzeugt.
+   Vector2D messpunkt1 = new Vector2D(0.0, 2.0);
+   Vector2D messpunkt2 = new Vector2D(0.0, 1.0);
+   ArrayList<YKomponenteMesspunkt> yListe = new ArrayList<YKomponenteMesspunkt>();
+   yListe.add(new YKomponenteMesspunkt(messpunkt1));
+   yListe.add(new YKomponenteMesspunkt(messpunkt2));
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = Startpunktbestimmung.class.getDeclaredMethod("minMesspunktBestimmen", ArrayList.class);
+   methode.setAccessible(true);
+   Vector2D minYMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, yListe);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
+   assertEquals(messpunkt2, minYMesspunkt);
+   
+   // Es wird überprüft, ob der korrekte Messpunkt aus der Liste entfernt worden ist.
+   assertEquals(1, yListe.size());
+   assertEquals(messpunkt1, yListe.get(0).getMesspunkt());
+   }
+
 }
