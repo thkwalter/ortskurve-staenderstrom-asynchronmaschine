@@ -118,6 +118,25 @@ public void testStartpunktbestimmung3()
 // =====================================================================================================================
 
 /**
+ * Test für den Konstruktor {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
+ */
+@Test
+public void testStartpunktbestimmung4() 
+   {
+   // Die Startpunktbestimmung wird mit genau drei Messpunkten durchgeführt.
+   Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), 
+      new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0), new Vector2D(1.0, -1.0)});
+   
+   // Es wird überprüft, ob der Startpunkt korrekt bestimmt worden ist.
+   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[0], 2.0/1000);
+   assertEquals(0.0, startpunktbestimmung.getStartpunkt()[1], 2.0/1000);
+   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[2], 2.0/1000); 
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link Startpunktbestimmung#startpunktBestimmen(Vector2D[])}.
  * 
  * @throws ApplicationRuntimeException 
@@ -160,7 +179,7 @@ public void testStartpunktBestimmen1() throws ApplicationRuntimeException, Secur
  * @throws IllegalArgumentException 
  */
 @Test(expected=ApplicationRuntimeException.class)
-public void testStartpunktBestimmen4() throws Throwable
+public void testStartpunktBestimmen2() throws Throwable
    {   
    Vector2D[] messpunkteZurStartpunktbestimmung = 
       new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(2.0, 0.0), new Vector2D(3.0, 0.0)};
@@ -183,67 +202,6 @@ public void testStartpunktBestimmen4() throws Throwable
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Startpunktbestimmung#mittlerenMesspunktAuswaehlen(Vector2D[], double)}.
- * 
- * @throws NoSuchMethodException 
- * @throws SecurityException 
- * @throws InvocationTargetException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- * @throws NoSuchFieldException 
- */
-@Test
-public void testMittlerenMesspunktAuswaehlen1() throws SecurityException, NoSuchMethodException, 
-   IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
-   {
-   // Die Messpunkte, die für den Test verwendet werden.
-   Vector2D[] messpunkte = new Vector2D[]{new Vector2D(0.0, 0.1), new Vector2D(1.0, 1.0), new Vector2D(1.0, -1.0)};
-   
-   // Die zu testende Methode wird aufgerufen
-   Method methode = 
-      Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktAuswaehlen", Vector2D[].class, double.class);
-   methode.setAccessible(true);
-   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, messpunkte, 0.0);
-   
-   // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
-   assertEquals(messpunkte[0], mittlererMesspunkt);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Startpunktbestimmung#mittlerenMesspunktAuswaehlen(Vector2D[], double)}.
- * 
- * @throws NoSuchMethodException 
- * @throws SecurityException 
- * @throws InvocationTargetException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- * @throws NoSuchFieldException 
- */
-@Test
-public void testMittlerenMesspunktAuswaehlen2() throws SecurityException, NoSuchMethodException, 
-   IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
-   {
-   // Die Messpunkte, die für den Test verwendet werden.
-   Vector2D[] messpunkte = 
-      new Vector2D[]{new Vector2D(1.0, 1.0), new Vector2D(1.0, -1.0), new Vector2D(0.0, -0.1), new Vector2D(0.0, -0.2)};
-   
-   // Die zu testende Methode wird aufgerufen
-   Method methode = 
-      Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktAuswaehlen", Vector2D[].class, double.class);
-   methode.setAccessible(true);
-   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, messpunkte, 0.0);
-   
-   // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
-   assertEquals(messpunkte[2], mittlererMesspunkt);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
  * Test für die Methode {@link Startpunktbestimmung#messpunkteAuswaehlen(Vector2D[])}.
  * 
  * @throws NoSuchMethodException 
@@ -254,7 +212,7 @@ public void testMittlerenMesspunktAuswaehlen2() throws SecurityException, NoSuch
  * @throws NoSuchFieldException 
  */
 @Test
-public void testMesspunkteAuswaehlen() throws SecurityException, NoSuchMethodException, 
+public void testMesspunkteAuswaehlen1() throws SecurityException, NoSuchMethodException, 
    IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
    {
    // Die Messpunkte, die für den Test verwendet werden.
@@ -272,6 +230,108 @@ public void testMesspunkteAuswaehlen() throws SecurityException, NoSuchMethodExc
    assertEquals(messpunkte[0], messpunkteZurStartpunktbestimmung[0]);
    assertEquals(messpunkte[1], messpunkteZurStartpunktbestimmung[1]);
    assertEquals(messpunkte[2], messpunkteZurStartpunktbestimmung[2]);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#messpunkteAuswaehlen(Vector2D[])}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ * @throws NoSuchFieldException 
+ */
+@Test
+public void testMesspunkteAuswaehlen2() throws SecurityException, NoSuchMethodException, 
+   IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
+   {
+   // Die Messpunkte, die für den Test verwendet werden.
+   Vector2D[] messpunkte = 
+      new Vector2D[]{new Vector2D(1.1, 1.0), new Vector2D(0.0, 0.0), new Vector2D(2.0, 0.0), new Vector2D(1.2, 1.0)};
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = 
+      Startpunktbestimmung.class.getDeclaredMethod("messpunkteAuswaehlen", Vector2D[].class);
+   methode.setAccessible(true);
+   Vector2D[] messpunkteZurStartpunktbestimmung = 
+      (Vector2D[]) methode.invoke(this.startpunktbestimmung, (Object) messpunkte);
+   
+   // Es wird geprüft, ob die korrekten Messpunkt gefunden worden sind.
+   assertEquals(messpunkte[2], messpunkteZurStartpunktbestimmung[0]);
+   assertEquals(messpunkte[1], messpunkteZurStartpunktbestimmung[1]);
+   assertEquals(messpunkte[0], messpunkteZurStartpunktbestimmung[2]);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#mittlerenMesspunktBestimmen(ArrayList, double)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ * @throws NoSuchFieldException 
+ */
+@Test
+public void testMittlerenMesspunktBestimmen1() throws SecurityException, NoSuchMethodException, 
+   IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
+   {
+   // Die Testdaten werden erzeugt.
+   Vector2D messpunkt = new Vector2D(0.0, 0.1);
+   ArrayList<YKomponenteMesspunkt> yListe = new ArrayList<YKomponenteMesspunkt>();
+   yListe.add(new YKomponenteMesspunkt(new Vector2D(1.0, 1.0)));
+   yListe.add(new YKomponenteMesspunkt(new Vector2D(1.0, -1.0)));
+   yListe.add(new YKomponenteMesspunkt(messpunkt));
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = 
+      Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktBestimmen", ArrayList.class, double.class);
+   methode.setAccessible(true);
+   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, yListe, 0.0);
+   
+   // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
+   assertEquals(messpunkt, mittlererMesspunkt);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Startpunktbestimmung#mittlerenMesspunktBestimmen(ArrayList, double)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ * @throws NoSuchFieldException 
+ */
+@Test
+public void testMittlerenMesspunktBestimmen2() throws SecurityException, NoSuchMethodException, 
+   IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
+   {
+   // Die Testdaten werden erzeugt.
+   Vector2D messpunkt = new Vector2D(1.9, 0.0);
+   ArrayList<XKomponenteMesspunkt> xListe = new ArrayList<XKomponenteMesspunkt>();
+   xListe.add(new XKomponenteMesspunkt(new Vector2D(1.0, 0.0)));
+   xListe.add(new XKomponenteMesspunkt(new Vector2D(3.0, 0.0)));
+   xListe.add(new XKomponenteMesspunkt(messpunkt));
+   
+   // Die zu testende Methode wird aufgerufen
+   Method methode = 
+      Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktBestimmen", ArrayList.class, double.class);
+   methode.setAccessible(true);
+   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe, 2.0);
+   
+   // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
+   assertEquals(messpunkt, mittlererMesspunkt);
    }
 
 // =====================================================================================================================
