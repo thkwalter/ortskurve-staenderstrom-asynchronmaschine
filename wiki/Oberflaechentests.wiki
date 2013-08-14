@@ -7,6 +7,7 @@
  # [BerechnungOrtskurveDreiPunkte Berechnung der Ortskurve mit drei Punkten überprüfen]
  # [BerechnungOrtskurveVierPunkte Berechnung der Ortskurve mit vier Punkten überprüfen]
  # [BerechnungOrtskurveAchtPunkte Berechnung der Ortskurve mit acht Punkten überprüfen]
+ # [BerechnungOrtskurveRealistischeWerte Berechnung der Ortskurve mit realistischen Werten]
  # [FehlerbehandlungFalschesFormat Fehlerbehandlung bei Eingabe im falschen Format überprüfen]
  # [FehlerbehandlungZuWenigeMesspunkte Fehlerbehandlung bei Eingabe zu weniger Messpunkte überprüfen]
  # [FehlerbehandlungSingulaereMatrix Fehlerbehandlung bei Auftreten einer singulären Matrix überprüfen]
