@@ -1,0 +1,20 @@
+=Berechnung der Ortskurve mit realistischen Werten=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte 
+{{{
+2.33,	3.12
+2.11,	2.94
+1.62,	2.64
+1.21,	2.28
+0.80,	1.79
+0.56,	1.41
+0.41,	0.84
+0.36,	0.51
+0.40,	0.16
+0.51,	-0.33
+0.70,	-0.78
+1.48,	-1.60
+}}} 
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
+ # Das Resultat kontrollieren -> Mittelpunkt (3.05, 0.47) und Radius 2.65
