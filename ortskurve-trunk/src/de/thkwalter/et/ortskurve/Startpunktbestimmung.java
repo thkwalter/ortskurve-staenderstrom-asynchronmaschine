@@ -186,9 +186,9 @@ private double[] startpunktBestimmen(Vector2D[] messpunkteZurStartpunktbestimmun
    double radius = Math.sqrt(xMittelpunkt * xMittelpunkt + yMittelpunkt * yMittelpunkt - loesung.getEntry(0));
    
    // Der Startpunkt wird protokolliert.
-   Startpunktbestimmung.logger.fine("x: " + xMittelpunkt);
-   Startpunktbestimmung.logger.fine("y: " + yMittelpunkt);
-   Startpunktbestimmung.logger.fine("r: " + radius);
+   Startpunktbestimmung.logger.info("x: " + xMittelpunkt);
+   Startpunktbestimmung.logger.info("y: " + yMittelpunkt);
+   Startpunktbestimmung.logger.info("r: " + radius);
    
    Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "startpunktBestimmen");
    
@@ -220,84 +220,101 @@ private Vector2D[] messpunkteAuswaehlen(Vector2D[] messpunkte)
       yListe.add(new YKomponenteMesspunkt(messpunkt));
       }
    
-   // Die Messpunkte mit der größten x- bzw. der größten y-Komponente werden bestimmt.
+   // Die Messpunkte mit der größten und kleinsten x-Komponente werden bestimmt.
    Vector2D maxXMesspunkt = this.maxMesspunktBestimmen(xListe);
-   Vector2D maxYMesspunkt = this.maxMesspunktBestimmen(yListe);
-   
-   // Die Messpunkte mit der kleinsten x- bzw. der kleinsten y-Komponente werden bestimmt.
    Vector2D minXMesspunkt = this.minMesspunktBestimmen(xListe);
+   
+   // Die Messpunkte mit der größten und kleinsten y-Komponente werden bestimmt.
+   Vector2D maxYMesspunkt = this.maxMesspunktBestimmen(yListe);
    Vector2D minYMesspunkt = this.minMesspunktBestimmen(yListe);
    
-//   // Die Messpunkte mit der größten und der kleinsten y-Komponente werden protokolliert.
-//   Startpunktbestimmung.logger.info("Messpunkt mit maximalem Realteil: " + messpunktMaxRealteil.toString());
-//   Startpunktbestimmung.logger.info("Messpunkt mit minimalem Realteil: " + messpunktMinRealteil.toString());
-//   
-//   // Der Mittelwert aus der größten und der kleinsten y-Komponenten wird bestimmt.
-//   double mittelwert = 0.5 * (minRealteil + maxRealteil);
-//   
-//   // den Messpunkt, dessen y-Komponente (Realteil des Stroms) am nähesten zum Mittelwert aus der größten und der 
-//   // kleinsten auftreteten y-Komponente liegt, wird bestimmt.
-//   Vector2D mittlererMesspunkt = this.mittlerenMesspunktAuswaehlen(messpunkte, mittelwert);
-//   
-//   // Der Rücksprung aus der Methode wird protokolliert.
-//   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "messpunkteAuswaehlen");
+   // Die Messpunkte, die bei der Startpunktbestimmung verwendet werden, werden deklariert.
+   Vector2D maxMesspunkt = null;
+   Vector2D minMesspunkt = null;
+   Vector2D mittlererMesspunkt = null;
+   
+   // Falls der Wertebereich der x-Komponente der Messpunkte größer ist als der Wertebereich der y-Komponente, ...
+   if (maxXMesspunkt.getX() - minXMesspunkt.getX() > maxYMesspunkt.getY() - minYMesspunkt.getY())
+      {
+      // Die Messpunkte mit der größten und kleinsten x-Kompomnente werden bei der Startpunktbestimmung verwendet.
+      maxMesspunkt = maxXMesspunkt;
+      minMesspunkt = minXMesspunkt;
+      mittlererMesspunkt = 
+         this.mittlerenMesspunktBestimmen(xListe, 0.5 * (maxXMesspunkt.getX() + minXMesspunkt.getX()));
+      }
+   
+   // Falls der Wertebereich der x-Komponente der Messpunkte nicht größer ist als der Wertebereich der y-Komponente, ...
+   else
+      {
+      // Die Messpunkte mit der größten und kleinsten y-Kompomnente werden bei der Startpunktbestimmung verwendet.
+      maxMesspunkt = maxYMesspunkt;
+      minMesspunkt = minYMesspunkt;
+      mittlererMesspunkt = 
+         this.mittlerenMesspunktBestimmen(yListe, 0.5 * (maxYMesspunkt.getY() + minYMesspunkt.getY()));
+      }
+   
+   // Die Messpunkte, die für die Startpunktbestimmung verwendet werden, werden protokolliert.
+   Startpunktbestimmung.logger.info("Messpunkt mit größter Komponente: " + maxMesspunkt.toString());
+   Startpunktbestimmung.logger.info("Messpunkt mit kleinster Komponente: " + minMesspunkt.toString());
+   Startpunktbestimmung.logger.info("Messpunkt mit mittlerer Komponente: " + mittlererMesspunkt.toString());
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "messpunkteAuswaehlen");
    
    // Die Messpunkte, die zur Startpunktbestimmung verwendet werden, werden zurückgegeben.
-   return null; // new Vector2D[]{messpunktMaxRealteil, messpunktMinRealteil, mittlererMesspunkt};
+   return new Vector2D[]{maxMesspunkt, minMesspunkt, mittlererMesspunkt};
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode bestimmt den Messpunkt, dessen y-Komponente (Realteil des Stroms) am nähesten zum Mittelwert aus der
- * größten und der kleinsten auftreteten y-Komponente liegt. 
+ * Diese Methode bestimmt den Messpunkt, dessen x- bzw. y-Komponente am nähesten zum Mittelwert aus der größten und der 
+ * kleinsten auftreteten x- bzw. y-Komponente liegt. 
  * 
- * @param messpunkte Das Feld der Messpunkte
- * @param mittelwert Der Mittelwert des Wertebereichs der y-Komponenten aller Messpunkte
+ * @param messpunkte Eine Liste der x- bzw. y-Komponenten der Messpunkte
+ * @param mittelwert Der Mittelwert aus der größten und der kleinsten auftreteten x- bzw. y-Komponente
  * 
- * @return Der Messpunkt, dessen y-Komponente (Realteil des Stroms) am nähesten zum Mittelwert aus der
- * größten und der kleinsten auftreteten y-Komponente liegt
+ * @return Der Messpunkt, dessen x- bzw. y-Komponente am nähesten zum Mittelwert aus der größten und der 
+ * kleinsten auftreteten x- bzw. y-Komponente liegt
  */
-private Vector2D mittlerenMesspunktAuswaehlen(Vector2D[] messpunkte, double mittelwert)
+private Vector2D mittlerenMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> liste, double mittelwert)
    {
    // Der Einsprung in die Methode wird protokolliert.
-   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "mittlerenMesspunktAuswaehlen");
+   Startpunktbestimmung.logger.entering("Startpunktbestimmung", "mittlerenMesspunktBestimmen");
    
    // Der gesuchte Messpunkt.
-   Vector2D messpunktMittlererRealteil = null;
+   KomponenteMesspunkt mittlereKomponenteMesspunkt = null;
    
-   // Der minimale Abstand eines Messpunkts zum Mittelwert.
+   // Der kleinste bisher gefundene Abstand der x- bzw. y-Komponente eines Messpunkts zum Mittelwert.
    double minAbstandZumMittelwert = Double.POSITIVE_INFINITY;
    
-   // Der Abstand des aktuellen Messpunkts zum Mittelwert.
+   // Der Abstand der x- bzw. y-Komponente eines Messpunkts zum Mittelwert.
    double abstandZumMittelwert = Double.NaN;
    
    // Eine Schleife über alle Messpunkte.
-   for (Vector2D messpunkt : messpunkte)
+   for (KomponenteMesspunkt komponenteMesspunkt : liste)
       {
-      // Der Abstand des aktuellen Messpunkts zum Mittelwert wird berechnet.
-      abstandZumMittelwert = Math.abs(messpunkt.getY() - mittelwert);
+      // Der Abstand der x- bzw. y-Komponente eines Messpunkts zum Mittelwert wird berechnet.
+      abstandZumMittelwert = Math.abs(komponenteMesspunkt.getWert() - mittelwert);
       
-      // Falls der Abstand des aktuellen Messpunkts zum Mittelwert kleiner als das bisherige Minimum ist, ...
+      // Falls der Abstand der x- bzw. y-Komponente des aktuellen Messpunkts zum Mittelwert kleiner als das bisherige 
+      // Minimum ist, ...
       if (abstandZumMittelwert < minAbstandZumMittelwert)
          {
-         // Der minimale Abstand eines Messpunkts zum Mittelwert wird aktualisiert.
+         // Der minimale Abstand der x- bzw. y-Komponente eines Messpunkts zum Mittelwert wird aktualisiert.
          minAbstandZumMittelwert = abstandZumMittelwert;
          
          // Der gesuchte Punkt wird aktualisiert.
-         messpunktMittlererRealteil = messpunkt;
+         mittlereKomponenteMesspunkt = komponenteMesspunkt;
          }
       }
    
-   // Der gesuchte Messpunkt wird protokolliert.
-   Startpunktbestimmung.logger.info("Messpunkt mit mittlerem Realteil: " + messpunktMittlererRealteil.toString());
-   
    // Der Rücksprung aus der Methode wird protokolliert.
-   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "mittlerenMesspunktAuswaehlen");
+   Startpunktbestimmung.logger.exiting("Startpunktbestimmung", "mittlerenMesspunktBestimmen");
    
    // Der gesuchte Messpunkt wird zurückgegeben.
-   return messpunktMittlererRealteil;
+   return mittlereKomponenteMesspunkt.getMesspunkt();
    }
 
 // =====================================================================================================================
@@ -310,7 +327,7 @@ private Vector2D mittlerenMesspunktAuswaehlen(Vector2D[] messpunkte, double mitt
  * 
  * @return Der Messpunkt mit dem größten Wert der x- bzw. y-Komponente
  */
-public Vector2D maxMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> liste)
+private Vector2D maxMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> liste)
    {
    // Der Einsprung in die Methode wird protokolliert.
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "maxMesspunktBestimmen");
@@ -361,7 +378,7 @@ public Vector2D maxMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> l
  * 
  * @return Der Messpunkt mit dem kleinstenbgh Wert der x- bzw. y-Komponente
  */
-public Vector2D minMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> liste)
+private Vector2D minMesspunktBestimmen(ArrayList<? extends KomponenteMesspunkt> liste)
    {
    // Der Einsprung in die Methode wird protokolliert.
    Startpunktbestimmung.logger.entering("Startpunktbestimmung", "minMesspunktBestimmen");
