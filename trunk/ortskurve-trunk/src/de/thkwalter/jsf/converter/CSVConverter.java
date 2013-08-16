@@ -161,7 +161,7 @@ public String getAsString(FacesContext facesContext, UIComponent uiComponent, Ob
          // In dieser Schleife werden alle Vektoren zu einer Zeichenkette verknüpft.
          for (Vector2D punkt : punkte)
             {
-            stringBuffer.append(punkt.getX()).append(",").append(punkt.getY()).append("\n");
+            stringBuffer.append(punkt.getX()).append(", ").append(punkt.getY()).append("\n");
             }
          }
       }

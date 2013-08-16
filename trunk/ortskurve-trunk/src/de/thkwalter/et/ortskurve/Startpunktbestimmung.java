@@ -169,9 +169,12 @@ private double[] startpunktBestimmen(Vector2D[] messpunkteZurStartpunktbestimmun
       Startpunktbestimmung.logger.severe(fehlermeldung);
       
       // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
-      String jsfMeldung = "Eine von den ersten drei Messpunkten abhängige Matrix ist singuär. Der " +
-         "Berechnungsalgorithmus benötigt jedoch eine reguläre Matrix! Sortieren Sie bitte die eingegebenen " +
-         "Messpunkte so um, dass in den ersten drei Zeilen andere Werte stehen.";
+      String jsfMeldung = "Eine von den Messpunkten (" + messpunkteZurStartpunktbestimmung[0].getX() + ", " + 
+         messpunkteZurStartpunktbestimmung[0].getY() + "), ("+ messpunkteZurStartpunktbestimmung[1].getX() + ", " + 
+         messpunkteZurStartpunktbestimmung[1].getY() + ") und (" + messpunkteZurStartpunktbestimmung[2].getX() + ", " + 
+         messpunkteZurStartpunktbestimmung[2].getY() + ")" + " abhängige Matrix ist singuär. Der " +
+         "Berechnungsalgorithmus benötigt jedoch eine reguläre Matrix! Entfernen Sie bitte einen der oben " +
+         "angegebenen Messpunkte.";
       ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
       
       // Das vorzeitige Verlassen dieser Methode wird protokolliert.
