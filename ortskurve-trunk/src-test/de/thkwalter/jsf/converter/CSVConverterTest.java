@@ -113,7 +113,7 @@ public void testGetAsString1()
    String ausgabe = this.csvConverter.getAsString(null, null, vektoren);
    
    // Es wird überprüft, ob das Feld in die korrekte Zeichenkette konvertiert worden ist.
-   assertEquals("1.0,2.0\n3.0,4.0\n5.0,6.0\n", ausgabe);
+   assertEquals("1.0, 2.0\n3.0, 4.0\n5.0, 6.0\n", ausgabe);
    }
 
 // =====================================================================================================================
