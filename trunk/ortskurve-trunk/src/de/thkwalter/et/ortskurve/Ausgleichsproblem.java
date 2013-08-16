@@ -15,6 +15,7 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -91,6 +92,33 @@ public String problemLoesen()
    
    try
       {
+      // Alle Messpunkte werden in ein HashSet eingefügt.
+      HashSet<Vector2D> messpunktSet = new HashSet<Vector2D>();
+      for (Vector2D messpunkt : this.messpunkte)
+         {
+         messpunktSet.add(messpunkt);
+         }
+      
+      // Falls die Anzahl der Punkte im HashSet kleiner ist als die Anzahl der eingegebenen Messpunkte, so wurden 
+      // Messpunkte doppelt eingegeben. 
+      if (messpunktSet.size() < this.messpunkte.length)
+         {
+         // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+         String fehlermeldung = "Es wurden " + (this.messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
+            " eingegeben!";
+         Ausgleichsproblem.logger.severe(fehlermeldung);
+         
+         // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+         String jsfMeldung = "Sie haben " +  (this.messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
+            "eingegeben! Entfernen Sie bitte die doppelt eingegebenen Messpunkte.";
+         ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+         
+         // Das vorzeitige Verlassen dieser Methode wird protokolliert.
+         Ausgleichsproblem.logger.throwing("Ausgleichsproblem", "problemLoesen", applicationRuntimeException);
+         
+         throw applicationRuntimeException;
+         }
+      
       // Die Startparameter werden bestimmt.
       Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(this.messpunkte);
       double[] startpunkt = startpunktbestimmung.getStartpunkt();
