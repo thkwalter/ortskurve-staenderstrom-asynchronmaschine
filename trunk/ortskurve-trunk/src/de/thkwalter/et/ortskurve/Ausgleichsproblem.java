@@ -108,9 +108,26 @@ public String problemLoesen()
             " eingegeben!";
          Ausgleichsproblem.logger.severe(fehlermeldung);
          
-         // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
-         String jsfMeldung = "Sie haben " +  (this.messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
-            "eingegeben! Entfernen Sie bitte die doppelt eingegebenen Messpunkte.";
+         // Die Zeichenkette für die Fehlermeldung wird deklariert.
+         String jsfMeldung = "";
+         
+         // Falls nur ein Messpunkt doppelt eingegeben worden ist, ...
+         if (this.messpunkte.length - messpunktSet.size() == 1)
+            {
+            // Die Zeichenkette für die Fehlermeldung wird festgelegt.
+            jsfMeldung = "Sie haben einen Messpunkt doppelt eingegeben! Entfernen Sie bitte den doppelt eingegebenen " +
+               "Messpunkt.";
+            }
+         
+         // Falls mehrere Messpunkte doppelt eingegeben worden sind, ...
+         else
+            {
+            // Die Zeichenkette für die Fehlermeldung wird festgelegt.
+            jsfMeldung = "Sie haben " +  (this.messpunkte.length - messpunktSet.size()) + " Messpunkte " +
+               "doppelt eingegeben! Entfernen Sie bitte die doppelt eingegebenen Messpunkte.";
+            }
+         
+         // Die Ausnahme wird erzeugt
          ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
          
          // Das vorzeitige Verlassen dieser Methode wird protokolliert.
