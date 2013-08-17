@@ -12,4 +12,5 @@
  # [FehlerbehandlungZuWenigeMesspunkte Fehlerbehandlung bei Eingabe zu weniger Messpunkte überprüfen]
  # [FehlerbehandlungSingulaereMatrix Fehlerbehandlung bei Auftreten einer singulären Matrix überprüfen]
  # [FehlerbehandlungPunktBeiMittelpunkt Fehlerbehandlung bei Punkt in der Nähe des Mittelpunkts überprüfen]
- # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe überprüfen]
+ # [FehlerbehandlungEinfachDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (1) überprüfen]
+ # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (2) überprüfen]
