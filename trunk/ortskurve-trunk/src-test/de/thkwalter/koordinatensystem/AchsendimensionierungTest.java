@@ -16,6 +16,7 @@
 package de.thkwalter.koordinatensystem;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.lang.reflect.InvocationTargetException;
@@ -64,12 +65,22 @@ public void setUp() throws Exception
 // =====================================================================================================================
 
 /**
- * Test method for {@link Achsendimensionierung#Achsendimensionierung(Vector2D[])}.
+ * Test für den Konstruktor {@link Achsendimensionierung#Achsendimensionierung(Vector2D[])}.
  */
 @Test
 public void testAchsendimensionierung()
    {
-   fail("Not yet implemented");
+   // Es wird überprüft, ob der Konstruktor das Objekt der zu testenden Klasse erzeugt hat.
+   assertNotNull(this.achsendimensionierung);
+   
+   // Der Wertebereich wird bestimmt.
+   Wertebereich wertebereich = this.achsendimensionierung.getWertebereichKoordinatensystem();
+   
+   // Es wird überprüft, ob der korrekte Wertebereich bestimmt worden ist.
+   assertEquals(this.punkte[2].getX(), wertebereich.getMaxX(), 0.0);
+   assertEquals(this.punkte[0].getX(), wertebereich.getMinX(), 0.0);
+   assertEquals(this.punkte[1].getY(), wertebereich.getMaxY(), 0.0);
+   assertEquals(this.punkte[3].getY(), wertebereich.getMinY(), 0.0);
    }
 
 // =====================================================================================================================
@@ -98,4 +109,98 @@ public void testWertebereichBestimmen() throws SecurityException, NoSuchMethodEx
    assertEquals(this.punkte[1].getY(), wertebereich.getMaxY(), 0.0);
    assertEquals(this.punkte[3].getY(), wertebereich.getMinY(), 0.0);
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Achsendimensionierung#ursprungEinbeziehen(Wertebereich)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testUrsprungEinbeziehen1() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException
+   {
+   // Die Testdaten werden erstellt.
+   Wertebereich wertebereichPunktemenge = new Wertebereich(10.0, 9.0, 1.0, 2.0);
+   
+   // Die zu testende Methode wird ausgeführt.
+   Method method = Achsendimensionierung.class.getDeclaredMethod("ursprungEinbeziehen", Wertebereich.class);
+   method.setAccessible(true);
+   Wertebereich wertebereich = (Wertebereich) method.invoke(this.achsendimensionierung, wertebereichPunktemenge);
+   
+   // Es wird überprüft, ob der korrekte Wertebereich bestimmt worden ist.
+   assertEquals(wertebereichPunktemenge.getMaxX(), wertebereich.getMaxX(), 0.0);
+   assertEquals(wertebereichPunktemenge.getMaxY(), wertebereich.getMaxY(), 0.0);
+   assertEquals(0.0, wertebereich.getMinX(), 0.0);
+   assertEquals(0.0, wertebereich.getMinY(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Achsendimensionierung#ursprungEinbeziehen(Wertebereich)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testUrsprungEinbeziehen2() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException
+   {
+   // Die Testdaten werden erstellt.
+   Wertebereich wertebereichPunktemenge = new Wertebereich(-1.0, -2.0, -3.0, -4.0);
+   
+   // Die zu testende Methode wird ausgeführt.
+   Method method = Achsendimensionierung.class.getDeclaredMethod("ursprungEinbeziehen", Wertebereich.class);
+   method.setAccessible(true);
+   Wertebereich wertebereich = (Wertebereich) method.invoke(this.achsendimensionierung, wertebereichPunktemenge);
+   
+   // Es wird überprüft, ob der korrekte Wertebereich bestimmt worden ist.
+   assertEquals(0.0, wertebereich.getMaxX(), 0.0);
+   assertEquals(0.0, wertebereich.getMaxY(), 0.0);
+   assertEquals(wertebereichPunktemenge.getMinX(), wertebereich.getMinX(), 0.0);
+   assertEquals(wertebereichPunktemenge.getMinY(), wertebereich.getMinY(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Achsendimensionierung#ursprungEinbeziehen(Wertebereich)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testUrsprungEinbeziehen3() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException
+   {
+   // Die Testdaten werden erstellt.
+   Wertebereich wertebereichPunktemenge = new Wertebereich(1.0, 2.0, -3.0, -4.0);
+   
+   // Die zu testende Methode wird ausgeführt.
+   Method method = Achsendimensionierung.class.getDeclaredMethod("ursprungEinbeziehen", Wertebereich.class);
+   method.setAccessible(true);
+   Wertebereich wertebereich = (Wertebereich) method.invoke(this.achsendimensionierung, wertebereichPunktemenge);
+   
+   // Es wird überprüft, ob der korrekte Wertebereich bestimmt worden ist.
+   assertEquals(wertebereichPunktemenge.getMaxX(), wertebereich.getMaxX(), 0.0);
+   assertEquals(wertebereichPunktemenge.getMaxY(), wertebereich.getMaxY(), 0.0);
+   assertEquals(wertebereichPunktemenge.getMinX(), wertebereich.getMinX(), 0.0);
+   assertEquals(wertebereichPunktemenge.getMinY(), wertebereich.getMinY(), 0.0);
+   }
+
 }
