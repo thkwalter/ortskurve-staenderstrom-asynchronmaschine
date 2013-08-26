@@ -50,8 +50,11 @@ public Achsendimensionierung(Vector2D[] punkte)
    // Der Einsprung in den Konstruktor wird protokolliert.
    Achsendimensionierung.logger.entering("Achsendimensionierung", "Achsendimensionierung");
    
-   // Die Wertebereiche in x- und y-Richtung werden bestimmt.
-   this.wertebereichBestimmen(punkte);
+   // Die Wertebereiche der Punktemenge wird bestimmt.
+   Wertebereich wertebereich = this.wertebereichBestimmen(punkte);
+   
+   // Der Wertebereich wird gegebenenfalls bis zum Ursprung ausgedehnt.
+   this.wertebereichKoordinatensystem = this.ursprungEinbeziehen(wertebereich);
    
    // Der Rücksprung aus dem Konstruktor wird protokolliert.
    Achsendimensionierung.logger.exiting("Achsendimensionierung", "Achsendimensionierung");
@@ -64,6 +67,8 @@ public Achsendimensionierung(Vector2D[] punkte)
  * Diese Methode bestimmt die Wertebereiche in x- und y-Richtung.
  * 
  * @param punkte Die Punktemenge.
+ * 
+ * @return Der Wertebereich der Punktemenge.
  */
 private Wertebereich wertebereichBestimmen(Vector2D[] punkte)
    {
@@ -97,6 +102,40 @@ private Wertebereich wertebereichBestimmen(Vector2D[] punkte)
    Achsendimensionierung.logger.exiting("Achsendimensionierung", "wertebereichBestimmen");
 
    // Der maximale Wertebereich der Punktemenge wird zurückgegeben.
+   return new Wertebereich(maxX, maxY, minX, minY);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode dehnt den Wertebereich gegebenenfalls so aus, dass der Ursprung enthalten ist.
+ * 
+ * @param wertebereichPunktemenge
+ * 
+ * @return Der gegebenenfalls um den Ursprung erweiterte Wertebereich.
+ */
+private Wertebereich ursprungEinbeziehen(Wertebereich wertebereichPunktemenge)
+   {
+   // Der Einsprung in die Methode wird protokolliert.
+   Achsendimensionierung.logger.entering("Achsendimensionierung", "ursprungEinbeziehen");
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Achsendimensionierung.logger.exiting("Achsendimensionierung", "ursprungEinbeziehen");
+   
+   // Der Wertebereich wird gegebenenfalls so ausgedehnt, dass er den Ursprung umfasst.
+   double maxX = Math.max(0.0, wertebereichPunktemenge.getMaxX());
+   double maxY = Math.max(0.0, wertebereichPunktemenge.getMaxY());
+   double minX = Math.min(0.0, wertebereichPunktemenge.getMinX());
+   double minY = Math.min(0.0, wertebereichPunktemenge.getMinY());
+   
+   // Die neuen Maxima und Minima werden protokolliert.
+   Achsendimensionierung.logger.fine("maxX: " + maxX);
+   Achsendimensionierung.logger.fine("maxY: " + maxY);
+   Achsendimensionierung.logger.fine("minX: " + minX);
+   Achsendimensionierung.logger.fine("minY: " + minY);
+   
+   // Dererweiterte Wertebereich der Punktemenge wird zurückgegeben.
    return new Wertebereich(maxX, maxY, minX, minY);
    }
 
