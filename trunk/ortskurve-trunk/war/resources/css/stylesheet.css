@@ -52,7 +52,7 @@
    
 a.titellink
    {
-   padding-left: 10px;
+   padding-left: 20px;
    
    color: #ffffff;
    font-size: 30px;
@@ -68,7 +68,7 @@ a.titellink
    {
    height: 25px;
    
-   padding-left: 10px;
+   padding-left: 20px;
    
    background-color: #009900;
    
@@ -96,23 +96,23 @@ div#menue a
 
 #inhalt
    {
-   height: 480px;
+   height: 460px;
    
-   padding: 10px;
+   padding: 20px;
    
    overflow: auto;
    }
    
 .eingabe
    {
-   width: 880px;
+   width: 860px;
    border-collapse: collapse;
    border-spacing: 0px;
    }
    
 .eingabe-column-0
    {
-   width: 580px;
+   width: 560px;
    padding-right: 20px
    }
    
@@ -145,8 +145,8 @@ div#menue a
    
 .grafik-ortskurve
    {
-   width: 560px;
-   height: 280px;
+   width: 540px;
+   height: 270px;
    
    margin-top: 20px;
    padding: 9px;
@@ -162,8 +162,8 @@ div#menue a
    {
    height: 25px;
    
-   padding-left: 10px;
-   padding-right: 10px;
+   padding-left: 20px;
+   padding-right: 20px;
    
    background-color: #009900;
    
@@ -217,7 +217,7 @@ span.copyright
    
 .knopfzeile
    {
-   width: 880px;
+   width: 860px;
    
    margin-top: 20px;
    margin-bottom: 20px;
