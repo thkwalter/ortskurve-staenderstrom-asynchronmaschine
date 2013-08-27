@@ -142,6 +142,17 @@ div#menue a
 
    resize: none; 
    }
+   
+.grafik-ortskurve
+   {
+   width: 560px;
+   height: 280px;
+   
+   margin-top: 20px;
+   padding: 9px;
+   
+   border: solid 1px #000000;
+   }
  
 /* ****************************************************************************************************************** */
 /* Formatierungsangaben für die Fusszeile                                                                             */
