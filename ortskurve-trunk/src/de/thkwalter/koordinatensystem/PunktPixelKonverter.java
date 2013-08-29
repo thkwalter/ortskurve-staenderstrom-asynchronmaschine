@@ -117,8 +117,26 @@ public PunktPixelKonverter(Wertebereich wertebereich, double anzahlPixelX, doubl
 // =====================================================================================================================
 // =====================================================================================================================
 
-public Vector2D getPixelKoordinaten(Vector2D[] punkt)
+/**
+ * Diese Methode berechnet zu einem Punkt die Koordinaten in Pixeln.
+ * 
+ * @param punkt Der Punkt.
+ * 
+ * @return Die Koordinaten in Pixeln.
+ */
+public Vector2D getPixelKoordinaten(Vector2D punkt)
    {
-   return null;
+   // Der Einsprung in den Konstruktor wird protokolliert.
+   PunktPixelKonverter.logger.entering("PunktPixelKonverter", "getPixelKoordinaten");
+   
+   // Die Koordinaten in Pixeln werden berechnet.
+   double xPixel = this.ursprungInPixel.getX() + punkt.getX() * this.skalierungsfaktor;
+   double yPixel = this.ursprungInPixel.getY() - punkt.getY() * this.skalierungsfaktor;
+   
+   // Der Rücksprung aus dem Konstruktor wird protokolliert.
+   PunktPixelKonverter.logger.exiting("PunktPixelKonverter", "getPixelKoordinaten");
+   
+   // Die Koordinaten in Pixeln werden zurückgegeben.
+   return new Vector2D(xPixel, yPixel);
    }
 }

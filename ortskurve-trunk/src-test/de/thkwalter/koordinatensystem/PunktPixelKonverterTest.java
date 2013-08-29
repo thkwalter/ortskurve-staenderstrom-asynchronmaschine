@@ -235,4 +235,46 @@ public void testPunktPixelKonverter6() throws SecurityException, NoSuchFieldExce
    assertEquals(100, ursprungInPixel.getX(), 100/1000);
    assertEquals(200, ursprungInPixel.getY(), 200/1000);
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link PunktPixelKonverter#getPixelKoordinaten(Vector2D)}.
+ */
+@Test
+public void testGetPixelKoordinaten1() 
+   {
+   // Der darzustellende Wertebereich wird definiert.
+   Wertebereich wertebereich = new Wertebereich(10.0, 5.0, -30.0, -15.0);
+   
+   // Der zu testende Konstruktor wird aufgerufen.
+   PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Vector2D punktInPixeln = punktPixelKonverter.getPixelKoordinaten(new Vector2D(0, 5));
+   assertEquals(150, punktInPixeln.getX(), 150/1000);
+   assertEquals(50, punktInPixeln.getY(), 50/1000);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link PunktPixelKonverter#getPixelKoordinaten(Vector2D)}.
+ */
+@Test
+public void testGetPixelKoordinaten2() 
+   {
+   // Der darzustellende Wertebereich wird definiert.
+   Wertebereich wertebereich = new Wertebereich(10.0, 5.0, -30.0, -15.0);
+   
+   // Der zu testende Konstruktor wird aufgerufen.
+   PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Vector2D punktInPixeln = punktPixelKonverter.getPixelKoordinaten(new Vector2D(5, -5));
+   assertEquals(175, punktInPixeln.getX(), 175/1000);
+   assertEquals(100, punktInPixeln.getY(), 100/1000);
+   }
 }
