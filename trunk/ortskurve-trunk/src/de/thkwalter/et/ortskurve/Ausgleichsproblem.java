@@ -38,7 +38,7 @@ import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptim
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
 import de.thkwalter.koordinatensystem.Achsendimensionierung;
-import de.thkwalter.koordinatensystem.Wertebereich;
+import de.thkwalter.koordinatensystem.PunktPixelKonverter;
 
 /**
  * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
@@ -220,8 +220,8 @@ public String problemLoesen()
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
       
-      // Der Wertebereich des Koordinatensystems wird bestimmt.
-      this.wertebereichBestimmen();
+      // Ein Konverter, der Punkte in Pixel umrechnet, wird erzeugt.
+      PunktPixelKonverter punktPixelKonverter = this.konverterErstellen();
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
@@ -245,14 +245,14 @@ public String problemLoesen()
 // =====================================================================================================================
 
 /**
- * Diese Methode bestimmt den Wertebereich des Koordinatensystems.
+ * Diese Methode erzeugt einen Konverter, der Punkte in Pixel umrechnet.
  * 
- * @return Der Wertebereich des Koordinatensystems.
+ * @return Ein Konverter, der Punkte in Pixel umrechnet.
  */
-private Wertebereich wertebereichBestimmen()
+private PunktPixelKonverter konverterErstellen()
    {
    // Der Einsprung in die Methode wird protokolliert.
-   Ausgleichsproblem.logger.entering("Ausgleichsproblem", "wertebereichBestimmen");
+   Ausgleichsproblem.logger.entering("Ausgleichsproblem", "konverterErstellen");
    
    // Das Feld der anzuzeigenden Punkte wird erzeugt.
    Vector2D[] punkte = new Vector2D[this.messpunkte.length + 4];
@@ -278,11 +278,15 @@ private Wertebereich wertebereichBestimmen()
    // Ein Objekt der Klasse Achsendimensionierung berechnet den Wertebereich des Koordinatensystems.
    Achsendimensionierung achsendimensionierung = new Achsendimensionierung(punkte);
    
+   // Der Konverter wird erstellt.
+   PunktPixelKonverter punktPixelKonverter = 
+      new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), 540, 270);
+   
    // Der Rücksprung aus der Methode wird protokolliert.
-   Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "wertebereichBestimmen");
+   Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "konverterErstellen");
    
    // Der Wertebereich des Koordinatensystems wird zurückgegeben.
-   return achsendimensionierung.getWertebereichKoordinatensystem();
+   return punktPixelKonverter;
    }
 
 // =====================================================================================================================
