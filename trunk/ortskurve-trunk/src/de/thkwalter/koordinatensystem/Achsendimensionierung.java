@@ -120,9 +120,6 @@ private Wertebereich ursprungEinbeziehen(Wertebereich wertebereichPunktemenge)
    // Der Einsprung in die Methode wird protokolliert.
    Achsendimensionierung.logger.entering("Achsendimensionierung", "ursprungEinbeziehen");
    
-   // Der Rücksprung aus der Methode wird protokolliert.
-   Achsendimensionierung.logger.exiting("Achsendimensionierung", "ursprungEinbeziehen");
-   
    // Der Wertebereich wird gegebenenfalls so ausgedehnt, dass er den Ursprung umfasst.
    double maxX = Math.max(0.0, wertebereichPunktemenge.getMaxX());
    double maxY = Math.max(0.0, wertebereichPunktemenge.getMaxY());
@@ -134,6 +131,9 @@ private Wertebereich ursprungEinbeziehen(Wertebereich wertebereichPunktemenge)
    Achsendimensionierung.logger.fine("maxY: " + maxY);
    Achsendimensionierung.logger.fine("minX: " + minX);
    Achsendimensionierung.logger.fine("minY: " + minY);
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Achsendimensionierung.logger.exiting("Achsendimensionierung", "ursprungEinbeziehen");
    
    // Dererweiterte Wertebereich der Punktemenge wird zurückgegeben.
    return new Wertebereich(maxX, maxY, minX, minY);

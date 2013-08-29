@@ -75,14 +75,14 @@
          </h:panelGrid>   
          
          <h:panelGroup rendered="#{ausgleichsproblem.loesungAnzeigen}" class="grafik-ortskurve" layout="block">
-            <canvas id="grafik" width="560" height="280"></canvas>
+            <canvas id="grafik" width="540" height="270"></canvas>
             
             <script type="text/javascript">
               var canvas = document.getElementById('grafik');
               var context = canvas.getContext('2d');
 
               context.beginPath();
-              context.rect(0, 0, 560, 280);
+              context.rect(0, 0, 540, 270);
               context.lineWidth = 1;
               context.strokeStyle = 'red';
               context.stroke();         

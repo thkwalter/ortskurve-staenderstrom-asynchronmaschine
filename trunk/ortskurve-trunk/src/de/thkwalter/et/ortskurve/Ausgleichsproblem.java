@@ -37,6 +37,8 @@ import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
+import de.thkwalter.koordinatensystem.Achsendimensionierung;
+import de.thkwalter.koordinatensystem.Wertebereich;
 
 /**
  * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
@@ -213,10 +215,13 @@ public String problemLoesen()
          }
       
       // Die Lösung wird protokolliert.
-      Ausgleichsproblem.logger.fine("Mittelpunkt: (" + this.mx + ", " + this.my + "); Radius: " + this.r);
+      Ausgleichsproblem.logger.info("Mittelpunkt: (" + this.mx + ", " + this.my + "); Radius: " + this.r);
       
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
+      
+      // Der Wertebereich des Koordinatensystems wird bestimmt.
+      this.wertebereichBestimmen();
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
@@ -234,6 +239,50 @@ public String problemLoesen()
    
    // Die Startseite wird wieder angezeigt.
    return null;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode bestimmt den Wertebereich des Koordinatensystems.
+ * 
+ * @return Der Wertebereich des Koordinatensystems.
+ */
+private Wertebereich wertebereichBestimmen()
+   {
+   // Der Einsprung in die Methode wird protokolliert.
+   Ausgleichsproblem.logger.entering("Ausgleichsproblem", "wertebereichBestimmen");
+   
+   // Das Feld der anzuzeigenden Punkte wird erzeugt.
+   Vector2D[] punkte = new Vector2D[this.messpunkte.length + 4];
+   
+   // Die Messpunkte werden in das Feld der anzuzeigenden Punkte kopiert.
+   for (int i = 0; i < this.messpunkte.length; i++)
+      {
+      punkte[i] = this.messpunkte[i];
+      }
+   
+   // Der Punkt, der den Kreis links begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
+   punkte[this.messpunkte.length] = new Vector2D(this.mx - this.r, this.my);
+   
+   // Der Punkt, der den Kreis rechts begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
+   punkte[this.messpunkte.length + 1] = new Vector2D(this.mx + this.r, this.my);
+   
+   // Der Punkt, der den Kreis oben begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
+   punkte[this.messpunkte.length + 2] = new Vector2D(this.mx, this.my + this.r);
+   
+   // Der Punkt, der den Kreis links begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
+   punkte[this.messpunkte.length + 3] = new Vector2D(this.mx, this.my - this.r);
+   
+   // Ein Objekt der Klasse Achsendimensionierung berechnet den Wertebereich des Koordinatensystems.
+   Achsendimensionierung achsendimensionierung = new Achsendimensionierung(punkte);
+   
+   // Der Rücksprung aus der Methode wird protokolliert.
+   Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "wertebereichBestimmen");
+   
+   // Der Wertebereich des Koordinatensystems wird zurückgegeben.
+   return achsendimensionierung.getWertebereichKoordinatensystem();
    }
 
 // =====================================================================================================================
