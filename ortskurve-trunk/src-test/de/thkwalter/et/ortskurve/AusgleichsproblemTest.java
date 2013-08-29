@@ -19,10 +19,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.thkwalter.koordinatensystem.PunktPixelKonverter;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link Ausgleichsproblem}.
@@ -169,5 +173,62 @@ public void testProblemLoesen3() throws SecurityException, NoSuchFieldException,
    
    // Es wird überprüft, ob das Flag korrekt gesetzt ist.
    assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Ausgleichsproblem#konverterErstellen()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ */
+@Test
+public void testKonverterErstellen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException, NoSuchMethodException, InvocationTargetException
+   {
+   // Die Messpunkte werden deklariert und an das Objekt der zu testenden Klasse übergeben.
+   Vector2D[] messpunkte = new Vector2D[]{new Vector2D(0.1, 0), new Vector2D(1.9, 0), new Vector2D(1, 1.1), 
+      new Vector2D(1, -1.1)};
+   this.ausgleichsproblem.setMesspunkte(messpunkte);
+   
+   // Die Kreisradius wird an das Objekt der zu testenden Klasse übergeben.
+   Field rFeld = Ausgleichsproblem.class.getDeclaredField("r");
+   rFeld.setAccessible(true);
+   rFeld.setDouble(this.ausgleichsproblem, 1.0);
+   
+   // Die Kreismittelpunkt wird an das Objekt der zu testenden Klasse übergeben.
+   Field mxFeld = Ausgleichsproblem.class.getDeclaredField("mx");
+   mxFeld.setAccessible(true);
+   mxFeld.setDouble(this.ausgleichsproblem, 1.0);
+   
+   // Die Kreismittelpunkt wird an das Objekt der zu testenden Klasse übergeben.
+   Field myFeld = Ausgleichsproblem.class.getDeclaredField("my");
+   myFeld.setAccessible(true);
+   myFeld.setDouble(this.ausgleichsproblem, 0.0);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Method method = Ausgleichsproblem.class.getDeclaredMethod("konverterErstellen");
+   method.setAccessible(true);
+   PunktPixelKonverter punktPixelKonverter = (PunktPixelKonverter) method.invoke(this.ausgleichsproblem);
+   
+   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
+   Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
+   skalierungsfaktorFeld.setAccessible(true);
+   double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
+   assertEquals(122.7, skalierungsfaktor, 122.7/1000);
+   
+   // Es wird überprüft, ob der korrekte Ursprung in Pixeln berechnet worden ist.
+   Field ursprungInPixelFeld = PunktPixelKonverter.class.getDeclaredField("ursprungInPixel");
+   ursprungInPixelFeld.setAccessible(true);
+   Vector2D ursprungInPixel = (Vector2D) ursprungInPixelFeld.get(punktPixelKonverter);
+   assertEquals(147.3, ursprungInPixel.getX(), 147.3/1000);
+   assertEquals(135, ursprungInPixel.getY(), 135/1000);
+   
    }
 }
