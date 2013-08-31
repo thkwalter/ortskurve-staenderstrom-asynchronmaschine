@@ -139,4 +139,16 @@ public Vector2D getPixelKoordinaten(Vector2D punkt)
    // Die Koordinaten in Pixeln werden zurückgegeben.
    return new Vector2D(xPixel, yPixel);
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * @see java.lang.Object#toString()
+ */
+@Override
+public String toString()
+   {
+   return this.skalierungsfaktor + "; " + this.ursprungInPixel.toString();
+   }
 }
