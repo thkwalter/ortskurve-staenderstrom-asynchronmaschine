@@ -81,11 +81,23 @@
               var canvas = document.getElementById('grafik');
               var context = canvas.getContext('2d');
 
+              var startpunktXAchseXWert = ${ausgleichsproblem.koordinatenachsen.startPunktXAchse.x};
+              var startpunktXAchseYWert = ${ausgleichsproblem.koordinatenachsen.startPunktXAchse.y};
+              var endpunktXAchseXWert = ${ausgleichsproblem.koordinatenachsen.endPunktXAchse.x};
+              var endpunktXAchseYWert = ${ausgleichsproblem.koordinatenachsen.endPunktXAchse.y};
+
+              var startpunktYAchseXWert = ${ausgleichsproblem.koordinatenachsen.startPunktYAchse.x};
+              var startpunktYAchseYWert = ${ausgleichsproblem.koordinatenachsen.startPunktYAchse.y};
+              var endpunktYAchseXWert = ${ausgleichsproblem.koordinatenachsen.endPunktYAchse.x};
+              var endpunktYAchseYWert = ${ausgleichsproblem.koordinatenachsen.endPunktYAchse.y}; 
+
               context.beginPath();
-              context.rect(0, 0, 540, 270);
-              context.lineWidth = 1;
-              context.strokeStyle = 'red';
-              context.stroke();         
+              context.moveTo(startpunktXAchseXWert, startpunktXAchseYWert);
+              context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
+              context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
+              context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
+              context.strokeStyle = '#000000;';
+              context.stroke();      
             </script> 
          </h:panelGroup>  
       </ui:define>
