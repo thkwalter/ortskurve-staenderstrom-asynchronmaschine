@@ -38,7 +38,9 @@ import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptim
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
 import de.thkwalter.koordinatensystem.Achsendimensionierung;
+import de.thkwalter.koordinatensystem.Koordinatenachsen;
 import de.thkwalter.koordinatensystem.PunktPixelKonverter;
+import de.thkwalter.koordinatensystem.Wertebereich;
 
 /**
  * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
@@ -79,6 +81,11 @@ private double r;
  * Dieses Flag zeigt an, ob die Lösung des Ausgleichsproblems angezeigt werden soll. 
  */
 private boolean loesungAnzeigen;
+
+/**
+ * Die Koordinatenachsen.
+ */
+private Koordinatenachsen koordinatenachsen;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -220,8 +227,8 @@ public String problemLoesen()
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
       
-      // Ein Konverter, der Punkte in Pixel umrechnet, wird erzeugt.
-      PunktPixelKonverter punktPixelKonverter = this.konverterErstellen();
+      // Die Daten der Grafik der Ortskurve werden berechnet.
+      this.grafikdatenBerechnen();
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
@@ -241,19 +248,40 @@ public String problemLoesen()
    return null;
    }
 
+
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode erzeugt einen Konverter, der Punkte in Pixel umrechnet.
- * 
- * @return Ein Konverter, der Punkte in Pixel umrechnet.
+ * Diese Methode berechnet die Daten der Grafik der Ortskurve.
  */
-private PunktPixelKonverter konverterErstellen()
+private void grafikdatenBerechnen()
    {
-   // Der Einsprung in die Methode wird protokolliert.
-   Ausgleichsproblem.logger.entering("Ausgleichsproblem", "konverterErstellen");
+   // Die Achsen des Diagramms werden dimensioniert.
+   Achsendimensionierung achsendimensionierung = this.achsenDimensionieren();
    
+   // Ein Konverter, der Punkte in Pixel umrechnet, wird erzeugt.
+   PunktPixelKonverter punktPixelKonverter = 
+      this.konverterErstellen(achsendimensionierung.getWertebereichKoordinatensystem());
+   
+   // Die Koordinatenachsen werden berechnet.
+   this.koordinatenachsen = 
+      new Koordinatenachsen(achsendimensionierung.getWertebereichKoordinatensystem(), punktPixelKonverter);
+   
+   // Die Änderung der Koordinatenachsen wird protokolliert.
+   Ausgleichsproblem.logger.fine(this.koordinatenachsen.toString());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Die Achsen des Diagramms werden dimensioniert.
+ *  
+ * @return Ein Objekt, das die Dimensionierung der Achsen repräsentiert.
+ */
+private Achsendimensionierung achsenDimensionieren()
+   {
    // Das Feld der anzuzeigenden Punkte wird erzeugt.
    Vector2D[] punkte = new Vector2D[this.messpunkte.length + 4];
    
@@ -278,12 +306,33 @@ private PunktPixelKonverter konverterErstellen()
    // Ein Objekt der Klasse Achsendimensionierung berechnet den Wertebereich des Koordinatensystems.
    Achsendimensionierung achsendimensionierung = new Achsendimensionierung(punkte);
    
-   // Der Konverter wird erstellt.
-   PunktPixelKonverter punktPixelKonverter = 
-      new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), 540, 270);
+   // Das Objekt, das die Dimensionierung der Achsen repräsentiert, wird protokolliert.
+   Ausgleichsproblem.logger.fine(achsendimensionierung.toString());
    
-   // Der Rücksprung aus der Methode wird protokolliert.
-   Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "konverterErstellen");
+   // Das Objekt, das die Dimensionierung der Achsen repräsentiert, wird zurückgegeben.
+   return achsendimensionierung;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode erzeugt einen Konverter, der Punkte in Pixel umrechnet.
+ * 
+ * @param wertebereich Der Wertebereich des Koordinatensystems.
+ * 
+ * @return Ein Konverter, der Punkte in Pixel umrechnet.
+ */
+private PunktPixelKonverter konverterErstellen(Wertebereich wertebereich)
+   {
+   // Der Wertebereich, der an die Methode übergeben wird, wird protokolliert.
+   Ausgleichsproblem.logger.fine(wertebereich.toString());
+   
+   // Der Konverter wird erstellt.
+   PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 540, 270);
+   
+   // Der Zustand des Konverters, der die Stromkoordinaten in Pixel umrechnet, wird protokolliert.
+   Ausgleichsproblem.logger.fine(punktPixelKonverter.toString());
    
    // Der Wertebereich des Koordinatensystems wird zurückgegeben.
    return punktPixelKonverter;
@@ -382,4 +431,21 @@ public boolean isMeldungenAnzeigen()
    {
    return FacesContext.getCurrentInstance().getMessageList(null).size() > 0;
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt ein Objekt zurück, das die Koordinatenachsen repräsentiert.
+ * 
+ * @return Ein Objekt zurück, das die Koordinatenachsen repräsentiert.
+ */
+public Koordinatenachsen getKoordinatenachsen()
+   {
+   Ausgleichsproblem.logger.fine(this.koordinatenachsen.toString());
+   
+   return this.koordinatenachsen;
+   }
+
+
 }

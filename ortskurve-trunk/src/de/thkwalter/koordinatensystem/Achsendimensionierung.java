@@ -151,4 +151,16 @@ public Wertebereich getWertebereichKoordinatensystem()
    {
    return this.wertebereichKoordinatensystem;
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * @see java.lang.Object#toString()
+ */
+@Override
+public String toString()
+   {
+   return this.wertebereichKoordinatensystem.toString();
+   }
 }
