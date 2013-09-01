@@ -248,7 +248,7 @@ public void testGetPixelKoordinaten1()
    // Der darzustellende Wertebereich wird definiert.
    Wertebereich wertebereich = new Wertebereich(10.0, 5.0, -30.0, -15.0);
    
-   // Der zu testende Konstruktor wird aufgerufen.
+   // Der PunktPixelKonverter wird erzeugt.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
    // Die zu testende Methode wird aufgerufen.
@@ -269,12 +269,34 @@ public void testGetPixelKoordinaten2()
    // Der darzustellende Wertebereich wird definiert.
    Wertebereich wertebereich = new Wertebereich(10.0, 5.0, -30.0, -15.0);
    
-   // Der zu testende Konstruktor wird aufgerufen.
+   // Der PunktPixelKonverter wird erzeugt.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
    // Die zu testende Methode wird aufgerufen.
    Vector2D punktInPixeln = punktPixelKonverter.getPixelKoordinaten(new Vector2D(5, -5));
    assertEquals(175, punktInPixeln.getX(), 175/1000);
    assertEquals(100, punktInPixeln.getY(), 100/1000);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link PunktPixelKonverter#getLaengeInPixeln(double)}.
+ */
+@Test
+public void testGetLaengeInPixeln() 
+   {
+   // Der darzustellende Wertebereich wird definiert.
+   Wertebereich wertebereich = new Wertebereich(10.0, 10.0, 0.0, -10.0);
+   
+   // Der PunktPixelKonverter wird erzeugt.
+   PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
+   
+   // Die zu testende Methode wird aufgerufen.
+   double laengeInPixeln = punktPixelKonverter.getLaengeInPixeln(10.0);
+   
+   // Es wird überprüft, ob die Länge in Pixeln korrekt berechnet worden ist.
+   assertEquals(100.0, laengeInPixeln, 100.0/1000);
    }
 }

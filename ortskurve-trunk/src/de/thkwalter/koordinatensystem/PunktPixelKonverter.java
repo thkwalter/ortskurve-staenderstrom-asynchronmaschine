@@ -144,6 +144,31 @@ public Vector2D getPixelKoordinaten(Vector2D punkt)
 // =====================================================================================================================
 
 /**
+ * Diese Methode berechnet zu einer realen Länge die entsprechende Länge in Pixeln.
+ * 
+ * @param realeLaenge Die reale Länge.
+ * 
+ * @return Die Länge in Pixeln.
+ */
+public double getLaengeInPixeln(double realeLaenge)
+   {
+   // Der Parameter dieser Methode wird protokolliert.
+   PunktPixelKonverter.logger.fine("realeLaenge: " + realeLaenge);
+   
+   // Der Länge in Pixeln wird berechnet.
+   double laengeInPixeln = realeLaenge * this.skalierungsfaktor;
+   
+   // Die Länge in Pixeln wird protokolliert.
+   PunktPixelKonverter.logger.fine("laengeInPixeln: " + laengeInPixeln);
+   
+   // Die Länge in Pixeln wird zurückgegeben.
+   return laengeInPixeln;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString()
  */
 @Override
