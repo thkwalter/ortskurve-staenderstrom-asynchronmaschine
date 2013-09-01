@@ -87,6 +87,11 @@ private boolean loesungAnzeigen;
  */
 private Koordinatenachsen koordinatenachsen;
 
+/**
+ * Die Grafikdarstellung der Ortskurve.
+ */
+private OrtskurveGrafik ortskurveGrafik;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -268,6 +273,9 @@ private void grafikdatenBerechnen()
    this.koordinatenachsen = 
       new Koordinatenachsen(achsendimensionierung.getWertebereichKoordinatensystem(), punktPixelKonverter);
    
+   // Die Grafikdarstellung der Ortskurve wird berechnet.
+   this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(this.mx, this.my),  this.r, punktPixelKonverter);
+   
    // Die Änderung der Koordinatenachsen wird protokolliert.
    Ausgleichsproblem.logger.fine(this.koordinatenachsen.toString());
    }
@@ -447,5 +455,18 @@ public Koordinatenachsen getKoordinatenachsen()
    return this.koordinatenachsen;
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
 
+/**
+ * Diese Methode gibt die Grafikdarstellung der Ortskurve zurück.
+ * 
+ * @return Die Grafikdarstellung der Ortskurve.
+ */
+public OrtskurveGrafik getOrtskurveGrafik()
+   {
+   Ausgleichsproblem.logger.fine(this.ortskurveGrafik.toString());
+   
+   return this.ortskurveGrafik;
+   }
 }
