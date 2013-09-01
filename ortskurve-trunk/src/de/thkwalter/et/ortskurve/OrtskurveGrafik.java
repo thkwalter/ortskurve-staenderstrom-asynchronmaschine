@@ -74,8 +74,10 @@ public OrtskurveGrafik(Vector2D realerMittelpunkt, double realerRadius, PunktPix
  */
 public Vector2D getMittelpunktInPixeln()
    {
+   // Die Pixelkoordinaten des Mittelpunkts werden protokolliert.
    OrtskurveGrafik.logger.finer("mittelpunktInPixeln: " + this.mittelpunktInPixeln);
    
+   // Die Pixelkoordinaten des Mittelpunkts werden zurückgegeben.
    return this.mittelpunktInPixeln;
    }
 
@@ -89,8 +91,10 @@ public Vector2D getMittelpunktInPixeln()
  */
 public double getRadiusInPixeln()
    {
+   // Der Radius in Pixeln wird protokolliert.
    OrtskurveGrafik.logger.finer("radiusInPixeln: " + this.radiusInPixeln);
    
+   // Der Radius in Pixeln wird zurückgegeben.
    return this.radiusInPixeln;
    }
 
