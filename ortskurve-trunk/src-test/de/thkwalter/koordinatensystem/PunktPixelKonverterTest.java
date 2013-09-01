@@ -47,7 +47,7 @@ public void testPunktPixelKonverter1() throws SecurityException, NoSuchFieldExce
    // Der zu testende Konstruktor wird aufgerufen.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
-   // E wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
+   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
    Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
    skalierungsfaktorFeld.setAccessible(true);
    double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
@@ -82,7 +82,7 @@ public void testPunktPixelKonverter2() throws SecurityException, NoSuchFieldExce
    // Der zu testende Konstruktor wird aufgerufen.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
-   // E wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
+   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
    Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
    skalierungsfaktorFeld.setAccessible(true);
    double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
@@ -117,7 +117,7 @@ public void testPunktPixelKonverter3() throws SecurityException, NoSuchFieldExce
    // Der zu testende Konstruktor wird aufgerufen.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
-   // E wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
+   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
    Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
    skalierungsfaktorFeld.setAccessible(true);
    double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
@@ -152,7 +152,7 @@ public void testPunktPixelKonverter4() throws SecurityException, NoSuchFieldExce
    // Der zu testende Konstruktor wird aufgerufen.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
-   // E wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
+   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
    Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
    skalierungsfaktorFeld.setAccessible(true);
    double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
@@ -187,7 +187,7 @@ public void testPunktPixelKonverter5() throws SecurityException, NoSuchFieldExce
    // Der zu testende Konstruktor wird aufgerufen.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
-   // E wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
+   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
    Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
    skalierungsfaktorFeld.setAccessible(true);
    double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
@@ -222,7 +222,7 @@ public void testPunktPixelKonverter6() throws SecurityException, NoSuchFieldExce
    // Der zu testende Konstruktor wird aufgerufen.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
-   // E wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
+   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
    Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
    skalierungsfaktorFeld.setAccessible(true);
    double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
