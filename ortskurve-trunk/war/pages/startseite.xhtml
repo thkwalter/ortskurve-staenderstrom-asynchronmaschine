@@ -97,7 +97,17 @@
               context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
               context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
               context.strokeStyle = '#000000;';
-              context.stroke();      
+              context.stroke();   
+
+              var centerX = ${ausgleichsproblem.ortskurveGrafik.mittelpunktInPixeln.x};
+              var centerY = ${ausgleichsproblem.ortskurveGrafik.mittelpunktInPixeln.y};
+              var radius = ${ausgleichsproblem.ortskurveGrafik.radiusInPixeln};
+              
+              context.beginPath();
+              context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+              context.lineWidth = 1;
+              context.strokeStyle = '#00ff00';
+              context.stroke();   
             </script> 
          </h:panelGroup>  
       </ui:define>
