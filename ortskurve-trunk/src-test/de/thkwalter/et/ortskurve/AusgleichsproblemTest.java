@@ -327,5 +327,27 @@ public void testKonverterErstellen() throws SecurityException, NoSuchFieldExcept
 // =====================================================================================================================
 // =====================================================================================================================
 
-
+/**
+ * Test für die Methode {@link Ausgleichsproblem#getOrtskurveModell()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetOrtskurveModell() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {
+   // Das Datenmodell der Ortskurve wird erzeugt.
+   OrtskurveModell ortskurveModell = new OrtskurveModell();
+   
+   // Das Datenmodell der Ortskurve wird an das Objekt der zu testenden Klasse übergeben.
+   Field ortskurveFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
+   ortskurveFeld.setAccessible(true);
+   ortskurveFeld.set(this.ausgleichsproblem, ortskurveModell);
+   
+   // Es wird überprüft, ob das Datenmodell der Ortskurve korrekt zurückgegeben wird.
+   assertEquals(ortskurveModell, this.ausgleichsproblem.getOrtskurveModell());
+   }
 }
