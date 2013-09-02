@@ -92,6 +92,11 @@ private Koordinatenachsen koordinatenachsen;
  */
 private OrtskurveGrafik ortskurveGrafik;
 
+/**
+ * Das Datenmodell der Ortskurve.
+ */
+private OrtskurveModell ortskurveModell;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -468,5 +473,22 @@ public OrtskurveGrafik getOrtskurveGrafik()
    Ausgleichsproblem.logger.fine(this.ortskurveGrafik.toString());
    
    return this.ortskurveGrafik;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt das Datenmodell der Ortskurve zurück.
+ * 
+ * @return Das Datenmodell der Ortskurve
+ */
+public OrtskurveModell getOrtskurveModell()
+   {
+   // Das Datenmodell der Ortskurve wird protokolliert.
+   Ausgleichsproblem.logger.fine("ortskurveModell: " + this.ortskurveModell.toString());
+   
+   // Das Datenmodell der Ortskurve wird zurückgegeben.
+   return this.ortskurveModell;
    }
 }
