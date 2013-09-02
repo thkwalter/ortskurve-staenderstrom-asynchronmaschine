@@ -107,7 +107,15 @@
               context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
               context.lineWidth = 1;
               context.strokeStyle = '#00ff00';
-              context.stroke();   
+              context.stroke(); 
+
+              <ui:repeat value="#{ausgleichsproblem.messpunkte}" var="messpunkt">
+                 context.beginPath();
+                 context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
+                 context.lineWidth = 1;
+                 context.strokeStyle = '#ff0000';
+                 context.stroke(); 
+              </ui:repeat>  
             </script> 
          </h:panelGroup>  
       </ui:define>
