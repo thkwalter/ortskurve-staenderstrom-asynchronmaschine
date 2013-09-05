@@ -15,8 +15,7 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
 
@@ -28,16 +27,16 @@ import de.thkwalter.koordinatensystem.PunktPixelKonverter;
 import de.thkwalter.koordinatensystem.Wertebereich;
 
 /**
- * Diese Klasse enthält Tests für die Klasse {@link OrtskurveGrafik}.
+ * Diese Klasse enthält Tests für die Klasse {@link MesspunkteGrafik}.
  *
  * @author Th. K. Walter
  */
-public class OrtskurveGrafikTest
+public class MesspunkteGrafikTest
 {
 /**
- * Ein Objekt der zu testenden Klasse {@link OrtskurveGrafik}
+ * Ein Objekt der zu testenden Klasse {@link MesspunkteGrafik}
  */
-private OrtskurveGrafik ortskurveGrafik;
+private MesspunkteGrafik messpunkteGrafik;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -49,7 +48,7 @@ private OrtskurveGrafik ortskurveGrafik;
  */
 @Before
 public void setUp() throws Exception
-   {   
+   {
    // Der darzustellende Wertebereich wird definiert.
    Wertebereich wertebereich = new Wertebereich(10.0, 10.0, 0.0, -10.0);
    
@@ -57,80 +56,65 @@ public void setUp() throws Exception
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
    // Das Objekt der zu testenden Klasse wird erzeugt.
-   this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(1.0, 0.0), 1.0, punktPixelKonverter);
+   this.messpunkteGrafik = 
+      new MesspunkteGrafik(new Vector2D[]{new Vector2D(2.0, 0.0), new Vector2D(1.0, 1.0)}, punktPixelKonverter);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für den Konstruktor {@link OrtskurveGrafik#OrtskurveGrafik(Vector2D, double, PunktPixelKonverter)}.
- * 
+ * Test für den Konstruktor {@link MesspunkteGrafik#MesspunkteGrafik(Vector2D[], PunktPixelKonverter)}.
  * @throws NoSuchFieldException 
  * @throws SecurityException 
  * @throws IllegalAccessException 
  * @throws IllegalArgumentException 
  */
 @Test
-public void testOrtskurveGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException 
+public void testMesspunkteGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Es wird überprüft, ob das Objekt der zu testenden Klasse erzeugt worden ist.
-   assertNotNull(this.ortskurveGrafik);
+   assertNotNull(this.messpunkteGrafik);
    
-   // Der Mittelpunkt in Pixelkoordinaten wird gelesen.
-   Field mittelPunktInPixelnFeld = OrtskurveGrafik.class.getDeclaredField("mittelpunktInPixeln"); 
-   mittelPunktInPixelnFeld.setAccessible(true);
-   Vector2D mittelPunktInPixeln = (Vector2D) mittelPunktInPixelnFeld.get(this.ortskurveGrafik);
+   // Die Messpunkte in Pixelkoordinaten werden gelesen.
+   Field messpunkteInPixelnFeld = MesspunkteGrafik.class.getDeclaredField("messpunkteInPixeln"); 
+   messpunkteInPixelnFeld.setAccessible(true);
+   Vector2D[] messpunkteInPixeln = (Vector2D[]) messpunkteInPixelnFeld.get(this.messpunkteGrafik);
    
-   // Es wird überprüft, ob der Mittelpunkt in Pixelkoordinaten, korrekt berechnet worden ist.
-   assertEquals(new Vector2D(60, 100), mittelPunktInPixeln);
+   // Es wird überprüft, ob die korrekte Anzahl von Messpunkten in Pixelkoordinaten berechnet worden ist.
+   assertEquals(2, messpunkteInPixeln.length);
    
-   // Der Mittelpunkt in Pixelkoordinaten wird berechnet.
-   Field radiusInPixelnFeld = OrtskurveGrafik.class.getDeclaredField("radiusInPixeln"); 
-   radiusInPixelnFeld.setAccessible(true);
-   double radiusInPixeln = (Double) radiusInPixelnFeld.get(this.ortskurveGrafik);
-   
-   // Es wird überprüft, ob der Mittelpunkt in Pixelkoordinaten, korrekt berechnet worden ist.
-   assertEquals(10, radiusInPixeln, 10/1000);
+   // Es wird überprüft, ob die Pixelkoordinaten korrekt berechnet worden sind.
+   assertEquals(new Vector2D(70, 100), messpunkteInPixeln[0]);
+   assertEquals(new Vector2D(60, 90), messpunkteInPixeln[1]);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveGrafik#getMittelpunkt()}.
+ * Test für die Methode {@link MesspunkteGrafik#getMesspunkteInPixeln()}.
  */
 @Test
-public void testGetMittelpunkt() 
+public void testGetMesspunkteInPixeln()
    {
-   // Es wird überprüft, ob der Mittelpunkt in Pixelkoordinaten korrekt zurückgegeben wird. 
-   assertEquals(new Vector2D(60, 100), this.ortskurveGrafik.getMittelpunktInPixeln());
+   // Es wird überprüft, ob die Messwerte in Pixelkoordinaten korrekt zurückgegeben werden. 
+   Vector2D[] messpunkteInPixeln = this.messpunkteGrafik.getMesspunkteInPixeln();
+   assertEquals(new Vector2D(70, 100), messpunkteInPixeln[0]);
+   assertEquals(new Vector2D(60, 90), messpunkteInPixeln[1]);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveGrafik#getRadius()}.
- */
-@Test
-public void testGetRadius()
-   {
-   // Es wird überprüft, ob der Radius in Pixeln korrekt zurückgegeben wird. 
-   assertEquals(10, this.ortskurveGrafik.getRadiusInPixeln(), 10/1000);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link OrtskurveGrafik#toString()}.
+ * Test für die Methode {@link MesspunkteGrafik#toString()}.
  */
 @Test
 public void testToString()
    {
    // Es wird überprüft, ob die Zeichenkette, die das Objekt repräsentiert, korrekt zusammengebaut wird.
-   assertEquals("mittelPunktInPixeln: {60; 100}; radiusInPixeln: 10.0", this.ortskurveGrafik.toString());
+   assertEquals("messpunkteInPixeln: {70; 100}; {60; 90}; ", this.messpunkteGrafik.toString());
    }
 }

@@ -93,10 +93,10 @@ public Vector2D[] getMesspunkteInPixeln()
 public String toString()
    {
    // Die Zeichenkette, die dieses Objekt repräsentiert, wird zusammengebaut.
-   StringBuilder stringBuilder = new StringBuilder();
+   StringBuilder stringBuilder = new StringBuilder("messpunkteInPixeln: ");
    for (int i = 0; i < this.messpunkteInPixeln.length; i++)
       {
-      stringBuilder.append(messpunkteInPixeln).append("; ");
+      stringBuilder.append(messpunkteInPixeln[i]).append("; ");
       }
 
    // Die Zeichenkette, die dieses Objekt repräsentiert, wird zurückgegeben.
