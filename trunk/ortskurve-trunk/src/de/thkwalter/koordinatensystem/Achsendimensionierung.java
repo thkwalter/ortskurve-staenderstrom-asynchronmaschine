@@ -54,7 +54,9 @@ public Achsendimensionierung(Vector2D[] punkte)
    Wertebereich wertebereich = this.wertebereichBestimmen(punkte);
    
    // Der Wertebereich wird gegebenenfalls bis zum Ursprung ausgedehnt.
-   this.wertebereichKoordinatensystem = this.ursprungEinbeziehen(wertebereich);
+   wertebereich = this.ursprungEinbeziehen(wertebereich);
+   
+   this.wertebereichKoordinatensystem = this.sicherheitsabstandHinzufuegen(wertebereich);
    
    // Der Rücksprung aus dem Konstruktor wird protokolliert.
    Achsendimensionierung.logger.exiting("Achsendimensionierung", "Achsendimensionierung");
@@ -136,6 +138,22 @@ private Wertebereich ursprungEinbeziehen(Wertebereich wertebereichPunktemenge)
    Achsendimensionierung.logger.exiting("Achsendimensionierung", "ursprungEinbeziehen");
    
    // Dererweiterte Wertebereich der Punktemenge wird zurückgegeben.
+   return new Wertebereich(maxX, maxY, minX, minY);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+public Wertebereich sicherheitsabstandHinzufuegen(Wertebereich wertebereich)
+   {
+   double xAusdehnung = wertebereich.getMaxX() - wertebereich.getMinX();
+   double yAusdehnung = wertebereich.getMaxY() - wertebereich.getMinY();
+   
+   double maxX = wertebereich.getMaxX() + 0.1 * xAusdehnung;
+   double maxY = wertebereich.getMaxY() + 0.1 * yAusdehnung;
+   double minX = wertebereich.getMinX() - 0.1 * xAusdehnung;
+   double minY = wertebereich.getMinY() - 0.1 * yAusdehnung;
+   
    return new Wertebereich(maxX, maxY, minX, minY);
    }
 
