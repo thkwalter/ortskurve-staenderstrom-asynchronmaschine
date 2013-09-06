@@ -281,6 +281,11 @@ private void grafikdatenBerechnen()
    // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(this.mx, this.my),  this.r, punktPixelKonverter);
    
+   // Die Grafikdarstellung der Messpunkte werden berechnet.
+   MesspunkteGrafik messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
+   this.ortskurveModell = new OrtskurveModell();
+   this.ortskurveModell.setMesspunkteGrafik(messpunkteGrafik);
+   
    // Die Änderung der Koordinatenachsen wird protokolliert.
    Ausgleichsproblem.logger.fine(this.koordinatenachsen.toString());
    }
@@ -486,7 +491,7 @@ public OrtskurveGrafik getOrtskurveGrafik()
 public OrtskurveModell getOrtskurveModell()
    {
    // Das Datenmodell der Ortskurve wird protokolliert.
-   Ausgleichsproblem.logger.fine("ortskurveModell: " + this.ortskurveModell.toString());
+   // Ausgleichsproblem.logger.fine("ortskurveModell: " + this.ortskurveModell.toString());
    
    // Das Datenmodell der Ortskurve wird zurückgegeben.
    return this.ortskurveModell;
