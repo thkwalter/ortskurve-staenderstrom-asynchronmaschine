@@ -17,7 +17,6 @@ package de.thkwalter.koordinatensystem;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -77,10 +76,10 @@ public void testAchsendimensionierung()
    Wertebereich wertebereich = this.achsendimensionierung.getWertebereichKoordinatensystem();
    
    // Es wird überprüft, ob der korrekte Wertebereich bestimmt worden ist.
-   assertEquals(this.punkte[2].getX(), wertebereich.getMaxX(), 0.0);
-   assertEquals(this.punkte[0].getX(), wertebereich.getMinX(), 0.0);
-   assertEquals(this.punkte[1].getY(), wertebereich.getMaxY(), 0.0);
-   assertEquals(this.punkte[3].getY(), wertebereich.getMinY(), 0.0);
+   assertEquals(3.4, wertebereich.getMaxX(), 3.4/1000);
+   assertEquals(-1.4, wertebereich.getMinX(), -1.6/1000);
+   assertEquals(2.6, wertebereich.getMaxY(), 2.6/1000);
+   assertEquals(-4.6, wertebereich.getMinY(), -4.6/1000);
    }
 
 // =====================================================================================================================
@@ -108,6 +107,37 @@ public void testWertebereichBestimmen() throws SecurityException, NoSuchMethodEx
    assertEquals(this.punkte[0].getX(), wertebereich.getMinX(), 0.0);
    assertEquals(this.punkte[1].getY(), wertebereich.getMaxY(), 0.0);
    assertEquals(this.punkte[3].getY(), wertebereich.getMinY(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Achsendimensionierung#sicherheitsabstandHinzufuegen(Wertebereich)}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testSicherheitsabstandHinzufuegen() throws SecurityException, NoSuchMethodException, 
+   IllegalArgumentException, IllegalAccessException, InvocationTargetException
+   {
+   // Die Testdaten werden erstellt.
+   Wertebereich wertebereichPunktemenge = new Wertebereich(10.0, 5.0, 0.0, -5.0);
+   
+   // Die zu testende Methode wird ausgeführt.
+   Method method = Achsendimensionierung.class.getDeclaredMethod("sicherheitsabstandHinzufuegen", Wertebereich.class);
+   method.setAccessible(true);
+   Wertebereich wertebereich = (Wertebereich) method.invoke(this.achsendimensionierung, wertebereichPunktemenge);
+   
+   // Es wird überprüft, ob der korrekte Wertebereich bestimmt worden ist.
+   assertEquals(11, wertebereich.getMaxX(), 11.0/1000);
+   assertEquals(-1.0, wertebereich.getMinX(), -1.0/1000);
+   assertEquals(6.0, wertebereich.getMaxY(), 6.0/1000);
+   assertEquals(-6.0, wertebereich.getMinY(), -6.0/1000);
    }
 
 // =====================================================================================================================
