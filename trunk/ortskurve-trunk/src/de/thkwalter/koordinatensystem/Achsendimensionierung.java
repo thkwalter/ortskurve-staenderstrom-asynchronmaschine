@@ -47,19 +47,25 @@ private static Logger logger = Logger.getLogger(Achsendimensionierung.class.getN
  */
 public Achsendimensionierung(Vector2D[] punkte)
    {
-   // Der Einsprung in den Konstruktor wird protokolliert.
-   Achsendimensionierung.logger.entering("Achsendimensionierung", "Achsendimensionierung");
+   // Die an den Konstruktor übergebenen Parameter werden protokolliert.
+   StringBuilder parameter = new StringBuilder("punkte: ");
+   for (Vector2D punkt : punkte)
+      {
+      parameter.append(punkt + "; ");
+      }
+   Achsendimensionierung.logger.fine(parameter.toString());
    
    // Die Wertebereiche der Punktemenge wird bestimmt.
    Wertebereich wertebereich = this.wertebereichBestimmen(punkte);
    
+   // Der Wertebereich wird in jede Richtung um zehn Prozent Sicherheitsabstand vergrößert.
+   wertebereich = this.sicherheitsabstandHinzufuegen(wertebereich);
+   
    // Der Wertebereich wird gegebenenfalls bis zum Ursprung ausgedehnt.
-   wertebereich = this.ursprungEinbeziehen(wertebereich);
+   this.wertebereichKoordinatensystem = this.ursprungEinbeziehen(wertebereich);
    
-   this.wertebereichKoordinatensystem = this.sicherheitsabstandHinzufuegen(wertebereich);
-   
-   // Der Rücksprung aus dem Konstruktor wird protokolliert.
-   Achsendimensionierung.logger.exiting("Achsendimensionierung", "Achsendimensionierung");
+   // Der berechnete Wertebereich wird protokolliert.
+   Achsendimensionierung.logger.fine("wertebereichKoordinatensystem: " + this.wertebereichKoordinatensystem.toString());
    }
 
 // =====================================================================================================================
@@ -144,17 +150,34 @@ private Wertebereich ursprungEinbeziehen(Wertebereich wertebereichPunktemenge)
 // =====================================================================================================================
 // =====================================================================================================================
 
+/**
+ * Diese Methode vergrößert den Wertebereich in jede Richtung um zehn Prozent Sicherheitsabstand.
+ * 
+ * @param wertebereich Der Wertebereich ohne Sicherheitsabstand
+ * 
+ * @return Der Wertebereich mit Sicherheitsabstand
+ */
 public Wertebereich sicherheitsabstandHinzufuegen(Wertebereich wertebereich)
    {
+   // Der an die Methode übergebene Wertebereich wird protokolliert.
+   Achsendimensionierung.logger.fine("wertebereich: " + wertebereich.toString());
+   
+   // Die Ausdehnungen des Wertebereichs in x- und y-Richtung werden berechnet.
    double xAusdehnung = wertebereich.getMaxX() - wertebereich.getMinX();
    double yAusdehnung = wertebereich.getMaxY() - wertebereich.getMinY();
    
+   // Der Wertebereich mit Sicherheitsabstand wird berechnet.
    double maxX = wertebereich.getMaxX() + 0.1 * xAusdehnung;
    double maxY = wertebereich.getMaxY() + 0.1 * yAusdehnung;
    double minX = wertebereich.getMinX() - 0.1 * xAusdehnung;
    double minY = wertebereich.getMinY() - 0.1 * yAusdehnung;
+   Wertebereich werteBereichMitSicherheitsabstand = new Wertebereich(maxX, maxY, minX, minY);
    
-   return new Wertebereich(maxX, maxY, minX, minY);
+   // Der Wertebereich mit Sicherheitsabstand wird protokolliert.
+   Achsendimensionierung.logger.fine(werteBereichMitSicherheitsabstand.toString());
+   
+   // Der Wertebereich mit Sicherheitsabstand wird zurückgegeben.
+   return werteBereichMitSicherheitsabstand;
    }
 
 // =====================================================================================================================
