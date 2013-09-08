@@ -15,3 +15,5 @@
  # [FehlerbehandlungEinfachDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (1) überprüfen]
  # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (2) überprüfen]
  # [Grafiktest1 Grafiktest 1]
+ # [Grafiktest2 Grafiktest 2]
+ # [Grafiktest3 Grafiktest 3]
