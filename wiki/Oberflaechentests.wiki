@@ -14,3 +14,4 @@
  # [FehlerbehandlungPunktBeiMittelpunkt Fehlerbehandlung bei Punkt in der Nähe des Mittelpunkts überprüfen]
  # [FehlerbehandlungEinfachDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (1) überprüfen]
  # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (2) überprüfen]
+ # [Grafiktest1 Grafiktest 1]
