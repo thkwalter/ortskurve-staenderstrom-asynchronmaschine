@@ -4,6 +4,7 @@
 1.0, 0.0
 2.0, 1.0
 1.0, 0.0
+2.0, 1.0
 }}} 
 eingeben und den Knopf "Ortskurve berechnen" drücken -> Eine Fehlermeldung wird angezeigt
  # Die Fehlermeldung kontrollieren -> Die Fehlermeldung ist korrekt
