@@ -110,7 +110,7 @@ public String problemLoesen()
    Ausgleichsproblem.logger.entering("Ausgleichsproblem", "problemLoesen");
    
    try
-      {
+      {      
       // Alle Messpunkte werden in ein HashSet eingefügt.
       HashSet<Vector2D> messpunktSet = new HashSet<Vector2D>();
       for (Vector2D messpunkt : this.messpunkte)
@@ -267,6 +267,9 @@ public String problemLoesen()
  */
 private void grafikdatenBerechnen()
    {
+   // Das Datenmodell der Ortskurve wird erzeugt.
+   this.ortskurveModell = new OrtskurveModell();
+   
    // Die Achsen des Diagramms werden dimensioniert.
    Achsendimensionierung achsendimensionierung = this.achsenDimensionieren();
    
@@ -281,9 +284,8 @@ private void grafikdatenBerechnen()
    // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(this.mx, this.my),  this.r, punktPixelKonverter);
    
-   // Die Grafikdarstellung der Messpunkte werden berechnet.
+   // Die Grafikdarstellung der Messpunkte wird berechnet und im Datenmodell der Ortskurve gespeichert.
    MesspunkteGrafik messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
-   this.ortskurveModell = new OrtskurveModell();
    this.ortskurveModell.setMesspunkteGrafik(messpunkteGrafik);
    
    // Die Änderung der Koordinatenachsen wird protokolliert.
@@ -456,12 +458,11 @@ public boolean isMeldungenAnzeigen()
 /**
  * Diese Methode gibt ein Objekt zurück, das die Koordinatenachsen repräsentiert.
  * 
- * @return Ein Objekt zurück, das die Koordinatenachsen repräsentiert.
+ * @return Ein Objekt, das die Koordinatenachsen repräsentiert
  */
 public Koordinatenachsen getKoordinatenachsen()
    {
-   Ausgleichsproblem.logger.fine(this.koordinatenachsen.toString());
-   
+   // Ein Objekt, das die Koordinatenachsen repräsentiert, wird zurückgegeben.
    return this.koordinatenachsen;
    }
 
@@ -475,8 +476,7 @@ public Koordinatenachsen getKoordinatenachsen()
  */
 public OrtskurveGrafik getOrtskurveGrafik()
    {
-   Ausgleichsproblem.logger.fine(this.ortskurveGrafik.toString());
-   
+   // Die Grafikdarstellung der Ortskurve wird zurückgegeben.
    return this.ortskurveGrafik;
    }
 
@@ -490,9 +490,6 @@ public OrtskurveGrafik getOrtskurveGrafik()
  */
 public OrtskurveModell getOrtskurveModell()
    {
-   // Das Datenmodell der Ortskurve wird protokolliert.
-   // Ausgleichsproblem.logger.fine("ortskurveModell: " + this.ortskurveModell.toString());
-   
    // Das Datenmodell der Ortskurve wird zurückgegeben.
    return this.ortskurveModell;
    }
