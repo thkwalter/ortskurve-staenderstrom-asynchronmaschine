@@ -226,9 +226,9 @@ public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldExce
    Koordinatenachsen koordinatenachsen = (Koordinatenachsen) koordinatenachsenFeld.get(this.ausgleichsproblem);
 
    // Es wird überprüft, ob die Koordinatenachsen korrekt berechnet worden sind.
-   assertEquals(147.3, koordinatenachsen.getStartPunktYAchse().getX(), 147.3/1000);
+   assertEquals(167.7, koordinatenachsen.getStartPunktYAchse().getX(), 167.7/1000);
    assertEquals(270, koordinatenachsen.getStartPunktYAchse().getY(), 270/1000);
-   assertEquals(147.3, koordinatenachsen.getEndPunktYAchse().getX(), 147.3/1000);
+   assertEquals(167.7, koordinatenachsen.getEndPunktYAchse().getX(), 167.7/1000);
    assertEquals(0, koordinatenachsen.getEndPunktYAchse().getY(), 0);
    assertEquals(147.3, koordinatenachsen.getStartPunktXAchse().getX(), 147.3/1000);
    assertEquals(135, koordinatenachsen.getStartPunktXAchse().getY(), 135/1000);
@@ -279,10 +279,10 @@ public void testAchsenDimensionieren() throws SecurityException, NoSuchFieldExce
    Achsendimensionierung achsendimensionierung = (Achsendimensionierung) method.invoke(this.ausgleichsproblem);
    
    // Es wird überprüft, ob die Achsen korrekt dimensioniert worden sind.
-   assertEquals(2.0, achsendimensionierung.getWertebereichKoordinatensystem().getMaxX(), 1.9/1000);
-   assertEquals(0.0, achsendimensionierung.getWertebereichKoordinatensystem().getMinX(), 1.9/1000);
-   assertEquals(1.1, achsendimensionierung.getWertebereichKoordinatensystem().getMaxY(), 1.9/1000);
-   assertEquals(-1.1, achsendimensionierung.getWertebereichKoordinatensystem().getMinY(), 1.9/1000);
+   assertEquals(2.2, achsendimensionierung.getWertebereichKoordinatensystem().getMaxX(), 2.2/1000);
+   assertEquals(-0.2, achsendimensionierung.getWertebereichKoordinatensystem().getMinX(), -0.2/1000);
+   assertEquals(1.32, achsendimensionierung.getWertebereichKoordinatensystem().getMaxY(), 1.32/1000);
+   assertEquals(-1.32, achsendimensionierung.getWertebereichKoordinatensystem().getMinY(), 1.32/1000);
    }
 
 // =====================================================================================================================
