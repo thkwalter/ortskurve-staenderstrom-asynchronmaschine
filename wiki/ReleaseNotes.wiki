@@ -1,5 +1,5 @@
 = Release Notes =
 
-== Version 4 vom xx.09.2013 ==
+== Version 4 vom 08.09.2013 ==
 
 Fachliche Erweiterung: Grafik der berechneten Ortskurve wird angezeigt.
