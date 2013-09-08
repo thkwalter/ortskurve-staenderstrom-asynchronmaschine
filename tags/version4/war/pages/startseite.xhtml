@@ -1,0 +1,125 @@
+<!-- ===================================================================================================================
+     Copyright 2013 Th. K. Walter, Nürnberg.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+==================================================================================================================== -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" 
+   xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+   <ui:composition template="./template.xhtml">
+      <ui:define name="inhalt">   
+         <h:form>
+            <h:panelGroup rendered="#{ausgleichsproblem.meldungenAnzeigen}" styleClass="nachrichten" layout="block">
+               Die Ortskurve konnte aus folgenden Gründen leider nicht berechnet werden:
+               <br/><br/>
+            
+               <h:messages errorClass="error-messages" globalOnly="true" tooltip="true"/>
+            </h:panelGroup>
+         
+            <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
+               <h:panelGroup>
+                  <p id="eingabehilfe">
+                     Geben Sie bitte einen Messpunkt pro Zeile ein, die beiden Komponenten eines Messpunktes jeweils 
+                     durch ein Komma getrennt, also im Format: -Im <span class="zeiger">I</span><sub>1</sub>, 
+                     Re <span class="zeiger">I</span><sub>1</sub>
+                     <br/><br/>
+                     
+                     Beispiel:
+                     <br/><br/>
+                     
+                     <span id="eingabehilfe-beispiel">
+                     0.1,0.0<br/>
+                     1.0,1.1<br/>
+                     1.9,0.0<br/>
+                     1.0,-1.1<br/>
+                     </span>
+                  </p>
+               </h:panelGroup>
+               <h:inputTextarea value="#{ausgleichsproblem.messpunkte}" styleClass="eingabefeld" id="eingabe"
+                  converter="CSVConverter"/>
+            </h:panelGrid>
+            
+            <h:panelGroup class="knopfzeile" layout="block">
+               <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}" class="knopf"/>
+               <p:spacer width="1" height="21" />
+            </h:panelGroup>    
+         </h:form> 
+           
+         <h:panelGrid columns="2" rendered="#{ausgleichsproblem.loesungAnzeigen}">
+            <f:facet name="header">
+               <h:outputText value="Der berechnete Ausgleichskreis besitzt folgende Parameter:"/>
+            </f:facet>
+         
+            <h:outputText value="Mittelpunkt:"/>
+            <h:outputText value="(#{ausgleichsproblem.mx}, #{ausgleichsproblem.my})"/>
+            
+            <h:outputText value="Radius:"/>
+            <h:outputText value="#{ausgleichsproblem.r}"/>
+       
+         </h:panelGrid>   
+         
+         <h:panelGroup rendered="#{ausgleichsproblem.loesungAnzeigen}" class="grafik-ortskurve" layout="block">
+            <canvas id="grafik" width="540" height="270"></canvas>
+            
+            <script type="text/javascript">
+              var canvas = document.getElementById('grafik');
+              var context = canvas.getContext('2d');
+
+              var startpunktXAchseXWert = #{ausgleichsproblem.koordinatenachsen.startPunktXAchse.x};
+              var startpunktXAchseYWert = #{ausgleichsproblem.koordinatenachsen.startPunktXAchse.y};
+              var endpunktXAchseXWert = #{ausgleichsproblem.koordinatenachsen.endPunktXAchse.x};
+              var endpunktXAchseYWert = #{ausgleichsproblem.koordinatenachsen.endPunktXAchse.y};
+
+              var startpunktYAchseXWert = #{ausgleichsproblem.koordinatenachsen.startPunktYAchse.x};
+              var startpunktYAchseYWert = #{ausgleichsproblem.koordinatenachsen.startPunktYAchse.y};
+              var endpunktYAchseXWert = #{ausgleichsproblem.koordinatenachsen.endPunktYAchse.x};
+              var endpunktYAchseYWert = #{ausgleichsproblem.koordinatenachsen.endPunktYAchse.y}; 
+
+              context.beginPath();
+              context.moveTo(startpunktXAchseXWert, startpunktXAchseYWert);
+              context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
+              context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
+              context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
+              context.strokeStyle = '#000000;';
+              context.stroke();   
+
+              var centerX = #{ausgleichsproblem.ortskurveGrafik.mittelpunktInPixeln.x};
+              var centerY = #{ausgleichsproblem.ortskurveGrafik.mittelpunktInPixeln.y};
+              var radius = #{ausgleichsproblem.ortskurveGrafik.radiusInPixeln};
+              
+              context.beginPath();
+              context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+              context.lineWidth = 1;
+              context.strokeStyle = '#00cc00';
+              context.stroke(); 
+
+              <ui:repeat value="#{ausgleichsproblem.ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
+                 context.beginPath();
+                 context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
+                 context.lineWidth = 1;
+                 context.strokeStyle = '#ff0000';
+                 context.stroke(); 
+              </ui:repeat>  
+            </script> 
+         </h:panelGroup>  
+      </ui:define>
+   </ui:composition>
+</h:body>
+
+</html>
