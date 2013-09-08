@@ -1,0 +1,11 @@
+= Grafiktest 1 =
+ 
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte 
+{{{
+-5.0, 5.0
+-8.0, 3.0
+-3.0, 8.0
+}}} 
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
+ # Die Grafik kontrollieren
