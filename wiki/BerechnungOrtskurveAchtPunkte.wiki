@@ -14,3 +14,4 @@
 }}} 
 eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
  # Das Resultat kontrollieren -> Mittelpunkt (0, 0) und Radius 10
+ # Die Grafik kontrollieren
