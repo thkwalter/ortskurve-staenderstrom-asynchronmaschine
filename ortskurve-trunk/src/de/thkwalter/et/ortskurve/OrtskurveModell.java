@@ -24,9 +24,14 @@ package de.thkwalter.et.ortskurve;
 public class OrtskurveModell
 {
 /**
- * Die Grafikdarstellung der Messpunkte.
+ * Die Grafikdarstellung der Messpunkte
  */
 private MesspunkteGrafik messpunkteGrafik;
+
+/**
+ * Die Grafikdarstellung der Ortskurve
+ */
+private OrtskurveGrafik ortskurveGrafik;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -60,21 +65,55 @@ public void setMesspunkteGrafik(MesspunkteGrafik messpunkteGrafik)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt die Grafikdarstellung der Ortskurve zurück.
+ * 
+ * @return Die Grafikdarstellung der Ortskurve
+ */
+public OrtskurveGrafik getOrtskurveGrafik()
+   {
+   return this.ortskurveGrafik;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die übergebene Grafikdarstellung der Ortskurve in diesem Objekt.
+ * 
+ * @param messpunkteGrafik Die Grafikdarstellung der Ortskurve
+ */
+public void setOrtskurveGrafik(OrtskurveGrafik ortskurveGrafik)
+   {
+   this.ortskurveGrafik = ortskurveGrafik;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString() 
  */
 @Override
 public String toString()
    {
-   // Die Zeichenkette, die dieses Objekt repräsentiert, wird erzeugt..
+   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird erzeugt..
    StringBuilder stringBuilder = new StringBuilder();
    
-   // Die Zeichenkette, welche die Messpunkte in Pixelkoordinaten repräsentiert, wird hinzugefügt. 
+   // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
+   stringBuilder.append("messpunkteGrafik: ");
    if (this.messpunkteGrafik != null)
       {
-      stringBuilder.append("messpunkteGrafik: ").append(this.messpunkteGrafik.toString());
+      stringBuilder.append(this.messpunkteGrafik.toString());
+      }
+   
+   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird hinzugefügt. 
+   stringBuilder.append("ortskurveGrafik: ");
+   if (this.messpunkteGrafik != null)
+      {
+      stringBuilder.append(this.ortskurveGrafik.toString());
       }
       
-   // Die Zeichenkette, die dieses Objekt repräsentiert, wird zurückgegeben.
+   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird zurückgegeben.
    return stringBuilder.toString();
    }
 
