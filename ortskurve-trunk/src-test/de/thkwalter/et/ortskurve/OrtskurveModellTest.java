@@ -30,6 +30,7 @@ import de.thkwalter.koordinatensystem.Wertebereich;
  * Diese Klasse enthält Tests für die Klasse {@link OrtskurveModell}.
  *
  * @author Th. K. Walter
+ * @version 1.0
  */
 public class OrtskurveModellTest
 {
@@ -54,7 +55,7 @@ private MesspunkteGrafik messpunkteGrafik;
 @Before
 public void setUp() throws Exception
    {
-   // Ein Objekt der zu testenden Klasse wird initialisiert.
+   // Ein Objekt der zu testenden Klasse OrtskurveModell wird initialisiert.
    this.ortskurveModell = new OrtskurveModell();
    
    // Die im Test verwendete Grafikdarstellung der Messpunkte wird erzeugt.
@@ -69,6 +70,7 @@ public void setUp() throws Exception
 
 /**
  * Test für die Methode {@link OrtskurveModell#getMesspunkteGrafik()}.
+ * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
  * @throws IllegalAccessException 
@@ -78,7 +80,7 @@ public void setUp() throws Exception
 public void testGetMesspunkteGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException 
    {   
-   // Die Grafikdarstellung der Messpunkte wird im Objekt der zu testenden Klasse gespeichert.
+   // Die Grafikdarstellung der Messpunkte wird im Objekt der zu testenden Klasse OrtskurveModell gespeichert.
    Field messpunkteGrafikFeld = OrtskurveModell.class.getDeclaredField("messpunkteGrafik");
    messpunkteGrafikFeld.setAccessible(true);
    messpunkteGrafikFeld.set(this.ortskurveModell, this.messpunkteGrafik);
