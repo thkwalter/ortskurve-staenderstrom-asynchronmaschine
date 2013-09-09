@@ -30,6 +30,7 @@ import de.thkwalter.koordinatensystem.Wertebereich;
  * Diese Klasse enthält Tests für die Klasse {@link MesspunkteGrafik}.
  *
  * @author Th. K. Walter
+ * @version 1.0
  */
 public class MesspunkteGrafikTest
 {
@@ -52,7 +53,7 @@ public void setUp() throws Exception
    // Der darzustellende Wertebereich wird definiert.
    Wertebereich wertebereich = new Wertebereich(10.0, 10.0, 0.0, -10.0);
    
-   // Der Konverter zwischen realen Koordinaten und ihren Pixelkoordinaten wird erzeugt.
+   // Der Konverter, der reale Koordinaten in Pixelkoordinaten umrechnet, wird erzeugt.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
    // Das Objekt der zu testenden Klasse wird erzeugt.
@@ -65,6 +66,7 @@ public void setUp() throws Exception
 
 /**
  * Test für den Konstruktor {@link MesspunkteGrafik#MesspunkteGrafik(Vector2D[], PunktPixelKonverter)}.
+ * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
  * @throws IllegalAccessException 
