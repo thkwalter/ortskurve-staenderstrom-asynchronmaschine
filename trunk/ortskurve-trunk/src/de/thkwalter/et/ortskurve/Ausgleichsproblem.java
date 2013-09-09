@@ -287,9 +287,6 @@ private void grafikdatenBerechnen()
    // Die Grafikdarstellung der Messpunkte wird berechnet und im Datenmodell der Ortskurve gespeichert.
    MesspunkteGrafik messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
    this.ortskurveModell.setMesspunkteGrafik(messpunkteGrafik);
-   
-   // Die Änderung der Koordinatenachsen wird protokolliert.
-   Ausgleichsproblem.logger.fine(this.koordinatenachsen.toString());
    }
 
 // =====================================================================================================================
