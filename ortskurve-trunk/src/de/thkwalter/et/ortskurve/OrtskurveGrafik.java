@@ -15,8 +15,6 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import java.util.logging.Logger;
-
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.koordinatensystem.PunktPixelKonverter;
@@ -25,6 +23,7 @@ import de.thkwalter.koordinatensystem.PunktPixelKonverter;
  * Diese Klasse repräsentiert die Grafikdarstellung der Ortskurve.
  *
  * @author Th. K. Walter
+ * @version 1.0
  */
 public class OrtskurveGrafik
 {
@@ -38,11 +37,6 @@ private Vector2D mittelpunktInPixeln;
  */
 private double radiusInPixeln;
 
-/*
- * Der Logger dieser Klasse.
- */
-private static Logger logger = Logger.getLogger(OrtskurveGrafik.class.getName());
-
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -51,17 +45,9 @@ private static Logger logger = Logger.getLogger(OrtskurveGrafik.class.getName())
  */
 public OrtskurveGrafik(Vector2D realerMittelpunkt, double realerRadius, PunktPixelKonverter punktPixelKonverter)
    {
-   // Die an den Konstruktor übergebenen Parameter werden protokolliert.
-   OrtskurveGrafik.logger.fine("realerMittelpunkt: " + realerMittelpunkt);
-   OrtskurveGrafik.logger.fine("realerRadius: " + realerRadius);
-   OrtskurveGrafik.logger.fine("punktPixelKonverter: " + punktPixelKonverter.toString());
-   
    // Die Pixelkoordinaten des Mittelpunkts und der Radius in Pixeln werden berechnet.
    this.radiusInPixeln = punktPixelKonverter.getLaengeInPixeln(realerRadius);
    this.mittelpunktInPixeln = punktPixelKonverter.getPixelKoordinaten(realerMittelpunkt);
-   
-   // Die Pixelkoordinaten des Mittelpunkts und der Radius in Pixeln werden protokolliert.
-   OrtskurveGrafik.logger.fine(this.toString());
    }
 
 // =====================================================================================================================
@@ -70,13 +56,10 @@ public OrtskurveGrafik(Vector2D realerMittelpunkt, double realerRadius, PunktPix
 /**
  * Diese Methode gibt die Pixelkoordinaten des Mittelpunkts der Ortskurve zurück.
  * 
- * @return Die Pixelkoordinaten des Mittelpunkts der Ortskurve.
+ * @return Die Pixelkoordinaten des Mittelpunkts der Ortskurve
  */
 public Vector2D getMittelpunktInPixeln()
    {
-   // Die Pixelkoordinaten des Mittelpunkts werden protokolliert.
-   OrtskurveGrafik.logger.finer("mittelpunktInPixeln: " + this.mittelpunktInPixeln);
-   
    // Die Pixelkoordinaten des Mittelpunkts werden zurückgegeben.
    return this.mittelpunktInPixeln;
    }
@@ -87,13 +70,10 @@ public Vector2D getMittelpunktInPixeln()
 /**
  * Diese Methode gibt den Radius der Ortskurve in Pixeln zurück.
  * 
- * @return Der Radius der Ortskurve in Pixeln.
+ * @return Der Radius der Ortskurve in Pixeln
  */
 public double getRadiusInPixeln()
    {
-   // Der Radius in Pixeln wird protokolliert.
-   OrtskurveGrafik.logger.finer("radiusInPixeln: " + this.radiusInPixeln);
-   
    // Der Radius in Pixeln wird zurückgegeben.
    return this.radiusInPixeln;
    }
@@ -107,12 +87,12 @@ public double getRadiusInPixeln()
 @Override
 public String toString()
    {
-   // Die Zeichenkette, die das Objekt repräsentiert, wird zusammengebaut.
+   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird zusammengebaut.
    StringBuilder stringBuilder = new StringBuilder();
    stringBuilder.append("mittelPunktInPixeln: ").append(this.mittelpunktInPixeln).append("; radiusInPixeln: ").
       append(this.radiusInPixeln);
    
-   // Die Zeichenkette, die das Objekt repräsentiert, wird zurückgegeben.
+   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird zurückgegeben.
    return stringBuilder.toString();
    }
 }

@@ -31,6 +31,7 @@ import de.thkwalter.koordinatensystem.Wertebereich;
  * Diese Klasse enthält Tests für die Klasse {@link OrtskurveGrafik}.
  *
  * @author Th. K. Walter
+ * @version 1.0
  */
 public class OrtskurveGrafikTest
 {
@@ -53,7 +54,7 @@ public void setUp() throws Exception
    // Der darzustellende Wertebereich wird definiert.
    Wertebereich wertebereich = new Wertebereich(10.0, 10.0, 0.0, -10.0);
    
-   // Der Konverter zwischen realen Koordinaten und ihren Pixelkoordinaten wird erzeugt.
+   // Der Konverter, der reale Koordinaten in Pixelkoordinaten umrechnet, wird erzeugt.
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
    // Das Objekt der zu testenden Klasse wird erzeugt.
@@ -83,15 +84,15 @@ public void testOrtskurveGrafik() throws SecurityException, NoSuchFieldException
    mittelPunktInPixelnFeld.setAccessible(true);
    Vector2D mittelPunktInPixeln = (Vector2D) mittelPunktInPixelnFeld.get(this.ortskurveGrafik);
    
-   // Es wird überprüft, ob der Mittelpunkt in Pixelkoordinaten, korrekt berechnet worden ist.
+   // Es wird überprüft, ob der Mittelpunkt in Pixelkoordinaten korrekt berechnet worden ist.
    assertEquals(new Vector2D(60, 100), mittelPunktInPixeln);
    
-   // Der Mittelpunkt in Pixelkoordinaten wird berechnet.
+   // Der Radius in Pixeln wird gelesen.
    Field radiusInPixelnFeld = OrtskurveGrafik.class.getDeclaredField("radiusInPixeln"); 
    radiusInPixelnFeld.setAccessible(true);
    double radiusInPixeln = (Double) radiusInPixelnFeld.get(this.ortskurveGrafik);
    
-   // Es wird überprüft, ob der Mittelpunkt in Pixelkoordinaten, korrekt berechnet worden ist.
+   // Es wird überprüft, ob der Mittelpunkt in Pixelkoordinaten korrekt berechnet worden ist.
    assertEquals(10, radiusInPixeln, 10/1000);
    }
 
