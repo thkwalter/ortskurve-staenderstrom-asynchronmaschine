@@ -88,11 +88,6 @@ private boolean loesungAnzeigen;
 private Koordinatenachsen koordinatenachsen;
 
 /**
- * Die Grafikdarstellung der Ortskurve.
- */
-private OrtskurveGrafik ortskurveGrafik;
-
-/**
  * Das Datenmodell der Ortskurve.
  */
 private OrtskurveModell ortskurveModell;
@@ -281,8 +276,9 @@ private void grafikdatenBerechnen()
    this.koordinatenachsen = 
       new Koordinatenachsen(achsendimensionierung.getWertebereichKoordinatensystem(), punktPixelKonverter);
    
-   // Die Grafikdarstellung der Ortskurve wird berechnet.
-   this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(this.mx, this.my),  this.r, punktPixelKonverter);
+   // Die Grafikdarstellung der Ortskurve wird berechnet und im Datenmodell gespeichert.
+   OrtskurveGrafik ortskurveGrafik = new OrtskurveGrafik(new Vector2D(this.mx, this.my),  this.r, punktPixelKonverter);
+   this.ortskurveModell.setOrtskurveGrafik(ortskurveGrafik);
    
    // Die Grafikdarstellung der Messpunkte wird berechnet und im Datenmodell der Ortskurve gespeichert.
    MesspunkteGrafik messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
@@ -461,20 +457,6 @@ public Koordinatenachsen getKoordinatenachsen()
    {
    // Ein Objekt, das die Koordinatenachsen repräsentiert, wird zurückgegeben.
    return this.koordinatenachsen;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt die Grafikdarstellung der Ortskurve zurück.
- * 
- * @return Die Grafikdarstellung der Ortskurve.
- */
-public OrtskurveGrafik getOrtskurveGrafik()
-   {
-   // Die Grafikdarstellung der Ortskurve wird zurückgegeben.
-   return this.ortskurveGrafik;
    }
 
 // =====================================================================================================================
