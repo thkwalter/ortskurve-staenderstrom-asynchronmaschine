@@ -44,6 +44,11 @@ private OrtskurveModell ortskurveModell;
  */
 private MesspunkteGrafik messpunkteGrafik;
 
+/**
+ * Die im Test verwendete Grafikdarstellung der Ortskurve
+ */
+private OrtskurveGrafik ortskurveGrafik;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -58,11 +63,16 @@ public void setUp() throws Exception
    // Ein Objekt der zu testenden Klasse OrtskurveModell wird initialisiert.
    this.ortskurveModell = new OrtskurveModell();
    
-   // Die im Test verwendete Grafikdarstellung der Messpunkte wird erzeugt.
+   // Ein Konverter, der reale Koordinaten in Pixelkoordinaten konvertiert, wird erzeugt.
    Wertebereich wertebereich = new Wertebereich(10.0, 10.0, 0.0, -10.0);
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
+   
+   // Die im Test verwendete Grafikdarstellung der Messpunkte wird erzeugt.
    this.messpunkteGrafik = 
       new MesspunkteGrafik(new Vector2D[]{new Vector2D(2.0, 0.0), new Vector2D(1.0, 1.0)}, punktPixelKonverter);
+   
+   // Die im Test verwendete Grafikdarstellung der Ortskurve wird erzeugt.
+   this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(1.0, 0.0), 1.0, punktPixelKonverter);
    }
 
 // =====================================================================================================================
@@ -86,7 +96,7 @@ public void testGetMesspunkteGrafik() throws SecurityException, NoSuchFieldExcep
    messpunkteGrafikFeld.set(this.ortskurveModell, this.messpunkteGrafik);
    
    // Es wird überprüft, ob die Grafikdarstellung des Messpunkte korrekt zurückgegeben wird. 
-   assertEquals(messpunkteGrafik, this.ortskurveModell.getMesspunkteGrafik());
+   assertEquals(this.messpunkteGrafik, this.ortskurveModell.getMesspunkteGrafik());
    }
 
 // =====================================================================================================================
@@ -110,16 +120,73 @@ public void testSetMesspunkteGrafik()
 // =====================================================================================================================
 
 /**
+ * Test für die Methode {@link OrtskurveModell#getOrtskurveGrafik()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetOrtskurveGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Die Grafikdarstellung der Ortskuve wird im Objekt der zu testenden Klasse OrtskurveModell gespeichert.
+   Field ortskurveGrafikFeld = OrtskurveModell.class.getDeclaredField("ortskurveGrafik");
+   ortskurveGrafikFeld.setAccessible(true);
+   ortskurveGrafikFeld.set(this.ortskurveModell, this.ortskurveGrafik);
+   
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt zurückgegeben wird. 
+   assertEquals(this.ortskurveGrafik, this.ortskurveModell.getOrtskurveGrafik());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#setOrtskurveGrafik(OrtskurveGrafik)}.
+ */
+@Test
+public void testSetOrtskurveGrafik() 
+   {
+   // Die zu testende Methode wird ausgeführt.
+   this.ortskurveModell.setOrtskurveGrafik(this.ortskurveGrafik);
+   
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt im Objekt der zu testenden Klasse gespeichert
+   // worden ist.
+   assertEquals(this.ortskurveGrafik, this.ortskurveModell.getOrtskurveGrafik());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link java.lang.Object#toString()}.
  */
 @Test
-public void testToString()
+public void testToString1()
    {
    // Das Objekt der zu testenden Klasse wird initalisiert.
    this.ortskurveModell.setMesspunkteGrafik(this.messpunkteGrafik);
+   this.ortskurveModell.setOrtskurveGrafik(this.ortskurveGrafik);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   assertEquals("messpunkteGrafik: messpunkteInPixeln: {70; 100}; {60; 90}; ", this.ortskurveModell.toString());
+   String meldung = "messpunkteGrafik: messpunkteInPixeln: {70; 100}; {60; 90}; " +
+      "ortskurveGrafik: mittelPunktInPixeln: {60; 100}; radiusInPixeln: 10.0";
+   assertEquals(meldung, this.ortskurveModell.toString());
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link java.lang.Object#toString()}.
+ */
+@Test
+public void testToString2()
+   {   
+   // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
+   String meldung = "messpunkteGrafik: ortskurveGrafik: ";
+   assertEquals(meldung, this.ortskurveModell.toString());
+   }
 }
