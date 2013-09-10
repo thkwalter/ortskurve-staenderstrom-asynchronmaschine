@@ -99,9 +99,9 @@
               context.strokeStyle = '#000000;';
               context.stroke();   
 
-              var centerX = #{ausgleichsproblem.ortskurveGrafik.mittelpunktInPixeln.x};
-              var centerY = #{ausgleichsproblem.ortskurveGrafik.mittelpunktInPixeln.y};
-              var radius = #{ausgleichsproblem.ortskurveGrafik.radiusInPixeln};
+              var centerX = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
+              var centerY = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
+              var radius = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.radiusInPixeln};
               
               context.beginPath();
               context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
