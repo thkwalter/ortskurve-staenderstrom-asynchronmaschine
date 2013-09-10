@@ -108,7 +108,7 @@ public String toString()
    
    // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird hinzugefügt. 
    stringBuilder.append("ortskurveGrafik: ");
-   if (this.messpunkteGrafik != null)
+   if (this.ortskurveGrafik != null)
       {
       stringBuilder.append(this.ortskurveGrafik.toString());
       }
