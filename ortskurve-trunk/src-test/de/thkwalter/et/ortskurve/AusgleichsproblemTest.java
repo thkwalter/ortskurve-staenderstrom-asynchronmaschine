@@ -195,6 +195,11 @@ public void testProblemLoesen3() throws SecurityException, NoSuchFieldException,
 public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException, NoSuchMethodException, InvocationTargetException
    {
+   // Das Datenmodell der Ortskurve wird erzeugt und im zu testenden Objekt gespeichert.
+   Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
+   ortskurveModellFeld.setAccessible(true);
+   ortskurveModellFeld.set(this.ausgleichsproblem, new OrtskurveModell());
+   
    // Die Messpunkte werden deklariert und an das Objekt der zu testenden Klasse übergeben.
    Vector2D[] messpunkte = new Vector2D[]{new Vector2D(0.1, 0), new Vector2D(1.9, 0), new Vector2D(1, 1.1), 
       new Vector2D(1, -1.1)};
