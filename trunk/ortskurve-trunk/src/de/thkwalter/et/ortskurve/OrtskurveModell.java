@@ -100,20 +100,6 @@ public void setOrtskurveGrafik(OrtskurveGrafik ortskurveGrafik)
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt den Mittelpunkt der Ortskurve zurück.
- * 
- * @return Der Mittelpunkt der Ortskurve
- */
-public Vector2D getMittelpunktOrtskurve()
-   {
-   // Der Mittelpunkt der Ortskurve wird zurückgegeben.
-   return this.mittelpunktOrtskurve;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
  * Diese Methode speichert den Mittelpunkt der Ortskurve in diesem Objekt.
  * 
  * @param mittelpunktOrtskurve Der Mittelpunkt der Ortskurve
