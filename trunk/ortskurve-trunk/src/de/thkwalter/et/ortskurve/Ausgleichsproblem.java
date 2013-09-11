@@ -232,6 +232,9 @@ public String problemLoesen()
       // Das Datenmodell der Ortskurve wird erzeugt.
       this.ortskurveModell = new OrtskurveModell();
       
+      // Der Mittelpunkt der Ortskurve wird im Datenmodell gespeichert.
+      this.ortskurveModell.setMittelpunktOrtskurve(new Vector2D(this.mx, this.my));
+      
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
       

@@ -49,6 +49,11 @@ private MesspunkteGrafik messpunkteGrafik;
  */
 private OrtskurveGrafik ortskurveGrafik;
 
+/**
+ * Der im Test verwendete Mittelpunkt der Ortskurve
+ */
+private Vector2D mittelpunktOrtskurve;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -71,8 +76,11 @@ public void setUp() throws Exception
    this.messpunkteGrafik = 
       new MesspunkteGrafik(new Vector2D[]{new Vector2D(2.0, 0.0), new Vector2D(1.0, 1.0)}, punktPixelKonverter);
    
+   // Der im Test verwendete Mittelpunkt der Ortskurve wird erzeugt.
+   this.mittelpunktOrtskurve = new Vector2D(1.0, 0.0);
+   
    // Die im Test verwendete Grafikdarstellung der Ortskurve wird erzeugt.
-   this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(1.0, 0.0), 1.0, punktPixelKonverter);
+   this.ortskurveGrafik = new OrtskurveGrafik(this.mittelpunktOrtskurve, 1.0, punktPixelKonverter);
    }
 
 // =====================================================================================================================
@@ -161,17 +169,59 @@ public void testSetOrtskurveGrafik()
 // =====================================================================================================================
 
 /**
+ * Test für die Methode {@link OrtskurveModell#getMittelpunktOrtskurve()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetMittelpunktOrtskurve() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Der Mittelpunkt der Ortskuve wird im Objekt der zu testenden Klasse OrtskurveModell gespeichert.
+   Field mittelpunktOrtskurveFeld = OrtskurveModell.class.getDeclaredField("mittelpunktOrtskurve");
+   mittelpunktOrtskurveFeld.setAccessible(true);
+   mittelpunktOrtskurveFeld.set(this.ortskurveModell, this.mittelpunktOrtskurve);
+   
+   // Es wird überprüft, ob der Mittelpunkt der Ortskurve korrekt zurückgegeben wird. 
+   assertEquals(this.mittelpunktOrtskurve, this.ortskurveModell.getMittelpunktOrtskurve());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#setMittelpunktOrtskurve(Vector2D)}.
+ */
+@Test
+public void testSetMittelpunktOrtskurve() 
+   {
+   // Die zu testende Methode wird ausgeführt.
+   this.ortskurveModell.setMittelpunktOrtskurve(this.mittelpunktOrtskurve);
+   
+   // Es wird überprüft, ob der Mittelpunkt der Ortskurve korrekt im Objekt der zu testenden Klasse gespeichert
+   // worden ist.
+   assertEquals(this.mittelpunktOrtskurve, this.ortskurveModell.getMittelpunktOrtskurve());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link java.lang.Object#toString()}.
  */
 @Test
 public void testToString1()
    {
    // Das Objekt der zu testenden Klasse wird initalisiert.
+   this.ortskurveModell.setMittelpunktOrtskurve(this.mittelpunktOrtskurve);
    this.ortskurveModell.setMesspunkteGrafik(this.messpunkteGrafik);
    this.ortskurveModell.setOrtskurveGrafik(this.ortskurveGrafik);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "messpunkteGrafik: messpunkteInPixeln: {70; 100}; {60; 90}; " +
+   String meldung = "mittelpunktOrtskurve: {1; 0}; messpunkteGrafik: messpunkteInPixeln: {70; 100}; {60; 90}; " +
       "ortskurveGrafik: mittelPunktInPixeln: {60; 100}; radiusInPixeln: 10.0";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
@@ -186,7 +236,7 @@ public void testToString1()
 public void testToString2()
    {   
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "messpunkteGrafik: ortskurveGrafik: ";
+   String meldung = "mittelpunktOrtskurve: messpunkteGrafik: ortskurveGrafik: ";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
 }
