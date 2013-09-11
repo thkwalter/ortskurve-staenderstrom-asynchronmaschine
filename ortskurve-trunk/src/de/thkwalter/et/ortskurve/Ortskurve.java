@@ -91,7 +91,7 @@ public String toString()
    // Die Zeichenkette, welche die Ortskurve repräsentiert, wird zusammengebaut.
    StringBuilder stringBuilder = new StringBuilder();
    stringBuilder.append("mittelpunktOrtskurve: ").append(this.mittelpunktOrtskurve).append("; radiusOrtskurve: ").
-      append(this.radiusOrtskurve);
+      append(this.radiusOrtskurve).append("; ");
    
    // Die Zeichenkette, welche die Ortskurve repräsentiert, wird zurückgegeben.
    return stringBuilder.toString();
