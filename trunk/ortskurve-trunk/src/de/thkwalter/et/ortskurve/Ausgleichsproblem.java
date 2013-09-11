@@ -229,6 +229,9 @@ public String problemLoesen()
       // Die Lösung wird protokolliert.
       Ausgleichsproblem.logger.info("Mittelpunkt: (" + this.mx + ", " + this.my + "); Radius: " + this.r);
       
+      // Das Datenmodell der Ortskurve wird erzeugt.
+      this.ortskurveModell = new OrtskurveModell();
+      
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
       
@@ -261,10 +264,7 @@ public String problemLoesen()
  * Diese Methode berechnet die Daten der Grafik der Ortskurve.
  */
 private void grafikdatenBerechnen()
-   {
-   // Das Datenmodell der Ortskurve wird erzeugt.
-   this.ortskurveModell = new OrtskurveModell();
-   
+   {   
    // Die Achsen des Diagramms werden dimensioniert.
    Achsendimensionierung achsendimensionierung = this.achsenDimensionieren();
    
