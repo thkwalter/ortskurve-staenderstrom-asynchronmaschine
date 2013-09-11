@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+
 /**
  * Das Datenmodell der Ortskurve.
  * 
@@ -23,6 +25,11 @@ package de.thkwalter.et.ortskurve;
  */
 public class OrtskurveModell
 {
+/**
+ * Der Mittelpunkt der Ortskurve
+ */
+private Vector2D mittelpunktOrtskurve;
+
 /**
  * Die Grafikdarstellung der Messpunkte
  */
@@ -71,6 +78,7 @@ public void setMesspunkteGrafik(MesspunkteGrafik messpunkteGrafik)
  */
 public OrtskurveGrafik getOrtskurveGrafik()
    {
+   // Die Grafikdarstellung der Ortskurve wird zurückgegeben.
    return this.ortskurveGrafik;
    }
 
@@ -84,7 +92,36 @@ public OrtskurveGrafik getOrtskurveGrafik()
  */
 public void setOrtskurveGrafik(OrtskurveGrafik ortskurveGrafik)
    {
+   // Die übergebene Grafikdarstellung der Ortskurve wird in diesem Objekt gespeichert.
    this.ortskurveGrafik = ortskurveGrafik;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Mittelpunkt der Ortskurve zurück.
+ * 
+ * @return Der Mittelpunkt der Ortskurve
+ */
+public Vector2D getMittelpunktOrtskurve()
+   {
+   // Der Mittelpunkt der Ortskurve wird zurückgegeben.
+   return this.mittelpunktOrtskurve;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den Mittelpunkt der Ortskurve in diesem Objekt.
+ * 
+ * @param mittelpunktOrtskurve Der Mittelpunkt der Ortskurve
+ */
+public void setMittelpunktOrtskurve(Vector2D mittelpunktOrtskurve)
+   {
+   // Der übergebene Mittelpunkt der Ortskurve wird in diesem Objekt gespeichert.
+   this.mittelpunktOrtskurve = mittelpunktOrtskurve;
    }
 
 // =====================================================================================================================
@@ -96,8 +133,15 @@ public void setOrtskurveGrafik(OrtskurveGrafik ortskurveGrafik)
 @Override
 public String toString()
    {
-   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird erzeugt..
+   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird erzeugt.
    StringBuilder stringBuilder = new StringBuilder();
+   
+   // Die Zeichenkette, welche den Mittelpunkt der Ortskurve repräsentiert, wird hinzugefügt. 
+   stringBuilder.append("mittelpunktOrtskurve: ");
+   if (this.mittelpunktOrtskurve != null)
+      {
+      stringBuilder.append(this.mittelpunktOrtskurve.toString()).append("; ");
+      }
    
    // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
    stringBuilder.append("messpunkteGrafik: ");
