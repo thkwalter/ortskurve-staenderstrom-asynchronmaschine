@@ -15,7 +15,6 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
  * Das Datenmodell der Ortskurve.
@@ -26,9 +25,9 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 public class OrtskurveModell
 {
 /**
- * Der Mittelpunkt der Ortskurve
+ * Die Ortskurve
  */
-private Vector2D mittelpunktOrtskurve;
+private Ortskurve ortskurve;
 
 /**
  * Die Grafikdarstellung der Messpunkte
@@ -86,6 +85,20 @@ public OrtskurveGrafik getOrtskurveGrafik()
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt die Ortskurve zurück.
+ * 
+ * @return Die Ortskurve
+ */
+public Ortskurve getOrtskurve()
+   {
+   // Die Ortskurve wird zurückgegeben.
+   return this.ortskurve;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Diese Methode speichert die übergebene Grafikdarstellung der Ortskurve in diesem Objekt.
  * 
  * @param messpunkteGrafik Die Grafikdarstellung der Ortskurve
@@ -100,14 +113,14 @@ public void setOrtskurveGrafik(OrtskurveGrafik ortskurveGrafik)
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert den Mittelpunkt der Ortskurve in diesem Objekt.
+ * Diese Methode speichert die Ortskurve in diesem Objekt.
  * 
- * @param mittelpunktOrtskurve Der Mittelpunkt der Ortskurve
+ * @param ortskurve Die Ortskurve
  */
-public void setMittelpunktOrtskurve(Vector2D mittelpunktOrtskurve)
+public void setOrtskurve(Ortskurve ortskurve)
    {
-   // Der übergebene Mittelpunkt der Ortskurve wird in diesem Objekt gespeichert.
-   this.mittelpunktOrtskurve = mittelpunktOrtskurve;
+   // Die übergebene Ortskurve wird in diesem Objekt gespeichert.
+   this.ortskurve = ortskurve;
    }
 
 // =====================================================================================================================
@@ -123,10 +136,10 @@ public String toString()
    StringBuilder stringBuilder = new StringBuilder();
    
    // Die Zeichenkette, welche den Mittelpunkt der Ortskurve repräsentiert, wird hinzugefügt. 
-   stringBuilder.append("mittelpunktOrtskurve: ");
-   if (this.mittelpunktOrtskurve != null)
+   stringBuilder.append("ortskurve: ");
+   if (this.ortskurve != null)
       {
-      stringBuilder.append(this.mittelpunktOrtskurve.toString()).append("; ");
+      stringBuilder.append(this.ortskurve.toString());
       }
    
    // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 

@@ -50,9 +50,9 @@ private MesspunkteGrafik messpunkteGrafik;
 private OrtskurveGrafik ortskurveGrafik;
 
 /**
- * Der im Test verwendete Mittelpunkt der Ortskurve
+ * Der im Test verwendete Ortskurve
  */
-private Vector2D mittelpunktOrtskurve;
+private Ortskurve ortskurve;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -76,11 +76,11 @@ public void setUp() throws Exception
    this.messpunkteGrafik = 
       new MesspunkteGrafik(new Vector2D[]{new Vector2D(2.0, 0.0), new Vector2D(1.0, 1.0)}, punktPixelKonverter);
    
-   // Der im Test verwendete Mittelpunkt der Ortskurve wird erzeugt.
-   this.mittelpunktOrtskurve = new Vector2D(1.0, 0.0);
+   // Der im Test verwendete Ortskurve wird erzeugt.
+   this.ortskurve = new Ortskurve(new Vector2D(1.0, 0.0), 1.0);
    
    // Die im Test verwendete Grafikdarstellung der Ortskurve wird erzeugt.
-   this.ortskurveGrafik = new OrtskurveGrafik(this.mittelpunktOrtskurve, 1.0, punktPixelKonverter);
+   this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(1.0, 0.0), 1.0, punktPixelKonverter);
    }
 
 // =====================================================================================================================
@@ -169,42 +169,41 @@ public void testSetOrtskurveGrafik()
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveModell#getMittelpunktOrtskurve()}.
+ * Test für die Methode {@link OrtskurveModell#getOrtskurve()}.
  * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
  * @throws IllegalAccessException 
  * @throws IllegalArgumentException 
  */
-//@Test
-//public void testGetMittelpunktOrtskurve() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-//   IllegalAccessException 
-//   {   
-//   // Der Mittelpunkt der Ortskuve wird im Objekt der zu testenden Klasse OrtskurveModell gespeichert.
-//   Field mittelpunktOrtskurveFeld = OrtskurveModell.class.getDeclaredField("mittelpunktOrtskurve");
-//   mittelpunktOrtskurveFeld.setAccessible(true);
-//   mittelpunktOrtskurveFeld.set(this.ortskurveModell, this.mittelpunktOrtskurve);
-//   
-//   // Es wird überprüft, ob der Mittelpunkt der Ortskurve korrekt zurückgegeben wird. 
-//   assertEquals(this.mittelpunktOrtskurve, this.ortskurveModell.getMittelpunktOrtskurve());
-//   }
+@Test
+public void testGetOrtskurve() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Die Ortskuve wird im Objekt der zu testenden Klasse OrtskurveModell gespeichert.
+   Field ortskurveFeld = OrtskurveModell.class.getDeclaredField("ortskurve");
+   ortskurveFeld.setAccessible(true);
+   ortskurveFeld.set(this.ortskurveModell, this.ortskurve);
+   
+   // Es wird überprüft, ob der Mittelpunkt der Ortskurve korrekt zurückgegeben wird. 
+   assertEquals(this.ortskurve, this.ortskurveModell.getOrtskurve());
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveModell#setMittelpunktOrtskurve(Vector2D)}.
+ * Test für die Methode {@link OrtskurveModell#setOrtskurve(Ortskurve)}.
  */
-//@Test
-//public void testSetMittelpunktOrtskurve() 
-//   {
-//   // Die zu testende Methode wird ausgeführt.
-//   this.ortskurveModell.setMittelpunktOrtskurve(this.mittelpunktOrtskurve);
-//   
-//   // Es wird überprüft, ob der Mittelpunkt der Ortskurve korrekt im Objekt der zu testenden Klasse gespeichert
-//   // worden ist.
-//   assertEquals(this.mittelpunktOrtskurve, this.ortskurveModell.getMittelpunktOrtskurve());
-//   }
+@Test
+public void testSetOrtskurve() 
+   {
+   // Die zu testende Methode wird ausgeführt.
+   this.ortskurveModell.setOrtskurve(this.ortskurve);
+   
+   // Es wird überprüft, ob die Ortskurve korrekt im Objekt der zu testenden Klasse gespeichert worden ist.
+   assertEquals(this.ortskurve, this.ortskurveModell.getOrtskurve());
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -216,13 +215,13 @@ public void testSetOrtskurveGrafik()
 public void testToString1()
    {
    // Das Objekt der zu testenden Klasse wird initalisiert.
-   this.ortskurveModell.setMittelpunktOrtskurve(this.mittelpunktOrtskurve);
+   this.ortskurveModell.setOrtskurve(this.ortskurve);
    this.ortskurveModell.setMesspunkteGrafik(this.messpunkteGrafik);
    this.ortskurveModell.setOrtskurveGrafik(this.ortskurveGrafik);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "mittelpunktOrtskurve: {1; 0}; messpunkteGrafik: messpunkteInPixeln: {70; 100}; {60; 90}; " +
-      "ortskurveGrafik: mittelPunktInPixeln: {60; 100}; radiusInPixeln: 10.0";
+   String meldung = "ortskurve: mittelpunktOrtskurve: {1; 0}; radiusOrtskurve: 1.0; messpunkteGrafik: " +
+      "messpunkteInPixeln: {70; 100}; {60; 90}; ortskurveGrafik: mittelPunktInPixeln: {60; 100}; radiusInPixeln: 10.0";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
 
@@ -236,7 +235,7 @@ public void testToString1()
 public void testToString2()
    {   
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "mittelpunktOrtskurve: messpunkteGrafik: ortskurveGrafik: ";
+   String meldung = "ortskurve: messpunkteGrafik: ortskurveGrafik: ";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
 }
