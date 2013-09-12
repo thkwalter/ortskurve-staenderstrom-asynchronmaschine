@@ -77,7 +77,11 @@ public void grafikdatenBerechnen(Vector2D[] messpunkte)
    PunktPixelKonverter punktPixelKonverter = 
       new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), 540, 270);
    
+   // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
+   
+   // Die Grafikdatstellung der Messpunkte wird berechnet.
+   this.messpunkteGrafik = new MesspunkteGrafik(messpunkte, punktPixelKonverter);
    }
 
 // =====================================================================================================================
@@ -90,7 +94,7 @@ public void grafikdatenBerechnen(Vector2D[] messpunkte)
  * 
  * @return Das Feld der Punkte, welche die Grafik begrenzen.
  */
-public Vector2D[] randpunkteZusammenstellen(Vector2D[] messpunkte)
+private Vector2D[] randpunkteZusammenstellen(Vector2D[] messpunkte)
    {
    // Die Parameter der Ortskurve werden gelesen.
    double mx = this.ortskurve.getMittelpunktOrtskurve().getX();
@@ -135,20 +139,6 @@ public MesspunkteGrafik getMesspunkteGrafik()
    {   
    // Die Grafikdarstellung der Messpunkte wird zurückgegeben.
    return this.messpunkteGrafik;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert die übergebene Grafikdarstellung der Messpunkte in diesem Objekt.
- * 
- * @param messpunkteGrafik Die Grafikdarstellung der Messpunkte
- */
-public void setMesspunkteGrafik(MesspunkteGrafik messpunkteGrafik)
-   {  
-   // Die übergebene Grafikdarstellung der Messpunkte wird in diesem Objekt gespeichert.
-   this.messpunkteGrafik = messpunkteGrafik;
    }
 
 // =====================================================================================================================

@@ -282,10 +282,6 @@ private void grafikdatenBerechnen()
    // Die Koordinatenachsen werden berechnet.
    this.koordinatenachsen = 
       new Koordinatenachsen(achsendimensionierung.getWertebereichKoordinatensystem(), punktPixelKonverter);
-   
-   // Die Grafikdarstellung der Messpunkte wird berechnet und im Datenmodell der Ortskurve gespeichert.
-   MesspunkteGrafik messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
-   this.ortskurveModell.setMesspunkteGrafik(messpunkteGrafik);
    }
 
 // =====================================================================================================================
