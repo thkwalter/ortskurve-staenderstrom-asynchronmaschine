@@ -40,6 +40,11 @@ public class OrtskurveModellTest
 private OrtskurveModell ortskurveModell;
 
 /**
+ * Die im Test verwendeten Messpunkte
+ */
+private Vector2D[] messpunkte;
+
+/**
  * Die im Test verwendete Grafikdarstellung der Messpunkte
  */
 private MesspunkteGrafik messpunkteGrafik;
@@ -68,13 +73,16 @@ public void setUp() throws Exception
    // Ein Objekt der zu testenden Klasse OrtskurveModell wird initialisiert.
    this.ortskurveModell = new OrtskurveModell();
    
+   // Die im Test verwendeten Messpunkte werden erzeugt.
+   this.messpunkte = new Vector2D[]{new Vector2D(2.0, 0.0), new Vector2D(1.0, 1.0)};
+   
    // Ein Konverter, der reale Koordinaten in Pixelkoordinaten konvertiert, wird erzeugt.
    Wertebereich wertebereich = new Wertebereich(10.0, 10.0, 0.0, -10.0);
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
    // Die im Test verwendete Grafikdarstellung der Messpunkte wird erzeugt.
    this.messpunkteGrafik = 
-      new MesspunkteGrafik(new Vector2D[]{new Vector2D(2.0, 0.0), new Vector2D(1.0, 1.0)}, punktPixelKonverter);
+      new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
    
    // Der im Test verwendete Ortskurve wird erzeugt.
    this.ortskurve = new Ortskurve(new Vector2D(1.0, 0.0), 1.0);
@@ -209,6 +217,81 @@ public void testSetOrtskurve()
 // =====================================================================================================================
 
 /**
+ * Test für die Methode {@link OrtskurveModell#randpunkteZusammenstellen(Vector2D[])}.
+ */
+@Test
+public void testRandpunkteZusammenstellen() 
+   {
+   // Das Modell wird initialisiert.
+   this.ortskurveModell.setOrtskurve(this.ortskurve);
+   
+   // Die zu testende Methode wird ausgeführt.
+   Vector2D[] randpunkte = this.ortskurveModell.randpunkteZusammenstellen(this.messpunkte);
+   
+   // Es wird überprüft, ob die Anzahl der zusammengestellten Randpunkte korrekt ist.
+   assertEquals(this.messpunkte.length + 4, randpunkte.length);
+   
+   // Es wird überprüft, ob die Randpunkte korrekt zusammengestellt worden sind.
+   assertEquals(this.messpunkte[0], randpunkte[0]);
+   assertEquals(this.messpunkte[1], randpunkte[1]);
+   assertEquals(new Vector2D(0, 0), randpunkte[2]);
+   assertEquals(new Vector2D(2, 0), randpunkte[3]);
+   assertEquals(new Vector2D(1, 1), randpunkte[4]);
+   assertEquals(new Vector2D(1, -1), randpunkte[5]);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#getXPixelGrafik()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetXPixelGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {
+   // Die Anzahl der Pixel der Grafik in x-Richtung wird gelesen.
+   Field xPixelGrafikFeld = OrtskurveModell.class.getDeclaredField("xPixelGrafik");
+   xPixelGrafikFeld.setAccessible(true);
+   int xPixelGrafik = xPixelGrafikFeld.getInt(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die korrekte Anzahl der Pixel der Grafik in x-Richtung zurückgegeben wird.
+   assertEquals(xPixelGrafik, this.ortskurveModell.getxPixelGrafik());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#getYPixelGrafik()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetYPixelGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {
+   // Die Anzahl der Pixel der Grafik in x-Richtung wird gelesen.
+   Field yPixelGrafikFeld = OrtskurveModell.class.getDeclaredField("yPixelGrafik");
+   yPixelGrafikFeld.setAccessible(true);
+   int yPixelGrafik = yPixelGrafikFeld.getInt(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die korrekte Anzahl der Pixel der Grafik in x-Richtung zurückgegeben wird.
+   assertEquals(yPixelGrafik, this.ortskurveModell.getyPixelGrafik());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link java.lang.Object#toString()}.
  */
 @Test
@@ -220,8 +303,10 @@ public void testToString1()
    this.ortskurveModell.setOrtskurveGrafik(this.ortskurveGrafik);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "ortskurve: mittelpunktOrtskurve: {1; 0}; radiusOrtskurve: 1.0; messpunkteGrafik: " +
-      "messpunkteInPixeln: {70; 100}; {60; 90}; ortskurveGrafik: mittelPunktInPixeln: {60; 100}; radiusInPixeln: 10.0";
+   String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
+      this.ortskurveModell.getyPixelGrafik() + "; ortskurve: mittelpunktOrtskurve: {1; 0}; radiusOrtskurve: 1.0; " +
+      "messpunkteGrafik: messpunkteInPixeln: {70; 100}; {60; 90}; ortskurveGrafik: mittelPunktInPixeln: {60; 100}; " +
+      "radiusInPixeln: 10.0";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
 
@@ -235,7 +320,8 @@ public void testToString1()
 public void testToString2()
    {   
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "ortskurve: messpunkteGrafik: ortskurveGrafik: ";
+   String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
+       this.ortskurveModell.getyPixelGrafik() + "; ortskurve: messpunkteGrafik: ortskurveGrafik: ";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
 }
