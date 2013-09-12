@@ -77,7 +77,7 @@ public void grafikdatenBerechnen(Vector2D[] messpunkte)
    PunktPixelKonverter punktPixelKonverter = 
       new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), 540, 270);
    
-   // this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(this.mx, this.my),  this.r, punktPixelKonverter);
+   this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
    }
 
 // =====================================================================================================================
@@ -177,20 +177,6 @@ public Ortskurve getOrtskurve()
    {
    // Die Ortskurve wird zurückgegeben.
    return this.ortskurve;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert die übergebene Grafikdarstellung der Ortskurve in diesem Objekt.
- * 
- * @param messpunkteGrafik Die Grafikdarstellung der Ortskurve
- */
-public void setOrtskurveGrafik(OrtskurveGrafik ortskurveGrafik)
-   {
-   // Die übergebene Grafikdarstellung der Ortskurve wird in diesem Objekt gespeichert.
-   this.ortskurveGrafik = ortskurveGrafik;
    }
 
 // =====================================================================================================================

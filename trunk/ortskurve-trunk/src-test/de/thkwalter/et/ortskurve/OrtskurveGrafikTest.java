@@ -58,7 +58,7 @@ public void setUp() throws Exception
    PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
    
    // Das Objekt der zu testenden Klasse wird erzeugt.
-   this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(1.0, 0.0), 1.0, punktPixelKonverter);
+   this.ortskurveGrafik = new OrtskurveGrafik(new Ortskurve(new Vector2D(1.0, 0.0), 1.0), punktPixelKonverter);
    }
 
 // =====================================================================================================================

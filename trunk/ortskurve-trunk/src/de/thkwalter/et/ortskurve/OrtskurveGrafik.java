@@ -42,12 +42,15 @@ private double radiusInPixeln;
 
 /**
  * Dieser Konstruktor berechnet die Grafikdarstellung der Ortskurve.
+ * 
+ * @param ortskurve Die Ortskurve
+ * @param punktPixelKonverter Ein Konverter, der Punkte in Pixelkoordinaten konveriert
  */
-public OrtskurveGrafik(Vector2D realerMittelpunkt, double realerRadius, PunktPixelKonverter punktPixelKonverter)
+public OrtskurveGrafik(Ortskurve ortskurve, PunktPixelKonverter punktPixelKonverter)
    {
    // Die Pixelkoordinaten des Mittelpunkts und der Radius in Pixeln werden berechnet.
-   this.radiusInPixeln = punktPixelKonverter.getLaengeInPixeln(realerRadius);
-   this.mittelpunktInPixeln = punktPixelKonverter.getPixelKoordinaten(realerMittelpunkt);
+   this.radiusInPixeln = punktPixelKonverter.getLaengeInPixeln(ortskurve.getRadiusOrtskurve());
+   this.mittelpunktInPixeln = punktPixelKonverter.getPixelKoordinaten(ortskurve.getMittelpunktOrtskurve());
    }
 
 // =====================================================================================================================
