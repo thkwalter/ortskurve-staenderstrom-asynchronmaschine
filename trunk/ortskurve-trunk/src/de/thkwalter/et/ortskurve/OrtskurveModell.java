@@ -15,6 +15,11 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+
+import de.thkwalter.koordinatensystem.Achsendimensionierung;
+import de.thkwalter.koordinatensystem.PunktPixelKonverter;
+
 
 /**
  * Das Datenmodell der Ortskurve.
@@ -38,6 +43,85 @@ private MesspunkteGrafik messpunkteGrafik;
  * Die Grafikdarstellung der Ortskurve
  */
 private OrtskurveGrafik ortskurveGrafik;
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Die Anzahl der Pixel der Grafik in x-Richtung.
+ */
+private final int xPixelGrafik = 540;
+
+/**
+ * Die Anzahl der Pixel der Grafik in y-Richtung.
+ */
+private final int yPixelGrafik = 270;
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet die Daten für die Grafik der Ortskurve.
+ * 
+ * @param Die Messpunkte
+ */
+public void grafikdatenBerechnen(Vector2D[] messpunkte)
+   {
+   // Die Punkte, welche die Grafik begrenzen, werden zusammengestellt.
+   Vector2D[] randpunkte = this.randpunkteZusammenstellen(messpunkte);
+   
+   // Ein Objekt der Klasse Achsendimensionierung berechnet den Wertebereich des Koordinatensystems.
+   Achsendimensionierung achsendimensionierung = new Achsendimensionierung(randpunkte);
+   
+   // Ein Konverter, der Punkte in Pixel umrechnet, wird erzeugt.
+   PunktPixelKonverter punktPixelKonverter = 
+      new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), 540, 270);
+   
+   // this.ortskurveGrafik = new OrtskurveGrafik(new Vector2D(this.mx, this.my),  this.r, punktPixelKonverter);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode stellt die Punkte zusammen, welche die Grafik begrenzen.
+ * 
+ * @param Die Messpunkte
+ * 
+ * @return Das Feld der Punkte, welche die Grafik begrenzen.
+ */
+public Vector2D[] randpunkteZusammenstellen(Vector2D[] messpunkte)
+   {
+   // Die Parameter der Ortskurve werden gelesen.
+   double mx = this.ortskurve.getMittelpunktOrtskurve().getX();
+   double my = this.ortskurve.getMittelpunktOrtskurve().getY();
+   double r = this.ortskurve.getRadiusOrtskurve();
+   
+   // Das Feld der Randpunkte wird erzeugt.
+   int feldlaenge = messpunkte.length;
+   Vector2D[] punkte = new Vector2D[feldlaenge + 4];
+   
+   // Die Messpunkte werden in das Feld der Randpunkte kopiert.
+   for (int i = 0; i < feldlaenge; i++)
+      {
+      punkte[i] = messpunkte[i];
+      }
+   
+   // Der Punkt, der den Kreis links begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   punkte[feldlaenge] = new Vector2D(mx - r, my);
+   
+   // Der Punkt, der den Kreis rechts begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   punkte[feldlaenge + 1] = new Vector2D(mx + r, my);
+   
+   // Der Punkt, der den Kreis oben begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   punkte[feldlaenge + 2] = new Vector2D(mx, my + r);
+   
+   // Der Punkt, der den Kreis unten begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   punkte[feldlaenge + 3] = new Vector2D(mx, my - r);
+   
+   // Das Feld der Randpunkte, welche die Grafik begrenzen, wird zurückgegeben.
+   return punkte;
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -127,6 +211,32 @@ public void setOrtskurve(Ortskurve ortskurve)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt die Anzahl der Pixel der Grafik in x-Richtung zurück.
+ * 
+ * @return Die Anzahl der Pixel der Grafik in x-Richtung.
+ */
+public int getxPixelGrafik()
+   {
+   return this.xPixelGrafik;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Anzahl der Pixel der Grafik in y-Richtung zurück.
+ * 
+ * @return Die Anzahl der Pixel der Grafik in y-Richtung.
+ */
+public int getyPixelGrafik()
+   {
+   return this.yPixelGrafik;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString() 
  */
 @Override
@@ -134,6 +244,10 @@ public String toString()
    {
    // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird erzeugt.
    StringBuilder stringBuilder = new StringBuilder();
+   
+   // Die Anzahl der Pixel der Grafik in x- und y-Richtung wird hinzugefügt.
+   stringBuilder.append("xPixelGrafik: ").append(this.xPixelGrafik).append("; yPixelGrafik: ").
+      append(this.yPixelGrafik).append("; ");
    
    // Die Zeichenkette, welche den Mittelpunkt der Ortskurve repräsentiert, wird hinzugefügt. 
    stringBuilder.append("ortskurve: ");

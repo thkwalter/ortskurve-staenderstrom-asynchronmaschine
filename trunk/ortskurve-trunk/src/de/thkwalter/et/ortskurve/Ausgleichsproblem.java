@@ -236,6 +236,9 @@ public String problemLoesen()
       Ortskurve ortskurve = new Ortskurve(new Vector2D(this.mx, this.my), this.r);
       this.ortskurveModell.setOrtskurve(ortskurve);
       
+      // Die Daten der Grafik der Ortskurve werden berechnet.
+      this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
+      
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
       
@@ -322,9 +325,6 @@ private Achsendimensionierung achsenDimensionieren()
    
    // Ein Objekt der Klasse Achsendimensionierung berechnet den Wertebereich des Koordinatensystems.
    Achsendimensionierung achsendimensionierung = new Achsendimensionierung(punkte);
-   
-   // Das Objekt, das die Dimensionierung der Achsen repräsentiert, wird protokolliert.
-   Ausgleichsproblem.logger.fine(achsendimensionierung.toString());
    
    // Das Objekt, das die Dimensionierung der Achsen repräsentiert, wird zurückgegeben.
    return achsendimensionierung;
