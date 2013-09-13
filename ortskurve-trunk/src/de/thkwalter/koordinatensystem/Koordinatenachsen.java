@@ -15,14 +15,13 @@
  */
 package de.thkwalter.koordinatensystem;
 
-import java.util.logging.Logger;
-
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
- * Diese Klasse repräsentiert die Korrdinatenachsen.
+ * Diese Klasse repräsentiert die Koordinatenachsen.
  *
  * @author Th. K. Walter
+ * @version 1.0
  */
 public class Koordinatenachsen
 {
@@ -46,34 +45,22 @@ private Vector2D startPunktYAchse;
  */
 private Vector2D endPunktYAchse;
 
-/*
- * Der Logger dieser Klasse.
- */
-private static Logger logger = Logger.getLogger(Koordinatenachsen.class.getName());
-
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Dieser Konstruktor berechnet die Koordinatenachsen.
+ * Dieser Konstruktor berechnet die Start- und Endpunkte der Koordinatenachsen in Pixeln.
  * 
  * @param wertebereich Der darszustellende Wertebereich
  * @param punktPixelKonverter Der Konverter zwischen Punkt- und Pixelkoordinaten
  */
 public Koordinatenachsen(Wertebereich wertebereich, PunktPixelKonverter punktPixelKonverter)
    {
-   // Die Parameter, die an den Konstruktor übergeben werden, werden protokolliert.
-   Koordinatenachsen.logger.fine(wertebereich.toString());
-   Koordinatenachsen.logger.fine(punktPixelKonverter.toString());
-   
    // Die Anfangs- und Endpunkte der Koordinatenachsen werden berechnet.
    this.startPunktXAchse = punktPixelKonverter.getPixelKoordinaten(new Vector2D(wertebereich.getMinX(), 0.0));
    this.endPunktXAchse = punktPixelKonverter.getPixelKoordinaten(new Vector2D(wertebereich.getMaxX(), 0.0));
    this.startPunktYAchse = punktPixelKonverter.getPixelKoordinaten(new Vector2D(0.0, wertebereich.getMinY()));
    this.endPunktYAchse = punktPixelKonverter.getPixelKoordinaten(new Vector2D(0.0, wertebereich.getMaxY()));
-   
-   // Der neu berechnete Zustand dieses Objekts wird protokolliert.
-   Koordinatenachsen.logger.fine(this.toString());
    }
 
 // =====================================================================================================================
@@ -86,8 +73,7 @@ public Koordinatenachsen(Wertebereich wertebereich, PunktPixelKonverter punktPix
  */
 public Vector2D getStartPunktXAchse()
    {
-   Koordinatenachsen.logger.finer(this.startPunktXAchse.toString());
-   
+   // Der Startpunkt der x-Achse in Pixeln wird zurückgegeben.
    return this.startPunktXAchse;
    }
 
@@ -101,8 +87,7 @@ public Vector2D getStartPunktXAchse()
  */
 public Vector2D getEndPunktXAchse()
    {
-   Koordinatenachsen.logger.finer(this.endPunktXAchse.toString());
-   
+   // Der Endpunkt der x-Achse in Pixeln wird zurückgegeben.
    return this.endPunktXAchse;
    }
 
@@ -116,8 +101,7 @@ public Vector2D getEndPunktXAchse()
  */
 public Vector2D getStartPunktYAchse()
    {
-   Koordinatenachsen.logger.finer(this.startPunktYAchse.toString());
-   
+   // Der Startpunkt der y-Achse in Pixeln wird zurückgegeben.
    return this.startPunktYAchse;
    }
 
@@ -131,8 +115,7 @@ public Vector2D getStartPunktYAchse()
  */
 public Vector2D getEndPunktYAchse()
    {
-   Koordinatenachsen.logger.finer(this.endPunktYAchse.toString());
-   
+   // Der Endpunkt der y-Achse in Pixeln wird zurückgegeben.
    return this.endPunktYAchse;
    }
 
@@ -145,7 +128,14 @@ public Vector2D getEndPunktYAchse()
 @Override
 public String toString()
    {
-   return this.startPunktXAchse + "; " + this.endPunktXAchse + "; " + this.startPunktYAchse + "; " + 
-      this.endPunktYAchse;
+   // Die Zeichenkette, welche die Koordinatenachsen in Pixelkoordinaten repräsentiert, wird zusammengebaut.
+   StringBuilder stringBuilder = new StringBuilder();
+   stringBuilder.append("startPunktXAchse: ").append(this.startPunktXAchse);
+   stringBuilder.append("endPunktXAchse: ").append(this.endPunktXAchse);
+   stringBuilder.append("startPunktYAchse: ").append(this.startPunktYAchse);
+   stringBuilder.append("endPunktYAchse: ").append(this.endPunktYAchse);
+
+   // Die Zeichenkette, welche die Koordinatenachsen in Pixelkoordinaten repräsentiert, wird zurückgegeben.
+   return stringBuilder.toString();
    }
 }

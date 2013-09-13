@@ -28,6 +28,7 @@ import org.junit.Test;
  * Diese Klasse enthält Tests für die Klasse {@link Koordinatenachsen}.
  *
  * @author Th. K. Walter
+ * @version 1.0
  */
 public class KoordinatenachsenTest
 {
@@ -48,10 +49,10 @@ private Koordinatenachsen koordinatenachsen;
 public void setUp() throws Exception
    {
    // Der darzustellende Wertebereich wird definiert.
-   Wertebereich wertebereich = new Wertebereich(10.0, 10.0, 0.0, -10.0);
+   Wertebereich wertebereich = new Wertebereich(2.2, 1.2, -0.2, -1.2);
    
    // Der zu testende Konstruktor wird aufgerufen.
-   PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 200, 200);
+   PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 540, 270);
    
    // Das Objekt der zu testenden Klasse wird erzeugt.
    this.koordinatenachsen = new Koordinatenachsen(wertebereich, punktPixelKonverter);
@@ -70,10 +71,14 @@ public void testKoordinatenachsen()
    assertNotNull(this.koordinatenachsen);
    
    // Es wird überprüft, ob die Start- und Endpunkte der Koordinatenachsen korrekt berechnet worden sind.
-   assertEquals(new Vector2D(50, 100),this.koordinatenachsen.getStartPunktXAchse());
-   assertEquals(new Vector2D(150, 100),this.koordinatenachsen.getEndPunktXAchse());
-   assertEquals(new Vector2D(50, 200),this.koordinatenachsen.getStartPunktYAchse());
-   assertEquals(new Vector2D(50, 0),this.koordinatenachsen.getEndPunktYAchse());
+   assertEquals(135.0, this.koordinatenachsen.getStartPunktXAchse().getX(), 135.0/1000);
+   assertEquals(135.0, this.koordinatenachsen.getStartPunktXAchse().getY(), 135.0/1000);
+   assertEquals(405.0, this.koordinatenachsen.getEndPunktXAchse().getX(), 405.0/1000);
+   assertEquals(135.0, this.koordinatenachsen.getEndPunktXAchse().getY(), 135.0/1000);
+   assertEquals(157.5, this.koordinatenachsen.getStartPunktYAchse().getX(), 157.5/1000);
+   assertEquals(270.0, this.koordinatenachsen.getStartPunktYAchse().getY(), 270.0/1000);
+   assertEquals(157.5, this.koordinatenachsen.getEndPunktYAchse().getX(), 157.5/1000);
+   assertEquals(0.0, this.koordinatenachsen.getEndPunktYAchse().getY(), 0.0);
    }
 
 // =====================================================================================================================
@@ -90,17 +95,14 @@ public void testKoordinatenachsen()
 @Test
 public void testGetStartPunktXAchse() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
-   {
-   // Die Testdaten werden erzeugt.
-   Vector2D punktInPixeln = new Vector2D(-1, 0);
-   
+   {   
    // Die Testdaten werden in dem zu testenden Objekt gespeichert.
    Field feld = Koordinatenachsen.class.getDeclaredField("startPunktXAchse");
    feld.setAccessible(true);
-   feld.set(this.koordinatenachsen, punktInPixeln);
+   Vector2D startPunktXAchse = (Vector2D) feld.get(this.koordinatenachsen);
    
    // Es wird überprüft, ob die zu testende Methode den korrekten Wert zurückgibt.
-   assertEquals(punktInPixeln, this.koordinatenachsen.getStartPunktXAchse());
+   assertEquals(startPunktXAchse, this.koordinatenachsen.getStartPunktXAchse());
    }
 
 // =====================================================================================================================
@@ -108,6 +110,7 @@ public void testGetStartPunktXAchse() throws SecurityException, NoSuchFieldExcep
 
 /**
  * Test für die Methode {@link Koordinatenachsen#getEndPunktXAchse()}.
+ * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
  * @throws IllegalAccessException 
@@ -116,17 +119,14 @@ public void testGetStartPunktXAchse() throws SecurityException, NoSuchFieldExcep
 @Test
 public void testGetEndPunktXAchse() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
-   {
-   // Die Testdaten werden erzeugt.
-   Vector2D punktInPixeln = new Vector2D(2, 0);
-   
+   {  
    // Die Testdaten werden in dem zu testenden Objekt gespeichert.
    Field feld = Koordinatenachsen.class.getDeclaredField("endPunktXAchse");
    feld.setAccessible(true);
-   feld.set(this.koordinatenachsen, punktInPixeln);
+   Vector2D endPunktXAchse = (Vector2D) feld.get(this.koordinatenachsen);
    
    // Es wird überprüft, ob die zu testende Methode den korrekten Wert zurückgibt.
-   assertEquals(punktInPixeln, this.koordinatenachsen.getEndPunktXAchse());
+   assertEquals(endPunktXAchse, this.koordinatenachsen.getEndPunktXAchse());
    }
 
 // =====================================================================================================================
@@ -142,17 +142,14 @@ public void testGetEndPunktXAchse() throws SecurityException, NoSuchFieldExcepti
 @Test
 public void testGetStartPunktYAchse() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
-   {
-   // Die Testdaten werden erzeugt.
-   Vector2D punktInPixeln = new Vector2D(0, -3);
-   
+   {   
    // Die Testdaten werden in dem zu testenden Objekt gespeichert.
    Field feld = Koordinatenachsen.class.getDeclaredField("startPunktYAchse");
    feld.setAccessible(true);
-   feld.set(this.koordinatenachsen, punktInPixeln);
+   Vector2D startPunktYAchse = (Vector2D) feld.get(this.koordinatenachsen);
    
    // Es wird überprüft, ob die zu testende Methode den korrekten Wert zurückgibt.
-   assertEquals(punktInPixeln, this.koordinatenachsen.getStartPunktYAchse());
+   assertEquals(startPunktYAchse, this.koordinatenachsen.getStartPunktYAchse());
    }
 
 // =====================================================================================================================
@@ -160,6 +157,7 @@ public void testGetStartPunktYAchse() throws SecurityException, NoSuchFieldExcep
 
 /**
  * Test für die Methode {@link Koordinatenachsen#getEndPunktYAchse()}.
+ * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
  * @throws IllegalAccessException 
@@ -168,16 +166,13 @@ public void testGetStartPunktYAchse() throws SecurityException, NoSuchFieldExcep
 @Test
 public void testGetEndPunktYAchse() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
-   {
-   // Die Testdaten werden erzeugt.
-   Vector2D punktInPixeln = new Vector2D(0, 4);
-   
+   { 
    // Die Testdaten werden in dem zu testenden Objekt gespeichert.
    Field feld = Koordinatenachsen.class.getDeclaredField("endPunktYAchse");
    feld.setAccessible(true);
-   feld.set(this.koordinatenachsen, punktInPixeln);
+   Vector2D endPunktYAchse = (Vector2D) feld.get(this.koordinatenachsen);
    
    // Es wird überprüft, ob die zu testende Methode den korrekten Wert zurückgibt.
-   assertEquals(punktInPixeln, this.koordinatenachsen.getEndPunktYAchse());
+   assertEquals(endPunktYAchse, this.koordinatenachsen.getEndPunktYAchse());
    }
 }
