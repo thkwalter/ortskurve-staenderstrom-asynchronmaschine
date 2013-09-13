@@ -73,7 +73,7 @@ public void setUp() throws Exception
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveModell#getMesspunkteGrafik()}.
+ * Test für die Methode {@link OrtskurveModell#getYPixelGrafik()}.
  * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
@@ -81,27 +81,23 @@ public void setUp() throws Exception
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetMesspunkteGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+public void testGetYPixelGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException 
-   {   
-   // Die Grafikdarstellung der Ortskurve wird initialisiert.
-   this.ortskurveModell.setOrtskurve(ortskurve);
-   this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
+   {
+   // Die Anzahl der Pixel der Grafik in x-Richtung wird gelesen.
+   Field yPixelGrafikFeld = OrtskurveModell.class.getDeclaredField("yPixelGrafik");
+   yPixelGrafikFeld.setAccessible(true);
+   int yPixelGrafik = yPixelGrafikFeld.getInt(this.ortskurveModell);
    
-   // Die Grafikdarstellung der Messpunkte wird im Objekt der zu testenden Klasse OrtskurveModell gespeichert.
-   Field messpunkteGrafikFeld = OrtskurveModell.class.getDeclaredField("messpunkteGrafik");
-   messpunkteGrafikFeld.setAccessible(true);
-   MesspunkteGrafik messpunkteGrafik = (MesspunkteGrafik) messpunkteGrafikFeld.get(this.ortskurveModell);
-   
-   // Es wird überprüft, ob die Grafikdarstellung des Messpunkte korrekt zurückgegeben wird. 
-   assertEquals(messpunkteGrafik, this.ortskurveModell.getMesspunkteGrafik());
+   // Es wird überprüft, ob die korrekte Anzahl der Pixel der Grafik in x-Richtung zurückgegeben wird.
+   assertEquals(yPixelGrafik, this.ortskurveModell.getyPixelGrafik());
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveModell#getOrtskurveGrafik()}.
+ * Test für die Methode {@link OrtskurveModell#getXPixelGrafik()}.
  * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
@@ -109,20 +105,16 @@ public void testGetMesspunkteGrafik() throws SecurityException, NoSuchFieldExcep
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetOrtskurveGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+public void testGetXPixelGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException 
-   {   
-   // Die Grafikdarstellung der Ortskurve wird initialisiert.
-   this.ortskurveModell.setOrtskurve(ortskurve);
-   this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
+   {
+   // Die Anzahl der Pixel der Grafik in x-Richtung wird gelesen.
+   Field xPixelGrafikFeld = OrtskurveModell.class.getDeclaredField("xPixelGrafik");
+   xPixelGrafikFeld.setAccessible(true);
+   int xPixelGrafik = xPixelGrafikFeld.getInt(this.ortskurveModell);
    
-   // Die Grafikdarstellung der Ortskurve wird gelesen.
-   Field ortskurveGrafikFeld = OrtskurveModell.class.getDeclaredField("ortskurveGrafik");
-   ortskurveGrafikFeld.setAccessible(true);
-   OrtskurveGrafik ortskurveGrafik = (OrtskurveGrafik) ortskurveGrafikFeld.get(this.ortskurveModell);
-   
-   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt zurückgegeben wird. 
-   assertEquals(ortskurveGrafik, this.ortskurveModell.getOrtskurveGrafik());
+   // Es wird überprüft, ob die korrekte Anzahl der Pixel der Grafik in x-Richtung zurückgegeben wird.
+   assertEquals(xPixelGrafik, this.ortskurveModell.getxPixelGrafik());
    }
 
 // =====================================================================================================================
@@ -168,31 +160,9 @@ public void testSetOrtskurve()
 // =====================================================================================================================
 // =====================================================================================================================
 
-///**
-// * Test für die Methode {@link OrtskurveModell#grafikdatenBerechnen(Vector2D[])}.
-// * 
-// * @throws NoSuchFieldException 
-// * @throws SecurityException 
-// * @throws IllegalAccessException 
-// * @throws IllegalArgumentException 
-// */
-//@Test
-//public void testGrafikdatenBerechnen()
-//   { 
-//   // Die Ortskurve wird im Objekt der zu testenden Klasse gespeichert.
-//   this.ortskurveModell.setOrtskurve(this.ortskurve);
-//   
-//   // Die zu testende Methode wird ausgeführt.
-//   this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
-//   
-//   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt berechnet worden ist.
-//   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
 /**
  * Test für die Methode {@link OrtskurveModell#randpunkteZusammenstellen(Vector2D[])}.
+ * 
  * @throws NoSuchMethodException 
  * @throws SecurityException 
  * @throws InvocationTargetException 
@@ -227,7 +197,7 @@ public void testRandpunkteZusammenstellen() throws SecurityException, NoSuchMeth
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveModell#getXPixelGrafik()}.
+ * Test für die Methode {@link OrtskurveModell#grafikdatenBerechnen(Vector2D[])}.
  * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
@@ -235,23 +205,42 @@ public void testRandpunkteZusammenstellen() throws SecurityException, NoSuchMeth
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetXPixelGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException 
-   {
-   // Die Anzahl der Pixel der Grafik in x-Richtung wird gelesen.
-   Field xPixelGrafikFeld = OrtskurveModell.class.getDeclaredField("xPixelGrafik");
-   xPixelGrafikFeld.setAccessible(true);
-   int xPixelGrafik = xPixelGrafikFeld.getInt(this.ortskurveModell);
+public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException
+   { 
+   // Die Ortskurve wird im Objekt der zu testenden Klasse gespeichert.
+   this.ortskurveModell.setOrtskurve(this.ortskurve);
+
+   // Die zu testende Methode wird ausgeführt.
+   this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
    
-   // Es wird überprüft, ob die korrekte Anzahl der Pixel der Grafik in x-Richtung zurückgegeben wird.
-   assertEquals(xPixelGrafik, this.ortskurveModell.getxPixelGrafik());
+   // Die Grafikdarstellung der Ortskurve wird gelesen.
+   Field ortskurveGrafikFeld = OrtskurveModell.class.getDeclaredField("ortskurveGrafik");
+   ortskurveGrafikFeld.setAccessible(true);
+   OrtskurveGrafik ortskurveGrafik = (OrtskurveGrafik) ortskurveGrafikFeld.get(this.ortskurveModell);
+
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt berechnet worden ist.
+   assertEquals(270.0, ortskurveGrafik.getMittelpunktInPixeln().getX(), 270.0/1000);
+   assertEquals(135.0, ortskurveGrafik.getMittelpunktInPixeln().getY(), 135.0/1000);
+   assertEquals(112.5, ortskurveGrafik.getRadiusInPixeln(), 112.5/1000);
+   
+   // Die Grafikdarstellung der Messpunkte wird gelesen.
+   Field messpunkteGrafikFeld = OrtskurveModell.class.getDeclaredField("messpunkteGrafik");
+   messpunkteGrafikFeld.setAccessible(true);
+   MesspunkteGrafik messpunkteGrafik = (MesspunkteGrafik) messpunkteGrafikFeld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Grafikdarstellung der Messpunkte korrekt berechnet worden ist.
+   assertEquals(382.5, messpunkteGrafik.getMesspunkteInPixeln()[0].getX(), 382.5/1000);
+   assertEquals(135.0, messpunkteGrafik.getMesspunkteInPixeln()[0].getY(), 135.0/1000);
+   assertEquals(270.0, messpunkteGrafik.getMesspunkteInPixeln()[1].getX(), 270.0/1000);
+   assertEquals(22.5, messpunkteGrafik.getMesspunkteInPixeln()[1].getY(), 22.5/1000);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link OrtskurveModell#getYPixelGrafik()}.
+ * Test für die Methode {@link OrtskurveModell#getMesspunkteGrafik()}.
  * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
@@ -259,16 +248,48 @@ public void testGetXPixelGrafik() throws SecurityException, NoSuchFieldException
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetYPixelGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+public void testGetMesspunkteGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException 
-   {
-   // Die Anzahl der Pixel der Grafik in x-Richtung wird gelesen.
-   Field yPixelGrafikFeld = OrtskurveModell.class.getDeclaredField("yPixelGrafik");
-   yPixelGrafikFeld.setAccessible(true);
-   int yPixelGrafik = yPixelGrafikFeld.getInt(this.ortskurveModell);
+   {   
+   // Die Grafikdarstellung der Ortskurve wird initialisiert.
+   this.ortskurveModell.setOrtskurve(ortskurve);
+   this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
    
-   // Es wird überprüft, ob die korrekte Anzahl der Pixel der Grafik in x-Richtung zurückgegeben wird.
-   assertEquals(yPixelGrafik, this.ortskurveModell.getyPixelGrafik());
+   // Die Grafikdarstellung der Messpunkte wird gelesen.
+   Field messpunkteGrafikFeld = OrtskurveModell.class.getDeclaredField("messpunkteGrafik");
+   messpunkteGrafikFeld.setAccessible(true);
+   MesspunkteGrafik messpunkteGrafik = (MesspunkteGrafik) messpunkteGrafikFeld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Grafikdarstellung des Messpunkte korrekt zurückgegeben wird. 
+   assertEquals(messpunkteGrafik, this.ortskurveModell.getMesspunkteGrafik());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#getOrtskurveGrafik()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetOrtskurveGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Die Grafikdarstellung der Ortskurve wird initialisiert.
+   this.ortskurveModell.setOrtskurve(ortskurve);
+   this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
+   
+   // Die Grafikdarstellung der Ortskurve wird gelesen.
+   Field ortskurveGrafikFeld = OrtskurveModell.class.getDeclaredField("ortskurveGrafik");
+   ortskurveGrafikFeld.setAccessible(true);
+   OrtskurveGrafik ortskurveGrafik = (OrtskurveGrafik) ortskurveGrafikFeld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt zurückgegeben wird. 
+   assertEquals(ortskurveGrafik, this.ortskurveModell.getOrtskurveGrafik());
    }
 
 // =====================================================================================================================

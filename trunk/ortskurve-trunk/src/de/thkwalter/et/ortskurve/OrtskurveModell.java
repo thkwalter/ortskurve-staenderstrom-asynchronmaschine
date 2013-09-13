@@ -44,9 +44,6 @@ private MesspunkteGrafik messpunkteGrafik;
  */
 private OrtskurveGrafik ortskurveGrafik;
 
-// =====================================================================================================================
-// =====================================================================================================================
-
 /**
  * Die Anzahl der Pixel der Grafik in x-Richtung.
  */
@@ -75,7 +72,8 @@ public void grafikdatenBerechnen(Vector2D[] messpunkte)
    
    // Ein Konverter, der Punkte in Pixel umrechnet, wird erzeugt.
    PunktPixelKonverter punktPixelKonverter = 
-      new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), 540, 270);
+      new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), this.xPixelGrafik, 
+         this.yPixelGrafik);
    
    // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
