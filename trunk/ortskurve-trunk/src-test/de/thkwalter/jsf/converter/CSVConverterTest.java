@@ -24,8 +24,6 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.thkwalter.jsf.converter.CSVConverter;
-
 /**
  * Diese Klasse enthält Tests für die Klasse {@link CSVConverter}.
  *

@@ -25,6 +25,8 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.thkwalter.koordinatensystem.Koordinatenachsen;
+
 /**
  * Diese Klasse enthält Tests für die Klasse {@link OrtskurveModell}.
  *
@@ -234,6 +236,21 @@ public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldExce
    assertEquals(135.0, messpunkteGrafik.getMesspunkteInPixeln()[0].getY(), 135.0/1000);
    assertEquals(270.0, messpunkteGrafik.getMesspunkteInPixeln()[1].getX(), 270.0/1000);
    assertEquals(22.5, messpunkteGrafik.getMesspunkteInPixeln()[1].getY(), 22.5/1000);
+   
+   // Die Koordinatenachsen wird gelesen.
+   Field koordinatenachsenFeld = OrtskurveModell.class.getDeclaredField("koordinatenachsen");
+   koordinatenachsenFeld.setAccessible(true);
+   Koordinatenachsen koordinatenachsen = (Koordinatenachsen) koordinatenachsenFeld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Koordinatenachsen korrekt berechnet worden sind.
+   assertEquals(135.0, koordinatenachsen.getStartPunktXAchse().getX(), 135.0/1000);
+   assertEquals(135.0, koordinatenachsen.getStartPunktXAchse().getY(), 135.0/1000);
+   assertEquals(405.0, koordinatenachsen.getEndPunktXAchse().getX(), 405.0/1000);
+   assertEquals(135.0, koordinatenachsen.getEndPunktXAchse().getY(), 135.0/1000);
+   assertEquals(157.5, koordinatenachsen.getStartPunktYAchse().getX(), 157.5/1000);
+   assertEquals(270.0, koordinatenachsen.getStartPunktYAchse().getY(), 270.0/1000);
+   assertEquals(157.5, koordinatenachsen.getEndPunktYAchse().getX(), 157.5/1000);
+   assertEquals(0.0, koordinatenachsen.getEndPunktYAchse().getY(), 0.0);
    }
 
 // =====================================================================================================================
@@ -290,6 +307,34 @@ public void testGetOrtskurveGrafik() throws SecurityException, NoSuchFieldExcept
    
    // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt zurückgegeben wird. 
    assertEquals(ortskurveGrafik, this.ortskurveModell.getOrtskurveGrafik());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#getKoordinatenachsen()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetKoordinatenachsen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Die Grafikdarstellung der Ortskurve wird initialisiert.
+   this.ortskurveModell.setOrtskurve(ortskurve);
+   this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
+   
+   // Die Grafikdarstellung der Ortskurve wird gelesen.
+   Field koordinatenachsenFeld = OrtskurveModell.class.getDeclaredField("koordinatenachsen");
+   koordinatenachsenFeld.setAccessible(true);
+   Koordinatenachsen koordinatenachsen = (Koordinatenachsen) koordinatenachsenFeld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt zurückgegeben wird. 
+   assertEquals(koordinatenachsen, this.ortskurveModell.getKoordinatenachsen());
    }
 
 // =====================================================================================================================

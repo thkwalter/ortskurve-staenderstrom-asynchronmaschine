@@ -37,10 +37,6 @@ import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
-import de.thkwalter.koordinatensystem.Achsendimensionierung;
-import de.thkwalter.koordinatensystem.Koordinatenachsen;
-import de.thkwalter.koordinatensystem.PunktPixelKonverter;
-import de.thkwalter.koordinatensystem.Wertebereich;
 
 /**
  * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
@@ -81,11 +77,6 @@ private double r;
  * Dieses Flag zeigt an, ob die Lösung des Ausgleichsproblems angezeigt werden soll. 
  */
 private boolean loesungAnzeigen;
-
-/**
- * Die Koordinatenachsen.
- */
-private Koordinatenachsen koordinatenachsen;
 
 /**
  * Das Datenmodell der Ortskurve.
@@ -241,9 +232,6 @@ public String problemLoesen()
       
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
-      
-      // Die Daten der Grafik der Ortskurve werden berechnet.
-      this.grafikdatenBerechnen();
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
@@ -261,90 +249,6 @@ public String problemLoesen()
    
    // Die Startseite wird wieder angezeigt.
    return null;
-   }
-
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode berechnet die Daten der Grafik der Ortskurve.
- */
-private void grafikdatenBerechnen()
-   {   
-   // Die Achsen des Diagramms werden dimensioniert.
-   Achsendimensionierung achsendimensionierung = this.achsenDimensionieren();
-   
-   // Ein Konverter, der Punkte in Pixel umrechnet, wird erzeugt.
-   PunktPixelKonverter punktPixelKonverter = 
-      this.konverterErstellen(achsendimensionierung.getWertebereichKoordinatensystem());
-   
-   // Die Koordinatenachsen werden berechnet.
-   this.koordinatenachsen = 
-      new Koordinatenachsen(achsendimensionierung.getWertebereichKoordinatensystem(), punktPixelKonverter);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Die Achsen des Diagramms werden dimensioniert.
- *  
- * @return Ein Objekt, das die Dimensionierung der Achsen repräsentiert.
- */
-private Achsendimensionierung achsenDimensionieren()
-   {
-   // Das Feld der anzuzeigenden Punkte wird erzeugt.
-   Vector2D[] punkte = new Vector2D[this.messpunkte.length + 4];
-   
-   // Die Messpunkte werden in das Feld der anzuzeigenden Punkte kopiert.
-   for (int i = 0; i < this.messpunkte.length; i++)
-      {
-      punkte[i] = this.messpunkte[i];
-      }
-   
-   // Der Punkt, der den Kreis links begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
-   punkte[this.messpunkte.length] = new Vector2D(this.mx - this.r, this.my);
-   
-   // Der Punkt, der den Kreis rechts begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
-   punkte[this.messpunkte.length + 1] = new Vector2D(this.mx + this.r, this.my);
-   
-   // Der Punkt, der den Kreis oben begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
-   punkte[this.messpunkte.length + 2] = new Vector2D(this.mx, this.my + this.r);
-   
-   // Der Punkt, der den Kreis links begrenzt, wird zum Feld der anzuzeigenden Punkte hinzugefügt.
-   punkte[this.messpunkte.length + 3] = new Vector2D(this.mx, this.my - this.r);
-   
-   // Ein Objekt der Klasse Achsendimensionierung berechnet den Wertebereich des Koordinatensystems.
-   Achsendimensionierung achsendimensionierung = new Achsendimensionierung(punkte);
-   
-   // Das Objekt, das die Dimensionierung der Achsen repräsentiert, wird zurückgegeben.
-   return achsendimensionierung;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode erzeugt einen Konverter, der Punkte in Pixel umrechnet.
- * 
- * @param wertebereich Der Wertebereich des Koordinatensystems.
- * 
- * @return Ein Konverter, der Punkte in Pixel umrechnet.
- */
-private PunktPixelKonverter konverterErstellen(Wertebereich wertebereich)
-   {
-   // Der Wertebereich, der an die Methode übergeben wird, wird protokolliert.
-   Ausgleichsproblem.logger.fine(wertebereich.toString());
-   
-   // Der Konverter wird erstellt.
-   PunktPixelKonverter punktPixelKonverter = new PunktPixelKonverter(wertebereich, 540, 270);
-   
-   // Der Zustand des Konverters, der die Stromkoordinaten in Pixel umrechnet, wird protokolliert.
-   Ausgleichsproblem.logger.fine(punktPixelKonverter.toString());
-   
-   // Der Wertebereich des Koordinatensystems wird zurückgegeben.
-   return punktPixelKonverter;
    }
 
 // =====================================================================================================================
@@ -439,20 +343,6 @@ public boolean isLoesungAnzeigen()
 public boolean isMeldungenAnzeigen()
    {
    return FacesContext.getCurrentInstance().getMessageList(null).size() > 0;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt ein Objekt zurück, das die Koordinatenachsen repräsentiert.
- * 
- * @return Ein Objekt, das die Koordinatenachsen repräsentiert
- */
-public Koordinatenachsen getKoordinatenachsen()
-   {
-   // Ein Objekt, das die Koordinatenachsen repräsentiert, wird zurückgegeben.
-   return this.koordinatenachsen;
    }
 
 // =====================================================================================================================
