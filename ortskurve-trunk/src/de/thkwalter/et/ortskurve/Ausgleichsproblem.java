@@ -16,7 +16,6 @@
 package de.thkwalter.et.ortskurve;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
@@ -276,45 +275,6 @@ public void setMesspunkte(Vector2D[] messpunkte)
 public Vector2D[] getMesspunkte()
    {
    return this.messpunkte;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt die x-Komponente des Mittelpunkts des Kreises zurück.
- * 
- * @return Die x-Komponente des Mittelpunkts des Kreises.
- */
-public String getMx()
-   {
-   return String.format(Locale.US, "%1$.2f", this.mx);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt die y-Komponente des Mittelpunkts des Kreises zurück.
- * 
- * @return Die y-Komponente des Mittelpunkts des Kreises.
- */
-public String getMy()
-   {
-   return String.format(Locale.US, "%1$.2f", this.my);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt den Radius des Kreises zurück.
- * 
- * @return Der Radius des Kreises.
- */
-public String getR()
-   {
-   return String.format(Locale.US, "%1$.2f", this.r);
    }
 
 // =====================================================================================================================
