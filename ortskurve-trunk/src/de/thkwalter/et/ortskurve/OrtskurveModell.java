@@ -18,6 +18,7 @@ package de.thkwalter.et.ortskurve;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.koordinatensystem.Achsendimensionierung;
+import de.thkwalter.koordinatensystem.Koordinatenachsen;
 import de.thkwalter.koordinatensystem.PunktPixelKonverter;
 
 
@@ -43,6 +44,11 @@ private MesspunkteGrafik messpunkteGrafik;
  * Die Grafikdarstellung der Ortskurve
  */
 private OrtskurveGrafik ortskurveGrafik;
+
+/**
+ * Die Grafikdarstellung der Koordinatenachsen
+ */
+private Koordinatenachsen koordinatenachsen;
 
 /**
  * Die Anzahl der Pixel der Grafik in x-Richtung.
@@ -74,6 +80,10 @@ public void grafikdatenBerechnen(Vector2D[] messpunkte)
    PunktPixelKonverter punktPixelKonverter = 
       new PunktPixelKonverter(achsendimensionierung.getWertebereichKoordinatensystem(), this.xPixelGrafik, 
          this.yPixelGrafik);
+   
+   // Die Koordinatenachsen werden berechnet.
+   this.koordinatenachsen = 
+      new Koordinatenachsen(achsendimensionierung.getWertebereichKoordinatensystem(), punktPixelKonverter);
    
    // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
@@ -151,6 +161,20 @@ public OrtskurveGrafik getOrtskurveGrafik()
    {
    // Die Grafikdarstellung der Ortskurve wird zurückgegeben.
    return this.ortskurveGrafik;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Grafikdarstellung der Koordinatenachsen zurück.
+ * 
+ * @return Die Grafikdarstellung der Koordinatenachsen
+ */
+public Koordinatenachsen getKoordinatenachsen()
+   {
+   // Die Grafikdarstellung der Koordinatenachsen wird zurückgegeben.
+   return this.koordinatenachsen;
    }
 
 // =====================================================================================================================

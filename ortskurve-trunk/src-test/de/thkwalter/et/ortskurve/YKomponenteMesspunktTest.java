@@ -15,7 +15,7 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Test;

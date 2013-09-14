@@ -19,17 +19,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
-
-import de.thkwalter.koordinatensystem.Achsendimensionierung;
-import de.thkwalter.koordinatensystem.Koordinatenachsen;
-import de.thkwalter.koordinatensystem.PunktPixelKonverter;
-import de.thkwalter.koordinatensystem.Wertebereich;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link Ausgleichsproblem}.
@@ -176,157 +169,6 @@ public void testProblemLoesen3() throws SecurityException, NoSuchFieldException,
    
    // Es wird überprüft, ob das Flag korrekt gesetzt ist.
    assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#grafikdatenBerechnen()}.
- * 
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- * @throws NoSuchMethodException 
- * @throws InvocationTargetException 
- */
-@Test
-public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException, NoSuchMethodException, InvocationTargetException
-   {
-   // Das Datenmodell der Ortskurve wird erzeugt und im zu testenden Objekt gespeichert.
-   Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
-   ortskurveModellFeld.setAccessible(true);
-   ortskurveModellFeld.set(this.ausgleichsproblem, new OrtskurveModell());
-   
-   // Die Messpunkte werden deklariert und an das Objekt der zu testenden Klasse übergeben.
-   Vector2D[] messpunkte = new Vector2D[]{new Vector2D(0.1, 0), new Vector2D(1.9, 0), new Vector2D(1, 1.1), 
-      new Vector2D(1, -1.1)};
-   this.ausgleichsproblem.setMesspunkte(messpunkte);
-   
-   // Die Kreisradius wird an das Objekt der zu testenden Klasse übergeben.
-   Field rFeld = Ausgleichsproblem.class.getDeclaredField("r");
-   rFeld.setAccessible(true);
-   rFeld.setDouble(this.ausgleichsproblem, 1.0);
-   
-   // Die Kreismittelpunkt wird an das Objekt der zu testenden Klasse übergeben.
-   Field mxFeld = Ausgleichsproblem.class.getDeclaredField("mx");
-   mxFeld.setAccessible(true);
-   mxFeld.setDouble(this.ausgleichsproblem, 1.0);
-   
-   // Die Kreismittelpunkt wird an das Objekt der zu testenden Klasse übergeben.
-   Field myFeld = Ausgleichsproblem.class.getDeclaredField("my");
-   myFeld.setAccessible(true);
-   myFeld.setDouble(this.ausgleichsproblem, 0.0);
-   
-   // Die zu testende Methode wird aufgerufen.
-   Method method = Ausgleichsproblem.class.getDeclaredMethod("grafikdatenBerechnen");
-   method.setAccessible(true);
-   method.invoke(this.ausgleichsproblem);
-   
-   // Die Koordinatenachsen werden gelesen.
-   Field koordinatenachsenFeld = Ausgleichsproblem.class.getDeclaredField("koordinatenachsen");
-   koordinatenachsenFeld.setAccessible(true);
-   Koordinatenachsen koordinatenachsen = (Koordinatenachsen) koordinatenachsenFeld.get(this.ausgleichsproblem);
-
-   // Es wird überprüft, ob die Koordinatenachsen korrekt berechnet worden sind.
-   assertEquals(167.7, koordinatenachsen.getStartPunktYAchse().getX(), 167.7/1000);
-   assertEquals(270, koordinatenachsen.getStartPunktYAchse().getY(), 270/1000);
-   assertEquals(167.7, koordinatenachsen.getEndPunktYAchse().getX(), 167.7/1000);
-   assertEquals(0, koordinatenachsen.getEndPunktYAchse().getY(), 0);
-   assertEquals(147.3, koordinatenachsen.getStartPunktXAchse().getX(), 147.3/1000);
-   assertEquals(135, koordinatenachsen.getStartPunktXAchse().getY(), 135/1000);
-   assertEquals(392.7, koordinatenachsen.getEndPunktXAchse().getX(), 392.7/1000);
-   assertEquals(135, koordinatenachsen.getEndPunktXAchse().getY(), 135/1000);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#achsenDimensionieren()}.
- * 
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- * @throws NoSuchMethodException 
- * @throws InvocationTargetException 
- */
-@Test
-public void testAchsenDimensionieren() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException, NoSuchMethodException, InvocationTargetException
-   {
-   // Die Messpunkte werden deklariert und an das Objekt der zu testenden Klasse übergeben.
-   Vector2D[] messpunkte = new Vector2D[]{new Vector2D(0.1, 0), new Vector2D(1.9, 0), new Vector2D(1, 1.1), 
-      new Vector2D(1, -1.1)};
-   this.ausgleichsproblem.setMesspunkte(messpunkte);
-   
-   // Die Kreisradius wird an das Objekt der zu testenden Klasse übergeben.
-   Field rFeld = Ausgleichsproblem.class.getDeclaredField("r");
-   rFeld.setAccessible(true);
-   rFeld.setDouble(this.ausgleichsproblem, 1.0);
-   
-   // Die Kreismittelpunkt wird an das Objekt der zu testenden Klasse übergeben.
-   Field mxFeld = Ausgleichsproblem.class.getDeclaredField("mx");
-   mxFeld.setAccessible(true);
-   mxFeld.setDouble(this.ausgleichsproblem, 1.0);
-   
-   // Die Kreismittelpunkt wird an das Objekt der zu testenden Klasse übergeben.
-   Field myFeld = Ausgleichsproblem.class.getDeclaredField("my");
-   myFeld.setAccessible(true);
-   myFeld.setDouble(this.ausgleichsproblem, 0.0);
-   
-   // Die zu testende Methode wird aufgerufen.
-   Method method = Ausgleichsproblem.class.getDeclaredMethod("achsenDimensionieren");
-   method.setAccessible(true);
-   Achsendimensionierung achsendimensionierung = (Achsendimensionierung) method.invoke(this.ausgleichsproblem);
-   
-   // Es wird überprüft, ob die Achsen korrekt dimensioniert worden sind.
-   assertEquals(2.2, achsendimensionierung.getWertebereichKoordinatensystem().getMaxX(), 2.2/1000);
-   assertEquals(-0.2, achsendimensionierung.getWertebereichKoordinatensystem().getMinX(), -0.2/1000);
-   assertEquals(1.32, achsendimensionierung.getWertebereichKoordinatensystem().getMaxY(), 1.32/1000);
-   assertEquals(-1.32, achsendimensionierung.getWertebereichKoordinatensystem().getMinY(), 1.32/1000);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#konverterErstellen()}.
- * 
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- * @throws NoSuchMethodException 
- * @throws InvocationTargetException 
- */
-@Test
-public void testKonverterErstellen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException, NoSuchMethodException, InvocationTargetException
-   {
-   // Der Wertebereich des Koordinatensystems, der im Test verwendet wird, wird erstellt.
-   Wertebereich wertebereich = new Wertebereich(2.0, 1.1, 0.0, -1.1);
-
-   // Die zu testende Methode wird aufgerufen.
-   Method method = Ausgleichsproblem.class.getDeclaredMethod("konverterErstellen", Wertebereich.class);
-   method.setAccessible(true);
-   PunktPixelKonverter punktPixelKonverter = (PunktPixelKonverter) method.invoke(this.ausgleichsproblem, wertebereich);
-   
-   // Es wird überprüft, ob der korrekte Skalierungsfaktor berechnet worden ist.
-   Field skalierungsfaktorFeld = PunktPixelKonverter.class.getDeclaredField("skalierungsfaktor");
-   skalierungsfaktorFeld.setAccessible(true);
-   double skalierungsfaktor = (Double) skalierungsfaktorFeld.get(punktPixelKonverter);
-   assertEquals(122.7, skalierungsfaktor, 122.7/1000);
-   
-   // Es wird überprüft, ob der korrekte Ursprung in Pixeln berechnet worden ist.
-   Field ursprungInPixelFeld = PunktPixelKonverter.class.getDeclaredField("ursprungInPixel");
-   ursprungInPixelFeld.setAccessible(true);
-   Vector2D ursprungInPixel = (Vector2D) ursprungInPixelFeld.get(punktPixelKonverter);
-   assertEquals(147.3, ursprungInPixel.getX(), 147.3/1000);
-   assertEquals(135, ursprungInPixel.getY(), 135/1000);
    }
 
 // =====================================================================================================================

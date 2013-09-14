@@ -82,15 +82,15 @@
               var canvas = document.getElementById('grafik');
               var context = canvas.getContext('2d');
 
-              var startpunktXAchseXWert = #{ausgleichsproblem.koordinatenachsen.startPunktXAchse.x};
-              var startpunktXAchseYWert = #{ausgleichsproblem.koordinatenachsen.startPunktXAchse.y};
-              var endpunktXAchseXWert = #{ausgleichsproblem.koordinatenachsen.endPunktXAchse.x};
-              var endpunktXAchseYWert = #{ausgleichsproblem.koordinatenachsen.endPunktXAchse.y};
+              var startpunktXAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktXAchse.x};
+              var startpunktXAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktXAchse.y};
+              var endpunktXAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktXAchse.x};
+              var endpunktXAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktXAchse.y};
 
-              var startpunktYAchseXWert = #{ausgleichsproblem.koordinatenachsen.startPunktYAchse.x};
-              var startpunktYAchseYWert = #{ausgleichsproblem.koordinatenachsen.startPunktYAchse.y};
-              var endpunktYAchseXWert = #{ausgleichsproblem.koordinatenachsen.endPunktYAchse.x};
-              var endpunktYAchseYWert = #{ausgleichsproblem.koordinatenachsen.endPunktYAchse.y}; 
+              var startpunktYAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktYAchse.x};
+              var startpunktYAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktYAchse.y};
+              var endpunktYAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktYAchse.x};
+              var endpunktYAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktYAchse.y}; 
 
               context.beginPath();
               context.moveTo(startpunktXAchseXWert, startpunktXAchseYWert);
