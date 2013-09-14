@@ -65,13 +65,22 @@
             <f:facet name="header">
                <h:outputText value="Der berechnete Ausgleichskreis besitzt folgende Parameter:"/>
             </f:facet>
-         
-            <h:outputText value="Mittelpunkt:"/>
-            <h:outputText value="(#{ausgleichsproblem.mx}, #{ausgleichsproblem.my})"/>
             
-            <h:outputText value="Radius:"/>
-            <h:outputText value="#{ausgleichsproblem.r}"/>
+            <h:outputText value="Mittelpunkt:"/>
+            <h:panelGroup>
+               (<h:outputText value="#{ausgleichsproblem.ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+               </h:outputText>
+               <h:outputText value=", "/>
+               <h:outputText value="#{ausgleichsproblem.ortskurveModell.ortskurve.mittelpunktOrtskurve.y}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+               </h:outputText>)
+            </h:panelGroup>
        
+            <h:outputText value="Radius:"/>
+            <h:outputText value="#{ausgleichsproblem.ortskurveModell.ortskurve.radiusOrtskurve}">
+               <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+            </h:outputText>
          </h:panelGrid>   
          
          <h:panelGroup rendered="#{ausgleichsproblem.loesungAnzeigen}" class="grafik-ortskurve" layout="block">
