@@ -58,21 +58,6 @@ private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName(
 private Vector2D[] messpunkte;
 
 /**
- * Die x-Komponente des Mittelpunkts des Kreises.
- */
-private double mx;
-
-/**
- * Die y-Komponente des Mittelpunkts des Kreises.
- */
-private double my;
-
-/**
- * Der Radius des Kreises.
- */
-private double r;
-
-/**
  * Dieses Flag zeigt an, ob die Lösung des Ausgleichsproblems angezeigt werden soll. 
  */
 private boolean loesungAnzeigen;
@@ -92,10 +77,13 @@ private OrtskurveModell ortskurveModell;
  */
 public String problemLoesen()
    {
-   Ausgleichsproblem.logger.entering("Ausgleichsproblem", "problemLoesen");
-   
    try
-      {      
+      {   
+      // Die Variablen für die Ortskurve werden deklariert.
+      double mx = Double.NaN;
+      double my = Double.NaN;
+      double r = Double.NaN;
+      
       // Alle Messpunkte werden in ein HashSet eingefügt.
       HashSet<Vector2D> messpunktSet = new HashSet<Vector2D>();
       for (Vector2D messpunkt : this.messpunkte)
@@ -147,9 +135,9 @@ public String problemLoesen()
       // Falls nur drei Messpunkte eingegeben worden sind, entspricht der Startpunkt der Lösung.
       if (this.messpunkte.length == 3)
          {
-         this.mx = startpunkt[0];
-         this.my = startpunkt[1];
-         this.r = startpunkt[2];
+         mx = startpunkt[0];
+         my = startpunkt[1];
+         r = startpunkt[2];
          }
       
       // Falls mehr als drei Messpunkte eingegeben worden sind, muss die Lösung durch eine nicht-lineare 
@@ -211,19 +199,19 @@ public String problemLoesen()
             }
          
          // Die Lösung wird gelesen.
-         this.mx = endParameter.getPoint()[0];
-         this.my = endParameter.getPoint()[1];
-         this.r = endParameter.getPoint()[2];
+         mx = endParameter.getPoint()[0];
+         my = endParameter.getPoint()[1];
+         r = endParameter.getPoint()[2];
          }
       
       // Die Lösung wird protokolliert.
-      Ausgleichsproblem.logger.info("Mittelpunkt: (" + this.mx + ", " + this.my + "); Radius: " + this.r);
+      Ausgleichsproblem.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
       
       // Das Datenmodell der Ortskurve wird erzeugt.
       this.ortskurveModell = new OrtskurveModell();
       
       // Die Ortskurve wird erstellt und im Datenmodell gespeichert.
-      Ortskurve ortskurve = new Ortskurve(new Vector2D(this.mx, this.my), this.r);
+      Ortskurve ortskurve = new Ortskurve(new Vector2D(mx, my), r);
       this.ortskurveModell.setOrtskurve(ortskurve);
       
       // Die Daten der Grafik der Ortskurve werden berechnet.
