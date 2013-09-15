@@ -36,18 +36,18 @@
                <h:panelGroup>
                   <p id="eingabehilfe">
                      Geben Sie bitte einen Messpunkt pro Zeile ein, die beiden Komponenten eines Messpunktes jeweils 
-                     durch ein Komma getrennt, also im Format: -Im <span class="zeiger">I</span><sub>1</sub>, 
-                     Re <span class="zeiger">I</span><sub>1</sub>
+                     durch ein Komma getrennt und zwar im Format:<br/> 
+                     -Im <span class="zeiger">I</span><sub>1</sub>, Re <span class="zeiger">I</span><sub>1</sub>
                      <br/><br/>
                      
                      Beispiel:
                      <br/><br/>
                      
                      <span id="eingabehilfe-beispiel">
-                     0.1,0.0<br/>
-                     1.0,1.1<br/>
-                     1.9,0.0<br/>
-                     1.0,-1.1<br/>
+                     2.11,2.94<br/>
+                     0.36,0.51<br/>
+                     0.40,0.16<br/>
+                     1.48,-1.60<br/>
                      </span>
                   </p>
                </h:panelGroup>
@@ -127,7 +127,7 @@
               // Achsenbeschriftung der x-Achse anbringen
               context.textBaseline = "bottom";
               context.textAlign = "left";
-              context.fillText("-Im I", endpunktXAchseXWert+10, endpunktXAchseYWert);
+              context.fillText("-Im I", endpunktXAchseXWert+5, endpunktXAchseYWert);
               
               context.strokeStyle = '#000000;';
               context.stroke();  
