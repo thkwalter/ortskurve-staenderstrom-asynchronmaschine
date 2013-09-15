@@ -108,16 +108,26 @@
               context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
               context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
 
-              // Pfeile an die Koordinatenachsen zeichnen
+              // Pfeil an y-Achse zeichnen
               context.moveTo(endpunktYAchseXWert-5,endpunktYAchseYWert+5);
               context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
               context.lineTo(endpunktYAchseXWert+5,endpunktYAchseYWert+5);
 
-              // Achsenbeschriftung anbringen
+              // Pfeil an x-Achse zeichnen
+              context.moveTo(endpunktXAchseXWert-5,endpunktXAchseYWert+5);
+              context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
+              context.lineTo(endpunktXAchseXWert-5,endpunktXAchseYWert-5);
+
+              // Achsenbeschriftung der y-Achse anbringen
               context.font = "16px 'Courier New', monospace";
               context.textBaseline = "top";
               context.textAlign = "right";
               context.fillText("Re I", endpunktYAchseXWert-10, endpunktYAchseYWert);
+
+              // Achsenbeschriftung der x-Achse anbringen
+              context.textBaseline = "bottom";
+              context.textAlign = "left";
+              context.fillText("-Im I", endpunktXAchseXWert+10, endpunktXAchseYWert);
               
               context.strokeStyle = '#000000;';
               context.stroke();  
