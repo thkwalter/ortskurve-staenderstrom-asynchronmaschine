@@ -15,8 +15,6 @@
  */
 package de.thkwalter.koordinatensystem;
 
-import java.util.logging.Logger;
-
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
@@ -32,11 +30,6 @@ public class Achsendimensionierung
  */
 private Wertebereich wertebereichKoordinatensystem;
 
-/*
- * Der Logger dieser Klasse.
- */
-private static Logger logger = Logger.getLogger(Achsendimensionierung.class.getName());
-
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -47,14 +40,6 @@ private static Logger logger = Logger.getLogger(Achsendimensionierung.class.getN
  */
 public Achsendimensionierung(Vector2D[] punkte)
    {
-   // Die an den Konstruktor übergebenen Parameter werden protokolliert.
-   StringBuilder parameter = new StringBuilder("punkte: ");
-   for (Vector2D punkt : punkte)
-      {
-      parameter.append(punkt + "; ");
-      }
-   Achsendimensionierung.logger.fine(parameter.toString());
-   
    // Die Wertebereiche der Punktemenge wird bestimmt.
    Wertebereich wertebereich = this.wertebereichBestimmen(punkte);
    
@@ -63,9 +48,6 @@ public Achsendimensionierung(Vector2D[] punkte)
    
    // Der Wertebereich wird gegebenenfalls bis zum Ursprung ausgedehnt.
    this.wertebereichKoordinatensystem = this.ursprungEinbeziehen(wertebereich);
-   
-   // Der berechnete Wertebereich wird protokolliert.
-   Achsendimensionierung.logger.fine("wertebereichKoordinatensystem: " + this.wertebereichKoordinatensystem.toString());
    }
 
 // =====================================================================================================================
@@ -79,10 +61,7 @@ public Achsendimensionierung(Vector2D[] punkte)
  * @return Der Wertebereich der Punktemenge.
  */
 private Wertebereich wertebereichBestimmen(Vector2D[] punkte)
-   {
-   // Der Einsprung in die Methode wird protokolliert.
-   Achsendimensionierung.logger.entering("Achsendimensionierung", "wertebereichBestimmen");
-   
+   {   
    // Die Objekte, die zur Bestimmung der minimalen und maximalen Werte verwendet werden, werden erzeugt.
    SummaryStatistics summaryStatisticsX = new SummaryStatistics();
    SummaryStatistics summaryStatisticsY = new SummaryStatistics();
@@ -99,15 +78,6 @@ private Wertebereich wertebereichBestimmen(Vector2D[] punkte)
    double maxY = summaryStatisticsY.getMax();
    double minX = summaryStatisticsX.getMin();
    double minY = summaryStatisticsY.getMin();
-   
-   // Die Maxima und Minima werden protokolliert.
-   Achsendimensionierung.logger.fine("maxX: " + maxX);
-   Achsendimensionierung.logger.fine("maxY: " + maxY);
-   Achsendimensionierung.logger.fine("minX: " + minX);
-   Achsendimensionierung.logger.fine("minY: " + minY);
-   
-   // Der Rücksprung aus der Methode wird protokolliert.
-   Achsendimensionierung.logger.exiting("Achsendimensionierung", "wertebereichBestimmen");
 
    // Der maximale Wertebereich der Punktemenge wird zurückgegeben.
    return new Wertebereich(maxX, maxY, minX, minY);
@@ -125,23 +95,11 @@ private Wertebereich wertebereichBestimmen(Vector2D[] punkte)
  */
 private Wertebereich ursprungEinbeziehen(Wertebereich wertebereichPunktemenge)
    {
-   // Der Einsprung in die Methode wird protokolliert.
-   Achsendimensionierung.logger.entering("Achsendimensionierung", "ursprungEinbeziehen");
-   
    // Der Wertebereich wird gegebenenfalls so ausgedehnt, dass er den Ursprung umfasst.
    double maxX = Math.max(0.0, wertebereichPunktemenge.getMaxX());
    double maxY = Math.max(0.0, wertebereichPunktemenge.getMaxY());
    double minX = Math.min(0.0, wertebereichPunktemenge.getMinX());
    double minY = Math.min(0.0, wertebereichPunktemenge.getMinY());
-   
-   // Die neuen Maxima und Minima werden protokolliert.
-   Achsendimensionierung.logger.fine("maxX: " + maxX);
-   Achsendimensionierung.logger.fine("maxY: " + maxY);
-   Achsendimensionierung.logger.fine("minX: " + minX);
-   Achsendimensionierung.logger.fine("minY: " + minY);
-   
-   // Der Rücksprung aus der Methode wird protokolliert.
-   Achsendimensionierung.logger.exiting("Achsendimensionierung", "ursprungEinbeziehen");
    
    // Dererweiterte Wertebereich der Punktemenge wird zurückgegeben.
    return new Wertebereich(maxX, maxY, minX, minY);
@@ -159,9 +117,6 @@ private Wertebereich ursprungEinbeziehen(Wertebereich wertebereichPunktemenge)
  */
 public Wertebereich sicherheitsabstandHinzufuegen(Wertebereich wertebereich)
    {
-   // Der an die Methode übergebene Wertebereich wird protokolliert.
-   Achsendimensionierung.logger.fine("wertebereich: " + wertebereich.toString());
-   
    // Die Ausdehnungen des Wertebereichs in x- und y-Richtung werden berechnet.
    double xAusdehnung = wertebereich.getMaxX() - wertebereich.getMinX();
    double yAusdehnung = wertebereich.getMaxY() - wertebereich.getMinY();
@@ -172,9 +127,6 @@ public Wertebereich sicherheitsabstandHinzufuegen(Wertebereich wertebereich)
    double minX = wertebereich.getMinX() - 0.1 * xAusdehnung;
    double minY = wertebereich.getMinY() - 0.1 * yAusdehnung;
    Wertebereich werteBereichMitSicherheitsabstand = new Wertebereich(maxX, maxY, minX, minY);
-   
-   // Der Wertebereich mit Sicherheitsabstand wird protokolliert.
-   Achsendimensionierung.logger.fine(werteBereichMitSicherheitsabstand.toString());
    
    // Der Wertebereich mit Sicherheitsabstand wird zurückgegeben.
    return werteBereichMitSicherheitsabstand;
