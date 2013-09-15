@@ -91,6 +91,7 @@
               var canvas = document.getElementById('grafik');
               var context = canvas.getContext('2d');
 
+              // Koordinatenachsen zeichnen
               var startpunktXAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktXAchse.x};
               var startpunktXAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktXAchse.y};
               var endpunktXAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktXAchse.x};
@@ -106,9 +107,22 @@
               context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
               context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
               context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
-              context.strokeStyle = '#000000;';
-              context.stroke();   
 
+              // Pfeile an die Koordinatenachsen zeichnen
+              context.moveTo(endpunktYAchseXWert-5,endpunktYAchseYWert+5);
+              context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
+              context.lineTo(endpunktYAchseXWert+5,endpunktYAchseYWert+5);
+
+              // Achsenbeschriftung anbringen
+              context.font = "16px 'Courier New', monospace";
+              context.textBaseline = "top";
+              context.textAlign = "right";
+              context.fillText("Re I", endpunktYAchseXWert-10, endpunktYAchseYWert);
+              
+              context.strokeStyle = '#000000;';
+              context.stroke();  
+
+              // Ortskurve zeichnen
               var centerX = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
               var centerY = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
               var radius = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.radiusInPixeln};
@@ -119,13 +133,22 @@
               context.strokeStyle = '#00cc00';
               context.stroke(); 
 
+              // Mittelpunkt einzeichnen
+              context.beginPath();
+              context.moveTo(centerX-5, centerY);
+              context.lineTo(centerX+5, centerY);
+              context.moveTo(centerX, centerY-5);
+              context.lineTo(centerX, centerY+5);
+              context.strokeStyle = '#00cc00';
+              context.stroke(); 
+
               <ui:repeat value="#{ausgleichsproblem.ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
                  context.beginPath();
                  context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
                  context.lineWidth = 1;
                  context.strokeStyle = '#ff0000';
                  context.stroke(); 
-              </ui:repeat>  
+              </ui:repeat>                
             </script> 
          </h:panelGroup>  
       </ui:define>
