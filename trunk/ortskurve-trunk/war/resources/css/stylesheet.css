@@ -153,6 +153,17 @@ div#menue a
    
    border: solid 1px #000000;
    }
+     
+.eingerueckte-aufzaehlung
+   {
+   margin-left: 20px;
+   }
+   
+.textlink
+   {
+   color: #00cc00;
+   text-decoration: none;
+   }
  
 /* ****************************************************************************************************************** */
 /* Formatierungsangaben für die Fusszeile                                                                             */
@@ -252,4 +263,5 @@ span.copyright
    {
    list-style-position: inside;
    }
+
    
