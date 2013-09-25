@@ -3,3 +3,4 @@
  # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
  # Den Link Datenschutzhinweis drücken -> Der Datenschutzhinweis wird angezeigt
  # Den Datenschutzhinweis überprüfen -> Der Datensschutzhinweis ist korrekt
+ # Den Link Impressum im Text des Datenschutzhinweises drücken -> Das Impressum erscheint
