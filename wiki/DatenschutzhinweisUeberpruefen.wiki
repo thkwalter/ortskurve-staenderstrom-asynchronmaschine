@@ -1,0 +1,5 @@
+=Datenschutzhinweis überprüfen=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Den Link Datenschutzhinweis drücken -> Der Datenschutzhinweis wird angezeigt
+ # Den Datenschutzhinweis überprüfen -> Der Datensschutzhinweis ist korrekt
