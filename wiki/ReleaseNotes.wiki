@@ -2,4 +2,13 @@
 
 == Version 4 vom 08.09.2013 ==
 
-Fachliche Erweiterung: Grafik der berechneten Ortskurve wird angezeigt.
+ * Fachliche Erweiterung: Grafik der berechneten Ortskurve wird angezeigt.
+
+
+== Version 5 vom 25.09.2013 ==
+
+ * Datenschutzhinweis hinzugefügt
+ * Koordinatenachsen beschriftet und Mittelpunkt der Ortskurve eingezeichnet
+ * Auf das Google App Engine-SDK der Version 1.8.4 umgestellt
+ * Die Bibliothek javax.faces-2.2.x.jar auf Version 2.2.3 aktualisiert
+ * Den erläuternden Text zum Eingabefeld verbessert
