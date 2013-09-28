@@ -50,7 +50,7 @@ public String datenUebernehmen()
             (OrtskurveModell) facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ortskurveModell}", OrtskurveModell.class);
         
    
-   ErsatzschaltbildController.logger.info("ortskurve x: " + ortskurveModell);
+   ErsatzschaltbildController.logger.info("ortskurve x: " + ortskurveModell.getOrtskurve().getRadiusOrtskurve());
    
    return "ersatzschaltbild";
    }

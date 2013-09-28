@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
@@ -34,6 +35,8 @@ import org.apache.commons.math3.optim.nonlinear.vector.ModelFunctionJacobian;
 import org.apache.commons.math3.optim.nonlinear.vector.Target;
 import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
+
+import quicktime.qd3d.camera.OrthographicCameraData;
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
@@ -65,6 +68,7 @@ private boolean loesungAnzeigen;
 /**
  * Das Datenmodell der Ortskurve.
  */
+@ManagedProperty(value="#{ortskurveModell}")
 private OrtskurveModell ortskurveModell;
 
 // =====================================================================================================================
@@ -208,7 +212,8 @@ public String problemLoesen()
       Ausgleichsproblem.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
       
       // Das Datenmodell der Ortskurve wird erzeugt.
-      this.ortskurveModell = new OrtskurveModell();
+//      this.ortskurveModell = new OrtskurveModell();
+      Ausgleichsproblem.logger.info("OrtskurveModell im Ausgleichsproblem" + this.ortskurveModell);
       
       // Die Ortskurve wird erstellt und im Datenmodell gespeichert.
       Ortskurve ortskurve = new Ortskurve(new Vector2D(mx, my), r);
@@ -306,4 +311,14 @@ public OrtskurveModell getOrtskurveModell()
    // Das Datenmodell der Ortskurve wird zurückgegeben.
    return this.ortskurveModell;
    }
+
+/**
+ * @param ortskurveModell the ortskurveModell to set
+ */
+public void setOrtskurveModell(OrtskurveModell ortskurveModell)
+   {
+   this.ortskurveModell = ortskurveModell;
+   }
+
+
 }
