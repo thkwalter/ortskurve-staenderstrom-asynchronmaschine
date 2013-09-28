@@ -44,7 +44,7 @@ import de.thkwalter.jsf.ApplicationRuntimeException;
  * @author Th. Walter
  */
 @RequestScoped
-@ManagedBean
+@ManagedBean(name="ausgleichsproblem")
 public class Ausgleichsproblem
 {
 /*

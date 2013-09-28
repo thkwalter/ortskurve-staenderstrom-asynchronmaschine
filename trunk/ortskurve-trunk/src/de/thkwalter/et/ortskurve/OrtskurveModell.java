@@ -15,6 +15,9 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.koordinatensystem.Achsendimensionierung;
@@ -28,6 +31,8 @@ import de.thkwalter.koordinatensystem.PunktPixelKonverter;
  * @author Th. K. Walter
  * @version 1.0
  */
+@RequestScoped
+@ManagedBean(name="ortskurveModell")
 public class OrtskurveModell
 {
 /**
