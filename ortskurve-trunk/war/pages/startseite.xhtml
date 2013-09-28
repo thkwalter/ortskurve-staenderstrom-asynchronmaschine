@@ -59,7 +59,6 @@
                <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}" class="knopf"/>
                <p:spacer width="1" height="21" />
             </h:panelGroup>    
-         </h:form> 
            
          <h:panelGrid columns="2" rendered="#{ausgleichsproblem.loesungAnzeigen}">
             <f:facet name="header">
@@ -160,7 +159,10 @@
                  context.stroke(); 
               </ui:repeat>                
             </script> 
-         </h:panelGroup>  
+         </h:panelGroup> 
+         <h:commandButton value="Daten übernehmen" 
+            action="#{ersatzschaltbildController.datenUebernehmen}" class="knopf"/> 
+         </h:form> 
       </ui:define>
    </ui:composition>
 </h:body>
