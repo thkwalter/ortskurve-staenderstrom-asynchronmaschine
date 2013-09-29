@@ -49,6 +49,12 @@ public void setUp() throws Exception
    {   
    // Das Objekt der zu testenden Klasse wird erzeugt.
    this.ausgleichsproblem = new Ausgleichsproblem();
+   
+   // Das Datenmodell der Ortskurve wird erzeugt und im Objekt der zu testenden Klasse gespeichert.
+   OrtskurveModell ortskurveModell = new OrtskurveModell();
+   Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
+   ortskurveModellFeld.setAccessible(true);
+   ortskurveModellFeld.set(this.ausgleichsproblem, ortskurveModell);
    }
 
 // =====================================================================================================================

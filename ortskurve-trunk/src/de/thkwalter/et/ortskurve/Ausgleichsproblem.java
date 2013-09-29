@@ -36,8 +36,6 @@ import org.apache.commons.math3.optim.nonlinear.vector.Target;
 import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
 
-import quicktime.qd3d.camera.OrthographicCameraData;
-
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
@@ -211,10 +209,6 @@ public String problemLoesen()
       // Die Lösung wird protokolliert.
       Ausgleichsproblem.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
       
-      // Das Datenmodell der Ortskurve wird erzeugt.
-//      this.ortskurveModell = new OrtskurveModell();
-      Ausgleichsproblem.logger.info("OrtskurveModell im Ausgleichsproblem" + this.ortskurveModell);
-      
       // Die Ortskurve wird erstellt und im Datenmodell gespeichert.
       Ortskurve ortskurve = new Ortskurve(new Vector2D(mx, my), r);
       this.ortskurveModell.setOrtskurve(ortskurve);
@@ -241,33 +235,6 @@ public String problemLoesen()
    
    // Die Startseite wird wieder angezeigt.
    return null;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode übergibt den Inhalt des Texteingabefeldes (nach der Konvertierung in ein Feld von 
- * {@link Vector2D}-Messpunkten) an die Geschäftslogik.
- * 
- * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
- */
-public void setMesspunkte(Vector2D[] messpunkte)
-   {      
-   this.messpunkte = messpunkte;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode übergibt die Messpunkte (nach der Konvertierung in eine Zeichenkette) an das Texteingabefeld.
- * 
- * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
- */
-public Vector2D[] getMesspunkte()
-   {
-   return this.messpunkte;
    }
 
 // =====================================================================================================================
@@ -312,13 +279,47 @@ public OrtskurveModell getOrtskurveModell()
    return this.ortskurveModell;
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
 /**
- * @param ortskurveModell the ortskurveModell to set
+ * Diese Methode speichert das übergebene Datenmodell der Ortskurve in diesem Objekt.
+ * 
+ * @param ortskurveModell Das Datenmodell der Ortskurve
  */
 public void setOrtskurveModell(OrtskurveModell ortskurveModell)
    {
+   // Das Datenmodell der Ortskurve wird gespeichert.
    this.ortskurveModell = ortskurveModell;
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+// Dieser Code kann nach Abschluss der Refaktorierung entfernt werden.
+// =====================================================================================================================
+// =====================================================================================================================
 
+/**
+ * Diese Methode übergibt den Inhalt des Texteingabefeldes (nach der Konvertierung in ein Feld von 
+ * {@link Vector2D}-Messpunkten) an die Geschäftslogik.
+ * 
+ * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
+ */
+public void setMesspunkte(Vector2D[] messpunkte)
+   {      
+   this.messpunkte = messpunkte;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode übergibt die Messpunkte (nach der Konvertierung in eine Zeichenkette) an das Texteingabefeld.
+ * 
+ * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
+ */
+public Vector2D[] getMesspunkte()
+   {
+   return this.messpunkte;
+   }
 }

@@ -16,7 +16,6 @@
 package de.thkwalter.et.ortskurve;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -36,6 +35,11 @@ import de.thkwalter.koordinatensystem.PunktPixelKonverter;
 @ManagedBean(name="ortskurveModell")
 public class OrtskurveModell
 {
+/**
+ * Dieses Feld enthält die Messpunkte.
+ */
+private Vector2D[] messpunkte;
+
 /**
  * Die Ortskurve
  */
@@ -240,42 +244,69 @@ public int getyPixelGrafik()
 // =====================================================================================================================
 // =====================================================================================================================
 
-///**
-// * @see java.lang.Object#toString() 
-// */
-//@Override
-//public String toString()
-//   {
-//   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird erzeugt.
-//   StringBuilder stringBuilder = new StringBuilder();
-//   
-//   // Die Anzahl der Pixel der Grafik in x- und y-Richtung wird hinzugefügt.
-//   stringBuilder.append("xPixelGrafik: ").append(this.xPixelGrafik).append("; yPixelGrafik: ").
-//      append(this.yPixelGrafik).append("; ");
-//   
-//   // Die Zeichenkette, welche den Mittelpunkt der Ortskurve repräsentiert, wird hinzugefügt. 
-//   stringBuilder.append("ortskurve: ");
-//   if (this.ortskurve != null)
-//      {
-//      stringBuilder.append(this.ortskurve.toString());
-//      }
-//   
-//   // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
-//   stringBuilder.append("messpunkteGrafik: ");
-//   if (this.messpunkteGrafik != null)
-//      {
-//      stringBuilder.append(this.messpunkteGrafik.toString());
-//      }
-//   
-//   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird hinzugefügt. 
-//   stringBuilder.append("ortskurveGrafik: ");
-//   if (this.ortskurveGrafik != null)
-//      {
-//      stringBuilder.append(this.ortskurveGrafik.toString());
-//      }
-//      
-//   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird zurückgegeben.
-//   return stringBuilder.toString();
-//   }
+/**
+ * @see java.lang.Object#toString() 
+ */
+@Override
+public String toString()
+   {
+   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird erzeugt.
+   StringBuilder stringBuilder = new StringBuilder();
+   
+   // Die Anzahl der Pixel der Grafik in x- und y-Richtung wird hinzugefügt.
+   stringBuilder.append("xPixelGrafik: ").append(this.xPixelGrafik).append("; yPixelGrafik: ").
+      append(this.yPixelGrafik).append("; ");
+   
+   // Die Zeichenkette, welche den Mittelpunkt der Ortskurve repräsentiert, wird hinzugefügt. 
+   stringBuilder.append("ortskurve: ");
+   if (this.ortskurve != null)
+      {
+      stringBuilder.append(this.ortskurve.toString());
+      }
+   
+   // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
+   stringBuilder.append("messpunkteGrafik: ");
+   if (this.messpunkteGrafik != null)
+      {
+      stringBuilder.append(this.messpunkteGrafik.toString());
+      }
+   
+   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird hinzugefügt. 
+   stringBuilder.append("ortskurveGrafik: ");
+   if (this.ortskurveGrafik != null)
+      {
+      stringBuilder.append(this.ortskurveGrafik.toString());
+      }
+      
+   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird zurückgegeben.
+   return stringBuilder.toString();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode übergibt den Inhalt des Texteingabefeldes (nach der Konvertierung in ein Feld von 
+ * {@link Vector2D}-Messpunkten) an die Geschäftslogik.
+ * 
+ * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
+ */
+public void setMesspunkte(Vector2D[] messpunkte)
+   {      
+   this.messpunkte = messpunkte;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode übergibt die Messpunkte (nach der Konvertierung in eine Zeichenkette) an das Texteingabefeld.
+ * 
+ * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
+ */
+public Vector2D[] getMesspunkte()
+   {
+   return this.messpunkte;
+   }
 
 }
