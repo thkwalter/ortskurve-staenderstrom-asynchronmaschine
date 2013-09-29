@@ -21,7 +21,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import de.thkwalter.et.ortskurve.Ausgleichsproblem;
 import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
@@ -43,14 +42,10 @@ public String datenUebernehmen()
    ErsatzschaltbildController.logger.info("datenUebernehmen()");
    
    FacesContext facesContext = FacesContext.getCurrentInstance();
-   Ausgleichsproblem ortskurveController = 
-      (Ausgleichsproblem) facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ausgleichsproblem}", Ausgleichsproblem.class);
-   
    OrtskurveModell ortskurveModell = 
-            (OrtskurveModell) facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ortskurveModell}", OrtskurveModell.class);
-        
+            (OrtskurveModell) facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ortskurveModell}", OrtskurveModell.class);    
    
-   ErsatzschaltbildController.logger.info("ortskurve x: " + ortskurveModell.getOrtskurve().getRadiusOrtskurve());
+   ErsatzschaltbildController.logger.info("ortskurve x: " + ortskurveModell);
    
    return "ersatzschaltbild";
    }
