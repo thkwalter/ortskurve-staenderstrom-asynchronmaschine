@@ -401,11 +401,12 @@ public void testToString1()
    // Das Objekt der zu testenden Klasse wird initalisiert.
    this.ortskurveModell.setOrtskurve(this.ortskurve);
    this.ortskurveModell.grafikdatenBerechnen(test_messpunkte);
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
    String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
       this.ortskurveModell.getyPixelGrafik() + "; ortskurve: mittelpunktOrtskurve: {1; 0}; radiusOrtskurve: 1.0; " +
-      "messpunkteGrafik: messpunkteInPixeln: {382,5; 135}; {270; 22,5}; ortskurveGrafik: mittelPunktInPixeln: " +
+      "messpunkte: {2; 0}; {1; 1}; messpunkteGrafik: messpunkteInPixeln: {382,5; 135}; {270; 22,5}; ortskurveGrafik: mittelPunktInPixeln: " +
       "{270; 135}; radiusInPixeln: 112.5";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
@@ -421,7 +422,7 @@ public void testToString2()
    {   
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
    String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
-       this.ortskurveModell.getyPixelGrafik() + "; ortskurve: messpunkteGrafik: ortskurveGrafik: ";
+       this.ortskurveModell.getyPixelGrafik() + "; ortskurve: messpunkte: messpunkteGrafik: ortskurveGrafik: ";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
 }
