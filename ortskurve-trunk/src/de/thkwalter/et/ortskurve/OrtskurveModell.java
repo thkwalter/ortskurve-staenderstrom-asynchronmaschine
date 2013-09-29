@@ -264,6 +264,16 @@ public String toString()
       stringBuilder.append(this.ortskurve.toString());
       }
    
+   // Die Zeichenkette, welche die Messpunkte repräsentiert, wird hinzugefügt. 
+   stringBuilder.append("messpunkte: ");
+   if (this.messpunkte != null)
+      {
+      for (Vector2D messpunkt : messpunkte)
+         {
+         stringBuilder.append(messpunkt).append("; ");
+         }
+      }
+   
    // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
    stringBuilder.append("messpunkteGrafik: ");
    if (this.messpunkteGrafik != null)
