@@ -286,13 +286,13 @@ public String toString()
 // =====================================================================================================================
 
 /**
- * Diese Methode übergibt den Inhalt des Texteingabefeldes (nach der Konvertierung in ein Feld von 
- * {@link Vector2D}-Messpunkten) an die Geschäftslogik.
+ * Diese Methode speichert die übergebenen Messpunkte in diesem Objekt.
  * 
- * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
+ * @param messpunkte Die Messpunkte
  */
 public void setMesspunkte(Vector2D[] messpunkte)
    {      
+   // Die Messpunkte werden gespeichert.
    this.messpunkte = messpunkte;
    }
 
@@ -300,12 +300,13 @@ public void setMesspunkte(Vector2D[] messpunkte)
 // =====================================================================================================================
 
 /**
- * Diese Methode übergibt die Messpunkte (nach der Konvertierung in eine Zeichenkette) an das Texteingabefeld.
+ * Diese Methode gibt die Messpunkte zurück.
  * 
- * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
+ * @return Die Messpunkte
  */
 public Vector2D[] getMesspunkte()
    {
+   // Die Messpunkte werden zurückgegeben.
    return this.messpunkte;
    }
 
