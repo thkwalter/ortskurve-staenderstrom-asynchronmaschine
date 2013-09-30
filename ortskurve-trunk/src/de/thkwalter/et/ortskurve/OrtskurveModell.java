@@ -75,13 +75,11 @@ private final int yPixelGrafik = 270;
 
 /**
  * Diese Methode berechnet die Daten für die Grafik der Ortskurve.
- * 
- * @param Die Messpunkte
  */
-public void grafikdatenBerechnen(Vector2D[] messpunkte)
+public void grafikdatenBerechnen()
    {
    // Die Punkte, welche die Grafik begrenzen, werden zusammengestellt.
-   Vector2D[] randpunkte = this.randpunkteZusammenstellen(messpunkte);
+   Vector2D[] randpunkte = this.randpunkteZusammenstellen();
    
    // Ein Objekt der Klasse Achsendimensionierung berechnet den Wertebereich des Koordinatensystems.
    Achsendimensionierung achsendimensionierung = new Achsendimensionierung(randpunkte);
@@ -99,7 +97,7 @@ public void grafikdatenBerechnen(Vector2D[] messpunkte)
    this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
    
    // Die Grafikdatstellung der Messpunkte wird berechnet.
-   this.messpunkteGrafik = new MesspunkteGrafik(messpunkte, punktPixelKonverter);
+   this.messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
    }
 
 // =====================================================================================================================
@@ -108,11 +106,9 @@ public void grafikdatenBerechnen(Vector2D[] messpunkte)
 /**
  * Diese Methode stellt die Punkte zusammen, welche die Grafik begrenzen.
  * 
- * @param Die Messpunkte
- * 
  * @return Das Feld der Punkte, welche die Grafik begrenzen.
  */
-private Vector2D[] randpunkteZusammenstellen(Vector2D[] messpunkte)
+private Vector2D[] randpunkteZusammenstellen()
    {
    // Die Parameter der Ortskurve werden gelesen.
    double mx = this.ortskurve.getMittelpunktOrtskurve().getX();
@@ -120,13 +116,13 @@ private Vector2D[] randpunkteZusammenstellen(Vector2D[] messpunkte)
    double r = this.ortskurve.getRadiusOrtskurve();
    
    // Das Feld der Randpunkte wird erzeugt.
-   int feldlaenge = messpunkte.length;
+   int feldlaenge = this.messpunkte.length;
    Vector2D[] punkte = new Vector2D[feldlaenge + 4];
    
    // Die Messpunkte werden in das Feld der Randpunkte kopiert.
    for (int i = 0; i < feldlaenge; i++)
       {
-      punkte[i] = messpunkte[i];
+      punkte[i] = this.messpunkte[i];
       }
    
    // Der Punkt, der den Kreis links begrenzt, wird zum Feld der Randpunkte hinzugefügt.

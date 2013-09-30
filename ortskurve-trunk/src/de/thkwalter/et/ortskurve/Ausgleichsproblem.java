@@ -211,7 +211,7 @@ public String problemLoesen()
       this.ortskurveModell.setOrtskurve(ortskurve);
       
       // Die Daten der Grafik der Ortskurve werden berechnet.
-      this.ortskurveModell.grafikdatenBerechnen(messpunkte);
+      this.ortskurveModell.grafikdatenBerechnen();
       
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
