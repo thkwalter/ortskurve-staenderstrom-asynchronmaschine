@@ -176,12 +176,13 @@ public void testRandpunkteZusammenstellen() throws SecurityException, NoSuchMeth
    IllegalAccessException, InvocationTargetException 
    {
    // Das Modell wird initialisiert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    this.ortskurveModell.setOrtskurve(this.ortskurve);
    
    // Die zu testende Methode wird ausgeführt.
-   Method method = OrtskurveModell.class.getDeclaredMethod("randpunkteZusammenstellen", Vector2D[].class);
+   Method method = OrtskurveModell.class.getDeclaredMethod("randpunkteZusammenstellen", (Class[]) null);
    method.setAccessible(true);
-   Vector2D[] randpunkte = (Vector2D[]) method.invoke(this.ortskurveModell, (Object) this.test_messpunkte);
+   Vector2D[] randpunkte = (Vector2D[]) method.invoke(this.ortskurveModell, (Object[]) null);
    
    // Es wird überprüft, ob die Anzahl der zusammengestellten Randpunkte korrekt ist.
    assertEquals(this.test_messpunkte.length + 4, randpunkte.length);
@@ -210,11 +211,14 @@ public void testRandpunkteZusammenstellen() throws SecurityException, NoSuchMeth
 public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
    { 
+   // Die Messpunkte werden im Objekt der zu testenden Klasse gespeichert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
+   
    // Die Ortskurve wird im Objekt der zu testenden Klasse gespeichert.
    this.ortskurveModell.setOrtskurve(this.ortskurve);
 
    // Die zu testende Methode wird ausgeführt.
-   this.ortskurveModell.grafikdatenBerechnen(this.test_messpunkte);
+   this.ortskurveModell.grafikdatenBerechnen();
    
    // Die Grafikdarstellung der Ortskurve wird gelesen.
    Field ortskurveGrafikFeld = OrtskurveModell.class.getDeclaredField("ortskurveGrafik");
@@ -269,8 +273,9 @@ public void testGetMesspunkteGrafik() throws SecurityException, NoSuchFieldExcep
    IllegalAccessException 
    {   
    // Die Grafikdarstellung der Ortskurve wird initialisiert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    this.ortskurveModell.setOrtskurve(ortskurve);
-   this.ortskurveModell.grafikdatenBerechnen(this.test_messpunkte);
+   this.ortskurveModell.grafikdatenBerechnen();
    
    // Die Grafikdarstellung der Messpunkte wird gelesen.
    Field messpunkteGrafikFeld = OrtskurveModell.class.getDeclaredField("messpunkteGrafik");
@@ -297,8 +302,9 @@ public void testGetOrtskurveGrafik() throws SecurityException, NoSuchFieldExcept
    IllegalAccessException 
    {   
    // Die Grafikdarstellung der Ortskurve wird initialisiert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    this.ortskurveModell.setOrtskurve(ortskurve);
-   this.ortskurveModell.grafikdatenBerechnen(this.test_messpunkte);
+   this.ortskurveModell.grafikdatenBerechnen();
    
    // Die Grafikdarstellung der Ortskurve wird gelesen.
    Field ortskurveGrafikFeld = OrtskurveModell.class.getDeclaredField("ortskurveGrafik");
@@ -325,8 +331,9 @@ public void testGetKoordinatenachsen() throws SecurityException, NoSuchFieldExce
    IllegalAccessException 
    {   
    // Die Grafikdarstellung der Ortskurve wird initialisiert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    this.ortskurveModell.setOrtskurve(ortskurve);
-   this.ortskurveModell.grafikdatenBerechnen(this.test_messpunkte);
+   this.ortskurveModell.grafikdatenBerechnen();
    
    // Die Grafikdarstellung der Ortskurve wird gelesen.
    Field koordinatenachsenFeld = OrtskurveModell.class.getDeclaredField("koordinatenachsen");
@@ -399,8 +406,9 @@ public void testSetMesspunkte()
 public void testToString1()
    {
    // Das Objekt der zu testenden Klasse wird initalisiert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    this.ortskurveModell.setOrtskurve(this.ortskurve);
-   this.ortskurveModell.grafikdatenBerechnen(test_messpunkte);
+   this.ortskurveModell.grafikdatenBerechnen();
    this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
