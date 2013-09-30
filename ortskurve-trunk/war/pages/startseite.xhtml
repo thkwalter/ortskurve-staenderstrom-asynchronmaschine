@@ -67,39 +67,39 @@
             
             <h:outputText value="Mittelpunkt:"/>
             <h:panelGroup>
-               (<h:outputText value="#{ausgleichsproblem.ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
+               (<h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
                </h:outputText>
                <h:outputText value=", "/>
-               <h:outputText value="#{ausgleichsproblem.ortskurveModell.ortskurve.mittelpunktOrtskurve.y}">
+               <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.y}">
                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
                </h:outputText>)
             </h:panelGroup>
        
             <h:outputText value="Radius:"/>
-            <h:outputText value="#{ausgleichsproblem.ortskurveModell.ortskurve.radiusOrtskurve}">
+            <h:outputText value="#{ortskurveModell.ortskurve.radiusOrtskurve}">
                <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
             </h:outputText>
          </h:panelGrid>   
          
          <h:panelGroup rendered="#{ausgleichsproblem.loesungAnzeigen}" class="grafik-ortskurve" layout="block">
-            <canvas id="grafik" width="#{ausgleichsproblem.ortskurveModell.xPixelGrafik}" 
-               height="#{ausgleichsproblem.ortskurveModell.yPixelGrafik}"></canvas>
+            <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" 
+               height="#{ortskurveModell.yPixelGrafik}"></canvas>
             
             <script type="text/javascript">
               var canvas = document.getElementById('grafik');
               var context = canvas.getContext('2d');
 
               // Koordinatenachsen zeichnen
-              var startpunktXAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktXAchse.x};
-              var startpunktXAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktXAchse.y};
-              var endpunktXAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktXAchse.x};
-              var endpunktXAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktXAchse.y};
+              var startpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.x};
+              var startpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.y};
+              var endpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.x};
+              var endpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.y};
 
-              var startpunktYAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktYAchse.x};
-              var startpunktYAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.startPunktYAchse.y};
-              var endpunktYAchseXWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktYAchse.x};
-              var endpunktYAchseYWert = #{ausgleichsproblem.ortskurveModell.koordinatenachsen.endPunktYAchse.y}; 
+              var startpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.x};
+              var startpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.y};
+              var endpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.x};
+              var endpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.y}; 
 
               context.beginPath();
               context.moveTo(startpunktXAchseXWert, startpunktXAchseYWert);
@@ -132,9 +132,9 @@
               context.stroke();  
 
               // Ortskurve zeichnen
-              var centerX = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
-              var centerY = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
-              var radius = #{ausgleichsproblem.ortskurveModell.ortskurveGrafik.radiusInPixeln};
+              var centerX = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
+              var centerY = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
+              var radius = #{ortskurveModell.ortskurveGrafik.radiusInPixeln};
               
               context.beginPath();
               context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
@@ -151,7 +151,7 @@
               context.strokeStyle = '#00cc00';
               context.stroke(); 
 
-              <ui:repeat value="#{ausgleichsproblem.ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
+              <ui:repeat value="#{ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
                  context.beginPath();
                  context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
                  context.lineWidth = 1;
