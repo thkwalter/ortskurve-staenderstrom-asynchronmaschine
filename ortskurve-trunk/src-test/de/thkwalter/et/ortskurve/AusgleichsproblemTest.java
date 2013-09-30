@@ -36,6 +36,11 @@ public class AusgleichsproblemTest
  */
 private Ausgleichsproblem ausgleichsproblem;
 
+/**
+ * Das im Test verwendete Datenmodell der Ortskurve.
+ */
+private OrtskurveModell testOrtskurveModell;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -50,11 +55,11 @@ public void setUp() throws Exception
    // Das Objekt der zu testenden Klasse wird erzeugt.
    this.ausgleichsproblem = new Ausgleichsproblem();
    
-   // Das Datenmodell der Ortskurve wird erzeugt und im Objekt der zu testenden Klasse gespeichert.
-   OrtskurveModell ortskurveModell = new OrtskurveModell();
+   // Das im Test verwendete Datenmodell der Ortskurve wird erzeugt und im Objekt der zu testenden Klasse gespeichert.
+   this.testOrtskurveModell = new OrtskurveModell();
    Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
    ortskurveModellFeld.setAccessible(true);
-   ortskurveModellFeld.set(this.ausgleichsproblem, ortskurveModell);
+   ortskurveModellFeld.set(this.ausgleichsproblem, this.testOrtskurveModell);
    }
 
 // =====================================================================================================================
@@ -72,7 +77,7 @@ public void testProblemLoesen1() throws SecurityException, NoSuchFieldException,
    IllegalAccessException
    {
    // Das Feld der Messpunkte wird initialisiert.
-   this.ausgleichsproblem.setMesspunkte(new Vector2D[]{new Vector2D(0.1, 0.0), new Vector2D(2.0, 2.1), 
+   this.testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(0.1, 0.0), new Vector2D(2.0, 2.1), 
       new Vector2D(3.9, 0.0), new Vector2D(2.0, -2.1)});
    
    // Die zu testende Methode wird ausgeführt.
@@ -97,7 +102,7 @@ public void testProblemLoesen2() throws SecurityException, NoSuchFieldException,
    IllegalAccessException
    {
    // Das Feld der Messpunkte wird initialisiert.
-   this.ausgleichsproblem.setMesspunkte(new Vector2D[]{new Vector2D(-5.0, 0.0), new Vector2D(0.0, 5.0), 
+   this.testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(-5.0, 0.0), new Vector2D(0.0, 5.0), 
       new Vector2D(5.0, 0.0)});
    
    // Die zu testende Methode wird ausgeführt.
@@ -122,7 +127,7 @@ public void testProblemLoesen3() throws SecurityException, NoSuchFieldException,
    IllegalAccessException
    {
    // Das Feld der Messpunkte wird initialisiert.
-   this.ausgleichsproblem.setMesspunkte(new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(5.0, 4.0), 
+   this.testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(5.0, 4.0), 
       new Vector2D(9.0, 0.0), new Vector2D(5.0, -4.0)});
    
    // Die zu testende Methode wird ausgeführt.

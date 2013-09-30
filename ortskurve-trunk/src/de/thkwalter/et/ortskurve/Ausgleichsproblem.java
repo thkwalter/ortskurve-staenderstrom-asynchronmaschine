@@ -54,11 +54,6 @@ public class Ausgleichsproblem
 private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName());
 
 /**
- * Dieses Feld enthält die Messpunkte.
- */
-private Vector2D[] messpunkte;
-
-/**
  * Dieses Flag zeigt an, ob die Lösung des Ausgleichsproblems angezeigt werden soll. 
  */
 private boolean loesungAnzeigen;
@@ -81,6 +76,8 @@ public String problemLoesen()
    {
    try
       {   
+      Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
+      
       // Die Variablen für die Ortskurve werden deklariert.
       double mx = Double.NaN;
       double my = Double.NaN;
@@ -88,17 +85,17 @@ public String problemLoesen()
       
       // Alle Messpunkte werden in ein HashSet eingefügt.
       HashSet<Vector2D> messpunktSet = new HashSet<Vector2D>();
-      for (Vector2D messpunkt : this.messpunkte)
+      for (Vector2D messpunkt : messpunkte)
          {
          messpunktSet.add(messpunkt);
          }
       
       // Falls die Anzahl der Punkte im HashSet kleiner ist als die Anzahl der eingegebenen Messpunkte, so wurden 
       // Messpunkte doppelt eingegeben. 
-      if (messpunktSet.size() < this.messpunkte.length)
+      if (messpunktSet.size() < messpunkte.length)
          {
          // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
-         String fehlermeldung = "Es wurden " + (this.messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
+         String fehlermeldung = "Es wurden " + (messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
             " eingegeben!";
          Ausgleichsproblem.logger.severe(fehlermeldung);
          
@@ -106,7 +103,7 @@ public String problemLoesen()
          String jsfMeldung = "";
          
          // Falls nur ein Messpunkt doppelt eingegeben worden ist, ...
-         if (this.messpunkte.length - messpunktSet.size() == 1)
+         if (messpunkte.length - messpunktSet.size() == 1)
             {
             // Die Zeichenkette für die Fehlermeldung wird festgelegt.
             jsfMeldung = "Sie haben einen Messpunkt doppelt eingegeben! Entfernen Sie bitte den doppelt eingegebenen " +
@@ -117,7 +114,7 @@ public String problemLoesen()
          else
             {
             // Die Zeichenkette für die Fehlermeldung wird festgelegt.
-            jsfMeldung = "Sie haben " +  (this.messpunkte.length - messpunktSet.size()) + " Messpunkte " +
+            jsfMeldung = "Sie haben " +  (messpunkte.length - messpunktSet.size()) + " Messpunkte " +
                "doppelt eingegeben! Entfernen Sie bitte die doppelt eingegebenen Messpunkte.";
             }
          
@@ -131,11 +128,11 @@ public String problemLoesen()
          }
       
       // Die Startparameter werden bestimmt.
-      Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(this.messpunkte);
+      Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(messpunkte);
       double[] startpunkt = startpunktbestimmung.getStartpunkt();
       
       // Falls nur drei Messpunkte eingegeben worden sind, entspricht der Startpunkt der Lösung.
-      if (this.messpunkte.length == 3)
+      if (messpunkte.length == 3)
          {
          mx = startpunkt[0];
          my = startpunkt[1];
@@ -153,13 +150,13 @@ public String problemLoesen()
                new GaussNewtonOptimizer(false, new SimpleVectorValueChecker(0.01, -1.0));
          
          // Das Feld für die Gewichte der einzelnen Punkte wird deklariert.
-         double[] gewichte = new double[this.messpunkte.length];
+         double[] gewichte = new double[messpunkte.length];
          
          // Das folgende Feld enthält die Werte, welche die Modellgleichungen ergeben sollten.
-         double[] zielwerte = new double[this.messpunkte.length];
+         double[] zielwerte = new double[messpunkte.length];
          
          // In der folgenden Schleife über alle Messpunkte werden die oben deklarierten Felder initialisiert.
-         for (int i = 0; i < this.messpunkte.length; i++)
+         for (int i = 0; i < messpunkte.length; i++)
             {
             // Allen Messpunkten wird das gleiche Gewicht zugewiesen.
             gewichte[i] = 1.0;
@@ -169,11 +166,11 @@ public String problemLoesen()
             }
          
          // Ein Objekte der Klasse, welche die Modellgleichungen (der Kreisgleichungen) repräsentiert, wird erzeugt.
-         Modellgleichungen strommesswerte = new Modellgleichungen(this.messpunkte);
+         Modellgleichungen strommesswerte = new Modellgleichungen(messpunkte);
          
          // Ein Objekt der Klasse, welche die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen) repräsentiert, 
          // wird erzeugt.
-         Jakobimatrix jakobiMatrix = new Jakobimatrix(this.messpunkte);
+         Jakobimatrix jakobiMatrix = new Jakobimatrix(messpunkte);
          
          // Das Ausgleichsproblem wird gelöst, wobei höchstens 200 Iterationsschritte durchgeführt werden.
          PointVectorValuePair endParameter = null;
@@ -214,7 +211,7 @@ public String problemLoesen()
       this.ortskurveModell.setOrtskurve(ortskurve);
       
       // Die Daten der Grafik der Ortskurve werden berechnet.
-      this.ortskurveModell.grafikdatenBerechnen(this.messpunkte);
+      this.ortskurveModell.grafikdatenBerechnen(messpunkte);
       
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
       this.loesungAnzeigen = true;
@@ -291,35 +288,5 @@ public void setOrtskurveModell(OrtskurveModell ortskurveModell)
    {
    // Das Datenmodell der Ortskurve wird gespeichert.
    this.ortskurveModell = ortskurveModell;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-// Dieser Code kann nach Abschluss der Refaktorierung entfernt werden.
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode übergibt den Inhalt des Texteingabefeldes (nach der Konvertierung in ein Feld von 
- * {@link Vector2D}-Messpunkten) an die Geschäftslogik.
- * 
- * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
- */
-public void setMesspunkte(Vector2D[] messpunkte)
-   {      
-   this.messpunkte = messpunkte;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode übergibt die Messpunkte (nach der Konvertierung in eine Zeichenkette) an das Texteingabefeld.
- * 
- * @param messpunkte Das Feld von {@link Vector2D}-Objekten.
- */
-public Vector2D[] getMesspunkte()
-   {
-   return this.messpunkte;
    }
 }
