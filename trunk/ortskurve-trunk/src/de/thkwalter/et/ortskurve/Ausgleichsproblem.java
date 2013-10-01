@@ -54,11 +54,6 @@ public class Ausgleichsproblem
 private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName());
 
 /**
- * Dieses Flag zeigt an, ob die Lösung des Ausgleichsproblems angezeigt werden soll. 
- */
-private boolean loesungAnzeigen;
-
-/**
  * Das Datenmodell der Ortskurve.
  */
 @ManagedProperty(value="#{ortskurveModell}")
@@ -214,12 +209,15 @@ public String problemLoesen()
       this.ortskurveModell.grafikdatenBerechnen();
       
       // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
-      this.loesungAnzeigen = true;
+      this.ortskurveModell.setLoesungAnzeigen(true);
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
    catch (ApplicationRuntimeException exception)
       {
+      // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
+      this.ortskurveModell.setLoesungAnzeigen(false);
+      
       // Eine Fehlermeldung für die Oberfläche wird erstellt.
       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
          exception.getMessage(), ""));
@@ -228,24 +226,8 @@ public String problemLoesen()
       Ausgleichsproblem.logger.info(exception.getMessage());
       }
    
-   Ausgleichsproblem.logger.exiting("Ausgleichsproblem", "problemLoesen");
-   
    // Die Startseite wird wieder angezeigt.
    return null;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt zurück, ob die Lösung des Ausgleichsproblems angezeigt werden soll.
- * 
- * @return <tt>true</tt>, falls die Lösung des Ausgleichsproblems angezeigt werden soll; <tt>false</tt>, falls die 
- * Lösung des Ausgleichsproblems nicht angezeigt werden soll.
- */
-public boolean isLoesungAnzeigen()
-   {
-   return this.loesungAnzeigen;
    }
 
 // =====================================================================================================================
@@ -260,20 +242,6 @@ public boolean isLoesungAnzeigen()
 public boolean isMeldungenAnzeigen()
    {
    return FacesContext.getCurrentInstance().getMessageList(null).size() > 0;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt das Datenmodell der Ortskurve zurück.
- * 
- * @return Das Datenmodell der Ortskurve
- */
-public OrtskurveModell getOrtskurveModell()
-   {
-   // Das Datenmodell der Ortskurve wird zurückgegeben.
-   return this.ortskurveModell;
    }
 
 // =====================================================================================================================
