@@ -15,9 +15,6 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.lang.reflect.Field;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -82,9 +79,6 @@ public void testProblemLoesen1() throws SecurityException, NoSuchFieldException,
    
    // Die zu testende Methode wird ausgeführt.
    this.ausgleichsproblem.problemLoesen();
-   
-   // Es wird überprüft, ob das Flag korrekt gesetzt ist.
-   assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
    }
 
 // =====================================================================================================================
@@ -107,9 +101,6 @@ public void testProblemLoesen2() throws SecurityException, NoSuchFieldException,
    
    // Die zu testende Methode wird ausgeführt.
    this.ausgleichsproblem.problemLoesen();
-   
-   // Es wird überprüft, ob das Flag korrekt gesetzt ist.
-   assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
    }
 
 // =====================================================================================================================
@@ -132,35 +123,5 @@ public void testProblemLoesen3() throws SecurityException, NoSuchFieldException,
    
    // Die zu testende Methode wird ausgeführt.
    this.ausgleichsproblem.problemLoesen();
-   
-   // Es wird überprüft, ob das Flag korrekt gesetzt ist.
-   assertTrue(this.ausgleichsproblem.isLoesungAnzeigen());
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#getOrtskurveModell()}.
- * 
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- */
-@Test
-public void testGetOrtskurveModell() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException 
-   {
-   // Das Datenmodell der Ortskurve wird erzeugt.
-   OrtskurveModell ortskurveModell = new OrtskurveModell();
-   
-   // Das Datenmodell der Ortskurve wird an das Objekt der zu testenden Klasse übergeben.
-   Field ortskurveFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
-   ortskurveFeld.setAccessible(true);
-   ortskurveFeld.set(this.ausgleichsproblem, ortskurveModell);
-   
-   // Es wird überprüft, ob das Datenmodell der Ortskurve korrekt zurückgegeben wird.
-   assertEquals(ortskurveModell, this.ausgleichsproblem.getOrtskurveModell());
    }
 }
