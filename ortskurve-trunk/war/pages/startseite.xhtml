@@ -68,7 +68,7 @@
             </f:facet>
             
             <h:outputText value="Mittelpunkt:"/>
-            <h:panelGroup>
+            <h:panelGroup styleClass="zahl">
                (<h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
                </h:outputText>
@@ -79,9 +79,12 @@
             </h:panelGroup>
        
             <h:outputText value="Radius:"/>
-            <h:outputText value="#{ortskurveModell.ortskurve.radiusOrtskurve}">
-               <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
-            </h:outputText>
+            <h:panelGroup styleClass="zahl">
+               <h:outputText value="&#160;"/> 
+               <h:outputText value="#{ortskurveModell.ortskurve.radiusOrtskurve}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+               </h:outputText>
+            </h:panelGroup>
          </h:panelGrid>   
          
          <h:panelGroup rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}" 
