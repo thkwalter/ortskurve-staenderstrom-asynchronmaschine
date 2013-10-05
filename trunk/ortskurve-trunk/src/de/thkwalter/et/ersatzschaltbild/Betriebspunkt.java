@@ -21,17 +21,17 @@ import org.apache.commons.math3.complex.Complex;
  * Diese Klasse speichert die Daten zu einem Betriebspunkt.
  * 
  * @author Th. K. Walter
- * @version 1.0
+ * @version 1.2
  */
 public class Betriebspunkt
 {
 /**
- * Der Ständerstrom
+ * Der Ständerstrom (in A).
  */
 private Complex i1;
 
 /**
- * Die Drehzahl des Motors.
+ * Die Drehzahl des Motors (in Hz).
  */
 private double n;
 
@@ -39,13 +39,26 @@ private double n;
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt den Ständerstrom zurück.
+ * Dieser Konstruktor initialisiert den Betriebspunkt mit NaN-Werten.
+ */
+public Betriebspunkt()
+   {
+   // Die Attribute werden mit NaN-Werten initialisiert.
+   this.n = Double.NaN;
+   this.i1 = Complex.NaN;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Ständerstrom zurück (in A).
  * 
- * @return Der Ständerstrom
+ * @return Der Ständerstrom (in A)
  */
 public Complex getI1()
    {
-   // Der Ständerstrom wird zurückgegeben.
+   // Der Ständerstrom (in A) wird zurückgegeben.
    return this.i1;
    }
 
@@ -53,13 +66,13 @@ public Complex getI1()
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert den übergebenen Ständerstrom in diesem Objekt.
+ * Diese Methode speichert den übergebenen Ständerstrom (in A) in diesem Objekt.
  * 
- * @param Der Ständerstrom 
+ * @param Der Ständerstrom (in A) 
  */
 public void setI1(Complex i1)
    {
-   // Der Ständerstrom wird gespeichert.
+   // Der Ständerstrom (in A) wird gespeichert.
    this.i1 = i1;
    }
 
@@ -67,13 +80,13 @@ public void setI1(Complex i1)
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt die Drehzahl des Motors zurück.
+ * Diese Methode gibt die Drehzahl des Motors (in Hz) zurück.
  * 
- * @return Die Drehzahl des Motors
+ * @return Die Drehzahl des Motors (in Hz)
  */
 public double getN()
    {
-   // Die Drehzahl des Motors wird zurückgegeben.
+   // Die Drehzahl des Motors (in Hz) wird zurückgegeben.
    return this.n;
    }
 
@@ -81,13 +94,36 @@ public double getN()
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert die Drehzahl des Motors in diesem Objekt.
+ * Diese Methode speichert die Drehzahl des Motors (in Hz) in diesem Objekt.
  * 
- * @param Die Drehzahl des Motors
+ * @param Die Drehzahl des Motors (in Hz)
  */
 public void setN(double n)
    {
-   // Die Drehzahl des Motors wird gespeichert.
+   // Die Drehzahl des Motors (in Hz) wird gespeichert.
    this.n = n;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * @see java.lang.Object#toString() 
+ */
+@Override
+public String toString()
+   {
+   // Die Zeichenkette, die den Betriebspunkt repräsentiert, wird erzeugt.
+   StringBuilder builder = new StringBuilder();
+   builder.append("Betriebspunkt [");
+   
+   // Die Zeichenkette, die den Ständerstrom repräsentiert, wird hinzugefügt.
+   builder.append("i1=").append(i1).append(", ");
+
+   // Die Zeichenkette, welche die Drehzahl repräsentiert, wird hinzugefügt.
+   builder.append("n=").append(n).append("]");
+   
+   // Die Zeichenkette, die den Betriebspunkt repräsentiert, wird zurückgegeben.
+   return builder.toString();
    }
 }
