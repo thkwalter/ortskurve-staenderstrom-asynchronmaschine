@@ -16,6 +16,7 @@
 package de.thkwalter.et.ersatzschaltbild;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
 
@@ -48,6 +49,30 @@ public void setUp() throws Exception
    {
    // Das Objekt der zu testenden Klasse wird erzeugt.
    this.betriebspunkt = new Betriebspunkt();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Betriebspunkt#Betriebspunkt()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testBetriebspunkt() 
+   {
+   // Es wird überprüft, ob der Betriebspunkt erzeugt worden ist.
+   assertNotNull(this.betriebspunkt);
+   
+   // Es wird überprüft, ob der Ständerstrom (in A) korrekt initialisiert worden ist.
+   assertEquals(Complex.NaN, this.betriebspunkt.getI1());
+   
+   // Es wird überprüft, ob die Drehzahl (in Hz) korrekt initialisiert worden ist.
+   assertEquals(Double.NaN, this.betriebspunkt.getN(), 0.0);
    }
 
 // =====================================================================================================================
@@ -133,5 +158,37 @@ public void testSetN()
    
    // Es wird überprüft, ob die Drehzahl korrekt gespeichert worden ist.
    assertEquals(1000.0, this.betriebspunkt.getN(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link java.lang.Object#toString()}.
+ */
+@Test
+public void testToString1()
+   {
+   // Das Objekt der zu testenden Klasse wird initalisiert.
+   this.betriebspunkt.setI1(new Complex(1, 5));
+   this.betriebspunkt.setN(100.0);
+   
+   // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
+   String meldung = "Betriebspunkt [i1=(1.0, 5.0), n=100.0]";
+   assertEquals(meldung, this.betriebspunkt.toString());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link java.lang.Object#toString()}.
+ */
+@Test
+public void testToString2()
+   {   
+   // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
+   String meldung = "Betriebspunkt [i1=(NaN, NaN), n=NaN]";
+   assertEquals(meldung, this.betriebspunkt.toString());
    }
 }

@@ -15,43 +15,235 @@
  */
 package de.thkwalter.et.ersatzschaltbild;
 
+import java.util.ArrayList;
+
 import de.thkwalter.et.ortskurve.Ortskurve;
 
 /**
  * Das Datenmodell der Ersatzschaltbildberechnung.
  * 
  * @author Th. K. Walter
- * @version 1.0
+ * @version 1.2
  */
 public class ErsatzschaltbildModell
 {
 /**
- * Das Objekt, das die Ortskurve repräsentiert.
+ * Die Kreisparameter der Ortskurve
  */
 private Ortskurve ortskurve;
 
 /**
  * Die Daten der verschiedenen Betriebspunkte.
  */
-private Betriebspunkt[] betriebspunkte;
+private ArrayList<Betriebspunkt> betriebspunkte;
 
 /**
- * Die Leiter-Leiter-Spannung im Ständer.
+ * Die Leiter-Leiter-Spannung (in V).
  */
 private double u1;
 
 /**
- * Die Frequenz im Ständer.
+ * Die Frequenz des Ständerstroms (in Hz).
  */
 private double f1;
 
 /**
- * Die Polpaarzahl
+ * Die Polpaarzahl.
  */
 private int p;
 
 // =====================================================================================================================
 // =====================================================================================================================
 
+/**
+ * Dieser Konstruktor initialisiert die Attribute.
+ */
+public ErsatzschaltbildModell()
+   {
+   // Die numerischen Attribute werden mit NaN-Werten initialisiert.
+   this.f1 = Double.NaN;
+   this.p = Integer.MIN_VALUE;
+   this.u1 = Double.NaN;
+   
+   // Die Liste für die Daten der Betriebspunkte wird erzeugt.
+   this.betriebspunkte = new ArrayList<Betriebspunkt>();
+   }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Kreisparameter der Ortskurve zurück.
+ * 
+ * @return Die Kreisparameter der Ortskurve
+ */
+public Ortskurve getOrtskurve()
+   {
+   // Die Kreisparameter der Ortskurve werden zurückgegeben.
+   return this.ortskurve;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Die übergebenen Kreisparameter der Ortskurve werden im Datenmodell gespeichert.
+ * 
+ * @param ortskurve Die übergebenen Kreisparameter der Ortskurve
+ */
+public void setOrtskurve(Ortskurve ortskurve)
+   {
+   // Die übergebenen Kreisparameter der Ortskurve werden gespeichert.
+   this.ortskurve = ortskurve;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Daten der Betriebspunkte zurück.
+ * 
+ * @return Die Daten der Betriebspunkte
+ */
+public ArrayList<Betriebspunkt> getBetriebspunkte()
+   {
+   // Die Daten der Betriebspunkte werden zurückgegeben.
+   return this.betriebspunkte;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die Daten der Betriebspunkte im Datenmodell.
+ * 
+ * @param betriebspunkte Die Daten der Betriebspunkte
+ */
+public void setBetriebspunkte(ArrayList<Betriebspunkt> betriebspunkte)
+   {
+   // Die Daten der Betriebspunkte werden im Datenmodell gespeichert.
+   this.betriebspunkte = betriebspunkte;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Leiter-Leiter-Spannung zurück (in V) zurück.
+ * 
+ * @return Die Leiter-Leiter-Spannung (in V)
+ */
+public double getU1()
+   {
+   // Die Leiter-Leiter-Spannung (in V) wird zurückgegeben.
+   return this.u1;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die übergebene Leiter-Leiter-Spannung (in V) im Datenmodell.
+ * 
+ * @param u1 Die Leiter-Leiter-Spannung (in V)
+ */
+public void setU1(double u1)
+   {
+   // Die übergebene Leiter-Leiter-Spannung wird im Datenmodell gespeichert.
+   this.u1 = u1;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Frequenz des Ständerstroms (in Hz) zurück.
+ * 
+ * @return Die Frequenz des Ständerstroms (in Hz)
+ */
+public double getF1()
+   {
+   // Die Frequenz des Ständerstroms (in Hz) wird zurückgegeben.
+   return this.f1;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die übergebene Frequenz des Ständerstroms (in Hz).
+ * 
+ * @param f1 Die Frequenz des Ständerstroms (in Hz).
+ */
+public void setF1(double f1)
+   {
+   // Die übergebene Frequenz des Ständerstroms wird im Datenmodell gespeichert.
+   this.f1 = f1;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Polpaarzahl zurück.
+ * 
+ * @return Die Polpaarzahl
+ */
+public int getP()
+   {
+   // Die Polpaarzahl wird zurückgegeben.
+   return this.p;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die übergebene Polpaarzahl im Datenmodell.
+ * 
+ * @param p Die Polpaarzahl
+ */
+public void setP(int p)
+   {
+   // Die übergebene Polpaarzahl wird im Datenmodell gespeichert.
+   this.p = p;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * @see java.lang.Object#toString()
+ */
+@Override
+public String toString()
+   {
+   // Die Zeichenkette, die dieses Datenmodell repräsentiert, wird erzeugt.
+   StringBuilder builder = new StringBuilder();
+   builder.append("ErsatzschaltbildModell [");
+   
+   // Die Zeichenkette, welche die Ortskurve repräsentiert, wird hinzugefügt.
+   if (ortskurve != null)
+      {
+      builder.append("ortskurve=").append(ortskurve).append(", ");
+      }
+   
+   // Die Zeichenkette, welche die Daten der Betriebspunkte repräsentiert, wird hinzugefügt.
+   if (betriebspunkte != null)
+      {
+      builder.append("betriebspunkte=").append(betriebspunkte).append(", ");
+      }
+   
+   // Die Zeichenkette, welche die Leiter-Leiter-Spannung (in V) repräsentiert, wird hinzugefügt.
+   builder.append("u1=").append(u1);
+   
+   // Die Zeichenkette, welche die Frequenz des Ständerstroms (in Hz) repräsentiert, wird hinzugefügt.
+   builder.append(", f1=").append(f1);
+   
+   // Die Zeichenkette, welche die Polpaarzahl repräsentiert, wird hinzugefügt.
+   builder.append(", p=").append(p).append("]");
+   
+   // Die Zeichenkette, die die dieses Datenmodell repräsentiert, wird zurückgegeben.
+   return builder.toString();
+   }
 }
