@@ -118,8 +118,11 @@ public String toString()
    builder.append("Betriebspunkt [");
    
    // Die Zeichenkette, die den Ständerstrom repräsentiert, wird hinzugefügt.
-   builder.append("i1=").append(i1).append(", ");
-
+   if (i1 != null)
+      {
+      builder.append("i1=").append(i1).append(", ");
+      }
+      
    // Die Zeichenkette, welche die Drehzahl repräsentiert, wird hinzugefügt.
    builder.append("n=").append(n).append("]");
    

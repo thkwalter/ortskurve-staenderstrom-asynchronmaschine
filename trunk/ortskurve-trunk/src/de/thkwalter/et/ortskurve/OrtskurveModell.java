@@ -251,7 +251,7 @@ public int getyPixelGrafik()
 @Override
 public String toString()
    {
-   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird erzeugt.
+   // Die Zeichenkette, die das Datenmodell repräsentiert, wird erzeugt.
    StringBuilder stringBuilder = new StringBuilder();
    
    // Die Anzahl der Pixel der Grafik in x- und y-Richtung wird hinzugefügt.
@@ -289,7 +289,7 @@ public String toString()
       stringBuilder.append(this.ortskurveGrafik.toString());
       }
       
-   // Die Zeichenkette, die das Datenmodell der Zeichenkette repräsentiert, wird zurückgegeben.
+   // Die Zeichenkette, die das Datenmodell repräsentiert, wird zurückgegeben.
    return stringBuilder.toString();
    }
 
