@@ -28,6 +28,7 @@ import org.junit.Test;
  * Diese Klasse enthält Tests für die Klasse {@link Betriebspunkt}.
  * 
  * @author Th. K. Walter
+ * @version 1.2
  */
 public class BetriebspunktTest
 {
