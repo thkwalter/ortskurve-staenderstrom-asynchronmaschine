@@ -257,4 +257,18 @@ public void setOrtskurveModell(OrtskurveModell ortskurveModell)
    // Das Datenmodell der Ortskurve wird gespeichert.
    this.ortskurveModell = ortskurveModell;
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt das Datenmodell der Ortskurvenberechnung zurück.
+ * 
+ * @return Das Datenmodell der Ortskurvenberechnung
+ */
+public OrtskurveModell getOrtskurveModell()
+   {
+   // Das Datenmodell der Ortskurvenberechnung wird zurückgegeben.
+   return this.ortskurveModell;
+   }
 }
