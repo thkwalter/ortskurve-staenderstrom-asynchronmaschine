@@ -18,10 +18,8 @@ package de.thkwalter.et.ersatzschaltbild;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-
-import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
  * Diese Klasse repräsentiert den Controller der Ersatzschaltbildberechnung.
@@ -32,21 +30,28 @@ import de.thkwalter.et.ortskurve.OrtskurveModell;
 @ManagedBean
 public class ErsatzschaltbildController
 {
+/**
+ * Das Datenmodell der Ersatzschaltbildberechnung
+ */
+@ManagedProperty(value="#{ersatzschaltbildModell}")
+private ErsatzschaltbildModell ersatzschaltbildModell;
+
 /*
  * Der Logger dieser Klasse.
  */
 private static Logger logger = Logger.getLogger(ErsatzschaltbildController.class.getName());
 
-public String datenUebernehmen()
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert das übergebene Datenmodell des Ersatzschaltbildes in diesem Controller.
+ * 
+ * @param ersatzschaltbildModell Das Datenmodell des Ersatzschaltbildes
+ */
+public void setErsatzschaltbildModell(ErsatzschaltbildModell ersatzschaltbildModell)
    {
-   ErsatzschaltbildController.logger.info("datenUebernehmen()");
-   
-   FacesContext facesContext = FacesContext.getCurrentInstance();
-   OrtskurveModell ortskurveModell = 
-            (OrtskurveModell) facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ortskurveModell}", OrtskurveModell.class);    
-   
-   ErsatzschaltbildController.logger.info("ortskurve x: " + ortskurveModell);
-   
-   return "ersatzschaltbild";
+   // Das Datenmodell der Ortskurve wird gespeichert.
+   this.ersatzschaltbildModell = ersatzschaltbildModell;
    }
 }

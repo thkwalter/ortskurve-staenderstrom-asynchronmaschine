@@ -17,7 +17,14 @@ package de.thkwalter.et.ersatzschaltbild;
 
 import java.util.ArrayList;
 
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import de.thkwalter.et.ortskurve.Ausgleichsproblem;
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
  * Das Datenmodell der Ersatzschaltbildberechnung.
@@ -25,6 +32,8 @@ import de.thkwalter.et.ortskurve.Ortskurve;
  * @author Th. K. Walter
  * @version 1.2
  */
+@ViewScoped
+@ManagedBean(name="ersatzschaltbildModell")
 public class ErsatzschaltbildModell
 {
 /**
@@ -67,6 +76,29 @@ public ErsatzschaltbildModell()
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode initialisiert das Datenmodell mit Hilfe des Datenmodells der Ortskurvenberechnung.
+ */
+@PostConstruct
+public void init()
+   {
+   // Der FacesContext wird gelesen.
+   FacesContext facesContext = FacesContext.getCurrentInstance();
+   
+   // Der Controller der Ortskurvenberechnung wird gelesen.
+   Ausgleichsproblem ausgleichsproblem = (Ausgleichsproblem) facesContext.getApplication().evaluateExpressionGet(
+      facesContext, "#{ausgleichsproblem}", Ausgleichsproblem.class);  
+   
+   // Das Datenmodell der Ortskurvenberechnung wird gelesen.
+   OrtskurveModell ortskurveModell = ausgleichsproblem.getOrtskurveModell();
+   
+   // Die Ortskurve wird in das Datenmodell des Ersatzschaltbilds übertragen.
+   this.setOrtskurve(ortskurveModell.getOrtskurve());
    }
 
 // =====================================================================================================================

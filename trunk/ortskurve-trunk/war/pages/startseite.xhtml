@@ -170,14 +170,13 @@
             </script> 
          </h:panelGroup> 
          
+         <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                                  -->
          <h:form>
-         <h:panelGroup class="knopfzeile" layout="block" 
-            rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}">
-            <h:commandButton value="Zur ESB-Berechnung" action="#{ersatzschaltbildController.datenUebernehmen}" 
-               class="knopf">
-            </h:commandButton>
-            <p:spacer width="1" height="21" />
-         </h:panelGroup>
+            <h:panelGroup class="knopfzeile" layout="block" rendered="#{ortskurveModell.loesungAnzeigen and 
+               (!ausgleichsproblem.meldungenAnzeigen)}">
+               <h:commandButton value="Zur ESB-Berechnung" action="ersatzschaltbild" class="knopf"/>
+               <p:spacer width="1" height="20" />
+            </h:panelGroup>
          </h:form> 
       </ui:define>
    </ui:composition>

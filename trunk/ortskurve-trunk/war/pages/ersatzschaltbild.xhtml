@@ -26,6 +26,31 @@
       <ui:define name="inhalt">   
          <h2>Berechnung der Ersatzschaltbildgrößen</h2>
          <br/><br/>
+         
+         <h:panelGrid columns="2">
+            <f:facet name="header">
+               <h:outputText value="Die berechnete Ortskurve besitzt folgende Kreisparameter:"/>
+            </f:facet>
+            
+            <h:outputText value="Mittelpunkt:"/>
+            <h:panelGroup styleClass="zahl">
+               (<h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.x}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+               </h:outputText>
+               <h:outputText value=", "/>
+               <h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.y}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+               </h:outputText>)
+            </h:panelGroup>
+       
+            <h:outputText value="Radius:"/>
+            <h:panelGroup styleClass="zahl">
+               <h:outputText value="&#160;"/> 
+               <h:outputText value="#{ersatzschaltbildModell.ortskurve.radiusOrtskurve}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+               </h:outputText>
+            </h:panelGroup>
+         </h:panelGrid>
       </ui:define>
    </ui:composition>
 </h:body>
