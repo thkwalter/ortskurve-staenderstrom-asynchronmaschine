@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Field;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -123,5 +125,48 @@ public void testProblemLoesen3() throws SecurityException, NoSuchFieldException,
    
    // Die zu testende Methode wird ausgeführt.
    this.ausgleichsproblem.problemLoesen();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Ausgleichsproblem#getOrtskurveModell()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetOrtskurveModell() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Das Datenmodell der Ortskurvenberechnung wird im Controller gespeichert.
+   Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
+   ortskurveModellFeld.setAccessible(true);
+   ortskurveModellFeld.set(this.ausgleichsproblem, this.testOrtskurveModell);
+   
+   // Die zu testende Methode wird aufgerufen.
+   OrtskurveModell ortskurveModell = this.ausgleichsproblem.getOrtskurveModell();
+   
+   // Es wird überprüft, ob das Datenmodell der Ortskurvenberechnung korrekt zurückgegeben worden ist.
+   assertEquals(this.testOrtskurveModell, ortskurveModell);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Ausgleichsproblem#setOrtskurveModell(OrtskurveModell)}.
+ */
+@Test
+public void testSetOrtskurveModell()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.ausgleichsproblem.setOrtskurveModell(this.testOrtskurveModell);
+   
+   // Es wird überprüft, ob das Datenmodell der Ortskurvenberechnung korrekt gespeichert worden ist.
+   assertEquals(this.testOrtskurveModell, this.ausgleichsproblem.getOrtskurveModell());
    }
 }
