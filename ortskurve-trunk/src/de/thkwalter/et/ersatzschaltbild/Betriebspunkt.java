@@ -39,13 +39,13 @@ private double n;
 // =====================================================================================================================
 
 /**
- * Dieser Konstruktor initialisiert den Betriebspunkt mit NaN-Werten.
+ * Dieser Konstruktor initialisiert den Betriebspunkt.
  */
-public Betriebspunkt()
+public Betriebspunkt(Complex i1)
    {
    // Die Attribute werden mit NaN-Werten initialisiert.
    this.n = Double.NaN;
-   this.i1 = Complex.NaN;
+   this.i1 = i1;
    }
 
 // =====================================================================================================================
@@ -60,20 +60,6 @@ public Complex getI1()
    {
    // Der Ständerstrom (in A) wird zurückgegeben.
    return this.i1;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert den übergebenen Ständerstrom (in A) in diesem Objekt.
- * 
- * @param Der Ständerstrom (in A) 
- */
-public void setI1(Complex i1)
-   {
-   // Der Ständerstrom (in A) wird gespeichert.
-   this.i1 = i1;
    }
 
 // =====================================================================================================================
