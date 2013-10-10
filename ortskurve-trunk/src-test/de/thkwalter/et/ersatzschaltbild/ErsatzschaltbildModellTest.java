@@ -19,13 +19,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.thkwalter.et.ortskurve.Ausgleichsproblem;
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link ErsatzschaltbildModell}.
@@ -94,6 +99,49 @@ public void testErsatzschaltbildModell()
    
    // Es wird überprüft, ob die Polpaarzahl initialisiert worden ist.
    assertEquals(Integer.MIN_VALUE, this.ersatzschaltbildModell.getP());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#datenUebernehmen(Ausgleichsproblem)}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testDatenUebernehmen() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException 
+   {
+   // Die im Test verwendete Ortskurve wird erzeugt.
+   Ortskurve testOrtskurve = new Ortskurve(new Vector2D(2.0, 0.0), 1.5);
+   
+   // Das im Test verwendete Datenmodell der Ortskurvenberechnung wird erzeugt.
+   OrtskurveModell testOrtskurveModell = new OrtskurveModell();
+   testOrtskurveModell.setOrtskurve(testOrtskurve);
+   testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(0.5, 0.0), new Vector2D(2.0, 1.5)});
+   
+   // Der im Test verwendete Controller der Ortskurvenberechnung wird initialisiert.
+   Ausgleichsproblem testAusgleichsproblem = new Ausgleichsproblem();
+   testAusgleichsproblem.setOrtskurveModell(testOrtskurveModell);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = ErsatzschaltbildModell.class.getDeclaredMethod("datenUebernehmen", Ausgleichsproblem.class);
+   methode.setAccessible(true);
+   methode.invoke(this.ersatzschaltbildModell, testAusgleichsproblem);
+   
+   // Es wird überprüft, ob die Ortskurve korrekt übernommen worden ist.
+   assertEquals(testOrtskurve, this.ersatzschaltbildModell.getOrtskurve());
+   
+   // Es wird überprüft, ob die Messpunkte korrekt übernommen worden sind.
+   assertEquals(2, this.ersatzschaltbildModell.getBetriebspunkte().size());
+   assertEquals(new Complex(1.5, -2.0), 
+      ((Betriebspunkt) this.ersatzschaltbildModell.getBetriebspunkte().get(1)).getI1());
+   assertEquals(new Complex(0.0, -0.5), 
+      ((Betriebspunkt) this.ersatzschaltbildModell.getBetriebspunkte().get(0)).getI1());
    }
 
 // =====================================================================================================================
@@ -321,14 +369,14 @@ public void testToString1()
    // Das Objekt der zu testenden Klasse wird initalisiert.
    this.ersatzschaltbildModell.setOrtskurve(this.testOrtskurve);
    this.ersatzschaltbildModell.setBetriebspunkte(this.testBetriebspunkte);
-   this.testBetriebspunkte.add(new Betriebspunkt());
+   this.testBetriebspunkte.add(new Betriebspunkt(new Complex(2, 0)));
    this.ersatzschaltbildModell.setF1(50);
    this.ersatzschaltbildModell.setU1(400);
    this.ersatzschaltbildModell.setP(1);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
    String meldung = "ErsatzschaltbildModell [ortskurve=mittelpunktOrtskurve: {2; 0}; radiusOrtskurve: 2.0; , " +
-      "betriebspunkte=[Betriebspunkt [i1=(NaN, NaN), n=NaN]], u1=400.0, f1=50.0, p=1]";
+      "betriebspunkte=[Betriebspunkt [i1=(2.0, 0.0), n=NaN]], u1=400.0, f1=50.0, p=1]";
    assertEquals(meldung, this.ersatzschaltbildModell.toString());
    }
 
