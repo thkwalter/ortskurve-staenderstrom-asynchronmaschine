@@ -37,6 +37,11 @@ public class BetriebspunktTest
  */
 private Betriebspunkt betriebspunkt;
 
+/**
+ * Der in den Tests verwendete Ständerstrom (in A).
+ */
+private Complex test_i1;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -48,8 +53,11 @@ private Betriebspunkt betriebspunkt;
 @Before
 public void setUp() throws Exception
    {
+   // Der in den Tests verwendete Ständerstrom (in A) wird initialisiert.
+   this.test_i1 = new Complex(2, 0);
+   
    // Das Objekt der zu testenden Klasse wird erzeugt.
-   this.betriebspunkt = new Betriebspunkt();
+   this.betriebspunkt = new Betriebspunkt(this.test_i1);
    }
 
 // =====================================================================================================================
@@ -70,7 +78,7 @@ public void testBetriebspunkt()
    assertNotNull(this.betriebspunkt);
    
    // Es wird überprüft, ob der Ständerstrom (in A) korrekt initialisiert worden ist.
-   assertEquals(Complex.NaN, this.betriebspunkt.getI1());
+   assertEquals(this.test_i1, this.betriebspunkt.getI1());
    
    // Es wird überprüft, ob die Drehzahl (in Hz) korrekt initialisiert worden ist.
    assertEquals(Double.NaN, this.betriebspunkt.getN(), 0.0);
@@ -100,22 +108,6 @@ public void testGetI1() throws NoSuchFieldException, SecurityException, IllegalA
    
    // Es wird überprüft, ob der Ständerstrom korrekt zurückgegeben worden ist.
    assertEquals(new Complex(1, 1), i1);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Betriebspunkt#setI1(Complex)}.
- */
-@Test
-public void testSetI1()
-   {
-   // Die zu testende Methode wird aufgerufen.
-   this.betriebspunkt.setI1(new Complex(2, 1));
-   
-   // Es wird überprüft, ob der Ständerstrom korrekt gespeichert worden ist.
-   assertEquals(new Complex(2, 1), this.betriebspunkt.getI1());
    }
 
 // =====================================================================================================================
@@ -171,11 +163,10 @@ public void testSetN()
 public void testToString1()
    {
    // Das Objekt der zu testenden Klasse wird initalisiert.
-   this.betriebspunkt.setI1(new Complex(1, 5));
    this.betriebspunkt.setN(100.0);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "Betriebspunkt [i1=(1.0, 5.0), n=100.0]";
+   String meldung = "Betriebspunkt [i1=(2.0, 0.0), n=100.0]";
    assertEquals(meldung, this.betriebspunkt.toString());
    }
 
@@ -189,7 +180,7 @@ public void testToString1()
 public void testToString2()
    {   
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "Betriebspunkt [i1=(NaN, NaN), n=NaN]";
+   String meldung = "Betriebspunkt [i1=(2.0, 0.0), n=NaN]";
    assertEquals(meldung, this.betriebspunkt.toString());
    }
 }
