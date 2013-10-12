@@ -142,7 +142,7 @@ div#menue a
 
    resize: none; 
    }
-   
+      
 .grafik-ortskurve
    {
    width: 540px;
@@ -168,6 +168,35 @@ div#menue a
 .letztes-element
    {
    margin-bottom: 20px;
+   }
+ 
+/* ****************************************************************************************************************** */
+/* Formatierungsangaben für Formulare                                                                                 */
+/* ****************************************************************************************************************** */ 
+ 
+.formular-3-spaltig
+   {
+   width: 860px;
+   border-collapse: collapse;
+   border-spacing: 0px;
+   }
+
+.formular-spalte-1
+   {
+   width: 150px;
+   }
+ 
+.formular-spalte-2
+   {
+   width: 150px;
+   padding-left: 100px;
+   }
+   
+.formular-eingabefeld
+   {
+   width: 70px;
+   text-align: right;
+   vertical-align: middle;
    }
  
 /* ****************************************************************************************************************** */
@@ -275,6 +304,16 @@ span.copyright
 .error-messages
    {
    list-style-position: inside;
+   }
+   
+/* ****************************************************************************************************************** */
+/* Formatierungen für HTML-Elemente                                                                                   */
+/* ****************************************************************************************************************** */
+   
+input[type="text"]
+   {
+   font-family: 'Courier New', monospace;
+   font-size: 14px;
    }
 
    
