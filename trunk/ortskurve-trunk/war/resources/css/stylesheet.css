@@ -183,13 +183,13 @@ div#menue a
 
 .formular-spalte-1
    {
-   width: 145px;
+   width: 159px;
    }
  
 .formular-spalte-2
    {
-   width: 145px;
-   padding-left: 100px;
+   width: 158px;
+   padding-left: 80px;
    }
    
 .formular-eingabefeld
@@ -284,6 +284,11 @@ span.copyright
    font-size: 14px
    }
    
+.hilfe
+   {
+   font-size: 14px;
+   }
+   
 /* ****************************************************************************************************************** */
 /* Nachrichten                                                                                                        */
 /* ****************************************************************************************************************** */
@@ -314,6 +319,41 @@ input[type="text"]
    {
    font-family: 'Courier New', monospace;
    font-size: 14px;
+   }
+   
+/* ****************************************************************************************************************** */
+/* Formatierungen für PrimeFaces-Elemente                                                                             */
+/* ****************************************************************************************************************** */
+   
+.ui-dialog
+   {
+   border: solid 3px #009900;
+   }
+   
+.ui-dialog-titlebar
+   {
+   background: #00cc00;
+   }
+   
+.ui-dialog-title
+   {
+   color: #ffffff;
+   font-family: Georgia,'Times New Roman',serif;
+   font-size: 16px;
+   
+   text-shadow: none;
+   }
+   
+.ui-dialog-content
+   {
+   font-family: Georgia,'Times New Roman',serif;
+   font-size: 16px;
+   color: #000000;
+   }
+   
+.ui-dialog-titlebar-close
+   {
+   color: #000000;
    }
 
    
