@@ -191,10 +191,10 @@ public void setBetriebspunkte(ArrayList<Betriebspunkt> betriebspunkte)
  * 
  * @return Die Leiter-Leiter-Spannung (in V)
  */
-public double getU1()
+public Double getU1()
    {
    // Die Leiter-Leiter-Spannung (in V) wird zurückgegeben.
-   return this.u1;
+   return Double.isNaN(this.u1) ? null : this.u1;
    }
 
 // =====================================================================================================================
@@ -205,7 +205,7 @@ public double getU1()
  * 
  * @param u1 Die Leiter-Leiter-Spannung (in V)
  */
-public void setU1(double u1)
+public void setU1(Double u1)
    {
    // Die übergebene Leiter-Leiter-Spannung wird im Datenmodell gespeichert.
    this.u1 = u1;
