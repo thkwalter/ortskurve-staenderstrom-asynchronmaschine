@@ -29,8 +29,13 @@
          
          <!--  Das Formular mit den Eingabedaten für die Berechnung des Ersatzschaltbildes                           -->
          <h:form>
-            <h:messages errorClass="error-messages"  tooltip="true"/>
-         
+            <h:panelGroup rendered="#{not empty facesContext.messageList}" styleClass="nachrichten" layout="block">
+               Das Ersatzschaltbild konnte aus folgenden Gründen leider nicht berechnet werden:
+               <br/><br/>
+            
+               <h:messages errorClass="error-messages" tooltip="true"/>
+            </h:panelGroup>
+            
             <p>Bitte geben Sie Werte für folgende Größen ein:</p>
             <br/>
          
