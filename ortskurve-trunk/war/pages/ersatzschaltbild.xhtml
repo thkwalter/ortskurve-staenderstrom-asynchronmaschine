@@ -29,6 +29,8 @@
          
          <!--  Das Formular mit den Eingabedaten für die Berechnung des Ersatzschaltbildes                           -->
          <h:form>
+            <h:messages errorClass="error-messages"  tooltip="true"/>
+         
             <p>Bitte geben Sie Werte für folgende Größen ein:</p>
             <br/>
          
@@ -37,10 +39,12 @@
 	            columnClasses="formular-spalte-1,formular-eingabefeld,formular-spalte-2,formular-eingabefeld,formular-spalte-2,formular-eingabefeld">  
 	            <h:panelGroup>
 	            <h:outputLabel for="spannung" value="Netzspannung "/>
-	            (<a onclick="dlg1.show();" class="hilfe">?</a>)
+	            <a onclick="dlg1.show();" class="hilfe">(?)</a>
 	            <h:outputLabel for="spannung" value=" in V"/>
 	            </h:panelGroup>
-	            <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8"/>
+	            <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8">
+	               <f:validateDoubleRange minimum="0.00"/>
+	            </h:inputText>
 	            <h:outputLabel for="frequenz" value="Netzfrequenz in Hz"/>
 	            <h:inputText id="frequenz" value="#{ersatzschaltbildModell.f1}" size="8"/>
 	            <h:outputLabel for="polpaarzahl" value="Polpaarzahl"/>

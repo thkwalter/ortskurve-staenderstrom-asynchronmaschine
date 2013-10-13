@@ -17,6 +17,8 @@ package de.thkwalter.et.ersatzschaltbild;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -81,9 +83,15 @@ public void setUp() throws Exception
 
 /**
  * Test für den Konstruktor {@link ErsatzschaltbildModell#ErsatzschaltbildModell()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test
-public void testErsatzschaltbildModell()
+public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Es wird überprüft, ob das Datenmodell des Ersatzschaltbilds erzeugt worden ist.
    assertNotNull(this.ersatzschaltbildModell);
@@ -94,8 +102,13 @@ public void testErsatzschaltbildModell()
    // Es wird überprüft, ob die Frequenz des Ständerstroms initialisiert worden ist.
    assertEquals(Double.NaN, this.ersatzschaltbildModell.getF1(), 0.0);
    
-   // Es wird überprüft, ob die Leiter-Leiter-Spannung (in V) initialisiert worden ist.
-   assertEquals(Double.NaN, this.ersatzschaltbildModell.getU1(), 0.0);
+   // Die effektive Leiter-Leiter-Spannung (in V) wird gelesen.
+   Field feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
+   feld.setAccessible(true);
+   Double u1 = feld.getDouble(this.ersatzschaltbildModell);
+   
+   // Es wird überprüft, ob die Leiter-Leiter-Spannung (in V) korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(u1));
    
    // Es wird überprüft, ob die Polpaarzahl initialisiert worden ist.
    assertEquals(Integer.MIN_VALUE, this.ersatzschaltbildModell.getP());
@@ -242,7 +255,7 @@ public void testSetBetriebspunkte()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetU1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetU1_1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
    // Die im Test verwendete Leiter-Leiter-Spannung (in V) wird im Datenmodell gespeichert.
    Field u1Feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
@@ -254,6 +267,29 @@ public void testGetU1() throws NoSuchFieldException, SecurityException, IllegalA
    
    // Es wird überprüft, ob die Leiter-Leiter-Spannung (in V) korrekt zurückgegeben worden ist.
    assertEquals(400.0, u1, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#getU1()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetU1_2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+   {
+   // Die im Test verwendete Leiter-Leiter-Spannung (in V) wird im Datenmodell gespeichert.
+   Field u1Feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
+   u1Feld.setAccessible(true);
+   u1Feld.setDouble(this.ersatzschaltbildModell, Double.NaN);
+   
+   // Die zu testende Methode wird aufgerufen.
+   assertNull(this.ersatzschaltbildModell.getU1());
    }
 
 // =====================================================================================================================
@@ -371,7 +407,7 @@ public void testToString1()
    this.ersatzschaltbildModell.setBetriebspunkte(this.testBetriebspunkte);
    this.testBetriebspunkte.add(new Betriebspunkt(new Complex(2, 0)));
    this.ersatzschaltbildModell.setF1(50);
-   this.ersatzschaltbildModell.setU1(400);
+   this.ersatzschaltbildModell.setU1(400d);
    this.ersatzschaltbildModell.setP(1);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
