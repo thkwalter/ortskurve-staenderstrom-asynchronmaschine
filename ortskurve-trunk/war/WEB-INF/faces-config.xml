@@ -6,4 +6,10 @@
    <factory>
       <exception-handler-factory>de.thkwalter.jsf.ApplicationExceptionHandlerFactory</exception-handler-factory>
    </factory>
+   
+   <application>
+      <message-bundle>
+         de.thkwalter.jsf.messages
+      </message-bundle>    
+   </application>
 </faces-config>

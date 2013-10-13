@@ -47,7 +47,7 @@
 	            <a onclick="dlg1.show();" class="hilfe">(?)</a>
 	            <h:outputLabel for="spannung" value=" in V"/>
 	            </h:panelGroup>
-	            <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8">
+	            <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8" required="true">
 	               <f:validateDoubleRange minimum="0.00"/>
 	            </h:inputText>
 	            <h:outputLabel for="frequenz" value="Netzfrequenz in Hz"/>
