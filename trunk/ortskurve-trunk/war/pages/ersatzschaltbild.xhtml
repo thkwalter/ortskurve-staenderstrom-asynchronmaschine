@@ -42,16 +42,21 @@
             <!-- Eingabefelder für Netzspannung, Netzfrequenz und Polpaarzahl                                        -->
 	         <h:panelGrid columns="6" styleClass="formular-3-spaltig" 
 	            columnClasses="formular-spalte-1,formular-eingabefeld,formular-spalte-2,formular-eingabefeld,formular-spalte-2,formular-eingabefeld">  
+	            
 	            <h:panelGroup>
 	            <h:outputLabel for="spannung" value="Netzspannung "/>
 	            <a onclick="dlg1.show();" class="hilfe">(?)</a>
 	            <h:outputLabel for="spannung" value=" in V"/>
 	            </h:panelGroup>
-	            <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8" required="true">
-	               <f:validateDoubleRange minimum="0.00"/>
+	            <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8" required="true" 
+	               label="Netzspannung"
+	               requiredMessage="Die Netzspannung wird benötigt, um das Ersatzschaltbild berechnen zu können. Geben Sie bitte die Netzspannung an.">
+	               <f:validator validatorId="positiveDoubleValidator" />
 	            </h:inputText>
+	            
 	            <h:outputLabel for="frequenz" value="Netzfrequenz in Hz"/>
 	            <h:inputText id="frequenz" value="#{ersatzschaltbildModell.f1}" size="8"/>
+	            
 	            <h:outputLabel for="polpaarzahl" value="Polpaarzahl"/>
 	            <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8"/> 
 	         </h:panelGrid>
