@@ -99,11 +99,16 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
    // Es wird überprüft, ob die Liste der Betriebspunkte initialisiert worden ist.
    assertNotNull(this.ersatzschaltbildModell.getBetriebspunkte());
    
+   // Die Frequenz des Ständerstroms (in Hz) wird gelesen.
+   Field feld = ErsatzschaltbildModell.class.getDeclaredField("f1");
+   feld.setAccessible(true);
+   Double f1 = feld.getDouble(this.ersatzschaltbildModell);
+   
    // Es wird überprüft, ob die Frequenz des Ständerstroms initialisiert worden ist.
-   assertEquals(Double.NaN, this.ersatzschaltbildModell.getF1(), 0.0);
+   assertTrue(Double.isNaN(f1));
    
    // Die effektive Leiter-Leiter-Spannung (in V) wird gelesen.
-   Field feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
+   feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
    feld.setAccessible(true);
    Double u1 = feld.getDouble(this.ersatzschaltbildModell);
    
@@ -320,7 +325,8 @@ public void testSetU1()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetF1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetF1_1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Die im Test verwendete Frequenz des Ständerstroms (in Hz) wird im Datenmodell gespeichert.
    Field f1Feld = ErsatzschaltbildModell.class.getDeclaredField("f1");
@@ -332,6 +338,30 @@ public void testGetF1() throws NoSuchFieldException, SecurityException, IllegalA
    
    // Es wird überprüft, ob die Frequenz des Ständerstroms (in Hz) korrekt zurückgegeben worden ist.
    assertEquals(50.0, f1, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#getF1()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetF1_2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die im Test verwendete Frequenz des Ständerstroms (in Hz) wird im Datenmodell gespeichert.
+   Field f1Feld = ErsatzschaltbildModell.class.getDeclaredField("f1");
+   f1Feld.setAccessible(true);
+   f1Feld.setDouble(this.ersatzschaltbildModell, Double.NaN);
+   
+   // Es wird überprüft, ob die Frequenz des Ständerstroms (in Hz) korrekt zurückgegeben worden ist.
+   assertNull(this.ersatzschaltbildModell.getF1());
    }
 
 // =====================================================================================================================
@@ -406,7 +436,7 @@ public void testToString1()
    this.ersatzschaltbildModell.setOrtskurve(this.testOrtskurve);
    this.ersatzschaltbildModell.setBetriebspunkte(this.testBetriebspunkte);
    this.testBetriebspunkte.add(new Betriebspunkt(new Complex(2, 0)));
-   this.ersatzschaltbildModell.setF1(50);
+   this.ersatzschaltbildModell.setF1(50d);
    this.ersatzschaltbildModell.setU1(400d);
    this.ersatzschaltbildModell.setP(1);
    

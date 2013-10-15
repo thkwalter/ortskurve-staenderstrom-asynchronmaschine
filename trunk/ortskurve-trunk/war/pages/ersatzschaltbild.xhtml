@@ -50,12 +50,16 @@
 	            </h:panelGroup>
 	            <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8" required="true" 
 	               label="Netzspannung"
-	               requiredMessage="Die Netzspannung wird benötigt, um das Ersatzschaltbild berechnen zu können. Geben Sie bitte die Netzspannung an.">
+	               requiredMessage="Die Netzspannung wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
 	               <f:validator validatorId="positiveDoubleValidator" />
 	            </h:inputText>
 	            
 	            <h:outputLabel for="frequenz" value="Netzfrequenz in Hz"/>
-	            <h:inputText id="frequenz" value="#{ersatzschaltbildModell.f1}" size="8"/>
+	            <h:inputText id="frequenz" value="#{ersatzschaltbildModell.f1}" size="8" required="true" 
+	               label="Netzfrequenz"
+	               requiredMessage="Die Netzfrequenz wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
+	               <f:validator validatorId="positiveDoubleValidator" />
+	            </h:inputText>
 	            
 	            <h:outputLabel for="polpaarzahl" value="Polpaarzahl"/>
 	            <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8"/> 

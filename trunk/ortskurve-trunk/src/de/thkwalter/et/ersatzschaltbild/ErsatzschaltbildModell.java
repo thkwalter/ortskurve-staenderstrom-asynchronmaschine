@@ -219,10 +219,10 @@ public void setU1(Double u1)
  * 
  * @return Die Frequenz des Ständerstroms (in Hz)
  */
-public double getF1()
+public Double getF1()
    {
    // Die Frequenz des Ständerstroms (in Hz) wird zurückgegeben.
-   return this.f1;
+   return Double.isNaN(this.f1) ? null : this.f1;
    }
 
 // =====================================================================================================================
@@ -233,7 +233,7 @@ public double getF1()
  * 
  * @param f1 Die Frequenz des Ständerstroms (in Hz).
  */
-public void setF1(double f1)
+public void setF1(Double f1)
    {
    // Die übergebene Frequenz des Ständerstroms wird im Datenmodell gespeichert.
    this.f1 = f1;
