@@ -47,7 +47,7 @@ private static Logger logger = Logger.getLogger(PositiveDoubleValidator.class.ge
 public void validate(FacesContext facesContext, UIComponent uiComponent, Object object) throws ValidatorException
    {
    // Der Wert wird in einen double umgewandelt.
-   double wert = Double.parseDouble(object.toString());
+   double wert = (Double) object;
    
    // Falls der Wert kleiner oder gleich Null ist
    if (wert <= 0)
@@ -71,5 +71,4 @@ public void validate(FacesContext facesContext, UIComponent uiComponent, Object 
       throw validatorException;
       }
    }
-
 }
