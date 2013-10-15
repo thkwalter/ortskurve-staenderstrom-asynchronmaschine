@@ -62,7 +62,10 @@
 	            </h:inputText>
 	            
 	            <h:outputLabel for="polpaarzahl" value="Polpaarzahl"/>
-	            <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8"/> 
+	            <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8" required="true"
+	               label="Polpaarzahl"
+                  requiredMessage="Die Polpaarzahl wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
+	            </h:inputText> 
 	         </h:panelGrid>
 	         
 	         <p:dialog id="basicDialog" header="Hilfe" widgetVar="dlg1">  

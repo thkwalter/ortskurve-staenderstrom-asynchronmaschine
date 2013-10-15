@@ -115,8 +115,13 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
    // Es wird überprüft, ob die Leiter-Leiter-Spannung (in V) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(u1));
    
+   // Die Polpaarzahl wird gelesen.
+   feld = ErsatzschaltbildModell.class.getDeclaredField("p");
+   feld.setAccessible(true);
+   Integer p = feld.getInt(this.ersatzschaltbildModell);
+   
    // Es wird überprüft, ob die Polpaarzahl initialisiert worden ist.
-   assertEquals(Integer.MIN_VALUE, this.ersatzschaltbildModell.getP());
+   assertEquals(Integer.MIN_VALUE, p.intValue());
    }
 
 // =====================================================================================================================
@@ -392,7 +397,7 @@ public void testSetF1()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetP() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+public void testGetP_1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
    IllegalAccessException
    {
    // Die im Test verwendete Polpaarzahl wird im Datenmodell gespeichert.
@@ -411,6 +416,30 @@ public void testGetP() throws NoSuchFieldException, SecurityException, IllegalAr
 // =====================================================================================================================
 
 /**
+ * Test für die Methode {@link ErsatzschaltbildModell#getP()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetP_2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die im Test verwendete Polpaarzahl wird im Datenmodell gespeichert.
+   Field pFeld = ErsatzschaltbildModell.class.getDeclaredField("p");
+   pFeld.setAccessible(true);
+   pFeld.setInt(this.ersatzschaltbildModell, Integer.MIN_VALUE);
+   
+   // Es wird überprüft, ob die Polpaarzahl korrekt zurückgegeben worden ist.
+   assertNull(this.ersatzschaltbildModell.getP());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link ErsatzschaltbildModell#setP(int)}.
  */
 @Test
@@ -420,7 +449,7 @@ public void testSetP()
    this.ersatzschaltbildModell.setP(3);
    
    // Es wird überprüft, ob die Polpaarzahl korrekt gespeichert worden ist.
-   assertEquals(3, this.ersatzschaltbildModell.getP());
+   assertEquals(3, this.ersatzschaltbildModell.getP().intValue());
    }
 
 // =====================================================================================================================
