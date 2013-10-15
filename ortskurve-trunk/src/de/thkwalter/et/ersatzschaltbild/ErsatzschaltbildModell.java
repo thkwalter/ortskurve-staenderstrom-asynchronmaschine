@@ -247,10 +247,10 @@ public void setF1(Double f1)
  * 
  * @return Die Polpaarzahl
  */
-public int getP()
+public Integer getP()
    {
    // Die Polpaarzahl wird zurückgegeben.
-   return this.p;
+   return this.p == Integer.MIN_VALUE ? null : this.p;
    }
 
 // =====================================================================================================================
@@ -261,7 +261,7 @@ public int getP()
  * 
  * @param p Die Polpaarzahl
  */
-public void setP(int p)
+public void setP(Integer p)
    {
    // Die übergebene Polpaarzahl wird im Datenmodell gespeichert.
    this.p = p;
