@@ -36,7 +36,7 @@
                <h:messages errorClass="error-messages" tooltip="true"/>
             </h:panelGroup>
             
-            <p>Bitte geben Sie Werte für folgende Größen ein:</p>
+            <h4>Bitte geben Sie Werte für folgende Größen ein:</h4>
             <br/>
          
             <!-- Eingabefelder für Netzspannung, Netzfrequenz und Polpaarzahl                                        -->
@@ -75,13 +75,14 @@
             </p:dialog> 
 	       
 	         <br/><br/>
+	         
+	         <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
+            <br/>
 	               
-	         <h:panelGrid columns="2">
-	            <f:facet name="header">
-	               <h:outputText value="Die berechnete Ortskurve besitzt folgende Kreisparameter:"/>
-	            </f:facet>
+	         <h:panelGrid columns="6" styleClass="formular-3-spaltig" 
+               columnClasses="formular2-spalte-1,formular2-eingabefeld,formular2-spalte-2,formular2-eingabefeld,formular2-spalte-2,formular2-eingabefeld">
 	            
-	            <h:outputText value="Mittelpunkt:"/>
+	            <h:outputText value="Mittelpunkt"/>
 	            <h:panelGroup styleClass="zahl">
 	               (<h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.x}">
 	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
@@ -92,13 +93,15 @@
 	               </h:outputText>)
 	            </h:panelGroup>
 	       
-	            <h:outputText value="Radius:"/>
+	            <h:outputText value="Radius"/>
 	            <h:panelGroup styleClass="zahl">
-	               <h:outputText value="&#160;"/> 
 	               <h:outputText value="#{ersatzschaltbildModell.ortskurve.radiusOrtskurve}">
 	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
 	               </h:outputText>
 	            </h:panelGroup>
+	            
+	            <h:outputText value=" "/>
+	            <h:outputText value=" "/>
 	         </h:panelGrid>
          
            <h:panelGroup class="knopfzeile" layout="block">

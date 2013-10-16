@@ -198,6 +198,24 @@ div#menue a
    text-align: right;
    vertical-align: middle;
    }
+   
+.formular2-spalte-1
+   {
+   width: 134px;
+   }
+ 
+.formular2-spalte-2
+   {
+   width: 133px;
+   padding-left: 80px;
+   }
+   
+.formular2-eingabefeld
+   {
+   width: 100px;
+   text-align: right;
+   vertical-align: middle;
+   }
  
 /* ****************************************************************************************************************** */
 /* Formatierungsangaben für die Fusszeile                                                                             */
