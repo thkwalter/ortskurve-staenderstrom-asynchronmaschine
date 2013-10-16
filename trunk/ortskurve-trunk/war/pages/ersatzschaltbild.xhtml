@@ -65,6 +65,7 @@
 	            <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8" required="true"
 	               label="Polpaarzahl"
                   requiredMessage="Die Polpaarzahl wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
+	            <f:validator validatorId="positiveIntegerValidator" />
 	            </h:inputText> 
 	         </h:panelGrid>
 	         
