@@ -76,6 +76,38 @@
 	       
 	         <br/><br/>
 	         
+	         <h4>Ergänzen Sie bitte in der folgenden Tabelle die Drehzahlen:</h4>
+            <br/>
+            
+            <p:dataTable var="betriebspunkt" value="#{ersatzschaltbildModell.betriebspunkte}" editable="true" editMode="cell">">  
+			      <p:column> 
+			         <f:facet name="header">
+                     -Im <span class="zeiger">I</span><sub>1</sub>
+                  </f:facet> 
+			         <h:outputText value="#{-betriebspunkt.i1.imaginary}" />  
+			      </p:column>
+			      
+			      <p:column headerText="Re I1">
+			         <f:facet name="header">
+                     Re <span class="zeiger">I</span><sub>1</sub>
+                  </f:facet>   
+                  <h:outputText value="#{betriebspunkt.i1.real}" />  
+               </p:column> 
+               
+               <p:column headerText="n">  
+                  <p:cellEditor>  
+                     <f:facet name="output">
+                        <h:outputText value="#{betriebspunkt.n}" />
+                     </f:facet>  
+                     <f:facet name="input">
+                        <p:inputText value="#{betriebspunkt.n}" style="width:96%" label="Drehzahl"/>
+                     </f:facet>  
+                  </p:cellEditor> 
+               </p:column>   
+			   </p:dataTable>
+            
+            <br/><br/>
+	         
 	         <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
             <br/>
 	               
