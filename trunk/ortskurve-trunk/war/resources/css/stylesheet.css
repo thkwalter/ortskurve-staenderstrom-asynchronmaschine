@@ -216,6 +216,47 @@ div#menue a
    text-align: right;
    vertical-align: middle;
    }
+   
+.table-3-spalten
+   {
+   width: 860px;
+   border-collapse: collapse;
+   }
+   
+.eingabe-3-spalten
+   {
+   padding: 3px;
+   background-color: #66ff66;
+   width: 114px;
+   text-align: right;
+   }
+   
+.platzhalter-3-spalten
+   {
+   padding-left: 10px;
+   }
+   
+.text-3-spalten
+   {
+   padding: 3px;
+   background-color: #66ff66;
+   width: 154px;
+   }
+   
+.eingabe-3-spalten-empty
+   {
+   padding: 3px;
+   background-color: #ffffff;
+   width: 114px;
+   text-align: right;
+   }
+   
+.text-3-spalten-empty
+   {
+   padding: 3px;
+   background-color: #ffffff;
+   width: 154px;
+   }
  
 /* ****************************************************************************************************************** */
 /* Formatierungsangaben für die Fusszeile                                                                             */
