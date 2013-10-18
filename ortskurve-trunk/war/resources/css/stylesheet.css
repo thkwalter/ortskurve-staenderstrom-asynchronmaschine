@@ -376,22 +376,31 @@ input[type="text"]
    color: #000000;
    }
    
-.ui-state-default
+   
+/* ****************************************************************************************************************** */
+/* Tabelle auf der Seite Ersatzschaltbild                                                                             */
+/* ****************************************************************************************************************** */
+   
+.esb-tabelle
    {
-   -webkit-box-shadow: none;
-   }
+   width: 860px;
+      
+   border: solid 2px #009900;
+   border-collapse: collapse;
    
-.ui-datatable thead th
+   padding: 2px;
+   } 
+   
+table.esb-tabelle th
    {
-   background: #66ff66;
+   background-color: #66ff66;
+   border: solid 2px #009900;
+   }   
    
-   font-family: Georgia,'Times New Roman',serif;
-   font-size: 16px;
-   font-weight: normal;  
-   text-shadow: none;
-   color: #000000;
-   
-   border-color: #009900;
-   border-width: 2px;
-   }
+table.esb-tabelle td
+   {
+   border: solid 2px #009900;
+   text-align: right;
+   padding: 2px;
+   }   
    
