@@ -390,7 +390,7 @@ input[type="text"]
    } 
    
 table.esb-tabelle th
-   {
+   { 
    background-color: #66ff66;
    border: solid 2px #009900;
    }   
@@ -400,5 +400,24 @@ table.esb-tabelle td
    border: solid 2px #009900;
    text-align: right;
    padding: 2px;
-   }   
+   
+   font-family: 'Courier New', monospace;
+   font-size: 14px;
+   }  
+   
+.esb-tabelle-column
+   {
+   width: 286px;
+   
+   font-family: Georgia,'Times New Roman',serif;
+   font-size: 16px;
+   font-weight: normal;
+   } 
+   
+.esb-tabelle-column-letzte
+   {
+   font-family: Georgia,'Times New Roman',serif;
+   font-size: 16px;
+   font-weight: normal;
+   }
    

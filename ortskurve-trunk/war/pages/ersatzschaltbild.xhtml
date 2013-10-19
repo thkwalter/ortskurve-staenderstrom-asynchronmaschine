@@ -87,21 +87,21 @@
             <br/>
             
             <h:dataTable value="#{ersatzschaltbildModell.betriebspunkte}" var="betriebspunkt" styleClass="esb-tabelle">
-               <h:column>
+               <h:column headerClass="esb-tabelle-column">
                   <f:facet name="header">
-                     -Im <span class="zeiger">I</span><sub>1</sub>
+                     -Im <span class="zeiger">I</span><sub>1</sub> in A
                   </f:facet> 
                   <h:outputText value="#{-betriebspunkt.i1.imaginary}" />  
                </h:column>
             
-               <h:column>
+               <h:column headerClass="esb-tabelle-column">
                   <f:facet name="header">
-                     Re <span class="zeiger">I</span><sub>1</sub>
+                     Re <span class="zeiger">I</span><sub>1</sub> in A
                   </f:facet>   
                   <h:outputText value="#{betriebspunkt.i1.real}" />  
                </h:column>
                
-               <h:column>
+               <h:column headerClass="esb-tabelle-column-letzte">
                   <f:facet name="header">
                      Drehzahl in Hz
                   </f:facet> 
