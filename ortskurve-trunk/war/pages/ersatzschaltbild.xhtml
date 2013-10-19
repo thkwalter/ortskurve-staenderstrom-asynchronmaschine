@@ -114,17 +114,17 @@
 	         <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
             <br/>
 	               
-	         <h:panelGrid columns="8" styleClass="formular-3-spaltig" 
+	         <h:panelGrid columns="8" styleClass="table-3-spalten" 
                columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
                   text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
 	            <h:outputText value="Mittelpunkt"/>
 	            <h:panelGroup styleClass="zahl">
 	               (<h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.x}">
-	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
 	               </h:outputText>
 	               <h:outputText value=", "/>
 	               <h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.y}">
-	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
 	               </h:outputText>)
 	            </h:panelGroup>
 	            
@@ -133,7 +133,7 @@
 	            <h:outputText value="Radius"/>
 	            <h:panelGroup styleClass="zahl">
 	               <h:outputText value="#{ersatzschaltbildModell.ortskurve.radiusOrtskurve}">
-	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
+	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
 	               </h:outputText>
 	            </h:panelGroup>
 	            
