@@ -173,49 +173,6 @@ div#menue a
 /* ****************************************************************************************************************** */
 /* Formatierungsangaben für Formulare                                                                                 */
 /* ****************************************************************************************************************** */ 
- 
-.formular-3-spaltig
-   {
-   width: 860px;
-   border-collapse: collapse;
-   border-spacing: 0px;
-   }
-
-.formular-spalte-1
-   {
-   width: 159px;
-   }
- 
-.formular-spalte-2
-   {
-   width: 158px;
-   padding-left: 80px;
-   }
-   
-.formular-eingabefeld
-   {
-   width: 75px;
-   text-align: right;
-   vertical-align: middle;
-   }
-   
-.formular2-spalte-1
-   {
-   width: 134px;
-   }
- 
-.formular2-spalte-2
-   {
-   width: 133px;
-   padding-left: 80px;
-   }
-   
-.formular2-eingabefeld
-   {
-   width: 100px;
-   text-align: right;
-   vertical-align: middle;
-   }
    
 .table-3-spalten
    {

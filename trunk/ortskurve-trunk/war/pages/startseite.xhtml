@@ -64,36 +64,38 @@
             </h:panelGroup>    
          </h:form>
           
-          <h:panelGroup  rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}">
-          <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
-          </h:panelGroup>
+        <h:panelGroup  rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}">
+          <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
           <br/>
-                
-          <h:panelGrid columns="6" styleClass="formular-3-spaltig" 
-             columnClasses="formular2-spalte-1,formular2-eingabefeld,formular2-spalte-2,formular2-eingabefeld,formular2-spalte-2,formular2-eingabefeld"
-             rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}">
-             
-             <h:outputText value="Mittelpunkt"/>
-             <h:panelGroup styleClass="zahl">
-                (<h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.x}">
-                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
-                </h:outputText>
-                <h:outputText value=", "/>
-                <h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.y}">
-                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
-                </h:outputText>)
-             </h:panelGroup>
-        
-             <h:outputText value="Radius"/>
-             <h:panelGroup styleClass="zahl">
-                <h:outputText value="#{ersatzschaltbildModell.ortskurve.radiusOrtskurve}">
-                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="Locale.US"/>
-                </h:outputText>
-             </h:panelGroup>
-             
-             <h:outputText value=" "/>
-             <h:outputText value=" "/>
-          </h:panelGrid> 
+ 
+            <h:panelGrid columns="8" styleClass="table-3-spalten" 
+               columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
+                  text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
+               <h:outputText value="Mittelpunkt"/>
+               <h:panelGroup styleClass="zahl">
+                  (<h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.x}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>
+                  <h:outputText value=", "/>
+                  <h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.y}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>)
+               </h:panelGroup>
+               
+               <h:outputText value=""/>
+          
+               <h:outputText value="Radius"/>
+               <h:panelGroup styleClass="zahl">
+                  <h:outputText value="#{ersatzschaltbildModell.ortskurve.radiusOrtskurve}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>
+               </h:panelGroup>
+               
+               <h:outputText value=""/>
+               <h:outputText value=""/>
+               <h:outputText value=""/>
+            </h:panelGrid>
+         </h:panelGroup>
          
          <h:panelGroup rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}" 
             class="grafik-ortskurve" layout="block">
