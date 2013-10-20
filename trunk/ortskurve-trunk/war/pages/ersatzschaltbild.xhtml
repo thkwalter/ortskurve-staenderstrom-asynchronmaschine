@@ -91,14 +91,18 @@
                   <f:facet name="header">
                      -Im <span class="zeiger">I</span><sub>1</sub> in A
                   </f:facet> 
-                  <h:outputText value="#{-betriebspunkt.i1.imaginary}" />  
+                  <h:outputText value="#{-betriebspunkt.i1.imaginary}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
                </h:column>
             
                <h:column headerClass="esb-tabelle-column">
                   <f:facet name="header">
                      Re <span class="zeiger">I</span><sub>1</sub> in A
                   </f:facet>   
-                  <h:outputText value="#{betriebspunkt.i1.real}" />  
+                  <h:outputText value="#{betriebspunkt.i1.real}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
                </h:column>
                
                <h:column headerClass="esb-tabelle-column-letzte">
