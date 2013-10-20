@@ -383,10 +383,8 @@ input[type="text"]
    {
    width: 860px;
       
-   border: solid 2px #009900;
+
    border-collapse: collapse;
-   
-   padding: 2px;
    } 
    
 table.esb-tabelle th
@@ -399,7 +397,7 @@ table.esb-tabelle td
    {
    border: solid 2px #009900;
    text-align: right;
-   padding: 2px;
+   padding: 3px;
    
    font-family: 'Courier New', monospace;
    font-size: 14px;

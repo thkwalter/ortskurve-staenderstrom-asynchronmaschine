@@ -70,10 +70,10 @@ public Complex getI1()
  * 
  * @return Die Drehzahl des Motors (in Hz)
  */
-public double getN()
+public Double getN()
    {
    // Die Drehzahl des Motors (in Hz) wird zurückgegeben.
-   return this.n;
+   return Double.isNaN(this.n) ? null : this.n;
    }
 
 // =====================================================================================================================
@@ -84,7 +84,7 @@ public double getN()
  * 
  * @param Die Drehzahl des Motors (in Hz)
  */
-public void setN(double n)
+public void setN(Double n)
    {
    // Die Drehzahl des Motors (in Hz) wird gespeichert.
    this.n = n;
