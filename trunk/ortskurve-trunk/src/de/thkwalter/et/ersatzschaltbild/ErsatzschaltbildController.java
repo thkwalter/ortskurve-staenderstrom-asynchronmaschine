@@ -45,6 +45,23 @@ private static Logger logger = Logger.getLogger(ErsatzschaltbildController.class
 // =====================================================================================================================
 
 /**
+ * Diese Methode berechnet das Ersatzschaltbild.
+ * 
+ * @return Die Zeichenkette <tt>null</tt>
+ */
+public String ersatzschaltbildBerechnen()
+   {
+   // Die Eingabedaten werden geloggt.
+   ErsatzschaltbildController.logger.info(this.ersatzschaltbildModell.toString());
+   
+   // Es wird wieder zur Seite ersatzschaltbild.xhtml weitergeleitet.
+   return null;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Diese Methode speichert das übergebene Datenmodell des Ersatzschaltbildes in diesem Controller.
  * 
  * @param ersatzschaltbildModell Das Datenmodell des Ersatzschaltbildes
