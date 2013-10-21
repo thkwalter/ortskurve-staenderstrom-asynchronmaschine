@@ -17,6 +17,8 @@ package de.thkwalter.et.ersatzschaltbild;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 
@@ -72,7 +74,8 @@ public void setUp() throws Exception
  * @throws IllegalArgumentException 
  */
 @Test
-public void testBetriebspunkt() 
+public void testBetriebspunkt() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException 
    {
    // Es wird überprüft, ob der Betriebspunkt erzeugt worden ist.
    assertNotNull(this.betriebspunkt);
@@ -80,8 +83,13 @@ public void testBetriebspunkt()
    // Es wird überprüft, ob der Ständerstrom (in A) korrekt initialisiert worden ist.
    assertEquals(this.test_i1, this.betriebspunkt.getI1());
    
+   // Die Drehzahl (in Hz) wird gelesen.
+   Field feld = Betriebspunkt.class.getDeclaredField("n");
+   feld.setAccessible(true);
+   Double n = feld.getDouble(this.betriebspunkt);
+   
    // Es wird überprüft, ob die Drehzahl (in Hz) korrekt initialisiert worden ist.
-   assertEquals(Double.NaN, this.betriebspunkt.getN(), 0.0);
+   assertTrue(Double.isNaN(n));
    }
 
 // =====================================================================================================================
@@ -122,7 +130,7 @@ public void testGetI1() throws NoSuchFieldException, SecurityException, IllegalA
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetN() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+public void testGetN_1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
    IllegalAccessException
    {
    // Eine Drehzahl wird in diesem Objekt gespeichert.
@@ -135,6 +143,33 @@ public void testGetN() throws NoSuchFieldException, SecurityException, IllegalAr
    
    // Es wird überprüft, ob die Drehzahl korrekt zurückgegeben worden ist.
    assertEquals(100.0, n, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Betriebspunkt#getN()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetN_2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Eine Drehzahl wird in diesem Objekt gespeichert.
+   Field nFeld = Betriebspunkt.class.getDeclaredField("n");
+   nFeld.setAccessible(true);
+   nFeld.set(this.betriebspunkt, Double.NaN);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Double n = this.betriebspunkt.getN();
+   
+   // Es wird überprüft, ob die Drehzahl korrekt zurückgegeben worden ist.
+   assertNull(n);
    }
 
 // =====================================================================================================================
