@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.io.Serializable;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
@@ -23,7 +25,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  * @author Th. K. Walter
  * @version 1.0
  */
-public class Ortskurve
+public class Ortskurve implements Serializable
 {
 /**
  * Der Mittelpunkt der Ortskurve
@@ -34,6 +36,11 @@ private Vector2D mittelpunktOrtskurve;
  * Der Radius der Ortskurve
  */
 private double radiusOrtskurve;
+
+/**
+ * Die Serialisierungsnummer
+ */
+private static final long serialVersionUID = 7836381800872312359L;
 
 // =====================================================================================================================
 // =====================================================================================================================

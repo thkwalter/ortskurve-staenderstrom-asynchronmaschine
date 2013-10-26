@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.io.Serializable;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.koordinatensystem.PunktPixelKonverter;
@@ -25,12 +27,17 @@ import de.thkwalter.koordinatensystem.PunktPixelKonverter;
  * @author Th. K. Walter
  * @version 1.0
  */
-public class MesspunkteGrafik
+public class MesspunkteGrafik implements Serializable
 {
 /**
  * Die Messpunkte in Pixelkoordinaten.
  */
 private Vector2D[] messpunkteInPixeln;
+
+/**
+ * Die Serialisierungsnummer
+ */
+private static final long serialVersionUID = 7711134403343113724L;
 
 // =====================================================================================================================
 // =====================================================================================================================

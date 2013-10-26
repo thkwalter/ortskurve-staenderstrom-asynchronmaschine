@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.io.Serializable;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.koordinatensystem.PunktPixelKonverter;
@@ -25,7 +27,7 @@ import de.thkwalter.koordinatensystem.PunktPixelKonverter;
  * @author Th. K. Walter
  * @version 1.0
  */
-public class OrtskurveGrafik
+public class OrtskurveGrafik implements Serializable
 {
 /**
  * Die Pixelkoordinaten des Mittelpunkts der Ortskurve.
@@ -36,6 +38,11 @@ private Vector2D mittelpunktInPixeln;
  * Der Radius der Ortskurve in Pixeln.
  */
 private double radiusInPixeln;
+
+/**
+ * Die Serialisierungsnummmer
+ */
+private static final long serialVersionUID = -4732030078188550953L;
 
 // =====================================================================================================================
 // =====================================================================================================================

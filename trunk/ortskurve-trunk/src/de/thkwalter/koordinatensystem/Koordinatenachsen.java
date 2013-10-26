@@ -15,6 +15,8 @@
  */
 package de.thkwalter.koordinatensystem;
 
+import java.io.Serializable;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
@@ -23,7 +25,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  * @author Th. K. Walter
  * @version 1.0
  */
-public class Koordinatenachsen
+public class Koordinatenachsen implements Serializable
 {
 /**
  * Der Startpunkt der x-Achse in Pixeln.
@@ -44,6 +46,11 @@ private Vector2D startPunktYAchse;
  * Der Endpunkt der y-Achse in Pixeln.
  */
 private Vector2D endPunktYAchse;
+
+/**
+ * Die Serialisierungsnummer
+ */
+private static final long serialVersionUID = 8802946415396083197L;
 
 // =====================================================================================================================
 // =====================================================================================================================
