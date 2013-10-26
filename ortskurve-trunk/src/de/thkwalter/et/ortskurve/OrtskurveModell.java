@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -33,8 +35,13 @@ import de.thkwalter.koordinatensystem.PunktPixelKonverter;
  */
 @ViewScoped
 @ManagedBean(name="ortskurveModell")
-public class OrtskurveModell
+public class OrtskurveModell implements Serializable
 {
+/**
+ * Die Serialisierungsnummer
+ */
+private static final long serialVersionUID = -401924956499809486L;
+
 /**
  * Dieses Feld enthält die Messpunkte.
  */
