@@ -433,45 +433,4 @@ public void testToString2()
        this.ortskurveModell.getyPixelGrafik() + "; ortskurve: messpunkte: messpunkteGrafik: ortskurveGrafik: ";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link OrtskurveModell#isLoesungAnzeigen()}.
- * 
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- */
-@Test
-public void testIsLoesungAnzeigen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException 
-   {   
-   // Im Modell wird gespeichert, ob die Lösung des Ausgleichsproblems angezeigt werden soll.
-   Field loesungAnzeigenFeld = OrtskurveModell.class.getDeclaredField("loesungAnzeigen");
-   loesungAnzeigenFeld.setAccessible(true);
-   loesungAnzeigenFeld.set(this.ortskurveModell, false);
-   
-   // Es wird überprüft, ob der Mittelpunkt der Ortskurve korrekt zurückgegeben wird. 
-   assertEquals(false, this.ortskurveModell.isLoesungAnzeigen());
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link OrtskurveModell#setLoesungAnzeigen(boolean)}.
- */
-@Test
-public void testSetLoesungAnzeigen() 
-   {
-   // Die zu testende Methode wird ausgeführt.
-   this.ortskurveModell.setLoesungAnzeigen(true);
-   
-   // Es wird überprüft, ob korrekt im Modellgespeichert worden ist, ob die Lösung des Ausgleichsproblems 
-   // angezeigt werden soll.
-   assertEquals(true, this.ortskurveModell.isLoesungAnzeigen());
-   }
 }

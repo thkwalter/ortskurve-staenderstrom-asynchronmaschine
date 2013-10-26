@@ -77,11 +77,6 @@ private final int xPixelGrafik = 540;
  */
 private final int yPixelGrafik = 270;
 
-/**
- * Dieses Flag zeigt an, ob die Lösung des Ausgleichsproblems angezeigt werden soll. 
- */
-private boolean loesungAnzeigen;
-
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -326,35 +321,5 @@ public Vector2D[] getMesspunkte()
    {
    // Die Messpunkte werden zurückgegeben.
    return this.messpunkte;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt zurück, ob die Ortskurve angezeigt werden soll.
- * 
- * @return <tt>true</tt>, falls die Ortskurve angezeigt werden soll; <tt>false</tt>, falls die Lösung der Ortskurve 
- * nicht angezeigt werden soll.
- */
-public boolean isLoesungAnzeigen()
-   {
-   // Es wird zurückgegeben, ob die Ortskurve angezeigt werden soll.
-   return this.loesungAnzeigen;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Es wird im Datenmodell gespeichert, ob die Ortskurve angezeigt werden soll. 
- * 
- * @param loesungAnzeigen <tt>true</tt>, falls die Ortskurve angezeigt werden soll; <tt>false</tt>, falls die Lösung der 
- * Ortskurve nicht angezeigt werden soll.
- */
-public void setLoesungAnzeigen(boolean loesungAnzeigen)
-   {
-   // Es wird im Datenmodell gespeichert, ob die Ortskurve angezeigt werden soll.
-   this.loesungAnzeigen = loesungAnzeigen;
    }
 }
