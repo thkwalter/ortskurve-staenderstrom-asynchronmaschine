@@ -19,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,72 +58,6 @@ public void setUp() throws Exception
    Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
    ortskurveModellFeld.setAccessible(true);
    ortskurveModellFeld.set(this.ausgleichsproblem, this.testOrtskurveModell);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#problemLoesen()}.
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- */
-@Test
-public void testProblemLoesen1() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException
-   {
-   // Das Feld der Messpunkte wird initialisiert.
-   this.testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(0.1, 0.0), new Vector2D(2.0, 2.1), 
-      new Vector2D(3.9, 0.0), new Vector2D(2.0, -2.1)});
-   
-   // Die zu testende Methode wird ausgeführt.
-   this.ausgleichsproblem.problemLoesen();
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#problemLoesen()}.
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- */
-@Test
-public void testProblemLoesen2() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException
-   {
-   // Das Feld der Messpunkte wird initialisiert.
-   this.testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(-5.0, 0.0), new Vector2D(0.0, 5.0), 
-      new Vector2D(5.0, 0.0)});
-   
-   // Die zu testende Methode wird ausgeführt.
-   this.ausgleichsproblem.problemLoesen();
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link Ausgleichsproblem#problemLoesen()}.
- * @throws NoSuchFieldException 
- * @throws SecurityException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- */
-@Test
-public void testProblemLoesen3() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
-   IllegalAccessException
-   {
-   // Das Feld der Messpunkte wird initialisiert.
-   this.testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(5.0, 4.0), 
-      new Vector2D(9.0, 0.0), new Vector2D(5.0, -4.0)});
-   
-   // Die zu testende Methode wird ausgeführt.
-   this.ausgleichsproblem.problemLoesen();
    }
 
 // =====================================================================================================================

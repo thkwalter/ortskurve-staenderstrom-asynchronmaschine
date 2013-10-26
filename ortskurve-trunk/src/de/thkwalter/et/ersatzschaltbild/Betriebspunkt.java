@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.ersatzschaltbild;
 
+import java.io.Serializable;
+
 import org.apache.commons.math3.complex.Complex;
 
 /**
@@ -23,7 +25,7 @@ import org.apache.commons.math3.complex.Complex;
  * @author Th. K. Walter
  * @version 1.2
  */
-public class Betriebspunkt
+public class Betriebspunkt implements Serializable
 {
 /**
  * Der Ständerstrom (in A).
@@ -34,6 +36,11 @@ private Complex i1;
  * Die Drehzahl des Motors (in Hz).
  */
 private double n;
+
+/**
+ * Die Serialisierungsnummer
+ */
+private static final long serialVersionUID = 1L;
 
 // =====================================================================================================================
 // =====================================================================================================================

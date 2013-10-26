@@ -17,11 +17,13 @@ package de.thkwalter.et.ersatzschaltbild;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -40,11 +42,6 @@ import de.thkwalter.et.ortskurve.OrtskurveModell;
 @ManagedBean(name="ersatzschaltbildModell")
 public class ErsatzschaltbildModell implements Serializable
 {
-/**
- * Die Serialisierungsnummer
- */
-private static final long serialVersionUID = -8101831504048593878L;
-
 /**
  * Die Kreisparameter der Ortskurve
  */
@@ -69,6 +66,16 @@ private double f1;
  * Die Polpaarzahl.
  */
 private int p;
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger(ErsatzschaltbildModell.class.getName());
+
+/**
+ * Die Serialisierungsnummer
+ */
+private static final long serialVersionUID = -8101831504048593878L;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -106,6 +113,13 @@ public void init()
    // Die benötigten Daten des Datenmodells der Ortskurvenberechnung werden in das Datenmodell der 
    // Ersatzschaltbildberechnung übernommen.
    this.datenUebernehmen(ausgleichsproblem);
+   
+   // Das Session-Attribut, das anzeigt, ob die Ortskurve angezeigt werden soll, wird auf false gesetzt. 
+   HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+   session.setAttribute("ortskurveAnzeigen", "false"); 
+   
+   // Das Modell des Ersatzschaltbildes wird protokolliert.
+   ErsatzschaltbildModell.logger.info(this.toString());
    }
    
 // =====================================================================================================================

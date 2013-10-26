@@ -62,9 +62,8 @@
                <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}" class="knopf"/>
                <p:spacer width="1" height="21" />
             </h:panelGroup>    
-         </h:form>
           
-        <h:panelGroup  rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}">
+        <h:panelGroup  rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
           <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
           <br/>
  
@@ -97,7 +96,7 @@
             </h:panelGrid>
          </h:panelGroup>
          
-         <h:panelGroup rendered="#{ortskurveModell.loesungAnzeigen and (!ausgleichsproblem.meldungenAnzeigen)}" 
+         <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}" 
             class="grafik-ortskurve" layout="block">
             <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" 
                height="#{ortskurveModell.yPixelGrafik}"></canvas>
@@ -178,9 +177,7 @@
          </h:panelGroup> 
          
          <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                                  -->
-         <h:form>
-            <h:panelGroup class="knopfzeile" layout="block" rendered="#{ortskurveModell.loesungAnzeigen and 
-               (!ausgleichsproblem.meldungenAnzeigen)}">
+            <h:panelGroup class="knopfzeile" layout="block" rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
                <h:commandButton value="Zur ESB-Berechnung" action="ersatzschaltbild" class="knopf"/>
                <p:spacer width="1" height="20" />
             </h:panelGroup>
