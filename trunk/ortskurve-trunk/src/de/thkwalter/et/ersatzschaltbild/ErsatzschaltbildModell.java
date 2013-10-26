@@ -114,10 +114,6 @@ public void init()
    // Ersatzschaltbildberechnung übernommen.
    this.datenUebernehmen(ausgleichsproblem);
    
-   // Das Session-Attribut, das anzeigt, ob die Ortskurve angezeigt werden soll, wird auf false gesetzt. 
-   HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-   session.setAttribute("ortskurveAnzeigen", "false"); 
-   
    // Das Modell des Ersatzschaltbildes wird protokolliert.
    ErsatzschaltbildModell.logger.info(this.toString());
    }

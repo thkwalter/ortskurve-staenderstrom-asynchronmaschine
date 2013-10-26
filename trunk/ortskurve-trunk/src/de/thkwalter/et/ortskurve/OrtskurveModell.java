@@ -17,8 +17,11 @@ package de.thkwalter.et.ortskurve;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
@@ -76,6 +79,20 @@ private final int xPixelGrafik = 540;
  * Die Anzahl der Pixel der Grafik in y-Richtung.
  */
 private final int yPixelGrafik = 270;
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode initialisiert das Datenmodell mit Hilfe des Datenmodells der Ortskurvenberechnung.
+ */
+@PostConstruct
+public void init()
+   {
+   // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
+   HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+   session.setAttribute("ortskurveAnzeigen", "false"); 
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================
