@@ -15,6 +15,7 @@
  */
 package de.thkwalter.et.ersatzschaltbild;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
@@ -37,8 +38,13 @@ import de.thkwalter.et.ortskurve.OrtskurveModell;
  */
 @ViewScoped
 @ManagedBean(name="ersatzschaltbildModell")
-public class ErsatzschaltbildModell
+public class ErsatzschaltbildModell implements Serializable
 {
+/**
+ * Die Serialisierungsnummer
+ */
+private static final long serialVersionUID = -8101831504048593878L;
+
 /**
  * Die Kreisparameter der Ortskurve
  */
