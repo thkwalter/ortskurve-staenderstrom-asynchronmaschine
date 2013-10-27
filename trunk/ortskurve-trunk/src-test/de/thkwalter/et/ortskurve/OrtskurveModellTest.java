@@ -226,9 +226,9 @@ public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldExce
    OrtskurveGrafik ortskurveGrafik = (OrtskurveGrafik) ortskurveGrafikFeld.get(this.ortskurveModell);
 
    // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt berechnet worden ist.
-   assertEquals(270.0, ortskurveGrafik.getMittelpunktInPixeln().getX(), 270.0/1000);
-   assertEquals(135.0, ortskurveGrafik.getMittelpunktInPixeln().getY(), 135.0/1000);
-   assertEquals(112.5, ortskurveGrafik.getRadiusInPixeln(), 112.5/1000);
+   assertEquals(275.0, ortskurveGrafik.getMittelpunktInPixeln().getX(), 275.0/1000);
+   assertEquals(137.5, ortskurveGrafik.getMittelpunktInPixeln().getY(), 137.5/1000);
+   assertEquals(114.58, ortskurveGrafik.getRadiusInPixeln(), 114.58/1000);
    
    // Die Grafikdarstellung der Messpunkte wird gelesen.
    Field messpunkteGrafikFeld = OrtskurveModell.class.getDeclaredField("messpunkteGrafik");
@@ -236,10 +236,10 @@ public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldExce
    MesspunkteGrafik messpunkteGrafik = (MesspunkteGrafik) messpunkteGrafikFeld.get(this.ortskurveModell);
    
    // Es wird überprüft, ob die Grafikdarstellung der Messpunkte korrekt berechnet worden ist.
-   assertEquals(382.5, messpunkteGrafik.getMesspunkteInPixeln()[0].getX(), 382.5/1000);
-   assertEquals(135.0, messpunkteGrafik.getMesspunkteInPixeln()[0].getY(), 135.0/1000);
-   assertEquals(270.0, messpunkteGrafik.getMesspunkteInPixeln()[1].getX(), 270.0/1000);
-   assertEquals(22.5, messpunkteGrafik.getMesspunkteInPixeln()[1].getY(), 22.5/1000);
+   assertEquals(389.6, messpunkteGrafik.getMesspunkteInPixeln()[0].getX(), 389.6/1000);
+   assertEquals(137.5, messpunkteGrafik.getMesspunkteInPixeln()[0].getY(), 137.5/1000);
+   assertEquals(275.0, messpunkteGrafik.getMesspunkteInPixeln()[1].getX(), 275.0/1000);
+   assertEquals(22.92, messpunkteGrafik.getMesspunkteInPixeln()[1].getY(), 22.92/1000);
    
    // Die Koordinatenachsen wird gelesen.
    Field koordinatenachsenFeld = OrtskurveModell.class.getDeclaredField("koordinatenachsen");
@@ -247,13 +247,13 @@ public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldExce
    Koordinatenachsen koordinatenachsen = (Koordinatenachsen) koordinatenachsenFeld.get(this.ortskurveModell);
    
    // Es wird überprüft, ob die Koordinatenachsen korrekt berechnet worden sind.
-   assertEquals(135.0, koordinatenachsen.getStartPunktXAchse().getX(), 135.0/1000);
-   assertEquals(135.0, koordinatenachsen.getStartPunktXAchse().getY(), 135.0/1000);
-   assertEquals(405.0, koordinatenachsen.getEndPunktXAchse().getX(), 405.0/1000);
-   assertEquals(135.0, koordinatenachsen.getEndPunktXAchse().getY(), 135.0/1000);
-   assertEquals(157.5, koordinatenachsen.getStartPunktYAchse().getX(), 157.5/1000);
-   assertEquals(270.0, koordinatenachsen.getStartPunktYAchse().getY(), 270.0/1000);
-   assertEquals(157.5, koordinatenachsen.getEndPunktYAchse().getX(), 157.5/1000);
+   assertEquals(137.5, koordinatenachsen.getStartPunktXAchse().getX(), 137.5/1000);
+   assertEquals(137.5, koordinatenachsen.getStartPunktXAchse().getY(), 137.5/1000);
+   assertEquals(412.5, koordinatenachsen.getEndPunktXAchse().getX(), 412.5/1000);
+   assertEquals(137.5, koordinatenachsen.getEndPunktXAchse().getY(), 137.5/1000);
+   assertEquals(160.4, koordinatenachsen.getStartPunktYAchse().getX(), 160.4/1000);
+   assertEquals(275.0, koordinatenachsen.getStartPunktYAchse().getY(), 275.0/1000);
+   assertEquals(160.4, koordinatenachsen.getEndPunktYAchse().getX(), 160.4/1000);
    assertEquals(0.0, koordinatenachsen.getEndPunktYAchse().getY(), 0.0);
    }
 
@@ -409,13 +409,12 @@ public void testToString1()
    this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    this.ortskurveModell.setOrtskurve(this.ortskurve);
    this.ortskurveModell.grafikdatenBerechnen();
-   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
    String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
       this.ortskurveModell.getyPixelGrafik() + "; ortskurve: mittelpunktOrtskurve: {1; 0}; radiusOrtskurve: 1.0; " +
-      "messpunkte: {2; 0}; {1; 1}; messpunkteGrafik: messpunkteInPixeln: {382,5; 135}; {270; 22,5}; ortskurveGrafik: mittelPunktInPixeln: " +
-      "{270; 135}; radiusInPixeln: 112.5";
+      "messpunkte: {2; 0}; {1; 1}; messpunkteGrafik: messpunkteInPixeln: {389,5833333333; 137,5}; {275; 22,9166666667}; " +
+      "ortskurveGrafik: mittelPunktInPixeln: {275; 137,5}; radiusInPixeln: 114.58333333333334";
    assertEquals(meldung, this.ortskurveModell.toString());
    }
 

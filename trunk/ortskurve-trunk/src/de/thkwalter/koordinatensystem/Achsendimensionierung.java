@@ -43,11 +43,11 @@ public Achsendimensionierung(Vector2D[] punkte)
    // Die Wertebereiche der Punktemenge wird bestimmt.
    Wertebereich wertebereich = this.wertebereichBestimmen(punkte);
    
-   // Der Wertebereich wird in jede Richtung um zehn Prozent Sicherheitsabstand vergrößert.
-   wertebereich = this.sicherheitsabstandHinzufuegen(wertebereich);
-   
    // Der Wertebereich wird gegebenenfalls bis zum Ursprung ausgedehnt.
-   this.wertebereichKoordinatensystem = this.ursprungEinbeziehen(wertebereich);
+   wertebereich = this.ursprungEinbeziehen(wertebereich);
+   
+   // Der Wertebereich wird in jede Richtung um zehn Prozent Sicherheitsabstand vergrößert.
+   this.wertebereichKoordinatensystem = this.sicherheitsabstandHinzufuegen(wertebereich);
    }
 
 // =====================================================================================================================
