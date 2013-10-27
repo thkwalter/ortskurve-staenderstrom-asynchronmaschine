@@ -52,10 +52,7 @@ private static Logger logger = Logger.getLogger(PunktPixelKonverter.class.getNam
  * @param anzahlPixelY Die maximale Anzahl von Pixeln in y-Richtung.
  */
 public PunktPixelKonverter(Wertebereich wertebereich, double anzahlPixelX, double anzahlPixelY)
-   {
-   // Der Einsprung in den Konstruktor wird protokolliert.
-   PunktPixelKonverter.logger.entering("PunktPixelKonverter", "PunktPixelKonverter");
-   
+   {   
    // Die maximalen Skalierungsfaktoren für die einzelnen Dimensionen werden berechnet.
    double skalierungsfaktorX = anzahlPixelX / (wertebereich.getMaxX() - wertebereich.getMinX());
    double skalierungsfaktorY = anzahlPixelY / (wertebereich.getMaxY() - wertebereich.getMinY());

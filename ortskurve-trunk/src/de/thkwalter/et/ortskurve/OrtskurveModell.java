@@ -73,12 +73,12 @@ private Koordinatenachsen koordinatenachsen;
 /**
  * Die Anzahl der Pixel der Grafik in x-Richtung.
  */
-private final int xPixelGrafik = 540;
+private final int xPixelGrafik = 550;
 
 /**
  * Die Anzahl der Pixel der Grafik in y-Richtung.
  */
-private final int yPixelGrafik = 270;
+private final int yPixelGrafik = 275;
 
 // =====================================================================================================================
 // =====================================================================================================================

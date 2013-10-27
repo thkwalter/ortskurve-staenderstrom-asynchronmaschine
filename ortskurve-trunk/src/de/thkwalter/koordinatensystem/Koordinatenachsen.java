@@ -58,7 +58,7 @@ private static final long serialVersionUID = 8802946415396083197L;
 /**
  * Dieser Konstruktor berechnet die Start- und Endpunkte der Koordinatenachsen in Pixeln.
  * 
- * @param wertebereich Der darszustellende Wertebereich
+ * @param wertebereich Der darzustellende Wertebereich
  * @param punktPixelKonverter Der Konverter zwischen Punkt- und Pixelkoordinaten
  */
 public Koordinatenachsen(Wertebereich wertebereich, PunktPixelKonverter punktPixelKonverter)
