@@ -339,6 +339,18 @@ input[type="text"]
    font-size: 14px;
    }
    
+   sup, sub
+{
+    height: 0;
+    line-height: 1;
+    vertical-align: baseline;
+    _vertical-align: bottom;
+    position: relative;
+}
+
+sup { bottom: 1ex; }
+sub { top: .5ex; }
+   
 /* ****************************************************************************************************************** */
 /* Formatierungen für PrimeFaces-Elemente                                                                             */
 /* ****************************************************************************************************************** */
