@@ -28,6 +28,7 @@
          <br/><br/>
         
          <h:form>
+            <!-- Das div-Element, das die Fehlermeldungen anzeigt. -->
             <h:panelGroup rendered="#{ausgleichsproblem.meldungenAnzeigen}" styleClass="nachrichten" layout="block">
                Die Ortskurve konnte aus folgenden Gründen leider nicht berechnet werden:
                <br/><br/>
@@ -35,14 +36,22 @@
                <h:messages errorClass="error-messages" globalOnly="true" tooltip="true"/>
             </h:panelGroup>
          
+            <!-- Der einleitende Absatz. -->
+            <p>
+              Um die Ortskurve berechnen zu können, müssen Sie den komplexen Zeiger des Ständerstroms
+              <span class="zeiger">I</span><sub>1</sub> in mindestens drei verschiedenen Betriebspunkten bestimmen.
+              Nehmen Sie dabei an, dass der Zeiger <span class="zeiger">U</span><sub>1</sub> der Netzspannung rein
+              real ist.
+            </p>
+            <br/><br/>
+         
             <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
                <h:panelGroup>
-                  <p id="eingabehilfe">
-                     Geben Sie bitte einen Messpunkt pro Zeile ein, die beiden Komponenten eines Messpunktes jeweils 
-                     durch ein Komma getrennt und zwar im Format:<br/> 
-                     -Im <span class="zeiger">I</span><sub>1</sub>, Re <span class="zeiger">I</span><sub>1</sub>
-                     <br/><br/>
-                     
+                  <p id="eingabehilfe">                  
+                     Geben Sie bitte die Stromstärken in den verschiedenen Betriebspunkten ein. Verwenden Sie 
+                     eine Zeile pro Betriebspunkt und schreiben Sie die komplexe Stromstärke eines Betriebspunkts im 
+                     Format -Im <span class="zeiger">I</span><sub>1</sub>, Re <span class="zeiger">I</span><sub>1</sub>
+                     <a onclick="formatDlg.show();" class="hilfe">(?)</a>. Geben Sie die Stromstärken in Ampere an. 
                      Beispiel:
                      <br/><br/>
                      
@@ -57,6 +66,13 @@
                <h:inputTextarea value="#{ortskurveModell.messpunkte}" styleClass="eingabefeld" id="eingabe"
                   converter="CSVConverter"/>
             </h:panelGrid>
+            
+            <p:dialog id="basicDialog" header="Erläuterung" widgetVar="formatDlg">  
+               Wir stellen das Koordinatensystem der Ortskurve wie in der Literatur üblich um<br/> 
+               90 Grad gedreht dar. Die Eingabe der komplexen Stromstärke im Format 
+               -Im <span class="zeiger">I</span><sub>1</sub>, Re <span class="zeiger">I</span><sub>1</sub><br/> 
+               erleichtert Ihnen später das Auffinden der Messpunkte in der Grafik der Ortskurve.
+            </p:dialog>
             
             <h:panelGroup class="knopfzeile" layout="block">
                <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}" class="knopf"/>
