@@ -80,28 +80,28 @@
             </h:panelGroup>    
           
         <h:panelGroup  rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
-          <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
+          <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
           <br/>
  
             <h:panelGrid columns="8" styleClass="table-3-spalten" 
                columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
                   text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
-               <h:outputText value="Mittelpunkt"/>
+               <h:outputText value="Mittelpunkt in A"/>
                <h:panelGroup styleClass="zahl">
                   (<h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
                      <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
                   </h:outputText>
                   <h:outputText value=", "/>
-                  <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
+                  <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.y}">
                      <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
                   </h:outputText>)
                </h:panelGroup>
                
                <h:outputText value=""/>
           
-               <h:outputText value="Radius"/>
+               <h:outputText value="Radius in A"/>
                <h:panelGroup styleClass="zahl">
-                  <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
+                  <h:outputText value="#{ortskurveModell.ortskurve.radiusOrtskurve}">
                      <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
                   </h:outputText>
                </h:panelGroup>
@@ -191,6 +191,17 @@
               </ui:repeat>                
             </script> 
          </h:panelGroup> 
+         
+         
+         <h:panelGroup layout="block" rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
+         <br/><br/>
+         <p>
+            Auf der nächsten Seite können Sie mit Hilfe der berechneten Ortskurve und einiger weiterer Messwerte die
+            Werte der Größen des Ersatzschaltbildes (abgekürzt mit ESB) berechnen.
+         </p>
+         </h:panelGroup>
+         
+         
          
          <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                                  -->
             <h:panelGroup class="knopfzeile" layout="block" rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
