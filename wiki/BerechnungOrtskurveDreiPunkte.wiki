@@ -11,5 +11,5 @@ eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angez
  # Das Resultat kontrollieren -> Mittelpunkt (1, 0) und Radius 1
  # Die Grafik kontrollieren
  # Den Knopf "Zur ESB-Berechnung" drücken -> Die Seite "Berechnung der Ersatzschaltbildgrößen" erscheint
- # Die übernommenen Messpunkte kontroliieren
+ # Die übernommenen Messpunkte kontrollieren
  # Die übernommenen Ortskurvendaten kontrollieren
