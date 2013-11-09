@@ -1,11 +1,12 @@
 =Oberflächentests=
 
- # [WeiterleitungVonIndexJspTesten Weiterleitung durch die index.jsp testen]
- # Fußzeile prüfen
+ * Navigation
+   # [WeiterleitungVonIndexJspTesten Weiterleitung durch die index.jsp testen]
+   # [LinksAufDieBerechnungUeberpruefen Links auf die Berechnung überprüfen]
+ * Fußzeile prüfen
    # [ImpressumUeberpruefen Impressum überprüfen]
    # [NutzungsbedingungenUeberpruefen Nutzungsbedingungen überprüfen]
    # [DatenschutzhinweisUeberpruefen Datenschutzhinweis überprüfen]
- # [LinksAufDieBerechnungUeberpruefen Links auf die Berechnung überprüfen]
  # [BerechnungOrtskurveDreiPunkte Berechnung der Ortskurve mit drei Punkten überprüfen]
  # [BerechnungOrtskurveVierPunkte Berechnung der Ortskurve mit vier Punkten überprüfen]
  # [BerechnungOrtskurveAchtPunkte Berechnung der Ortskurve mit acht Punkten überprüfen]
