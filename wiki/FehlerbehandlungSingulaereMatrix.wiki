@@ -8,7 +8,8 @@
 2.0, 2.1
 3.9, 0.0
 2.0, -2.1
-}}}  eingeben und den Knopf "Ortskurve berechnen" drücken -> Eine Fehlermeldung wird angezeigt
+}}}  
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Eine Fehlermeldung wird angezeigt 
  # Die Fehlermeldung kontrollieren -> Die Fehlermeldung ist korrekt
 
  
