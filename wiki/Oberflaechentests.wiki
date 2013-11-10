@@ -22,6 +22,8 @@
    # [FehlerbehandlungPunktBeiMittelpunkt Fehlerbehandlung bei Punkt in der Nähe des Mittelpunkts überprüfen]
    # [FehlerbehandlungEinfachDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (1) überprüfen]
    # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (2) überprüfen]
+ * Fehlerbehandlung auf der Seite "Berechnung des Ersatzschaltbildes" 
+   # [FehlerbehandlungFehlendeNetzspannung Fehlerbehandlung bei fehlender Eingabe der Netzspannung]
  * Test der Ortskurvengrafik
    # [Grafiktest1 Grafiktest 1]
    # [Grafiktest2 Grafiktest 2]
