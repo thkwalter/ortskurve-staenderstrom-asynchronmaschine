@@ -19,7 +19,8 @@
    # [FehlerbehandlungPunktBeiMittelpunkt Fehlerbehandlung bei Punkt in der Nähe des Mittelpunkts überprüfen]
    # [FehlerbehandlungEinfachDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (1) überprüfen]
    # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (2) überprüfen]
- # [Grafiktest1 Grafiktest 1]
- # [Grafiktest2 Grafiktest 2]
- # [Grafiktest3 Grafiktest 3]
- # [Grafiktest4 Grafiktest 4]
+ * Test der Ortskurvengrafik
+   # [Grafiktest1 Grafiktest 1]
+   # [Grafiktest2 Grafiktest 2]
+   # [Grafiktest3 Grafiktest 3]
+   # [Grafiktest4 Grafiktest 4]
