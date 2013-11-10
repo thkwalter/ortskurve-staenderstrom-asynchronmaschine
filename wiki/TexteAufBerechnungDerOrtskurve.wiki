@@ -1,0 +1,12 @@
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Den einleitenden Textblock prüfen
+ # Die Beschreibung des Eingabefeldes prüfen
+ # Die Punkte 
+{{{
+2.11,2.94
+0.36,0.51
+0.40,0.16
+1.48,-1.60
+}}} 
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt
+ # Den Text für die Weiterleitung kontrollieren
