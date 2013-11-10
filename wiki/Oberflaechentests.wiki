@@ -9,6 +9,7 @@
    # [DatenschutzhinweisUeberpruefen Datenschutzhinweis überprüfen]
  * Seite "Berechnung der Ortskurve" prüfen
    # [TexteAufBerechnungDerOrtskurve Texte auf der Seite "Berechnung der Ortskurve" prüfen]
+   # [ErlaeuterungAufBerechnungDerOrtskurve Erläuterung auf der Seite "Berechnung der Ortskurve" prüfen]
  * Berechnung der Ortskurve prüfen
    # [BerechnungOrtskurveDreiPunkte Berechnung der Ortskurve mit drei Punkten überprüfen]
    # [BerechnungOrtskurveVierPunkte Berechnung der Ortskurve mit vier Punkten überprüfen]
