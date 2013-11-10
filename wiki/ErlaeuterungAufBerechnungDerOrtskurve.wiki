@@ -1,0 +1,6 @@
+Erläuterung auf der der Seite "Berechnung der Ortskurve" prüfen
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Auf das Fragezeichen im Text zum Eingabefeld klicken. -> Ein modales Popup erscheint.
+ # Den Text der Erläuterung prüfen
+ # Auf das Symbol zum Schließen klicken -> Das Popup schließt sich
