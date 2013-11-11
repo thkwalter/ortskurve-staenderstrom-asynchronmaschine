@@ -16,4 +16,4 @@
 == Version 6 ==
 
   * Die Bibliothek javax.faces-2.2.x.jar auf Version 2.2.4 aktualisiert
-  * Auf das Google App Engine-SDK der Version 1.8.6 umgestellt
+  * Auf das Google App Engine-SDK der Version 1.8.7 umgestellt
