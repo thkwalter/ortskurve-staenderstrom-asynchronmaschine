@@ -10,6 +10,6 @@
 }}} 
 eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
  # Den Knopf "Zur ESB-Berechnung" drücken -> Die Seite "Berechnung der Ersatzschaltbildgrößen" erscheint
- # Negative Werte für die Netzspannung, die Netzfrequenz und die Polpaarzahl eingeben.
+ # Negative Werte oder 0 für die Netzspannung, die Netzfrequenz und die Polpaarzahl eingeben.
  # Den Knopf "ESB berechnen drücken" -> Fehlermeldungen für die Netzspannung, die Netzfrequenz und die Polpaarzahl erscheinen.
  # Fehlermeldungen überprüfen.
