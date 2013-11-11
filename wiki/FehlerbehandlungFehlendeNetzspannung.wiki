@@ -1,4 +1,4 @@
-=Fehlerbehandlung bei fehlender Eingabe der Netzspannung=
+=Fehlerbehandlung bei fehlenden Eingaben=
 
  # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
  # Die Punkte 
