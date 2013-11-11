@@ -23,7 +23,8 @@
    # [FehlerbehandlungEinfachDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (1) überprüfen]
    # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (2) überprüfen]
  * Fehlerbehandlung auf der Seite "Berechnung des Ersatzschaltbildes" 
-   # [FehlerbehandlungFehlendeNetzspannung Fehlerbehandlung bei fehlender Eingabe der Netzspannung]
+   # [FehlerbehandlungFehlendeNetzspannung Fehlerbehandlung bei fehlenden Eingaben]
+   # [FehlerbehandlungNegativeWerte Fehlerbehandlung bei Eingabe negativer Werte]
  * Test der Ortskurvengrafik
    # [Grafiktest1 Grafiktest 1]
    # [Grafiktest2 Grafiktest 2]
