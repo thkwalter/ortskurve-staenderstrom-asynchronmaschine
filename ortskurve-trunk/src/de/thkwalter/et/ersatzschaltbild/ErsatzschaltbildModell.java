@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.complex.Complex;
@@ -37,7 +37,7 @@ import de.thkwalter.et.ortskurve.OrtskurveModell;
  * @author Th. K. Walter
  * @version 1.2
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean(name="ersatzschaltbildModell")
 public class ErsatzschaltbildModell implements Serializable
 {
@@ -108,11 +108,11 @@ public void init()
    // Der Controller der Ortskurvenberechnung wird gelesen.
    Ausgleichsproblem ausgleichsproblem = (Ausgleichsproblem) facesContext.getApplication().evaluateExpressionGet(
       facesContext, "#{ausgleichsproblem}", Ausgleichsproblem.class); 
-   
+
    // Die benötigten Daten des Datenmodells der Ortskurvenberechnung werden in das Datenmodell der 
    // Ersatzschaltbildberechnung übernommen.
    this.datenUebernehmen(ausgleichsproblem);
-   
+      
    // Das Modell des Ersatzschaltbildes wird protokolliert.
    ErsatzschaltbildModell.logger.info(this.toString());
    }
@@ -130,12 +130,13 @@ private void datenUebernehmen(Ausgleichsproblem ausgleichsproblem)
    {
    // Das Datenmodell der Ortskurvenberechnung wird gelesen.
    OrtskurveModell ortskurveModell = ausgleichsproblem.getOrtskurveModell();
-   
+
    // Die Ortskurve wird in das Datenmodell des Ersatzschaltbildberechnung übertragen.
    this.setOrtskurve(ortskurveModell.getOrtskurve());
    
    // Die Messpunkte werden in das Datenmodell der Ersatzschaltbildberechnung übertragen.
    Vector2D[] messpunkte = ortskurveModell.getMesspunkte();
+   
    for (Vector2D messpunkt : messpunkte)
       {
       this.betriebspunkte.add(new Betriebspunkt(new Complex(messpunkt.getY(), -messpunkt.getX())));
