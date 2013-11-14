@@ -17,9 +17,14 @@ package de.thkwalter.et.ersatzschaltbild;
 
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse repräsentiert den Controller der Ersatzschaltbildberechnung.
@@ -51,8 +56,31 @@ private static Logger logger = Logger.getLogger(ErsatzschaltbildController.class
  */
 public String ersatzschaltbildBerechnen()
    {
-   // Die Eingabedaten werden geloggt.
-   ErsatzschaltbildController.logger.info(this.ersatzschaltbildModell.toString());
+   try
+      {
+      double u1 = this.ersatzschaltbildModell.getU1();
+      double m_x = this.ersatzschaltbildModell.getOrtskurve().getMittelpunktOrtskurve().getX();
+      double m_y = this.ersatzschaltbildModell.getOrtskurve().getMittelpunktOrtskurve().getY();
+      double r = this.ersatzschaltbildModell.getOrtskurve().getRadiusOrtskurve();
+      
+      // Die Hauptreaktanz (in Ohm) wird berechnet.
+      this.ersatzschaltbildModell.setX_1h(u1 / (m_x - r));
+      }
+   
+   // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
+   catch (ApplicationRuntimeException exception)
+      {
+      // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
+      HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+      session.setAttribute("ersatzschaltbildAnzeigen", "false"); 
+      
+      // Eine Fehlermeldung für die Oberfläche wird erstellt.
+      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+         exception.getMessage(), ""));
+      
+      // Der Nachrichtentext der Ausnahme wird protokolliert.
+      ErsatzschaltbildController.logger.info(exception.getMessage());
+      }
    
    // Es wird wieder zur Seite ersatzschaltbild.xhtml weitergeleitet.
    return null;
