@@ -66,6 +66,15 @@ private double f1;
  */
 private int p;
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Die Hauptreaktanz (in Ohm)
+ */
+private double x_1h;
+
+// ---------------------------------------------------------------------------------------------------------------------
+
 /*
  * Der Logger dieser Klasse.
  */
@@ -88,6 +97,7 @@ public ErsatzschaltbildModell()
    this.f1 = Double.NaN;
    this.p = Integer.MIN_VALUE;
    this.u1 = Double.NaN;
+   this.x_1h = Double.NaN;
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
@@ -287,6 +297,34 @@ public void setP(Integer p)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt die Hauptreaktanz (in Ohm) zurück.
+ * 
+ * @return Die Hauptreaktanz (in Ohm)
+ */
+public double getX_1h()
+   {
+   // Die Hauptreaktanz (in Ohm) wird zurückgegeben.
+   return this.x_1h;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die übergebene Hauptreaktanz (in Ohm) in diesem Modell.
+ * 
+ * @param x_1h Die Hauptreaktanz (in Ohm)
+ */
+public void setX_1h(double x_1h)
+   {
+   // Die übergebene Hauptreaktanz (in Ohm) wird in diesem Modell gespeichert.
+   this.x_1h = x_1h;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString()
  */
 @Override
@@ -315,7 +353,10 @@ public String toString()
    builder.append(", f1=").append(f1);
    
    // Die Zeichenkette, welche die Polpaarzahl repräsentiert, wird hinzugefügt.
-   builder.append(", p=").append(p).append("]");
+   builder.append(", p=").append(p);
+   
+   // Die Zeichenkette, welche die Hauptreaktanz repräsentiert, wird hinzugefügt.
+   builder.append(", x_1h=").append(this.x_1h).append("]");
    
    // Die Zeichenkette, die die dieses Datenmodell repräsentiert, wird zurückgegeben.
    return builder.toString();

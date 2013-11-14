@@ -84,4 +84,9 @@ public void testSetErsatzschaltbildModell() throws NoSuchFieldException, Securit
    // Es wird überprüft, ob das Modell der Ersatzschaltbildberechnung korrekt im Controller gespeichert worden ist.
    assertEquals(this.testErsatzschaltbildModell, ersatzschaltbildModell);
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+
 }

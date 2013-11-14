@@ -122,6 +122,9 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
    
    // Es wird überprüft, ob die Polpaarzahl initialisiert worden ist.
    assertEquals(Integer.MIN_VALUE, p.intValue());
+   
+   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(this.ersatzschaltbildModell.getX_1h()));
    }
 
 // =====================================================================================================================
@@ -231,7 +234,7 @@ public void testGetBetriebspunkte() throws NoSuchFieldException, SecurityExcepti
    betriebspunkteFeld.set(this.ersatzschaltbildModell, this.testBetriebspunkte);
    
    // Die zu testende Methode wird aufgerufen.
-   ArrayList<Betriebspunkt> betriebspunkte = this.ersatzschaltbildModell.getBetriebspunkte();
+   ArrayList<Betriebspunkt> betriebspunkte = (ArrayList<Betriebspunkt>) this.ersatzschaltbildModell.getBetriebspunkte();
    
    // Es wird überprüft, ob die Ortskurve korrekt zurückgegeben worden ist.
    assertEquals(this.testBetriebspunkte, betriebspunkte);
@@ -456,6 +459,49 @@ public void testSetP()
 // =====================================================================================================================
 
 /**
+ * Test für die Methode {@link ErsatzschaltbildModell#getX_1h()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetX_1h() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die im Test verwendete Hauptreaktanz (in Ohm) wird im Datenmodell gespeichert.
+   Field feld = ErsatzschaltbildModell.class.getDeclaredField("x_1h");
+   feld.setAccessible(true);
+   feld.setDouble(this.ersatzschaltbildModell, 25.0);
+   
+   // Die zu testende Methode wird aufgerufen.
+   double x_1h = this.ersatzschaltbildModell.getX_1h();
+   
+   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt zurückgegeben worden ist.
+   assertEquals(25.0, x_1h, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#setX_1h(double)}.
+ */
+@Test
+public void testSetX_1h()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.ersatzschaltbildModell.setX_1h(25.0);
+   
+   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt gespeichert worden ist.
+   assertEquals(25.0, this.ersatzschaltbildModell.getX_1h(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link ErsatzschaltbildModell#toString()}.
  */
 @Test
@@ -468,10 +514,11 @@ public void testToString1()
    this.ersatzschaltbildModell.setF1(50d);
    this.ersatzschaltbildModell.setU1(400d);
    this.ersatzschaltbildModell.setP(1);
+   this.ersatzschaltbildModell.setX_1h(25.0);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
    String meldung = "ErsatzschaltbildModell [ortskurve=mittelpunktOrtskurve: {2; 0}; radiusOrtskurve: 2.0; , " +
-      "betriebspunkte=[Betriebspunkt [i1=(2.0, 0.0), n=NaN]], u1=400.0, f1=50.0, p=1]";
+      "betriebspunkte=[Betriebspunkt [i1=(2.0, 0.0), n=NaN]], u1=400.0, f1=50.0, p=1, x_1h=25.0]";
    assertEquals(meldung, this.ersatzschaltbildModell.toString());
    }
 
@@ -485,7 +532,7 @@ public void testToString1()
 public void testToString2()
    {   
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "ErsatzschaltbildModell [betriebspunkte=[], u1=NaN, f1=NaN, p=-2147483648]";
+   String meldung = "ErsatzschaltbildModell [betriebspunkte=[], u1=NaN, f1=NaN, p=-2147483648, x_1h=NaN]";
    assertEquals(meldung, this.ersatzschaltbildModell.toString());
    }
 }
