@@ -19,8 +19,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.thkwalter.et.ortskurve.Ortskurve;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link ErsatzschaltbildController}.
@@ -56,6 +59,13 @@ public void setUp() throws Exception
    
    // Das in den Tests verwendete Modell der Ersatzschaltbildberechnung wird erzeugt.
    this.testErsatzschaltbildModell = new ErsatzschaltbildModell();
+   
+   // Die im Test verwendete Ortskurve wird erstellt und zum Modell hinzugefügt.
+   Ortskurve testOrtskurve = new Ortskurve(new Vector2D(2.0, 0.5), 1.0);
+   this.testErsatzschaltbildModell.setOrtskurve(testOrtskurve);
+   
+   // Die im Test verwendete Strangspannung (in V) wird erzeugt und zum Modell hinzugefügt.
+   this.testErsatzschaltbildModell.setU1(400.0);
    }
 
 // =====================================================================================================================
@@ -88,5 +98,16 @@ public void testSetErsatzschaltbildModell() throws NoSuchFieldException, Securit
 // =====================================================================================================================
 // =====================================================================================================================
 
-
+/**
+ * Test für die Methode {@link ErsatzschaltbildController#ersatzschaltbildBerechnen()}.
+ */
+@Test
+public void testErsatzschaltbildBerechnen()
+   {
+   // Die zu testende Methode wird aufgerufen.
+ //  this.ersatzschaltbildController.ersatzschaltbildBerechnen();
+   
+   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt berechnet worden ist.
+//   assertEquals(12.0 ,this.testErsatzschaltbildModell.getX_1h(), 0.0);
+   }
 }
