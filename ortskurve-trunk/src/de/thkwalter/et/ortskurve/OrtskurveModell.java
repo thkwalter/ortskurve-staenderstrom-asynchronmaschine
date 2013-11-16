@@ -56,6 +56,11 @@ private Vector2D[] messpunkte;
 private Ortskurve ortskurve;
 
 /**
+ * Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt.
+ */
+private Ortskurve ortskurve2d;
+
+/**
  * Die Grafikdarstellung der Messpunkte
  */
 private MesspunkteGrafik messpunkteGrafik;
@@ -89,7 +94,7 @@ private final int yPixelGrafik = 275;
 @PostConstruct
 public void init()
    {
-   // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
+   // Das Flag wird auf false gesetzt, so dass die Lösung des Ausgleichsproblems nicht angezeigt wird. 
    HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
    session.setAttribute("ortskurveAnzeigen", "false"); 
    }
@@ -339,4 +344,35 @@ public Vector2D[] getMesspunkte()
    // Die Messpunkte werden zurückgegeben.
    return this.messpunkte;
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Ortskurve der 2d-Berechnung zurück, deren Mittelpunkt auf der x-Achse liegt.
+ * 
+ * @return Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt
+ */
+public Ortskurve getOrtskurve2d()
+   {
+   // Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt, wird zurückgegeben.
+   return this.ortskurve2d;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die übergebene Ortskurve der 2d-Berechnung, der Mittelpunkt auf der x-Achse liegt, in diesem
+ * Modell.
+ * 
+ * @param ortskurve2d Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt
+ */
+public void setOrtskurve2d(Ortskurve ortskurve2d)
+   {
+   // Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt, wird in diesem Modell gespeichert.
+   this.ortskurve2d = ortskurve2d;
+   }
+
+
 }
