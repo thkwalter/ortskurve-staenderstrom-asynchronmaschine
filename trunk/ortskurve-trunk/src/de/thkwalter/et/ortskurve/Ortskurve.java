@@ -95,9 +95,10 @@ public double getRadiusOrtskurve()
 @Override
 public String toString()
    {
-   // Die Zeichenkette, welche die Ortskurve repräsentiert, wird zusammengebaut.
-   StringBuilder builder = new StringBuilder("");
+   // Die Zeichenkette, welche die Ortskurve repräsentiert, wird erzeugt.
+   StringBuilder builder = new StringBuilder();
    
+   // Die Zeichenkette, welche die Ortskurve repräsentiert, wird zusammengebaut.
    builder.append("Ortskurve [mittelpunktOrtskurve=").append(mittelpunktOrtskurve).append(", radiusOrtskurve=")
       .append(radiusOrtskurve).append("]");
    
