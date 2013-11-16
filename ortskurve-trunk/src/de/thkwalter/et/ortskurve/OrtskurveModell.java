@@ -16,6 +16,7 @@
 package de.thkwalter.et.ortskurve;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -270,51 +271,55 @@ public int getyPixelGrafik()
 // =====================================================================================================================
 
 /**
- * @see java.lang.Object#toString() 
+ * @see java.lang.Object#toString()
  */
 @Override
 public String toString()
    {
    // Die Zeichenkette, die das Datenmodell repräsentiert, wird erzeugt.
-   StringBuilder stringBuilder = new StringBuilder();
-   
-   // Die Anzahl der Pixel der Grafik in x- und y-Richtung wird hinzugefügt.
-   stringBuilder.append("xPixelGrafik: ").append(this.xPixelGrafik).append("; yPixelGrafik: ").
-      append(this.yPixelGrafik).append("; ");
-   
-   // Die Zeichenkette, welche den Mittelpunkt der Ortskurve repräsentiert, wird hinzugefügt. 
-   stringBuilder.append("ortskurve: ");
-   if (this.ortskurve != null)
-      {
-      stringBuilder.append(this.ortskurve.toString());
-      }
+   StringBuilder builder = new StringBuilder("OrtskurveModell [");
    
    // Die Zeichenkette, welche die Messpunkte repräsentiert, wird hinzugefügt. 
-   stringBuilder.append("messpunkte: ");
-   if (this.messpunkte != null)
+   if (messpunkte != null)
       {
-      for (Vector2D messpunkt : messpunkte)
-         {
-         stringBuilder.append(messpunkt).append("; ");
-         }
-      }
-   
-   // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
-   stringBuilder.append("messpunkteGrafik: ");
-   if (this.messpunkteGrafik != null)
-      {
-      stringBuilder.append(this.messpunkteGrafik.toString());
-      }
-   
-   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird hinzugefügt. 
-   stringBuilder.append("ortskurveGrafik: ");
-   if (this.ortskurveGrafik != null)
-      {
-      stringBuilder.append(this.ortskurveGrafik.toString());
+      builder.append("messpunkte=").append(Arrays.toString(messpunkte)).append(", ");
       }
       
+   // Die Zeichenkette, welche die Ortskurve repräsentiert, wird hinzugefügt. 
+   if (ortskurve != null)
+      {
+      builder.append("ortskurve=").append(ortskurve).append(", ");
+      }
+      
+   // Die Zeichenkette, welche die Ortskurve der 2d-Berechnung repräsentiert, wird hinzugefügt. 
+   if (ortskurve2d != null)
+      {
+      builder.append("ortskurve2d=").append(ortskurve2d).append(", ");
+      }
+      
+   // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
+   if (messpunkteGrafik != null)
+      {
+      builder.append("messpunkteGrafik=").append(messpunkteGrafik).append(", ");
+      }   
+      
+   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird hinzugefügt. 
+   if (ortskurveGrafik != null)
+      {
+      builder.append("ortskurveGrafik=").append(ortskurveGrafik).append(", ");
+      }
+      
+   // Die Zeichenkette, welche die Koordinatenachsen repräsentiert, wird hinzugefügt. 
+   if (koordinatenachsen != null)
+      {
+      builder.append("koordinatenachsen=").append(koordinatenachsen).append(", ");
+      }
+      
+   // Die restlichen Parameter werden zur Zeichenkette hinzugefügt.
+   builder.append("xPixelGrafik=").append(xPixelGrafik).append(", yPixelGrafik=").append(yPixelGrafik).append("]");
+   
    // Die Zeichenkette, die das Datenmodell repräsentiert, wird zurückgegeben.
-   return stringBuilder.toString();
+   return builder.toString();
    }
 
 // =====================================================================================================================
@@ -373,6 +378,4 @@ public void setOrtskurve2d(Ortskurve ortskurve2d)
    // Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt, wird in diesem Modell gespeichert.
    this.ortskurve2d = ortskurve2d;
    }
-
-
 }
