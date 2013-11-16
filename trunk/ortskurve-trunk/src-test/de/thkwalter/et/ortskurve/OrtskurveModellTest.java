@@ -438,41 +438,4 @@ public void testSetMesspunkte()
       assertEquals(this.test_messpunkte[i], messpunkte[i]);
       }
    }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link java.lang.Object#toString()}.
- */
-@Test
-public void testToString1()
-   {
-   // Das Objekt der zu testenden Klasse wird initalisiert.
-   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
-   this.ortskurveModell.setOrtskurve(this.ortskurve);
-   this.ortskurveModell.grafikdatenBerechnen();
-   
-   // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
-      this.ortskurveModell.getyPixelGrafik() + "; ortskurve: Ortskurve [mittelpunktOrtskurve={1; 0}, radiusOrtskurve=1.0]" +
-      "messpunkte: {2; 0}; {1; 1}; messpunkteGrafik: messpunkteInPixeln: {389,5833333333; 137,5}; {275; 22,9166666667}; " +
-      "ortskurveGrafik: mittelPunktInPixeln: {275; 137,5}; radiusInPixeln: 114.58333333333334";
-   assertEquals(meldung, this.ortskurveModell.toString());
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link java.lang.Object#toString()}.
- */
-@Test
-public void testToString2()
-   {   
-   // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
-       this.ortskurveModell.getyPixelGrafik() + "; ortskurve: messpunkte: messpunkteGrafik: ortskurveGrafik: ";
-   assertEquals(meldung, this.ortskurveModell.toString());
-   }
 }
