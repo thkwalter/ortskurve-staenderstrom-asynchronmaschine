@@ -199,6 +199,13 @@ public String problemLoesen()
          r = endParameter.getPoint()[2];
          }
       
+      // Falls der Mittelpunkt einen negativen Realteil besitzt, wird das Ausgleichsproblem noch einmal unter der Rand-
+      // bedingung gelöst, dass der Mittelpunkt auf der imaginären Achse liegt.
+      if (my < 0)
+         {
+         this.problem2dLoesen();
+         }
+      
       // Die Lösung wird protokolliert.
       Ausgleichsproblem.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
       
@@ -230,6 +237,22 @@ public String problemLoesen()
       }
    
    // Die Startseite wird wieder angezeigt.
+   return null;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode bestimmt die x-Komponente des Mittelpunkts und den Radius unter der Bedingung, dass die y-Komponente
+ * gleich 0 ist.
+ * 
+ * @return Die berechnete Ortskurve. Der Mittelpunkt liegt auf der x-Achse.
+ */
+private Ortskurve problem2dLoesen()
+   {
+   Ausgleichsproblem.logger.info("Das 2-dimensionale Ausgleichsproblem wird gelöst.");
+   
    return null;
    }
 

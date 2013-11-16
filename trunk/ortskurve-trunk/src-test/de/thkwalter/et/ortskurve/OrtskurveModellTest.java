@@ -348,6 +348,49 @@ public void testGetKoordinatenachsen() throws SecurityException, NoSuchFieldExce
 // =====================================================================================================================
 
 /**
+ * Test für die Methode {@link OrtskurveModell#getOrtskurve2d()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetOrtskurve2d() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Die Ortskurve der 2d-Berechnung wird im Testobjekt gespeichert.
+   Field messpunkteFeld = OrtskurveModell.class.getDeclaredField("ortskurve2d");
+   messpunkteFeld.setAccessible(true);
+   messpunkteFeld.set(this.ortskurveModell, this.ortskurve);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Ortskurve ortskurve2d = this.ortskurveModell.getOrtskurve2d();
+   
+   // Es wird überprüft, ob die Messpunkte korrekt zurückgegeben werden. 
+   assertEquals(this.ortskurve, ortskurve2d);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#setOrtskurve2d(Ortskurve)}.
+ */
+@Test
+public void testSetOrtskurve2d() 
+   {
+   // Die zu testende Methode wird ausgeführt.
+   this.ortskurveModell.setOrtskurve2d(this.ortskurve);
+   
+   // Es wird überprüft, ob die Messpunkte korrekt im Objekt der zu testenden Klasse gespeichert worden sind.
+   assertEquals(this.ortskurve, this.ortskurveModell.getOrtskurve2d());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link OrtskurveModell#getMesspunkte()}.
  * 
  * @throws NoSuchFieldException 
