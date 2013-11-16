@@ -96,11 +96,12 @@ public double getRadiusOrtskurve()
 public String toString()
    {
    // Die Zeichenkette, welche die Ortskurve repräsentiert, wird zusammengebaut.
-   StringBuilder stringBuilder = new StringBuilder();
-   stringBuilder.append("mittelpunktOrtskurve: ").append(this.mittelpunktOrtskurve).append("; radiusOrtskurve: ").
-      append(this.radiusOrtskurve).append("; ");
+   StringBuilder builder = new StringBuilder("");
    
-   // Die Zeichenkette, welche die Ortskurve repräsentiert, wird zurückgegeben.
-   return stringBuilder.toString();
+   builder.append("Ortskurve [mittelpunktOrtskurve=").append(mittelpunktOrtskurve).append(", radiusOrtskurve=")
+      .append(radiusOrtskurve).append("]");
+   
+   // Die Zeichenkette, welche die Ortskurve repräsentiert, wird zurückgegeben. 
+   return builder.toString();
    }
 }
