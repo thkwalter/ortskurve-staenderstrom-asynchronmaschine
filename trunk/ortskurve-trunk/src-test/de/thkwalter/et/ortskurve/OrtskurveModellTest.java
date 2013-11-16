@@ -412,7 +412,7 @@ public void testToString1()
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
    String meldung = "xPixelGrafik: " + this.ortskurveModell.getxPixelGrafik() + "; yPixelGrafik: " +
-      this.ortskurveModell.getyPixelGrafik() + "; ortskurve: mittelpunktOrtskurve: {1; 0}; radiusOrtskurve: 1.0; " +
+      this.ortskurveModell.getyPixelGrafik() + "; ortskurve: Ortskurve [mittelpunktOrtskurve={1; 0}, radiusOrtskurve=1.0]" +
       "messpunkte: {2; 0}; {1; 1}; messpunkteGrafik: messpunkteInPixeln: {389,5833333333; 137,5}; {275; 22,9166666667}; " +
       "ortskurveGrafik: mittelPunktInPixeln: {275; 137,5}; radiusInPixeln: 114.58333333333334";
    assertEquals(meldung, this.ortskurveModell.toString());

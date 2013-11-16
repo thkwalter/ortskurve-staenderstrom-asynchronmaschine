@@ -517,7 +517,7 @@ public void testToString1()
    this.ersatzschaltbildModell.setX_1h(25.0);
    
    // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
-   String meldung = "ErsatzschaltbildModell [ortskurve=mittelpunktOrtskurve: {2; 0}; radiusOrtskurve: 2.0; , " +
+   String meldung = "ErsatzschaltbildModell [ortskurve=Ortskurve [mittelpunktOrtskurve={2; 0}, radiusOrtskurve=2.0], " +
       "betriebspunkte=[Betriebspunkt [i1=(2.0, 0.0), n=NaN]], u1=400.0, f1=50.0, p=1, x_1h=25.0]";
    assertEquals(meldung, this.ersatzschaltbildModell.toString());
    }
