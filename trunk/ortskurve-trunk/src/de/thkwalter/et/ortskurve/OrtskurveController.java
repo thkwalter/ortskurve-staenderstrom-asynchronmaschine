@@ -47,12 +47,12 @@ import de.thkwalter.jsf.ApplicationRuntimeException;
  */
 @RequestScoped
 @ManagedBean(name="ausgleichsproblem")
-public class Ausgleichsproblem
+public class OrtskurveController
 {
 /*
  * Der Logger dieser Klasse.
  */
-private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName());
+private static Logger logger = Logger.getLogger(OrtskurveController.class.getName());
 
 /**
  * Das Datenmodell der Ortskurve.
@@ -73,7 +73,7 @@ public String problemLoesen()
    try
       {   
       // Die Daten des Frontend-Modells werden protokolliert.
-      Ausgleichsproblem.logger.info(this.ortskurveModell.toString());
+      OrtskurveController.logger.info(this.ortskurveModell.toString());
       
       // Die Messpunkte werden aus dem Frontend-Modell gelesen.
       Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
@@ -97,7 +97,7 @@ public String problemLoesen()
          // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
          String fehlermeldung = "Es wurden " + (messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
             " eingegeben!";
-         Ausgleichsproblem.logger.severe(fehlermeldung);
+         OrtskurveController.logger.severe(fehlermeldung);
          
          // Die Zeichenkette für die Fehlermeldung wird deklariert.
          String jsfMeldung = "";
@@ -179,7 +179,7 @@ public String problemLoesen()
             {
             // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
             String fehlermeldung = "Der Gauss-Newton-Algorithmus konvergiert nicht!";
-            Ausgleichsproblem.logger.severe(fehlermeldung);
+            OrtskurveController.logger.severe(fehlermeldung);
             
             // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
             String jsfMeldung = "Der Gauss-Newton-Algorithmus zur Berechnung der Ortskurve konvergiert nicht! " +
@@ -203,7 +203,7 @@ public String problemLoesen()
          }
       
       // Die Lösung wird protokolliert.
-      Ausgleichsproblem.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
+      OrtskurveController.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
       
       // Die Ortskurve wird erstellt und im Datenmodell gespeichert.
       Ortskurve ortskurve = new Ortskurve(new Vector2D(mx, my), r);
@@ -229,7 +229,7 @@ public String problemLoesen()
          exception.getMessage(), ""));
       
       // Der Nachrichtentext der Ausnahme wird protokolliert.
-      Ausgleichsproblem.logger.info(exception.getMessage());
+      OrtskurveController.logger.info(exception.getMessage());
       }
    
    // Die Startseite wird wieder angezeigt.

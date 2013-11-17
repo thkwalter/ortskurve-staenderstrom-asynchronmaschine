@@ -27,7 +27,7 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import de.thkwalter.et.ortskurve.Ausgleichsproblem;
+import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.Ortskurve;
 import de.thkwalter.et.ortskurve.OrtskurveModell;
 
@@ -116,8 +116,8 @@ public void init()
    FacesContext facesContext = FacesContext.getCurrentInstance();
    
    // Der Controller der Ortskurvenberechnung wird gelesen.
-   Ausgleichsproblem ausgleichsproblem = (Ausgleichsproblem) facesContext.getApplication().evaluateExpressionGet(
-      facesContext, "#{ausgleichsproblem}", Ausgleichsproblem.class); 
+   OrtskurveController ausgleichsproblem = (OrtskurveController) facesContext.getApplication().evaluateExpressionGet(
+      facesContext, "#{ausgleichsproblem}", OrtskurveController.class); 
 
    // Die benötigten Daten des Datenmodells der Ortskurvenberechnung werden in das Datenmodell der 
    // Ersatzschaltbildberechnung übernommen.
@@ -136,7 +136,7 @@ public void init()
  * 
  * @param ausgleichsproblem Der Controller der Ortskurvenberechnung
  */
-private void datenUebernehmen(Ausgleichsproblem ausgleichsproblem)
+private void datenUebernehmen(OrtskurveController ausgleichsproblem)
    {
    // Das Datenmodell der Ortskurvenberechnung wird gelesen.
    OrtskurveModell ortskurveModell = ausgleichsproblem.getOrtskurveModell();

@@ -26,16 +26,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Diese Klasse enthält Tests für die Klasse {@link Ausgleichsproblem}.
+ * Diese Klasse enthält Tests für die Klasse {@link OrtskurveController}.
  *
  * @author Th. K. Walter
  */
-public class AusgleichsproblemTest
+public class OrtskurveControllerTest
 {
 /**
  * Ein Objekt der zu testenden Klasse.
  */
-private Ausgleichsproblem ausgleichsproblem;
+private OrtskurveController ortskurveController;
 
 /**
  * Das im Test verwendete Datenmodell der Ortskurve.
@@ -54,20 +54,20 @@ private OrtskurveModell testOrtskurveModell;
 public void setUp() throws Exception
    {   
    // Das Objekt der zu testenden Klasse wird erzeugt.
-   this.ausgleichsproblem = new Ausgleichsproblem();
+   this.ortskurveController = new OrtskurveController();
    
    // Das im Test verwendete Datenmodell der Ortskurve wird erzeugt und im Objekt der zu testenden Klasse gespeichert.
    this.testOrtskurveModell = new OrtskurveModell();
-   Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
+   Field ortskurveModellFeld = OrtskurveController.class.getDeclaredField("ortskurveModell");
    ortskurveModellFeld.setAccessible(true);
-   ortskurveModellFeld.set(this.ausgleichsproblem, this.testOrtskurveModell);
+   ortskurveModellFeld.set(this.ortskurveController, this.testOrtskurveModell);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Ausgleichsproblem#getOrtskurveModell()}.
+ * Test für die Methode {@link OrtskurveController#getOrtskurveModell()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -79,12 +79,12 @@ public void testGetOrtskurveModell() throws NoSuchFieldException, SecurityExcept
    IllegalAccessException
    {
    // Das Datenmodell der Ortskurvenberechnung wird im Controller gespeichert.
-   Field ortskurveModellFeld = Ausgleichsproblem.class.getDeclaredField("ortskurveModell");
+   Field ortskurveModellFeld = OrtskurveController.class.getDeclaredField("ortskurveModell");
    ortskurveModellFeld.setAccessible(true);
-   ortskurveModellFeld.set(this.ausgleichsproblem, this.testOrtskurveModell);
+   ortskurveModellFeld.set(this.ortskurveController, this.testOrtskurveModell);
    
    // Die zu testende Methode wird aufgerufen.
-   OrtskurveModell ortskurveModell = this.ausgleichsproblem.getOrtskurveModell();
+   OrtskurveModell ortskurveModell = this.ortskurveController.getOrtskurveModell();
    
    // Es wird überprüft, ob das Datenmodell der Ortskurvenberechnung korrekt zurückgegeben worden ist.
    assertEquals(this.testOrtskurveModell, ortskurveModell);
@@ -94,23 +94,23 @@ public void testGetOrtskurveModell() throws NoSuchFieldException, SecurityExcept
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Ausgleichsproblem#setOrtskurveModell(OrtskurveModell)}.
+ * Test für die Methode {@link OrtskurveController#setOrtskurveModell(OrtskurveModell)}.
  */
 @Test
 public void testSetOrtskurveModell()
    {
    // Die zu testende Methode wird aufgerufen.
-   this.ausgleichsproblem.setOrtskurveModell(this.testOrtskurveModell);
+   this.ortskurveController.setOrtskurveModell(this.testOrtskurveModell);
    
    // Es wird überprüft, ob das Datenmodell der Ortskurvenberechnung korrekt gespeichert worden ist.
-   assertEquals(this.testOrtskurveModell, this.ausgleichsproblem.getOrtskurveModell());
+   assertEquals(this.testOrtskurveModell, this.ortskurveController.getOrtskurveModell());
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link Ausgleichsproblem#problem2dLoesen()}.
+ * Test für die Methode {@link OrtskurveController#problem2dLoesen()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -129,9 +129,9 @@ public void testProblem2dLoesen() throws NoSuchMethodException, SecurityExceptio
    // this.testOrtskurveModell.setMesspunkte(testMesspunkte);
    
    // Die zu testende Methode wird aufgerufen.
-   Method methode = Ausgleichsproblem.class.getDeclaredMethod("problem2dLoesen", new Class[0]);
+   Method methode = OrtskurveController.class.getDeclaredMethod("problem2dLoesen", new Class[0]);
    methode.setAccessible(true);
-   Ortskurve ortskurve2d = (Ortskurve) methode.invoke(this.ausgleichsproblem, new Object[0]);
+   Ortskurve ortskurve2d = (Ortskurve) methode.invoke(this.ortskurveController, new Object[0]);
    
    // Es wird überprüft, ob die Ortskurve der 2d-Berechnung korrekt erstellt worden ist.
    assertNotNull(ortskurve2d);
