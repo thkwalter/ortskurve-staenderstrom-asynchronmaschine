@@ -16,8 +16,11 @@
 package de.thkwalter.et.ortskurve;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -101,5 +104,36 @@ public void testSetOrtskurveModell()
    
    // Es wird überprüft, ob das Datenmodell der Ortskurvenberechnung korrekt gespeichert worden ist.
    assertEquals(this.testOrtskurveModell, this.ausgleichsproblem.getOrtskurveModell());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Ausgleichsproblem#problem2dLoesen()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testProblem2dLoesen() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
+   IllegalArgumentException, InvocationTargetException
+   {
+   // Die im Test verwendeten Messpunkte werden erzeugt
+   // Vector2D[] testMesspunkte = new Vector2D[]{new Vector2D(1.0, -0.5), new Vector2D(2.0, 0.5), new Vector2D(3.0, -0.5)};
+   
+   // Die im Test verwendeten Messpunkte werden im Frontend-Modell gespeichert.
+   // this.testOrtskurveModell.setMesspunkte(testMesspunkte);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = Ausgleichsproblem.class.getDeclaredMethod("problem2dLoesen", new Class[0]);
+   methode.setAccessible(true);
+   Ortskurve ortskurve2d = (Ortskurve) methode.invoke(this.ausgleichsproblem, new Object[0]);
+   
+   // Es wird überprüft, ob die Ortskurve der 2d-Berechnung korrekt erstellt worden ist.
+   assertNotNull(ortskurve2d);
    }
 }

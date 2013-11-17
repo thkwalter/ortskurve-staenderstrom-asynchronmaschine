@@ -72,6 +72,10 @@ public String problemLoesen()
    {
    try
       {   
+      // Die Daten des Frontend-Modells werden protokolliert.
+      Ausgleichsproblem.logger.info(this.ortskurveModell.toString());
+      
+      // Die Messpunkte werden aus dem Frontend-Modell gelesen.
       Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
       
       // Die Variablen für die Ortskurve werden deklariert.
@@ -114,13 +118,8 @@ public String problemLoesen()
                "doppelt eingegeben! Entfernen Sie bitte die doppelt eingegebenen Messpunkte.";
             }
          
-         // Die Ausnahme wird erzeugt
-         ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
-         
-         // Das vorzeitige Verlassen dieser Methode wird protokolliert.
-         Ausgleichsproblem.logger.throwing("Ausgleichsproblem", "problemLoesen", applicationRuntimeException);
-         
-         throw applicationRuntimeException;
+         // Die Ausnahme wird erzeugt und geworfen.         
+         throw new ApplicationRuntimeException(jsfMeldung);
          }
       
       // Die Startparameter werden bestimmt.
@@ -187,9 +186,6 @@ public String problemLoesen()
                "Überprüfen Sie bitte, ob die eingegebenen Punkte annähernd auf einem Kreis liegen.";
             ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
             
-            // Das vorzeitige Verlassen dieser Methode wird protokolliert.
-            Ausgleichsproblem.logger.throwing("Ausgleichsproblem", "problemLoesen", applicationRuntimeException);
-            
             throw applicationRuntimeException;
             }
          
@@ -251,9 +247,11 @@ public String problemLoesen()
  */
 private Ortskurve problem2dLoesen()
    {
-   Ausgleichsproblem.logger.info("Das 2-dimensionale Ausgleichsproblem wird gelöst.");
+   // Die Ortskurve der 2d-Berechnung wird erzeugt.
+   Ortskurve ortskurve2d = new Ortskurve(new Vector2D(2.0 ,0.0), 1.0);
    
-   return null;
+   // Die berechnete Ortskurve wird zurückgegeben.
+   return ortskurve2d;
    }
 
 // =====================================================================================================================
