@@ -30,7 +30,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.thkwalter.et.ortskurve.Ausgleichsproblem;
+import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.Ortskurve;
 import de.thkwalter.et.ortskurve.OrtskurveModell;
 
@@ -131,7 +131,7 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link ErsatzschaltbildModell#datenUebernehmen(Ausgleichsproblem)}.
+ * Test für die Methode {@link ErsatzschaltbildModell#datenUebernehmen(OrtskurveController)}.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -151,11 +151,11 @@ public void testDatenUebernehmen() throws NoSuchMethodException, SecurityExcepti
    testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(0.5, 0.0), new Vector2D(2.0, 1.5)});
    
    // Der im Test verwendete Controller der Ortskurvenberechnung wird initialisiert.
-   Ausgleichsproblem testAusgleichsproblem = new Ausgleichsproblem();
+   OrtskurveController testAusgleichsproblem = new OrtskurveController();
    testAusgleichsproblem.setOrtskurveModell(testOrtskurveModell);
    
    // Die zu testende Methode wird aufgerufen.
-   Method methode = ErsatzschaltbildModell.class.getDeclaredMethod("datenUebernehmen", Ausgleichsproblem.class);
+   Method methode = ErsatzschaltbildModell.class.getDeclaredMethod("datenUebernehmen", OrtskurveController.class);
    methode.setAccessible(true);
    methode.invoke(this.ersatzschaltbildModell, testAusgleichsproblem);
    
