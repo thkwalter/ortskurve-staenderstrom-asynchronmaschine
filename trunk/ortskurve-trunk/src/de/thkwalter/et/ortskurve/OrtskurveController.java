@@ -40,8 +40,7 @@ import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptim
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
- * Diese Klasse sucht mit Hilfe der Methoden der nichtlinearen Ausgleichsrechnung den Mittelpunkt und den Radius eines
- * Kreises zu einer vorgegebenen Menge von Messpunkten.
+ * Diese Klasse ist der Controller der Ortskurvenberechnung.
  *
  * @author Th. Walter
  */
@@ -55,7 +54,7 @@ public class OrtskurveController
 private static Logger logger = Logger.getLogger(OrtskurveController.class.getName());
 
 /**
- * Das Datenmodell der Ortskurve.
+ * Das Frontend-Modell der Ortskurvenberechnung.
  */
 @ManagedProperty(value="#{ortskurveModell}")
 private OrtskurveModell ortskurveModell;
