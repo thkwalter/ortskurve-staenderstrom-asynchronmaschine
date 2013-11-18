@@ -15,11 +15,23 @@
  */
 package de.thkwalter.et.ortskurve;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.math3.analysis.MultivariateMatrixFunction;
 import org.apache.commons.math3.analysis.MultivariateVectorFunction;
+import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.math3.optim.InitialGuess;
+import org.apache.commons.math3.optim.MaxEval;
+import org.apache.commons.math3.optim.PointVectorValuePair;
 import org.apache.commons.math3.optim.SimpleVectorValueChecker;
+import org.apache.commons.math3.optim.nonlinear.vector.ModelFunction;
+import org.apache.commons.math3.optim.nonlinear.vector.ModelFunctionJacobian;
+import org.apache.commons.math3.optim.nonlinear.vector.Target;
+import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
+
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse kapselt die Lösung eines nichtlinearen Ausgleichsproblems mit Hilfe des Gauß-Newton-Verfahrens. Das 
@@ -49,6 +61,11 @@ private double[] gewichte;
  * Die Zielwerte in der Ausgelichsrechnung
  */
 private double[] zielwerte;
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger(Ausgleichsproblem.class.getName());
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -85,30 +102,75 @@ public Ausgleichsproblem(Vector2D[] messpunkte)
 /**
  * Diese Methode löst das Ausgleichsproblem.
  * 
+ * @param startpunkt Der Startpunkt der Ausgleichsrechnung
  * @param ausgleichsproblemtyp Der Typ des Ausgleichsproblems
  * 
  * @return Die berechnete Ortskurve
  */
-public Ortskurve ausgleichsproblemLoesen(Ausgleichsproblemtyp ausgleichsproblemtyp)
+public Ortskurve ausgleichsproblemLoesen(double[] startpunkt, Ausgleichsproblemtyp ausgleichsproblemtyp)
    {
+   // Die Referenzen auf die Modellgleichungen und die Jakobimatrix werden deklariert.
    MultivariateVectorFunction modellgleichungen = null;
    MultivariateMatrixFunction jakobiMatrix = null;
    
+   // Falls das zweidimensionale Ausgleichsproblem gelöst werden soll, ...
    if (ausgleichsproblemtyp == Ausgleichsproblemtyp.ORTSKURVE_2d)
       {
       
       }
-   else if (ausgleichsproblemtyp == Ausgleichsproblemtyp.ORTSKURVE_2d)
+   
+   // Falls das dreidimensionale Ausgleichsproblem gelöst werden soll, ...
+   else if (ausgleichsproblemtyp == Ausgleichsproblemtyp.ORTSKURVE_3d)
       {
-      // Ein Objekte der Klasse, welche die Modellgleichungen (der Kreisgleichungen) repräsentiert, wird erzeugt.
+      // Die Modellgleichungen (die Kreisgleichungen) werden erzeugt.
       modellgleichungen = new Modellgleichungen(this.messpunkte);
       
-      // Ein Objekt der Klasse, welche die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen) repräsentiert, 
-      // wird erzeugt.
+      // Die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen) wird erzeugt.
       jakobiMatrix = new Jakobimatrix(this.messpunkte);
       }
    
-   return new Ortskurve(new Vector2D(2.0 ,0.0), 1.0);
+   // Das Ausgleichsproblem wird gelöst, wobei höchstens 200 Iterationsschritte durchgeführt werden.
+   double[] ortskurvenparameter = null;
+   try
+      {
+      PointVectorValuePair endParameter = this.gaussNewtonOptimizer.optimize(new Weight(gewichte), 
+         new Target(zielwerte), new  InitialGuess(startpunkt), new MaxEval(200), new ModelFunction(modellgleichungen), 
+         new ModelFunctionJacobian(jakobiMatrix));
+      
+      ortskurvenparameter = endParameter.getPoint();
+      }
+   
+   // Falls das Verfahren nicht konvergiert hat, wird die entsprechende Ausnahme gefangen.
+   catch (TooManyEvaluationsException e)
+      {
+      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+      String fehlermeldung = "Der Gauss-Newton-Algorithmus konvergiert nicht!";
+      Ausgleichsproblem.logger.severe(fehlermeldung);
+      
+      // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+      String jsfMeldung = "Der Gauss-Newton-Algorithmus zur Berechnung der Ortskurve konvergiert nicht! " +
+         "Überprüfen Sie bitte, ob die eingegebenen Punkte annähernd auf einem Kreis liegen.";
+      ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+      
+      throw applicationRuntimeException;
+      }
+   
+   // Die Referenz auf die Ortskurve wird deklariert.
+   Ortskurve ortskurve = null;
+   
+   // Falls das zweidimensionale Ausgleichsproblem gelöst werden soll, ...
+   if (ausgleichsproblemtyp == Ausgleichsproblemtyp.ORTSKURVE_2d)
+      {
+      ortskurve = new Ortskurve(new Vector2D(ortskurvenparameter[0], 0.0), ortskurvenparameter[1]);
+      }
+   
+   // Falls das dreidimensionale Ausgleichsproblem gelöst werden soll, ...
+   else if (ausgleichsproblemtyp == Ausgleichsproblemtyp.ORTSKURVE_3d)
+      {
+      ortskurve = new Ortskurve(new Vector2D(ortskurvenparameter[0], ortskurvenparameter[1]), ortskurvenparameter[2]);
+      }
+   
+   // Die berechnete Ortskurve wird zurückgegeben.
+   return ortskurve;
    }
-
 }
