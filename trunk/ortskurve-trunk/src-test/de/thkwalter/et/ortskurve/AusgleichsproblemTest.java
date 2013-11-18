@@ -55,8 +55,8 @@ private Vector2D[] testMesspunkte;
 public void setUp() throws Exception
    {
    // Die in den Tests verwendeten Stromstärken (in A) im Format (-Im I1, Re I1) werden erzeugt.
-   this.testMesspunkte = new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(2.0, 1.0), new Vector2D(3.0, 0.0), 
-      new Vector2D(2.0, -1.0)};
+   this.testMesspunkte = new Vector2D[]{new Vector2D(1.1, 0.0), new Vector2D(2.0, 1.1), new Vector2D(2.9, 0.0), 
+      new Vector2D(2.0, -1.1)};
    
    // Das Testobjekt wird erzeugt.
    this.ausgleichsproblem = new Ausgleichsproblem(this.testMesspunkte);
@@ -121,10 +121,17 @@ public void testAusgleichsproblem() throws NoSuchFieldException, SecurityExcepti
 @Test
 public void testAusgleichsproblemLoesen()
    {
-   // Die zu testende Methode wird aufgerufen.
-   Ortskurve ortskurve = this.ausgleichsproblem.ausgleichsproblemLoesen(Ausgleichsproblemtyp.ORTSKURVE_2d);
+   // Der in diesem Test verwendete Startpunkt wird erzeugt.
+   double[] testStartpunkt = new double[]{1.7, 0.3, 1.3};
    
-   // Es wird überprüft, ob die Ortskurve erzeugt worden ist.
+   // Die zu testende Methode wird aufgerufen.
+   Ortskurve ortskurve = this.ausgleichsproblem.ausgleichsproblemLoesen(testStartpunkt,
+      Ausgleichsproblemtyp.ORTSKURVE_3d);
+   
+   // Es wird überprüft, ob die Ortskurve korrekt berechnet worden ist.
    assertNotNull(ortskurve);
+   assertEquals(2.0, ortskurve.getMittelpunktOrtskurve().getX(), 2.0/1000);
+   assertEquals(0.0, ortskurve.getMittelpunktOrtskurve().getY(), 2.0/1000);
+   assertEquals(1.0, ortskurve.getRadiusOrtskurve(), 1.0/1000);
    }
 }
