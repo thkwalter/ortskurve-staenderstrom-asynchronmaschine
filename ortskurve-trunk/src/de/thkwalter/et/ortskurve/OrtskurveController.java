@@ -25,17 +25,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.math3.optim.InitialGuess;
-import org.apache.commons.math3.optim.MaxEval;
-import org.apache.commons.math3.optim.PointVectorValuePair;
-import org.apache.commons.math3.optim.SimpleVectorValueChecker;
-import org.apache.commons.math3.optim.nonlinear.vector.ModelFunction;
-import org.apache.commons.math3.optim.nonlinear.vector.ModelFunctionJacobian;
-import org.apache.commons.math3.optim.nonlinear.vector.Target;
-import org.apache.commons.math3.optim.nonlinear.vector.Weight;
-import org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer;
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
@@ -76,11 +66,6 @@ public String problemLoesen()
       
       // Die Messpunkte werden aus dem Frontend-Modell gelesen.
       Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
-      
-      // Die Variablen für die Ortskurve werden deklariert.
-      double mx = Double.NaN;
-      double my = Double.NaN;
-      double r = Double.NaN;
       
       // Alle Messpunkte werden in ein HashSet eingefügt.
       HashSet<Vector2D> messpunktSet = new HashSet<Vector2D>();
@@ -126,86 +111,31 @@ public String problemLoesen()
       double[] startpunkt = startpunktbestimmung.getStartpunkt();
       
       // Falls nur drei Messpunkte eingegeben worden sind, entspricht der Startpunkt der Lösung.
+      Ortskurve ortskurve = null;
       if (messpunkte.length == 3)
          {
-         mx = startpunkt[0];
-         my = startpunkt[1];
-         r = startpunkt[2];
+         ortskurve = new Ortskurve(new Vector2D(startpunkt[0], startpunkt[1]), startpunkt[2]);
          }
       
       // Falls mehr als drei Messpunkte eingegeben worden sind, muss die Lösung durch eine nicht-lineare 
       // Ausgleichsrechnung bestimmt werden.
       else
          {
-         // Ein Objekt der Klasse, die den Lösungsalgorithmus kapselt wird erzeugt. Es wird festgelegt, dass der 
-         // Algorithmus QR-Zerlegung zur Lösung des linearen Problems benutzen soll. Die Lösung des Ausgleichsproblems  
-         // gilt als gefunden, wenn sich kein Residuum zwischen zwei Iterationsschritten um mehr als 1 Prozent ändert.
-         GaussNewtonOptimizer gaussNewtonOptimizer = 
-               new GaussNewtonOptimizer(false, new SimpleVectorValueChecker(0.01, -1.0));
-         
-         // Das Feld für die Gewichte der einzelnen Punkte wird deklariert.
-         double[] gewichte = new double[messpunkte.length];
-         
-         // Das folgende Feld enthält die Werte, welche die Modellgleichungen ergeben sollten.
-         double[] zielwerte = new double[messpunkte.length];
-         
-         // In der folgenden Schleife über alle Messpunkte werden die oben deklarierten Felder initialisiert.
-         for (int i = 0; i < messpunkte.length; i++)
-            {
-            // Allen Messpunkten wird das gleiche Gewicht zugewiesen.
-            gewichte[i] = 1.0;
-            
-            // Die Zielwerte haben alle den Wert Null, da die Kreisgleichung für alle Punkte diesen Wert ergeben sollte.
-            zielwerte[i] = 0.0;
-            }
-         
-         // Ein Objekte der Klasse, welche die Modellgleichungen (der Kreisgleichungen) repräsentiert, wird erzeugt.
-         Modellgleichungen strommesswerte = new Modellgleichungen(messpunkte);
-         
-         // Ein Objekt der Klasse, welche die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen) repräsentiert, 
-         // wird erzeugt.
-         Jakobimatrix jakobiMatrix = new Jakobimatrix(messpunkte);
-         
-         // Das Ausgleichsproblem wird gelöst, wobei höchstens 200 Iterationsschritte durchgeführt werden.
-         PointVectorValuePair endParameter = null;
-         try
-            {
-            endParameter = gaussNewtonOptimizer.optimize(new Weight(gewichte), new Target(zielwerte), 
-               new  InitialGuess(startpunkt), new MaxEval(200), new ModelFunction(strommesswerte), 
-               new ModelFunctionJacobian(jakobiMatrix));
-            }
-         catch (TooManyEvaluationsException e)
-            {
-            // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
-            String fehlermeldung = "Der Gauss-Newton-Algorithmus konvergiert nicht!";
-            OrtskurveController.logger.severe(fehlermeldung);
-            
-            // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
-            String jsfMeldung = "Der Gauss-Newton-Algorithmus zur Berechnung der Ortskurve konvergiert nicht! " +
-               "Überprüfen Sie bitte, ob die eingegebenen Punkte annähernd auf einem Kreis liegen.";
-            ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
-            
-            throw applicationRuntimeException;
-            }
-         
-         // Die Lösung wird gelesen.
-         mx = endParameter.getPoint()[0];
-         my = endParameter.getPoint()[1];
-         r = endParameter.getPoint()[2];
+         Ausgleichsproblem ausgleichsproblem = new Ausgleichsproblem(messpunkte);
+         ortskurve = ausgleichsproblem.ausgleichsproblemLoesen(startpunkt, Ausgleichsproblemtyp.ORTSKURVE_3d);
          }
       
       // Falls der Mittelpunkt einen negativen Realteil besitzt, wird das Ausgleichsproblem noch einmal unter der Rand-
       // bedingung gelöst, dass der Mittelpunkt auf der imaginären Achse liegt.
-      if (my < 0)
+      if (ortskurve.getMittelpunktOrtskurve().getY() < 0)
          {
-         this.problem2dLoesen();
+
          }
       
-      // Die Lösung wird protokolliert.
-      OrtskurveController.logger.info("Mittelpunkt: (" + mx + ", " + my + "); Radius: " + r);
+      // Die berechnete Ortskurve wird protokolliert.
+      OrtskurveController.logger.info(ortskurve.toString());
       
-      // Die Ortskurve wird erstellt und im Datenmodell gespeichert.
-      Ortskurve ortskurve = new Ortskurve(new Vector2D(mx, my), r);
+      // Die Ortskurve wird im Datenmodell gespeichert.
       this.ortskurveModell.setOrtskurve(ortskurve);
       
       // Die Daten der Grafik der Ortskurve werden berechnet.
@@ -233,24 +163,6 @@ public String problemLoesen()
    
    // Die Startseite wird wieder angezeigt.
    return null;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode bestimmt die x-Komponente des Mittelpunkts und den Radius unter der Bedingung, dass die y-Komponente
- * gleich 0 ist.
- * 
- * @return Die berechnete Ortskurve. Der Mittelpunkt liegt auf der x-Achse.
- */
-private Ortskurve problem2dLoesen()
-   {
-   // Die Ortskurve der 2d-Berechnung wird erzeugt.
-   Ortskurve ortskurve2d = new Ortskurve(new Vector2D(2.0 ,0.0), 1.0);
-   
-   // Die berechnete Ortskurve wird zurückgegeben.
-   return ortskurve2d;
    }
 
 // =====================================================================================================================
