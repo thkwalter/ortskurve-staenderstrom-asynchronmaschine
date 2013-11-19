@@ -20,10 +20,10 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
  * Diese Klasse repräsentiert die Modellgleichungen (die Kreisgleichungen).
- *
+ * 
  * @author Th. K. Walter
  */
-public class Modellgleichungen implements MultivariateVectorFunction
+public class Modellgleichungen2d implements MultivariateVectorFunction
 {
 /**
  * Dieses Feld enthält die Messpunkte.
@@ -38,7 +38,7 @@ private Vector2D[] messpunkte;
  * 
  * @param messpunkte Das Feld der Messpunkte.
  */
-public Modellgleichungen(Vector2D[] messpunkte)
+public Modellgleichungen2d(Vector2D[] messpunkte)
    {
    this.messpunkte = messpunkte;
    }
@@ -61,10 +61,10 @@ public Modellgleichungen(Vector2D[] messpunkte)
 public double[] value(double[] kreisparameter)
    {   
    // Der Vektor für den Mittelpunkt der Ortskurve wird erzeugt.
-   Vector2D mittelpunkt = new Vector2D(kreisparameter[0], kreisparameter[1]);
+   Vector2D mittelpunkt = new Vector2D(kreisparameter[0], 0.0);
 
    // Der Radius des Kreises wird gelesen.
-   double radius = kreisparameter[2];
+   double radius = kreisparameter[1];
    
    // Dieses Feld enthält für jeden Betriebspunkt den Abstand des entsprechenden Messpunktes von der Ortskurve.
    double[] abstaende = new double[this.messpunkte.length]; 

@@ -23,11 +23,11 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
- * Diese Klasse repräsentiert die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen).
+ * Diese Klasse repräsentiert die Jakobi-Matrix der 2d-Modellgleichungen (der Kreisgleichungen).
  * 
  * @author Th. K. Walter
  */
-public class Jakobimatrix implements MultivariateMatrixFunction
+public class Jakobimatrix2d implements MultivariateMatrixFunction
 {
 /**
  * Dieses Feld enthält die Messpunkte.
@@ -37,7 +37,7 @@ private Vector2D[] messpunkte;
 /**
  * Der Logger dieser Klasse.
  */
-private static Logger logger = Logger.getLogger(Jakobimatrix.class.getName());
+private static Logger logger = Logger.getLogger(Jakobimatrix2d.class.getName());
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -47,7 +47,7 @@ private static Logger logger = Logger.getLogger(Jakobimatrix.class.getName());
  * 
  * @param messpunkte Das Feld der Messpunkte.
  */
-public Jakobimatrix(Vector2D[] messpunkte)
+public Jakobimatrix2d(Vector2D[] messpunkte)
    {
    this.messpunkte = messpunkte;
    }
@@ -59,8 +59,7 @@ public Jakobimatrix(Vector2D[] messpunkte)
  * Dieses Feld berechnet die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen).
  * 
  * @param kreisparameter Die Parameterwerte der Kreisgleichungen. Das 0-te Element ist die x-Koordinate des
- *        Kreismittelpunkts, das 1-te Element ist die y-Koordinate des Kreismittelpunkts, das 2-te Element ist der
- *        Radius des Kreises.
+ *        Kreismittelpunkts, das 1-te Element ist der Radius des Kreises.
  * 
  * @return Die Jakobi-Matrix der Modellgleichungen. Der erste Index des Feldes läuft über die Gleichungen, der zweite
  *         Index über die Kreisparameter.
@@ -71,10 +70,10 @@ public Jakobimatrix(Vector2D[] messpunkte)
 public double[][] value(double[] kreisparameter)
    {
    // Der Vektor für den Mittelpunkt der Ortskurve wird erzeugt.
-   Vector2D mittelpunkt = new Vector2D(kreisparameter[0], kreisparameter[1]);
+   Vector2D mittelpunkt = new Vector2D(kreisparameter[0], 0.0);
 
    // Das Feld für die Jakobi-Matrix wird deklariert.
-   double[][] jakobiMatrix = new double[this.messpunkte.length][3];
+   double[][] jakobiMatrix = new double[this.messpunkte.length][2];
 
    // In dieser Schleife wird die Jakobi-Matrix initialisiert.
    double abstandMesspunktMittelpunkt = Double.NaN;
@@ -86,12 +85,12 @@ public double[][] value(double[] kreisparameter)
       // Falls der Messpunkt mit dem Mittelpunkt identisch ist wird eine JSFAusnahme geworfen, da sonst das Inverse
       // des Abstands unendlich groß wird. Da der Vergleich zweier double-Wert jedoch sinnlos ist, wird der Abstand mit 
       // einem Prozent des aktuell vermuteten Radius verglichen.
-      if (abstandMesspunktMittelpunkt < 0.01 * kreisparameter[2])
+      if (abstandMesspunktMittelpunkt < 0.01 * kreisparameter[1])
          {
          // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
          String fehlermeldung = "Der Punkt " + this.messpunkte[i].toString() + " ist fast identisch mit dem " +
             " Mittelpunkt " + mittelpunkt.toString() + "!";
-         Jakobimatrix.logger.severe(fehlermeldung);
+         Jakobimatrix2d.logger.severe(fehlermeldung);
          
          // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
          String jsfMeldung = "Der Punkt " + this.messpunkte[i].toString() + 
@@ -106,8 +105,7 @@ public double[][] value(double[] kreisparameter)
 
       // Die Elemente der Jakobi-Matrix werden initialisiert.
       jakobiMatrix[i][0] = inverserAbstandMesspunktMittelpunkt * (mittelpunkt.getX() - this.messpunkte[i].getX());
-      jakobiMatrix[i][1] = inverserAbstandMesspunktMittelpunkt * (mittelpunkt.getY() - this.messpunkte[i].getY());
-      jakobiMatrix[i][2] = -1.0;
+      jakobiMatrix[i][1] = -1.0;
       }
 
    return jakobiMatrix;
