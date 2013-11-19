@@ -15,8 +15,7 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
 
@@ -25,11 +24,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Diese Klasse enthält Tests für die Klasse {@link Modellgleichungen}.
- *
+ * Diese Klasse enthält Tests für die Klasse {@link Modellgleichungen2d}.
+ * 
  * @author Th. K. Walter
  */
-public class ModellgleichungenTest
+public class Modellgleichungen2dTest
 {
 /**
  * Die Messpunkte, die für den Test verwendet werden.
@@ -37,9 +36,9 @@ public class ModellgleichungenTest
 private Vector2D[] testMesspunkte;
 
 /**
- * Das Objekt, das für die Tests verwendet wird.
+ * Das Testobjekt der Klasse {@link Modellgleichungen2d}.
  */
-private Modellgleichungen modellgleichungen;
+private Modellgleichungen2d modellgleichungen2d;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -56,14 +55,14 @@ public void setUp() throws Exception
    this.testMesspunkte = new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(2.0, 1.0)};
    
    // Ein Objekt der zu testenden Klasse wird erzeugt.
-   this.modellgleichungen = new Modellgleichungen(this.testMesspunkte);
+   this.modellgleichungen2d = new Modellgleichungen2d(this.testMesspunkte);
    }
-
+   
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für den Konstruktor {@link Modellgleichungen(Vector2D[])}.
+ * Test für den Konstruktor {@link Modellgleichungen2d(Vector2D[])}.
  * 
  * @throws NoSuchFieldException 
  * @throws SecurityException 
@@ -75,9 +74,9 @@ public void testModellgleichungen() throws SecurityException, NoSuchFieldExcepti
    IllegalAccessException
    {
    // Der Wert des Attributs messwerte wird gelesen.   
-   Field messpunkteFeld = Modellgleichungen.class.getDeclaredField("messpunkte");
+   Field messpunkteFeld = Modellgleichungen2d.class.getDeclaredField("messpunkte");
    messpunkteFeld.setAccessible(true);
-   Vector2D[] messpunkte = (Vector2D[]) messpunkteFeld.get(this.modellgleichungen);
+   Vector2D[] messpunkte = (Vector2D[]) messpunkteFeld.get(this.modellgleichungen2d);
    
    // Die Messpunkte werden überprüft.
    assertArrayEquals(messpunkte, this.testMesspunkte);  
@@ -93,7 +92,7 @@ public void testModellgleichungen() throws SecurityException, NoSuchFieldExcepti
 public void testValue()
    {
    // Die zu testende Methode wird ausgeführt.
-   double[] abstaende = this.modellgleichungen.value(new double[]{1.0, 0.0, 1.0});
+   double[] abstaende = this.modellgleichungen2d.value(new double[]{1.0, 1.0});
    
    // Es wird überprüft, ob das Feld, das die Methode zurückgibt, die korrekte Dimension hat.
    assertEquals(2, abstaende.length);
