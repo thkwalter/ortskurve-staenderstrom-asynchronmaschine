@@ -116,10 +116,11 @@ public void testAusgleichsproblem() throws NoSuchFieldException, SecurityExcepti
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Ausgleichsproblem#ausgleichsproblemLoesen()}.
+ * Test der Methode {@link Ausgleichsproblem#ausgleichsproblemLoesen()} für den Fall, dass das 3d-Ausgleichsproblem
+ * gelöst werden soll.
  */
 @Test
-public void testAusgleichsproblemLoesen()
+public void testAusgleichsproblemLoesen1()
    {
    // Der in diesem Test verwendete Startpunkt wird erzeugt.
    double[] testStartpunkt = new double[]{1.7, 0.3, 1.3};
@@ -133,5 +134,35 @@ public void testAusgleichsproblemLoesen()
    assertEquals(2.0, ortskurve.getMittelpunktOrtskurve().getX(), 2.0/1000);
    assertEquals(0.0, ortskurve.getMittelpunktOrtskurve().getY(), 2.0/1000);
    assertEquals(1.0, ortskurve.getRadiusOrtskurve(), 1.0/1000);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Ausgleichsproblem#ausgleichsproblemLoesen()} für den Fall, dass das 2d-Ausgleichsproblem
+ * gelöst werden soll.
+ */
+@Test
+public void testAusgleichsproblemLoesen2()
+   {
+   // Die in den Tests verwendeten Stromstärken (in A) im Format (-Im I1, Re I1) werden erzeugt.
+   this.testMesspunkte = new Vector2D[]{new Vector2D(1.1, -0.5), new Vector2D(2.0, 0.6), new Vector2D(2.9, -0.5), 
+      new Vector2D(2.0, -1.6)};
+   
+   // Das Testobjekt wird erzeugt.
+   this.ausgleichsproblem = new Ausgleichsproblem(this.testMesspunkte);
+   
+   // Der in diesem Test verwendete Startpunkt wird erzeugt.
+   double[] testStartpunkt = new double[]{1.8, 1};
+   
+   // Die zu testende Methode wird aufgerufen.
+   Ortskurve ortskurve = this.ausgleichsproblem.ausgleichsproblemLoesen(testStartpunkt,
+      Ausgleichsproblemtyp.ORTSKURVE_2d);
+   
+   // Es wird überprüft, ob die Ortskurve korrekt berechnet worden ist.
+   assertNotNull(ortskurve);
+   assertEquals(2.0, ortskurve.getMittelpunktOrtskurve().getX(), 2.0/1000);
+   assertEquals(0.0, ortskurve.getMittelpunktOrtskurve().getY(), 2.0/1000);
    }
 }

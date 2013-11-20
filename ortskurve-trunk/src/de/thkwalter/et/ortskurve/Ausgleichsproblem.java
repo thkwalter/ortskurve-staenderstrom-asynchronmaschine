@@ -116,7 +116,11 @@ public Ortskurve ausgleichsproblemLoesen(double[] startpunkt, Ausgleichsproblemt
    // Falls das zweidimensionale Ausgleichsproblem gelöst werden soll, ...
    if (ausgleichsproblemtyp == Ausgleichsproblemtyp.ORTSKURVE_2d)
       {
+      // Die Modellgleichungen (die Kreisgleichungen) werden erzeugt.
+      modellgleichungen = new Modellgleichungen2d(this.messpunkte);
       
+      // Die Jakobi-Matrix der Modellgleichungen (der Kreisgleichungen) wird erzeugt.
+      jakobiMatrix = new Jakobimatrix2d(this.messpunkte);
       }
    
    // Falls das dreidimensionale Ausgleichsproblem gelöst werden soll, ...

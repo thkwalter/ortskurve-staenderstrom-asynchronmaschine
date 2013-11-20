@@ -110,33 +110,31 @@ public String problemLoesen()
       Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(messpunkte);
       double[] startpunkt = startpunktbestimmung.getStartpunkt();
       
-      // Falls nur drei Messpunkte eingegeben worden sind, entspricht der Startpunkt der Lösung.
-      Ortskurve ortskurve = null;
-      if (messpunkte.length == 3)
-         {
-         ortskurve = new Ortskurve(new Vector2D(startpunkt[0], startpunkt[1]), startpunkt[2]);
-         }
+      // Die Ortskurve wird bestimmt.    
+      Ortskurve ortskurve = this.ortskurveBestimmen(messpunkte, startpunkt);
       
-      // Falls mehr als drei Messpunkte eingegeben worden sind, muss die Lösung durch eine nicht-lineare 
-      // Ausgleichsrechnung bestimmt werden.
-      else
-         {
-         Ausgleichsproblem ausgleichsproblem = new Ausgleichsproblem(messpunkte);
-         ortskurve = ausgleichsproblem.ausgleichsproblemLoesen(startpunkt, Ausgleichsproblemtyp.ORTSKURVE_3d);
-         }
+      // Die Ortskurve wird im Datenmodell gespeichert.
+      this.ortskurveModell.setOrtskurve(ortskurve);
       
       // Falls der Mittelpunkt einen negativen Realteil besitzt, wird das Ausgleichsproblem noch einmal unter der Rand-
       // bedingung gelöst, dass der Mittelpunkt auf der imaginären Achse liegt.
       if (ortskurve.getMittelpunktOrtskurve().getY() < 0)
          {
-
+         // Der Startpunkt für die Lösung des 2d-Ausgleichsproblems wird festgelegt.
+         double[] startpunkt2d = 
+            new double[]{ortskurve.getMittelpunktOrtskurve().getX(), ortskurve.getRadiusOrtskurve()};
+         
+         // Das 2d-Ausgleichsproblem word gelöst.
+         Ausgleichsproblem ausgleichsproblem = new Ausgleichsproblem(messpunkte);
+         Ortskurve ortskurve2d = 
+            ausgleichsproblem.ausgleichsproblemLoesen(startpunkt2d, Ausgleichsproblemtyp.ORTSKURVE_2d);
+         
+         // Die berechnete Ortskurve wird protokolliert.
+         OrtskurveController.logger.info(ortskurve2d.toString());
+         
+         // Die Ortskurve mit Mittelpunkt auf der Imaginärachse wird im Frontend-Modell gespeichert.
+         this.ortskurveModell.setOrtskurve2d(ortskurve2d);
          }
-      
-      // Die berechnete Ortskurve wird protokolliert.
-      OrtskurveController.logger.info(ortskurve.toString());
-      
-      // Die Ortskurve wird im Datenmodell gespeichert.
-      this.ortskurveModell.setOrtskurve(ortskurve);
       
       // Die Daten der Grafik der Ortskurve werden berechnet.
       this.ortskurveModell.grafikdatenBerechnen();
@@ -205,5 +203,43 @@ public OrtskurveModell getOrtskurveModell()
    {
    // Das Datenmodell der Ortskurvenberechnung wird zurückgegeben.
    return this.ortskurveModell;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode bestimmt die Ortskurve.
+ * 
+ * @param messpunkte Die Messpunkte
+ * @param startpunkt Das erste Element ist die x-Komponente des Mittelpunkts, das zweite Element die y-Komponente des 
+ * Mittelpunkts, das dritte Element der Radius.
+ * 
+ * @return Die Ortskurve
+ */
+private Ortskurve ortskurveBestimmen(Vector2D[] messpunkte, double[] startpunkt)
+   {
+   // Die Referenz auf die Ortskurve wird deklariert.
+   Ortskurve ortskurve = null;
+   
+   // Falls nur drei Messpunkte eingegeben worden sind, entspricht der Startpunkt der Lösung.
+   if (messpunkte.length == 3)
+      {
+      ortskurve = new Ortskurve(new Vector2D(startpunkt[0], startpunkt[1]), startpunkt[2]);
+      }
+   
+   // Falls mehr als drei Messpunkte eingegeben worden sind, muss die Lösung durch eine nicht-lineare 
+   // Ausgleichsrechnung bestimmt werden.
+   else
+      {
+      Ausgleichsproblem ausgleichsproblem = new Ausgleichsproblem(messpunkte);
+      ortskurve = ausgleichsproblem.ausgleichsproblemLoesen(startpunkt, Ausgleichsproblemtyp.ORTSKURVE_3d);
+      }
+   
+   // Die berechnete Ortskurve wird protokolliert.
+   OrtskurveController.logger.info(ortskurve.toString());
+   
+   // Die berechnete Ortskurve wird zurückgegeben.
+   return ortskurve;
    }
 }
