@@ -164,5 +164,8 @@ public void testAusgleichsproblemLoesen2()
    assertNotNull(ortskurve);
    assertEquals(2.0, ortskurve.getMittelpunktOrtskurve().getX(), 2.0/1000);
    assertEquals(0.0, ortskurve.getMittelpunktOrtskurve().getY(), 2.0/1000);
+   assertEquals(1.064, ortskurve.getRadiusOrtskurve(), 1.064/1000);
+   
+   
    }
 }
