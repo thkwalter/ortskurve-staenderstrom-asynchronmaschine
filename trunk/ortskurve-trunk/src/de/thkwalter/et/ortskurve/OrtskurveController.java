@@ -67,44 +67,8 @@ public String problemLoesen()
       // Die Messpunkte werden aus dem Frontend-Modell gelesen.
       Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
       
-      // Alle Messpunkte werden in ein HashSet eingefügt.
-      HashSet<Vector2D> messpunktSet = new HashSet<Vector2D>();
-      for (Vector2D messpunkt : messpunkte)
-         {
-         messpunktSet.add(messpunkt);
-         }
-      
-      // Falls die Anzahl der Punkte im HashSet kleiner ist als die Anzahl der eingegebenen Messpunkte, so wurden 
-      // Messpunkte doppelt eingegeben. 
-      if (messpunktSet.size() < messpunkte.length)
-         {
-         // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
-         String fehlermeldung = "Es wurden " + (messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
-            " eingegeben!";
-         OrtskurveController.logger.severe(fehlermeldung);
-         
-         // Die Zeichenkette für die Fehlermeldung wird deklariert.
-         String jsfMeldung = "";
-         
-         // Falls nur ein Messpunkt doppelt eingegeben worden ist, ...
-         if (messpunkte.length - messpunktSet.size() == 1)
-            {
-            // Die Zeichenkette für die Fehlermeldung wird festgelegt.
-            jsfMeldung = "Sie haben einen Messpunkt doppelt eingegeben! Entfernen Sie bitte den doppelt eingegebenen " +
-               "Messpunkt.";
-            }
-         
-         // Falls mehrere Messpunkte doppelt eingegeben worden sind, ...
-         else
-            {
-            // Die Zeichenkette für die Fehlermeldung wird festgelegt.
-            jsfMeldung = "Sie haben " +  (messpunkte.length - messpunktSet.size()) + " Messpunkte " +
-               "doppelt eingegeben! Entfernen Sie bitte die doppelt eingegebenen Messpunkte.";
-            }
-         
-         // Die Ausnahme wird erzeugt und geworfen.         
-         throw new ApplicationRuntimeException(jsfMeldung);
-         }
+      // Die eingegebenen Messpunkte werden validiert.
+      this.messpunkteValidieren(messpunkte);
       
       // Die Startparameter werden bestimmt.
       Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(messpunkte);
@@ -241,5 +205,56 @@ private Ortskurve ortskurveBestimmen(Vector2D[] messpunkte, double[] startpunkt)
    
    // Die berechnete Ortskurve wird zurückgegeben.
    return ortskurve;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode validiert die eingegebenen Messpunkte. Falls die eingegebenen Messpunkte nicht valide sind, wird eine
+ * Ausnahme geworfen.
+ * 
+ * @param messpunkte Die Messpunkte
+ */
+private void messpunkteValidieren(Vector2D[] messpunkte)
+   {
+   // Alle Messpunkte werden in ein HashSet eingefügt.
+   HashSet<Vector2D> messpunktSet = new HashSet<Vector2D>();
+   for (Vector2D messpunkt : messpunkte)
+      {
+      messpunktSet.add(messpunkt);
+      }
+   
+   // Falls die Anzahl der Punkte im HashSet kleiner ist als die Anzahl der eingegebenen Messpunkte, so wurden 
+   // Messpunkte doppelt eingegeben. 
+   if (messpunktSet.size() < messpunkte.length)
+      {
+      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+      String fehlermeldung = "Es wurden " + (messpunkte.length - messpunktSet.size()) + " Messpunkte doppelt " +
+         " eingegeben!";
+      OrtskurveController.logger.severe(fehlermeldung);
+      
+      // Die Zeichenkette für die Fehlermeldung wird deklariert.
+      String jsfMeldung = "";
+      
+      // Falls nur ein Messpunkt doppelt eingegeben worden ist, ...
+      if (messpunkte.length - messpunktSet.size() == 1)
+         {
+         // Die Zeichenkette für die Fehlermeldung wird festgelegt.
+         jsfMeldung = "Sie haben einen Messpunkt doppelt eingegeben! Entfernen Sie bitte den doppelt eingegebenen " +
+            "Messpunkt.";
+         }
+      
+      // Falls mehrere Messpunkte doppelt eingegeben worden sind, ...
+      else
+         {
+         // Die Zeichenkette für die Fehlermeldung wird festgelegt.
+         jsfMeldung = "Sie haben " +  (messpunkte.length - messpunktSet.size()) + " Messpunkte " +
+            "doppelt eingegeben! Entfernen Sie bitte die doppelt eingegebenen Messpunkte.";
+         }
+      
+      // Die Ausnahme wird erzeugt und geworfen.         
+      throw new ApplicationRuntimeException(jsfMeldung);
+      }
    }
 }
