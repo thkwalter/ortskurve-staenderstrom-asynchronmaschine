@@ -3,6 +3,8 @@
  * Navigation
    # [WeiterleitungVonIndexJspTesten Weiterleitung durch die index.jsp testen]
    # [LinksAufDieBerechnungUeberpruefen Links auf die Berechnung überprüfen]
+ * Seitenlayout prüfen
+   # [MinimaleHoeheTesten Einhaltung der minimalen Seitenhöhe überprüfen]
  * Fußzeile prüfen
    # [ImpressumUeberpruefen Impressum überprüfen]
    # [NutzungsbedingungenUeberpruefen Nutzungsbedingungen überprüfen]
