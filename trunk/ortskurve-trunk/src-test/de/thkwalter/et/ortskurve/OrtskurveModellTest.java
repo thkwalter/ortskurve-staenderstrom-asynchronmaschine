@@ -16,10 +16,12 @@
 package de.thkwalter.et.ortskurve;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
@@ -46,9 +48,14 @@ private OrtskurveModell ortskurveModell;
 private Vector2D[] test_messpunkte;
 
 /**
- * Der im Test verwendete Ortskurve
+ * Die im Test verwendete Ortskurve
  */
 private Ortskurve ortskurve;
+
+/**
+ * Die im Test verwendete Ortskurve der 2d-Ausgleichsrechnung
+ */
+private Ortskurve ortskurve2d;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -69,6 +76,9 @@ public void setUp() throws Exception
    
    // Der im Test verwendete Ortskurve wird erzeugt.
    this.ortskurve = new Ortskurve(new Vector2D(1.0, 0.0), 1.0);
+   
+   // Die im Test verwendete Ortskurve der 2d-Ausgleichsrechnung wird erzeugt.
+   this.ortskurve2d = new Ortskurve(new Vector2D(1.0, -0.5), 1.0);
    }
 
 // =====================================================================================================================
@@ -172,7 +182,49 @@ public void testSetOrtskurve()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testRandpunkteZusammenstellen() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+public void testRandpunkteZusammenstellen1() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+   IllegalAccessException, InvocationTargetException 
+   {
+   // Das Modell wird initialisiert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
+   this.ortskurveModell.setOrtskurve(this.ortskurve);
+   this.ortskurveModell.setOrtskurve2d(this.ortskurve2d);
+   
+   // Die zu testende Methode wird ausgeführt.
+   Method method = OrtskurveModell.class.getDeclaredMethod("randpunkteZusammenstellen", (Class[]) null);
+   method.setAccessible(true);
+   Vector2D[] randpunkte = (Vector2D[]) method.invoke(this.ortskurveModell, (Object[]) null);
+   
+   // Es wird überprüft, ob die Anzahl der zusammengestellten Randpunkte korrekt ist.
+   assertEquals(this.test_messpunkte.length + 8, randpunkte.length);
+   
+   // Es wird überprüft, ob die Randpunkte korrekt zusammengestellt worden sind.
+   assertEquals(this.test_messpunkte[0], randpunkte[0]);
+   assertEquals(this.test_messpunkte[1], randpunkte[1]);
+   assertEquals(new Vector2D(0, 0), randpunkte[2]);
+   assertEquals(new Vector2D(2, 0), randpunkte[3]);
+   assertEquals(new Vector2D(1, 1), randpunkte[4]);
+   assertEquals(new Vector2D(1, -1), randpunkte[5]);
+   assertEquals(new Vector2D(0, -0.5), randpunkte[6]);
+   assertEquals(new Vector2D(2, -0.5), randpunkte[7]);
+   assertEquals(new Vector2D(1, 0.5), randpunkte[8]);
+   assertEquals(new Vector2D(1, -1.5), randpunkte[9]);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#randpunkteZusammenstellen(Vector2D[])}.
+ * 
+ * @throws NoSuchMethodException 
+ * @throws SecurityException 
+ * @throws InvocationTargetException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testRandpunkteZusammenstellen2() throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
    IllegalAccessException, InvocationTargetException 
    {
    // Das Modell wird initialisiert.
@@ -437,5 +489,35 @@ public void testSetMesspunkte()
       {
       assertEquals(this.test_messpunkte[i], messpunkte[i]);
       }
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link OrtskurveModell#randpunkteOrtskurveZusammenstellen(Ortskurve)}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testRandpunkteOrtskurveZusammenstellen() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException 
+   {
+   // Die zu testende Methode wird ausgeführt.
+   Method methode = OrtskurveModell.class.getDeclaredMethod("randpunkteOrtskurveZusammenstellen", Ortskurve.class);
+   methode.setAccessible(true);
+   @SuppressWarnings("unchecked")
+   ArrayList<Vector2D> randpunkteOrtskurve = (ArrayList<Vector2D>) methode.invoke(this.ortskurveModell, this.ortskurve);
+   
+   // Es wird überprüft, ob die Liste die korrekten Randpunkte enthält.
+   assertEquals(4, randpunkteOrtskurve.size());   
+   assertTrue(randpunkteOrtskurve.contains(new Vector2D(0, 0)));
+   assertTrue(randpunkteOrtskurve.contains(new Vector2D(2, 0)));
+   assertTrue(randpunkteOrtskurve.contains(new Vector2D(1, 1)));
+   assertTrue(randpunkteOrtskurve.contains(new Vector2D(1, -1)));
    }
 }
