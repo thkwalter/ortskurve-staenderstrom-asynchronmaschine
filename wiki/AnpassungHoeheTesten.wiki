@@ -1,0 +1,16 @@
+=Anpassung der Seitenhöhe überprüfen=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Seite "Berechnung der Ortskurve" wird angezeigt
+ # Die Punkte 
+{{{
+0.1, 0.0
+2.0, 2.1
+3.9, 0.0
+2.0, -2.1
+}}} 
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt
+ # Überprüfen, ob sich die Seitenhöhe an den Inhalt anpasst
+ # Den Link Nutzungsbedingungen drücken -> Die Nutzungsbedingungen werden angezeigt
+ # Überprüfen, ob sich die Seitenhöhe an den Inhalt anpasst
+ # Den Link Datenschutzerklärung drücken -> Die Datenschutzerklärung wird angezeigt
+ # Überprüfen, ob sich die Seitenhöhe an den Inhalt anpasst
