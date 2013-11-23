@@ -18,9 +18,14 @@ package de.thkwalter.et.ortskurve;
 import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link OrtskurveController}.
@@ -101,5 +106,54 @@ public void testSetOrtskurveModell()
    
    // Es wird überprüft, ob das Datenmodell der Ortskurvenberechnung korrekt gespeichert worden ist.
    assertEquals(this.testOrtskurveModell, this.ortskurveController.getOrtskurveModell());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveController#messpunkteValidieren(Vector2D[])}.
+ * 
+ * @throws Throwable 
+ */
+@Test(expected=ApplicationRuntimeException.class)
+public void testMesspunkteValidieren1() throws Throwable
+   {
+   // Die in diesem Test verwendeten Messpunkte werden erzeugt.
+   Vector2D[] testMesspunkte = new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(3.0, 0.0), new Vector2D(1, 0)};
+   
+   try
+      {
+      // Die zu testende Methode wird aufgerufen.
+      Method methode = OrtskurveController.class.getDeclaredMethod("messpunkteValidieren", Vector2D[].class);
+      methode.setAccessible(true);
+      methode.invoke(this.ortskurveController, (Object) testMesspunkte);
+      }
+   
+   // Die InvocationTargetException wird gefangen und die ursprüngliche Ausnahme weitergeworfen.
+   catch (InvocationTargetException invocationTargetException)
+      {
+      throw invocationTargetException.getCause();
+      }
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveController#messpunkteValidieren(Vector2D[])}.
+ * 
+ * @throws Throwable 
+ */
+@Test
+public void testMesspunkteValidieren2() throws Throwable
+   {
+   // Die in diesem Test verwendeten Messpunkte werden erzeugt.
+   Vector2D[] testMesspunkte = new Vector2D[]{new Vector2D(1.0, 0.0), new Vector2D(3.0, 0.0), new Vector2D(2, 1)};
+   
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = OrtskurveController.class.getDeclaredMethod("messpunkteValidieren", Vector2D[].class);
+   methode.setAccessible(true);
+   methode.invoke(this.ortskurveController, (Object) testMesspunkte);
    }
 }
