@@ -16,6 +16,7 @@
 package de.thkwalter.et.ortskurve;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
@@ -126,7 +127,7 @@ public void grafikdatenBerechnen()
    // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
    
-   // Die Grafikdatstellung der Messpunkte wird berechnet.
+   // Die Grafikdarstellung der Messpunkte wird berechnet.
    this.messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
    }
 
@@ -140,35 +141,27 @@ public void grafikdatenBerechnen()
  */
 private Vector2D[] randpunkteZusammenstellen()
    {
-   // Die Parameter der Ortskurve werden gelesen.
-   double mx = this.ortskurve.getMittelpunktOrtskurve().getX();
-   double my = this.ortskurve.getMittelpunktOrtskurve().getY();
-   double r = this.ortskurve.getRadiusOrtskurve();
-   
    // Das Feld der Randpunkte wird erzeugt.
-   int feldlaenge = this.messpunkte.length;
-   Vector2D[] punkte = new Vector2D[feldlaenge + 4];
+   ArrayList<Vector2D> randpunkte = new ArrayList<Vector2D>();
    
    // Die Messpunkte werden in das Feld der Randpunkte kopiert.
-   for (int i = 0; i < feldlaenge; i++)
+   for (int i = 0; i < this.messpunkte.length; i++)
       {
-      punkte[i] = this.messpunkte[i];
+      randpunkte.add(this.messpunkte[i]);
       }
    
-   // Der Punkt, der den Kreis links begrenzt, wird zum Feld der Randpunkte hinzugefügt.
-   punkte[feldlaenge] = new Vector2D(mx - r, my);
+   // Die Randpunkte der Ortskurve werden hinzugefügt.
+   randpunkte.addAll(randpunkteOrtskurveZusammenstellen(this.ortskurve));
    
-   // Der Punkt, der den Kreis rechts begrenzt, wird zum Feld der Randpunkte hinzugefügt.
-   punkte[feldlaenge + 1] = new Vector2D(mx + r, my);
+   // Falls eine 2d-Ausgleichsrechnung ausgeführt worden ist, werden die Randpunkte der entsprechenden Ortskurve 
+   // hinzugfügt.
+   if (this.ortskurve2d != null)
+      {
+      randpunkte.addAll(randpunkteOrtskurveZusammenstellen(this.ortskurve2d));
+      }
    
-   // Der Punkt, der den Kreis oben begrenzt, wird zum Feld der Randpunkte hinzugefügt.
-   punkte[feldlaenge + 2] = new Vector2D(mx, my + r);
-   
-   // Der Punkt, der den Kreis unten begrenzt, wird zum Feld der Randpunkte hinzugefügt.
-   punkte[feldlaenge + 3] = new Vector2D(mx, my - r);
-   
-   // Das Feld der Randpunkte, welche die Grafik begrenzen, wird zurückgegeben.
-   return punkte;
+   // Die Liste der Randpunkte wird als Feld zurückgegeben.
+   return randpunkte.toArray(new Vector2D[randpunkte.size()]);
    }
 
 // =====================================================================================================================
@@ -377,5 +370,41 @@ public void setOrtskurve2d(Ortskurve ortskurve2d)
    {
    // Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt, wird in diesem Modell gespeichert.
    this.ortskurve2d = ortskurve2d;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode stellt die Randpunkte einer Ortskurve zusammen.
+ * 
+ * @param ortskurve Die Ortskurve
+ * 
+ * @return Eine Liste der Randpunkte der Ortskurve
+ */
+private ArrayList<Vector2D> randpunkteOrtskurveZusammenstellen(Ortskurve ortskurve)
+   {
+   // Die Parameter der Ortskurve werden gelesen.
+   double mx = ortskurve.getMittelpunktOrtskurve().getX();
+   double my = ortskurve.getMittelpunktOrtskurve().getY();
+   double r = ortskurve.getRadiusOrtskurve();
+   
+   // Das Feld der Randpunkte wird erzeugt.
+   ArrayList<Vector2D> randpunkte = new ArrayList<Vector2D>();
+   
+   // Der Punkt, der den Kreis links begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   randpunkte.add(new Vector2D(mx - r, my));
+   
+   // Der Punkt, der den Kreis rechts begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   randpunkte.add(new Vector2D(mx + r, my));
+   
+   // Der Punkt, der den Kreis oben begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   randpunkte.add(new Vector2D(mx, my + r));
+   
+   // Der Punkt, der den Kreis unten begrenzt, wird zum Feld der Randpunkte hinzugefügt.
+   randpunkte.add(new Vector2D(mx, my - r));
+
+   // Die Randpunkte der Ortskurve werden zurückgegeben.
+   return randpunkte;
    }
 }
