@@ -5,6 +5,7 @@
    # [LinksAufDieBerechnungUeberpruefen Links auf die Berechnung überprüfen]
  * Seitenlayout prüfen
    # [MinimaleHoeheTesten Einhaltung der minimalen Seitenhöhe überprüfen]
+   # [AnpassungHoeheTesten Anpassung der Seitenhöhe überprüfen]
  * Fußzeile prüfen
    # [ImpressumUeberpruefen Impressum überprüfen]
    # [NutzungsbedingungenUeberpruefen Nutzungsbedingungen überprüfen]
