@@ -100,15 +100,6 @@ public PunktPixelKonverter(Wertebereich wertebereich, double anzahlPixelX, doubl
       // Der Ursprung in Pixelkoordinaten wird initialisiert.
       this.ursprungInPixel = new Vector2D(ursprungPixelX, ursprungPixelY);
       } 
-   
-   // Der Skalierungsfaktor wird protokolliert.
-   PunktPixelKonverter.logger.fine("Skalierungsfaktor: " + this.skalierungsfaktor);
-   
-   // Der Urpsrung in Pixelkoordinaten wird protokolliert.
-   PunktPixelKonverter.logger.fine("Ursprung in Pixelkoordinaten: " + this.ursprungInPixel);
-  
-   // Der Rücksprung aus dem Konstruktor wird protokolliert.
-   PunktPixelKonverter.logger.exiting("PunktPixelKonverter", "PunktPixelKonverter");
    }
 
 // =====================================================================================================================
