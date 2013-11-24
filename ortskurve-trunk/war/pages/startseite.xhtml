@@ -192,19 +192,19 @@
             </script> 
          </h:panelGroup> 
          
+            <!-- Die Beschreibung der Aktion des nächsten Knopfes                                                    -->
+            <h:panelGroup layout="block" rendered="false"> 
+            <!-- rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}" -->
+            <br/><br/>
+            <p>
+               Auf der nächsten Seite können Sie mit Hilfe der berechneten Ortskurve und einiger weiterer Messwerte die
+               Werte der Größen des Ersatzschaltbildes (im Folgenden mit ESB abgekürzt) berechnen.
+            </p>
+            </h:panelGroup>
          
-         <h:panelGroup layout="block" rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
-         <br/><br/>
-         <p>
-            Auf der nächsten Seite können Sie mit Hilfe der berechneten Ortskurve und einiger weiterer Messwerte die
-            Werte der Größen des Ersatzschaltbildes (im Folgenden mit ESB abgekürzt) berechnen.
-         </p>
-         </h:panelGroup>
-         
-         
-         
-         <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                                  -->
-            <h:panelGroup class="knopfzeile" layout="block" rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
+            <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                               -->
+            <h:panelGroup class="knopfzeile" layout="block" rendered="false">
+            <!-- rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}" -->
                <h:commandButton value="Zur ESB-Berechnung" action="ersatzschaltbild" class="knopf"/>
                <p:spacer width="1" height="20" />
             </h:panelGroup>
