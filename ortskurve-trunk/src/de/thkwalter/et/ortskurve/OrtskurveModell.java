@@ -73,6 +73,11 @@ private MesspunkteGrafik messpunkteGrafik;
 private OrtskurveGrafik ortskurveGrafik;
 
 /**
+ * Die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung
+ */
+private OrtskurveGrafik ortskurve2dGrafik;
+
+/**
  * Die Grafikdarstellung der Koordinatenachsen
  */
 private Koordinatenachsen koordinatenachsen;
@@ -127,6 +132,13 @@ public void grafikdatenBerechnen()
    // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
    
+   // Falls eine 2d-Ausgleichsrechnung durchgeführt worden ist, wird auch die Grafikdarstellung der entsprechenden
+   // Ortskurve berechnet.
+   if (this.ortskurve2d != null)
+      {
+      this.ortskurve2dGrafik = new OrtskurveGrafik(this.ortskurve2d, punktPixelKonverter);
+      }
+   
    // Die Grafikdarstellung der Messpunkte wird berechnet.
    this.messpunkteGrafik = new MesspunkteGrafik(this.messpunkte, punktPixelKonverter);
    }
@@ -176,6 +188,20 @@ public MesspunkteGrafik getMesspunkteGrafik()
    {   
    // Die Grafikdarstellung der Messpunkte wird zurückgegeben.
    return this.messpunkteGrafik;
+   }
+
+//=====================================================================================================================
+//=====================================================================================================================
+
+/**
+ * Diese Methode gibt die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung zurück.
+ * 
+ * @return Die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung
+ */
+public OrtskurveGrafik getOrtskurve2dGrafik()
+   {
+   // Die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung wird zurückgegeben.
+   return this.ortskurve2dGrafik; 
    }
 
 // =====================================================================================================================
@@ -300,6 +326,13 @@ public String toString()
    if (ortskurveGrafik != null)
       {
       builder.append("ortskurveGrafik=").append(ortskurveGrafik).append(", ");
+      }
+   
+   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung repräsentiert, wird 
+   // hinzugefügt. 
+   if (ortskurve2dGrafik != null)
+      {
+      builder.append("ortskurve2dGrafik=").append(ortskurve2dGrafik).append(", ");
       }
       
    // Die Zeichenkette, welche die Koordinatenachsen repräsentiert, wird hinzugefügt. 

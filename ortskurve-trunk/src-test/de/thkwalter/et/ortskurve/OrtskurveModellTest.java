@@ -260,7 +260,7 @@ public void testRandpunkteZusammenstellen2() throws SecurityException, NoSuchMet
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+public void testGrafikdatenBerechnen1() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
    IllegalAccessException
    { 
    // Die Messpunkte werden im Objekt der zu testenden Klasse gespeichert.
@@ -306,6 +306,80 @@ public void testGrafikdatenBerechnen() throws SecurityException, NoSuchFieldExce
    assertEquals(160.4, koordinatenachsen.getStartPunktYAchse().getX(), 160.4/1000);
    assertEquals(275.0, koordinatenachsen.getStartPunktYAchse().getY(), 275.0/1000);
    assertEquals(160.4, koordinatenachsen.getEndPunktYAchse().getX(), 160.4/1000);
+   assertEquals(0.0, koordinatenachsen.getEndPunktYAchse().getY(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#grafikdatenBerechnen(Vector2D[])}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGrafikdatenBerechnen2() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException
+   { 
+   // Die Messpunkte werden im Objekt der zu testenden Klasse gespeichert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
+   
+   // Die Ortskurve wird im Objekt der zu testenden Klasse gespeichert.
+   this.ortskurveModell.setOrtskurve(this.ortskurve);
+   
+   // Die Ortskurve der 2d-Ausgleichsrechnung wird im Objekt der zu testenden Klasse gespeichert.
+   this.ortskurveModell.setOrtskurve2d(this.ortskurve2d);
+
+   // Die zu testende Methode wird ausgeführt.
+   this.ortskurveModell.grafikdatenBerechnen();
+   
+   // Die Grafikdarstellung der Ortskurve wird gelesen.
+   Field feld = OrtskurveModell.class.getDeclaredField("ortskurveGrafik");
+   feld.setAccessible(true);
+   OrtskurveGrafik ortskurveGrafik = (OrtskurveGrafik) feld.get(this.ortskurveModell);
+
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt berechnet worden ist.
+   assertEquals(275.0, ortskurveGrafik.getMittelpunktInPixeln().getX(), 275.0/1000);
+   assertEquals(114.6, ortskurveGrafik.getMittelpunktInPixeln().getY(), 114.6/1000);
+   assertEquals(91.67, ortskurveGrafik.getRadiusInPixeln(), 91.67/1000);
+   
+   // Die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung wird gelesen.
+   feld = OrtskurveModell.class.getDeclaredField("ortskurve2dGrafik");
+   feld.setAccessible(true);
+   OrtskurveGrafik ortskurve2dGrafik = (OrtskurveGrafik) feld.get(this.ortskurveModell);
+
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung korrekt berechnet worden ist.
+   assertEquals(275.0, ortskurve2dGrafik.getMittelpunktInPixeln().getX(), 275.0/1000);
+   assertEquals(160.4, ortskurve2dGrafik.getMittelpunktInPixeln().getY(), 160.4/1000);
+   assertEquals(91.67, ortskurve2dGrafik.getRadiusInPixeln(), 91.67/1000);
+   
+   // Die Grafikdarstellung der Messpunkte wird gelesen.
+   Field messpunkteGrafikFeld = OrtskurveModell.class.getDeclaredField("messpunkteGrafik");
+   messpunkteGrafikFeld.setAccessible(true);
+   MesspunkteGrafik messpunkteGrafik = (MesspunkteGrafik) messpunkteGrafikFeld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Grafikdarstellung der Messpunkte korrekt berechnet worden ist.
+   assertEquals(366.7, messpunkteGrafik.getMesspunkteInPixeln()[0].getX(), 366.7/1000);
+   assertEquals(114.6, messpunkteGrafik.getMesspunkteInPixeln()[0].getY(), 114.6/1000);
+   assertEquals(275.0, messpunkteGrafik.getMesspunkteInPixeln()[1].getX(), 275.0/1000);
+   assertEquals(22.92, messpunkteGrafik.getMesspunkteInPixeln()[1].getY(), 22.92/1000);
+   
+   // Die Koordinatenachsen wird gelesen.
+   Field koordinatenachsenFeld = OrtskurveModell.class.getDeclaredField("koordinatenachsen");
+   koordinatenachsenFeld.setAccessible(true);
+   Koordinatenachsen koordinatenachsen = (Koordinatenachsen) koordinatenachsenFeld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Koordinatenachsen korrekt berechnet worden sind.
+   assertEquals(165.0, koordinatenachsen.getStartPunktXAchse().getX(), 165.0/1000);
+   assertEquals(114.6, koordinatenachsen.getStartPunktXAchse().getY(), 114.6/1000);
+   assertEquals(385.0, koordinatenachsen.getEndPunktXAchse().getX(), 385.0/1000);
+   assertEquals(114.6, koordinatenachsen.getEndPunktXAchse().getY(), 114.6/1000);
+   assertEquals(183.3, koordinatenachsen.getStartPunktYAchse().getX(), 183.3/1000);
+   assertEquals(275.0, koordinatenachsen.getStartPunktYAchse().getY(), 275.0/1000);
+   assertEquals(183.3, koordinatenachsen.getEndPunktYAchse().getX(), 183.3/1000);
    assertEquals(0.0, koordinatenachsen.getEndPunktYAchse().getY(), 0.0);
    }
 
@@ -365,6 +439,36 @@ public void testGetOrtskurveGrafik() throws SecurityException, NoSuchFieldExcept
    
    // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt zurückgegeben wird. 
    assertEquals(ortskurveGrafik, this.ortskurveModell.getOrtskurveGrafik());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#getOrtskurve2dGrafik()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetOrtskurve2dGrafik() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Die Grafikdarstellung der Ortskurve wird initialisiert.
+   this.ortskurveModell.setMesspunkte(this.test_messpunkte);
+   this.ortskurveModell.setOrtskurve(this.ortskurve);
+   this.ortskurveModell.setOrtskurve2d(this.ortskurve2d);
+   this.ortskurveModell.grafikdatenBerechnen();
+   
+   // Die Grafikdarstellung der Ortskurve wird gelesen.
+   Field feld = OrtskurveModell.class.getDeclaredField("ortskurve2dGrafik");
+   feld.setAccessible(true);
+   OrtskurveGrafik ortskurve2dGrafik = (OrtskurveGrafik) feld.get(this.ortskurveModell);
+   
+   // Es wird überprüft, ob die Grafikdarstellung der Ortskurve korrekt zurückgegeben wird. 
+   assertEquals(ortskurve2dGrafik, this.ortskurveModell.getOrtskurve2dGrafik());
    }
 
 // =====================================================================================================================
