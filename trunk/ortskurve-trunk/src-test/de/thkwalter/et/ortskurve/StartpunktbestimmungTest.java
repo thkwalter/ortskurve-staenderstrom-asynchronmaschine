@@ -22,7 +22,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.junit.Before;
 import org.junit.Test;
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
@@ -35,40 +34,6 @@ import de.thkwalter.jsf.ApplicationRuntimeException;
 public class StartpunktbestimmungTest
 {
 /**
- * Die Messpunkte, die für den Test verwendet werden.
- */
-private Vector2D[] testMesspunkte;
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Das Objekt, das für die Tests verwendet wird.
- */
-private Startpunktbestimmung startpunktbestimmung;
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode initialisiert die Tests.
- * 
- * @throws java.lang.Exception
- */
-@Before
-public void setUp() throws Exception
-   {
-   // Die Messpunkte werden erzeugt.
-   this.testMesspunkte = new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0)};
-   
-   // Das Objekt, das für die Tests verwendet wird, wird erzeugt.
-   this.startpunktbestimmung = new Startpunktbestimmung(this.testMesspunkte);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
  * Test für den Konstruktor {@link Startpunktbestimmung#Startpunktbestimmung(Vector2D[])}.
  * 
  * @throws ApplicationRuntimeException 
@@ -77,7 +42,7 @@ public void setUp() throws Exception
 public void testStartpunktbestimmung1() throws ApplicationRuntimeException
    {   
    // Es wird überprüft, ob der Konstruktor eine Ausnahme wirft, wenn null übergeben wird.
-   new Startpunktbestimmung(null);
+   Startpunktbestimmung.startpunktBerechnen(null);
    }
 
 // =====================================================================================================================
@@ -92,7 +57,7 @@ public void testStartpunktbestimmung1() throws ApplicationRuntimeException
 public void testStartpunktbestimmung2() throws ApplicationRuntimeException
    {   
    // Es wird überprüft, ob der Konstruktor eine Ausnahme wirft, wenn weniger als drei Messpunkte übergeben werden.
-   new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0)});
+   Startpunktbestimmung.startpunktBerechnen(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(1.0, 1.0)});
    }
 
 // =====================================================================================================================
@@ -105,13 +70,13 @@ public void testStartpunktbestimmung2() throws ApplicationRuntimeException
 public void testStartpunktbestimmung3() 
    {
    // Die Startpunktbestimmung wird mit genau drei Messpunkten durchgeführt.
-   Startpunktbestimmung startpunktbestimmung = 
-      new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0)});
+   double[] startparameter = Startpunktbestimmung.startpunktBerechnen(new Vector2D[]{new Vector2D(0.0, 0.0), 
+      new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0)});
    
    // Es wird überprüft, ob der Startpunkt korrekt bestimmt worden ist.
-   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[0], 2.0/1000);
-   assertEquals(0.0, startpunktbestimmung.getStartpunkt()[1], 2.0/1000);
-   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[2], 2.0/1000); 
+   assertEquals(2.0, startparameter[0], 2.0/1000);
+   assertEquals(0.0, startparameter[1], 2.0/1000);
+   assertEquals(2.0, startparameter[2], 2.0/1000); 
    }
 
 // =====================================================================================================================
@@ -124,13 +89,13 @@ public void testStartpunktbestimmung3()
 public void testStartpunktbestimmung4() 
    {
    // Die Startpunktbestimmung wird mit genau drei Messpunkten durchgeführt.
-   Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(new Vector2D[]{new Vector2D(0.0, 0.0), 
+   double[] startparameter = Startpunktbestimmung.startpunktBerechnen(new Vector2D[]{new Vector2D(0.0, 0.0), 
       new Vector2D(2.0, 2.0), new Vector2D(4.0, 0.0), new Vector2D(1.0, -1.0)});
    
    // Es wird überprüft, ob der Startpunkt korrekt bestimmt worden ist.
-   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[0], 2.0/1000);
-   assertEquals(0.0, startpunktbestimmung.getStartpunkt()[1], 2.0/1000);
-   assertEquals(2.0, startpunktbestimmung.getStartpunkt()[2], 2.0/1000); 
+   assertEquals(2.0, startparameter[0], 2.0/1000);
+   assertEquals(0.0, startparameter[1], 2.0/1000);
+   assertEquals(2.0, startparameter[2], 2.0/1000); 
    }
 
 // =====================================================================================================================
@@ -158,7 +123,7 @@ public void testStartpunktBestimmen1() throws ApplicationRuntimeException, Secur
       Startpunktbestimmung.class.getDeclaredMethod("startpunktBestimmen", Vector2D[].class);
    methode.setAccessible(true);
    double[] startpunkt = 
-      (double[]) methode.invoke(this.startpunktbestimmung, (Object) messpunkteZurStartpunktbestimmung);
+      (double[]) methode.invoke(Startpunktbestimmung.class, (Object) messpunkteZurStartpunktbestimmung);
    
    assertEquals(2.0, startpunkt[0], 2.0/1000);
    assertEquals(0.0, startpunkt[1], 2.0/1000);
@@ -190,7 +155,7 @@ public void testStartpunktBestimmen2() throws Throwable
    methode.setAccessible(true);
    try
       {
-      methode.invoke(this.startpunktbestimmung, (Object) messpunkteZurStartpunktbestimmung);
+      methode.invoke(Startpunktbestimmung.class, (Object) messpunkteZurStartpunktbestimmung);
       }
    catch (InvocationTargetException invocationTargetException)
       {
@@ -224,7 +189,7 @@ public void testMesspunkteAuswaehlen1() throws SecurityException, NoSuchMethodEx
       Startpunktbestimmung.class.getDeclaredMethod("messpunkteAuswaehlen", Vector2D[].class);
    methode.setAccessible(true);
    Vector2D[] messpunkteZurStartpunktbestimmung = 
-      (Vector2D[]) methode.invoke(this.startpunktbestimmung, (Object) messpunkte);
+      (Vector2D[]) methode.invoke(Startpunktbestimmung.class, (Object) messpunkte);
    
    // Es wird geprüft, ob die korrekten Messpunkt gefunden worden sind.
    assertEquals(messpunkte[0], messpunkteZurStartpunktbestimmung[0]);
@@ -258,7 +223,7 @@ public void testMesspunkteAuswaehlen2() throws SecurityException, NoSuchMethodEx
       Startpunktbestimmung.class.getDeclaredMethod("messpunkteAuswaehlen", Vector2D[].class);
    methode.setAccessible(true);
    Vector2D[] messpunkteZurStartpunktbestimmung = 
-      (Vector2D[]) methode.invoke(this.startpunktbestimmung, (Object) messpunkte);
+      (Vector2D[]) methode.invoke(Startpunktbestimmung.class, (Object) messpunkte);
    
    // Es wird geprüft, ob die korrekten Messpunkt gefunden worden sind.
    assertEquals(messpunkte[2], messpunkteZurStartpunktbestimmung[0]);
@@ -294,7 +259,7 @@ public void testMittlerenMesspunktBestimmen1() throws SecurityException, NoSuchM
    Method methode = 
       Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktBestimmen", ArrayList.class, double.class);
    methode.setAccessible(true);
-   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, yListe, 0.0);
+   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(Startpunktbestimmung.class, yListe, 0.0);
    
    // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
    assertEquals(messpunkt, mittlererMesspunkt);
@@ -328,7 +293,7 @@ public void testMittlerenMesspunktBestimmen2() throws SecurityException, NoSuchM
    Method methode = 
       Startpunktbestimmung.class.getDeclaredMethod("mittlerenMesspunktBestimmen", ArrayList.class, double.class);
    methode.setAccessible(true);
-   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe, 2.0);
+   Vector2D mittlererMesspunkt = (Vector2D) methode.invoke(Startpunktbestimmung.class, xListe, 2.0);
    
    // Es wird geprüft, ob der korrekte Messpunkt gefunden worden ist.
    assertEquals(messpunkt, mittlererMesspunkt);
@@ -360,7 +325,7 @@ public void testMaxMesspunktBestimmen1() throws SecurityException, NoSuchMethodE
    // Die zu testende Methode wird aufgerufen
    Method methode = Startpunktbestimmung.class.getDeclaredMethod("maxMesspunktBestimmen", ArrayList.class);
    methode.setAccessible(true);
-   Vector2D maxXMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe);
+   Vector2D maxXMesspunkt = (Vector2D) methode.invoke(Startpunktbestimmung.class, xListe);
    
    // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
    assertEquals(messpunkt2, maxXMesspunkt);
@@ -396,7 +361,7 @@ public void testMaxMesspunktBestimmen2() throws SecurityException, NoSuchMethodE
    // Die zu testende Methode wird aufgerufen
    Method methode = Startpunktbestimmung.class.getDeclaredMethod("maxMesspunktBestimmen", ArrayList.class);
    methode.setAccessible(true);
-   Vector2D maxYMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, yListe);
+   Vector2D maxYMesspunkt = (Vector2D) methode.invoke(Startpunktbestimmung.class, yListe);
    
    // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
    assertEquals(messpunkt1, maxYMesspunkt);
@@ -432,7 +397,7 @@ public void testMinMesspunktBestimmen1() throws SecurityException, NoSuchMethodE
    // Die zu testende Methode wird aufgerufen
    Method methode = Startpunktbestimmung.class.getDeclaredMethod("minMesspunktBestimmen", ArrayList.class);
    methode.setAccessible(true);
-   Vector2D minXMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, xListe);
+   Vector2D minXMesspunkt = (Vector2D) methode.invoke(Startpunktbestimmung.class, xListe);
    
    // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
    assertEquals(messpunkt1, minXMesspunkt);
@@ -468,7 +433,7 @@ public void testMinMesspunktBestimmen2() throws SecurityException, NoSuchMethodE
    // Die zu testende Methode wird aufgerufen
    Method methode = Startpunktbestimmung.class.getDeclaredMethod("minMesspunktBestimmen", ArrayList.class);
    methode.setAccessible(true);
-   Vector2D minYMesspunkt = (Vector2D) methode.invoke(this.startpunktbestimmung, yListe);
+   Vector2D minYMesspunkt = (Vector2D) methode.invoke(Startpunktbestimmung.class, yListe);
    
    // Es wird überprüft, ob der korrekte Messpunkt zurückgegeben wird.
    assertEquals(messpunkt2, minYMesspunkt);
