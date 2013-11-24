@@ -71,8 +71,7 @@ public String problemLoesen()
       this.messpunkteValidieren(messpunkte);
       
       // Die Startparameter werden bestimmt.
-      Startpunktbestimmung startpunktbestimmung = new Startpunktbestimmung(messpunkte);
-      double[] startpunkt = startpunktbestimmung.getStartpunkt();
+      double[] startpunkt = Startpunktbestimmung.startpunktBerechnen(messpunkte);
       
       // Die Ortskurve wird bestimmt.    
       Ortskurve ortskurve = this.ortskurveBestimmen(messpunkte, startpunkt);
