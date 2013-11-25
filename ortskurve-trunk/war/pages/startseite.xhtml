@@ -169,13 +169,20 @@
               var centerX = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
               var centerY = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
               var radius = #{ortskurveModell.ortskurveGrafik.radiusInPixeln};
-              ortskurveZeichnen(context, centerX, centerY, radius);  
+              ortskurveZeichnen(context, centerX, centerY, radius, '#66ff66');  
 
+              <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null}">
+                 centerX = #{ortskurveModell.ortskurve2dGrafik.mittelpunktInPixeln.x};
+                 centerY = #{ortskurveModell.ortskurve2dGrafik.mittelpunktInPixeln.y};
+                 radius = #{ortskurveModell.ortskurve2dGrafik.radiusInPixeln};
+                 ortskurveZeichnen(context, centerX, centerY, radius, '#6699cc');  
+              </h:panelGroup>
+              
               <ui:repeat value="#{ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
                  context.beginPath();
                  context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
                  context.lineWidth = 1;
-                 context.strokeStyle = '#ff0000';
+                 context.strokeStyle = '#ff6666';
                  context.stroke(); 
               </ui:repeat>                
             </script> 
