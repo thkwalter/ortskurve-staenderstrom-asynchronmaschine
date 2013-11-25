@@ -64,6 +64,8 @@ public String problemLoesen()
       // Die Daten des Frontend-Modells werden protokolliert.
       OrtskurveController.logger.info(this.ortskurveModell.toString());
       
+      this.ortskurveModell.setOrtskurve2d(null);
+      
       // Die Messpunkte werden aus dem Frontend-Modell gelesen.
       Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
       
