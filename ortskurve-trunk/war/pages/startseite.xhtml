@@ -112,6 +112,9 @@
             </h:panelGrid>
          </h:panelGroup>
          
+         <!-- Die Datei mit den Javascript-Methoden der Ortskurvenberechnung wird eingebunden -->
+         <h:outputScript library="javascript" name="ortskurve.js" target="head" />
+         
          <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}" 
             class="grafik-ortskurve" layout="block">
             <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" 
@@ -162,25 +165,11 @@
               context.strokeStyle = '#000000;';
               context.stroke();  
 
-              // Ortskurve zeichnen
+              // Die Ortskurve wird gezeichnet
               var centerX = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
               var centerY = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
               var radius = #{ortskurveModell.ortskurveGrafik.radiusInPixeln};
-              
-              context.beginPath();
-              context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-              context.lineWidth = 1;
-              context.strokeStyle = '#00cc00';
-              context.stroke(); 
-
-              // Mittelpunkt einzeichnen
-              context.beginPath();
-              context.moveTo(centerX-5, centerY);
-              context.lineTo(centerX+5, centerY);
-              context.moveTo(centerX, centerY-5);
-              context.lineTo(centerX, centerY+5);
-              context.strokeStyle = '#00cc00';
-              context.stroke(); 
+              ortskurveZeichnen(context, centerX, centerY, radius);  
 
               <ui:repeat value="#{ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
                  context.beginPath();
