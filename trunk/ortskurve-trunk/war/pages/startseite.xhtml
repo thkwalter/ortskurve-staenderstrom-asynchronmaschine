@@ -79,8 +79,13 @@
                <p:spacer width="1" height="21" />
             </h:panelGroup>    
           
-        <h:panelGroup  rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
-          <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
+        <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
+          <h:panelGroup rendered="#{ortskurveModell.ortskurve2d == null}">
+             <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
+          </h:panelGroup>
+          <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null}">
+             <h4>Der optimale Ausgleichskreis besitzt folgende Parameter:</h4>
+          </h:panelGroup>
           <br/>
  
             <h:panelGrid columns="8" styleClass="table-3-spalten" 
@@ -112,10 +117,51 @@
             </h:panelGrid>
          </h:panelGroup>
          
-         <!-- Die Datei mit den Javascript-Methoden der Ortskurvenberechnung wird eingebunden -->
+       <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null and (!ausgleichsproblem.meldungenAnzeigen)}">
+          <br/>
+          <p>     
+             Der Realteil des Mittelpunkts des optimalen Ausgleichskreises ist negativ. Das ist jedoch aus technischen
+             Gründen nicht möglich. Daher wurde die Ortskurve ein weiteres Mal berechnet, diesmal jedoch unter 
+             Berücksichtigung der Randbedingung, dass der Mittelpunkt der Ortskurve auf der Imaginärachse liegen muss.
+          </p>
+          <br/><br/>
+          <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
+          <br/>
+ 
+            <h:panelGrid columns="8" styleClass="table-3-spalten" 
+               columnClasses="text-3-spalten-blau,eingabe-3-spalten-blau,platzhalter-3-spalten,
+                  text-3-spalten-blau,eingabe-3-spalten-blau,platzhalter-3-spalten,text-3-spalten-empty,
+                  eingabe-3-spalten-empty">
+               <h:outputText value="Mittelpunkt in A"/>
+               <h:panelGroup styleClass="zahl">
+                  (<h:outputText value="#{ortskurveModell.ortskurve2d.mittelpunktOrtskurve.x}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>
+                  <h:outputText value=", "/>
+                  <h:outputText value="#{ortskurveModell.ortskurve2d.mittelpunktOrtskurve.y}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>)
+               </h:panelGroup>
+               
+               <h:outputText value=""/>
+          
+               <h:outputText value="Radius in A"/>
+               <h:panelGroup styleClass="zahl">
+                  <h:outputText value="#{ortskurveModell.ortskurve2d.radiusOrtskurve}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>
+               </h:panelGroup>
+               
+               <h:outputText value=""/>
+               <h:outputText value=""/>
+               <h:outputText value=""/>
+            </h:panelGrid>
+         </h:panelGroup>
+         
+          <!-- Die Datei mit den Javascript-Methoden der Ortskurvenberechnung wird eingebunden -->
          <h:outputScript library="javascript" name="ortskurve.js" target="head" />
          
-         <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}" 
+         <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}"  
             class="grafik-ortskurve" layout="block">
             <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" 
                height="#{ortskurveModell.yPixelGrafik}"></canvas>

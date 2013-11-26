@@ -189,6 +189,14 @@ div#menue a
    text-align: right;
    }
    
+.eingabe-3-spalten-blau
+   {
+   padding: 3px;
+   background-color: #6699cc;
+   width: 114px;
+   text-align: right;
+   }
+   
 .platzhalter-3-spalten
    {
    padding-left: 10px;
@@ -198,6 +206,13 @@ div#menue a
    {
    padding: 3px;
    background-color: #66ff66;
+   width: 154px;
+   }
+   
+.text-3-spalten-blau
+   {
+   padding: 3px;
+   background-color: #6699cc;
    width: 154px;
    }
    
