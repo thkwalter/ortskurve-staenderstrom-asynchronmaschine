@@ -18,6 +18,7 @@
    # [BerechnungOrtskurveVierPunkte Berechnung der Ortskurve mit vier Punkten überprüfen]
    # [BerechnungOrtskurveAchtPunkte Berechnung der Ortskurve mit acht Punkten überprüfen]
    # [BerechnungOrtskurveRealistischeWerte Berechnung der Ortskurve mit realistischen Werten]
+   # [Berechnung2dOrtskurve Berechnung der Ortskurve der 2d-Ausgleichsrechnung]
  * Fehlerbehandlungen auf der Seite "Berechnung der Ortskurve"
    # [FehlerbehandlungFalschesFormat Fehlerbehandlung bei Eingabe im falschen Format überprüfen]
    # [FehlerbehandlungZuWenigeMesspunkte Fehlerbehandlung bei Eingabe zu weniger Messpunkte überprüfen]
