@@ -101,9 +101,8 @@ private final int yPixelGrafik = 275;
 @PostConstruct
 public void init()
    {
-   // Das Flag wird auf false gesetzt, so dass die Lösung des Ausgleichsproblems nicht angezeigt wird. 
-   HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-   session.setAttribute("ortskurveAnzeigen", "false"); 
+   // Die Ortskurve wird zurückgesetzt
+   this.ortskurve = null;
    }
 
 // =====================================================================================================================

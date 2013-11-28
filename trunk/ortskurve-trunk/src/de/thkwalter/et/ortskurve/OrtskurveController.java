@@ -23,7 +23,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
@@ -103,18 +102,13 @@ public String problemLoesen()
       
       // Die Daten der Grafik der Ortskurve werden berechnet.
       this.ortskurveModell.grafikdatenBerechnen();
-      
-      // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
-      HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-      session.setAttribute("ortskurveAnzeigen", "true"); 
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
    catch (ApplicationRuntimeException exception)
       {
-      // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
-      HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-      session.setAttribute("ortskurveAnzeigen", "false"); 
+      // Die Ortskurve wird zurückgesetzt, um ihre Anzeige zu vermeiden.
+      this.ortskurveModell.setOrtskurve(null);
       
       // Eine Fehlermeldung für die Oberfläche wird erstellt.
       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 

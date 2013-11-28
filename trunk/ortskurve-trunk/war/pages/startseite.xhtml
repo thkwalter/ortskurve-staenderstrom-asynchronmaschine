@@ -84,7 +84,7 @@
             </h:panelGroup>    
           
             <!-- Die Ausgabe der Ortskurve bzw. des optimalen Ausgleichskreises ==================================== -->
-            <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (empty facesContext.messageList)}">
+            <h:panelGroup rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}">
                <h:panelGroup rendered="#{ortskurveModell.ortskurve2d == null}">
                   <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
                </h:panelGroup>
@@ -166,7 +166,7 @@
           <!-- Die Datei mit den Javascript-Methoden der Ortskurvenberechnung wird eingebunden -->
          <h:outputScript library="javascript" name="ortskurve.js" target="head" />
          
-         <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (empty facesContext.messageList)}"  
+         <h:panelGroup rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}"  
             class="grafik-ortskurve" layout="block">
             <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" 
                height="#{ortskurveModell.yPixelGrafik}"></canvas>
