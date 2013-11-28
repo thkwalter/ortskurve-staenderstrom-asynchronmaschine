@@ -132,20 +132,6 @@ public String problemLoesen()
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt zurück, ob Meldungen angezeigt werden sollen.
- * 
- * @return <tt>true</tt>, falls Meldungen angezeigt werden sollen; <tt>false</tt>, falls die Meldungen nicht angezeigt 
- * werden sollen.
- */
-public boolean isMeldungenAnzeigen()
-   {
-   return FacesContext.getCurrentInstance().getMessageList(null).size() > 0;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
  * Diese Methode speichert das übergebene Datenmodell der Ortskurve in diesem Objekt.
  * 
  * @param ortskurveModell Das Datenmodell der Ortskurve

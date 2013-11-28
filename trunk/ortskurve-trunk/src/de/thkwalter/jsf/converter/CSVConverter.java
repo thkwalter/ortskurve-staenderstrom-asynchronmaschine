@@ -62,8 +62,6 @@ private static Logger logger = Logger.getLogger(CSVConverter.class.getName());
 @Override
 public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String eingabe)
    {
-   CSVConverter.logger.entering("CSVConverter", "getAsObject");
-   
    // Das Feld, das die Vektoren speichern soll, wird deklariert.
    Vector2D[] vektoren = null;
    
@@ -112,14 +110,9 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
       facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, jsfMeldung, ""));
       ConverterException converterException = new ConverterException(jsfMeldung);
       
-      // Das vorzeitige Verlassen dieser Methode wird protokolliert.
-      CSVConverter.logger.throwing("CSVConverter", "getAsObject", converterException);
-      
       // Die ConverterException wird geworfen.
       throw converterException;
       }
-   
-   CSVConverter.logger.exiting("CSVConverter", "getAsObject");
    
    // Das Feld, das die Vektoren speichert, wird zurückgegeben.
    return vektoren;
@@ -145,8 +138,6 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
 @Override
 public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object vektoren)
    {
-   CSVConverter.logger.entering("CSVConverter", "getAsString");
-   
    // Der StringBuffer wird mit einer leeren Zeichenkette initialisiert.
    StringBuffer stringBuffer = new StringBuffer("");
    
@@ -177,12 +168,6 @@ public String getAsString(FacesContext facesContext, UIComponent uiComponent, Ob
       // Eine ConverterException wird geworfen.
       throw new ConverterException(exception.getMessage());
       }
-   
-   // Die zusammengebaute Zeichenkette wird protokolliert.
-   String ausgabe = stringBuffer.toString();
-   CSVConverter.logger.fine(ausgabe);
-   
-   CSVConverter.logger.exiting("CSVConverter", "getAsString");
    
    // Die zusammengebaute Zeichenkette wird zurückgegeben.
    return stringBuffer.toString();

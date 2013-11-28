@@ -28,23 +28,24 @@
          <br/><br/>
         
          <h:form>
-            <!-- Das div-Element, das die Fehlermeldungen anzeigt. -->
-            <h:panelGroup rendered="#{ausgleichsproblem.meldungenAnzeigen}" styleClass="nachrichten" layout="block">
+            <!-- Das div-Element, das die Fehlermeldungen anzeigt ================================================= -->
+            <h:panelGroup rendered="#{not empty facesContext.messageList}" styleClass="nachrichten" layout="block">
                Die Ortskurve konnte aus folgenden Gründen leider nicht berechnet werden:
                <br/><br/>
             
                <h:messages errorClass="error-messages" globalOnly="true" tooltip="true"/>
             </h:panelGroup>
          
-            <!-- Der einleitende Absatz. -->
+            <!-- Der einleitende Absatz =========================================================================== -->
             <p>
-              Um die Ortskurve berechnen zu können, müssen Sie den komplexen Zeiger des Ständerstroms
-              <span class="zeiger">I</span><sub>1</sub> in mindestens drei verschiedenen Betriebspunkten bestimmen.
-              Nehmen Sie dabei an, dass der Zeiger <span class="zeiger">U</span><sub>1</sub> der Netzspannung rein
-              real ist.
+               Um die Ortskurve berechnen zu können, müssen Sie den komplexen Zeiger des Ständerstroms
+               <span class="zeiger">I</span><sub>1</sub> in mindestens drei verschiedenen Betriebspunkten bestimmen.
+               Nehmen Sie dabei an, dass der Zeiger <span class="zeiger">U</span><sub>1</sub> der Netzspannung rein
+               real ist.
             </p>
             <br/><br/>
          
+            <!-- Die Tabelle mit dem Texteingabefeld für die Stromzeiger =========================================== -->
             <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
                <h:panelGroup>
                   <p id="eingabehilfe">                  
@@ -63,10 +64,12 @@
                      </span>
                   </p>
                </h:panelGroup>
+               
                <h:inputTextarea value="#{ortskurveModell.messpunkte}" styleClass="eingabefeld" id="eingabe"
                   converter="CSVConverter"/>
             </h:panelGrid>
             
+            <!-- Der Dialog mit der Erläuterung des Koordinatensystems ============================================= -->
             <p:dialog id="basicDialog" header="Erläuterung" widgetVar="formatDlg">  
                Wir stellen das Koordinatensystem der Ortskurve wie in der Literatur üblich um<br/> 
                90 Grad gedreht dar. Die Eingabe der komplexen Stromstärke im Format 
@@ -74,19 +77,21 @@
                erleichtert Ihnen später das Auffinden der Messpunkte in der Grafik der Ortskurve.
             </p:dialog>
             
+            <!-- Der Knopf für die Berechnung der Ortskurve ======================================================== -->
             <h:panelGroup class="knopfzeile" layout="block">
                <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}" class="knopf"/>
                <p:spacer width="1" height="21" />
             </h:panelGroup>    
           
-        <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}">
-          <h:panelGroup rendered="#{ortskurveModell.ortskurve2d == null}">
-             <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
-          </h:panelGroup>
-          <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null}">
-             <h4>Der optimale Ausgleichskreis besitzt folgende Parameter:</h4>
-          </h:panelGroup>
-          <br/>
+            <!-- Die Ausgabe der Ortskurve bzw. des optimalen Ausgleichskreises ==================================== -->
+            <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (empty facesContext.messageList)}">
+               <h:panelGroup rendered="#{ortskurveModell.ortskurve2d == null}">
+                  <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
+               </h:panelGroup>
+               <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null}">
+                  <h4>Der optimale Ausgleichskreis besitzt folgende Parameter:</h4>
+               </h:panelGroup>
+               <br/>
  
             <h:panelGrid columns="8" styleClass="table-3-spalten" 
                columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
@@ -117,7 +122,7 @@
             </h:panelGrid>
          </h:panelGroup>
          
-       <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null and (!ausgleichsproblem.meldungenAnzeigen)}">
+       <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null and (empty facesContext.messageList)}">
           <br/>
           <p>     
              Der Realteil des Mittelpunkts des optimalen Ausgleichskreises ist negativ. Das ist jedoch aus technischen
@@ -161,7 +166,7 @@
           <!-- Die Datei mit den Javascript-Methoden der Ortskurvenberechnung wird eingebunden -->
          <h:outputScript library="javascript" name="ortskurve.js" target="head" />
          
-         <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (!ausgleichsproblem.meldungenAnzeigen)}"  
+         <h:panelGroup rendered="#{sessionScope['ortskurveAnzeigen'] and (empty facesContext.messageList)}"  
             class="grafik-ortskurve" layout="block">
             <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" 
                height="#{ortskurveModell.yPixelGrafik}"></canvas>
