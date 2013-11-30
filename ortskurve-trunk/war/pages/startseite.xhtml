@@ -28,7 +28,7 @@
          <br/><br/>
         
          <h:form>
-            <!-- Das div-Element, das die Fehlermeldungen anzeigt ================================================= -->
+            <!-- Die Fehlermeldungen =============================================================================== -->
             <h:panelGroup rendered="#{not empty facesContext.messageList}" styleClass="nachrichten" layout="block">
                Die Ortskurve konnte aus folgenden Gründen leider nicht berechnet werden:
                <br/><br/>
@@ -45,7 +45,7 @@
             </p>
             <br/><br/>
          
-            <!-- Die Tabelle mit dem Texteingabefeld für die Stromzeiger =========================================== -->
+            <!-- Das Texteingabefeld und seine Beschreibung ======================================================== -->
             <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
                <h:panelGroup>
                   <p id="eingabehilfe">                  
@@ -88,156 +88,172 @@
                <h:panelGroup rendered="#{ortskurveModell.ortskurve2d == null}">
                   <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
                </h:panelGroup>
+               
                <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null}">
                   <h4>Der optimale Ausgleichskreis besitzt folgende Parameter:</h4>
                </h:panelGroup>
                <br/>
  
-            <h:panelGrid columns="8" styleClass="table-3-spalten" 
-               columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
-                  text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
-               <h:outputText value="Mittelpunkt in A"/>
-               <h:panelGroup styleClass="zahl">
-                  (<h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                  </h:outputText>
-                  <h:outputText value=", "/>
-                  <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.y}">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                  </h:outputText>)
-               </h:panelGroup>
-               
-               <h:outputText value=""/>
-          
-               <h:outputText value="Radius in A"/>
-               <h:panelGroup styleClass="zahl">
-                  <h:outputText value="#{ortskurveModell.ortskurve.radiusOrtskurve}">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                  </h:outputText>
-               </h:panelGroup>
-               
-               <h:outputText value=""/>
-               <h:outputText value=""/>
-               <h:outputText value=""/>
-            </h:panelGrid>
-         </h:panelGroup>
-         
-       <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null and (empty facesContext.messageList)}">
-          <br/>
-          <p>     
-             Der Realteil des Mittelpunkts des optimalen Ausgleichskreises ist negativ. Das ist jedoch aus technischen
-             Gründen nicht möglich. Daher wurde die Ortskurve ein weiteres Mal berechnet, diesmal jedoch unter 
-             Berücksichtigung der Randbedingung, dass der Mittelpunkt der Ortskurve auf der Imaginärachse liegen muss.
-          </p>
-          <br/><br/>
-          <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
-          <br/>
- 
-            <h:panelGrid columns="8" styleClass="table-3-spalten" 
-               columnClasses="text-3-spalten-blau,eingabe-3-spalten-blau,platzhalter-3-spalten,
-                  text-3-spalten-blau,eingabe-3-spalten-blau,platzhalter-3-spalten,text-3-spalten-empty,
+               <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
+                  platzhalter-3-spalten,text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,
                   eingabe-3-spalten-empty">
-               <h:outputText value="Mittelpunkt in A"/>
-               <h:panelGroup styleClass="zahl">
-                  (<h:outputText value="#{ortskurveModell.ortskurve2d.mittelpunktOrtskurve.x}">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                  </h:outputText>
-                  <h:outputText value=", "/>
-                  <h:outputText value="#{ortskurveModell.ortskurve2d.mittelpunktOrtskurve.y}">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                  </h:outputText>)
-               </h:panelGroup>
+                  <h:outputText value="Mittelpunkt in A"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     (
+                     <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                     
+                     <h:outputText value=", "/>
+                     
+                     <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.y}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                     )
+                  </h:panelGroup>
                
-               <h:outputText value=""/>
+                  <h:outputText value=""/>
           
-               <h:outputText value="Radius in A"/>
-               <h:panelGroup styleClass="zahl">
-                  <h:outputText value="#{ortskurveModell.ortskurve2d.radiusOrtskurve}">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                  </h:outputText>
-               </h:panelGroup>
+                  <h:outputText value="Radius in A"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     <h:outputText value="#{ortskurveModell.ortskurve.radiusOrtskurve}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                  </h:panelGroup>
                
-               <h:outputText value=""/>
-               <h:outputText value=""/>
-               <h:outputText value=""/>
-            </h:panelGrid>
-         </h:panelGroup>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+               </h:panelGrid>
+            </h:panelGroup>
          
-          <!-- Die Datei mit den Javascript-Methoden der Ortskurvenberechnung wird eingebunden -->
-         <h:outputScript library="javascript" name="ortskurve.js" target="head" />
+            <!--  Die Ausgabe der Ortskurve im Fall einer 2d-Ausgleichsrechnung ==================================== -->
+            <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null and (empty facesContext.messageList)}">
+               <br/>
+               
+               <p>     
+                  Der Realteil des Mittelpunkts des optimalen Ausgleichskreises ist negativ. Das ist jedoch aus 
+                  technischen Gründen nicht möglich. Daher wurde die Ortskurve ein weiteres Mal berechnet, diesmal 
+                  jedoch unter Berücksichtigung der Randbedingung, dass der Mittelpunkt der Ortskurve auf der 
+                  Imaginärachse liegen muss.
+               </p>
+               <br/><br/>
+               
+               <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
+               <br/>
+ 
+               <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten-blau,
+                  eingabe-3-spalten-blau,platzhalter-3-spalten,text-3-spalten-blau,eingabe-3-spalten-blau,
+                  platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
+               
+                  <h:outputText value="Mittelpunkt in A"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     (
+                     <h:outputText value="#{ortskurveModell.ortskurve2d.mittelpunktOrtskurve.x}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                  
+                     <h:outputText value=", "/>
+                     
+                     <h:outputText value="#{ortskurveModell.ortskurve2d.mittelpunktOrtskurve.y}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>)
+                  </h:panelGroup>
+               
+                  <h:outputText value=""/>
+          
+                  <h:outputText value="Radius in A"/>
+                     
+                  <h:panelGroup styleClass="zahl">
+                     <h:outputText value="#{ortskurveModell.ortskurve2d.radiusOrtskurve}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                  </h:panelGroup>
+               
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+               </h:panelGrid>
+            </h:panelGroup>
          
-         <h:panelGroup rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}"  
-            class="grafik-ortskurve" layout="block">
-            <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" 
-               height="#{ortskurveModell.yPixelGrafik}"></canvas>
+            <!-- Die Datei mit den Javascript-Methoden der Ortskurvenberechnung wird eingebunden -->
+            <h:outputScript library="javascript" name="ortskurve.js" target="head" />
+         
+            <!-- Die Grafik der Ortskurve ========================================================================== -->
+            <h:panelGroup rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}"  
+               class="grafik-ortskurve" layout="block">
+               <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" height="#{ortskurveModell.yPixelGrafik}"/>
             
-            <script type="text/javascript">
-              var canvas = document.getElementById('grafik');
-              var context = canvas.getContext('2d');
+               <script type="text/javascript">
+                  var canvas = document.getElementById('grafik');
+                  var context = canvas.getContext('2d');
 
-              // Koordinatenachsen zeichnen
-              var startpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.x};
-              var startpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.y};
-              var endpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.x};
-              var endpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.y};
+                  // Koordinatenachsen zeichnen
+                  var startpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.x};
+                  var startpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.y};
+                  var endpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.x};
+                  var endpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.y};
 
-              var startpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.x};
-              var startpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.y};
-              var endpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.x};
-              var endpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.y}; 
+                  var startpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.x};
+                  var startpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.y};
+                  var endpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.x};
+                  var endpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.y}; 
 
-              context.beginPath();
-              context.moveTo(startpunktXAchseXWert, startpunktXAchseYWert);
-              context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
-              context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
-              context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
+                  context.beginPath();
+                  context.moveTo(startpunktXAchseXWert, startpunktXAchseYWert);
+                  context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
+                  context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
+                  context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
 
-              // Pfeil an y-Achse zeichnen
-              context.moveTo(endpunktYAchseXWert-5,endpunktYAchseYWert+5);
-              context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
-              context.lineTo(endpunktYAchseXWert+5,endpunktYAchseYWert+5);
+                  // Pfeil an y-Achse zeichnen
+                  context.moveTo(endpunktYAchseXWert-5,endpunktYAchseYWert+5);
+                  context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
+                  context.lineTo(endpunktYAchseXWert+5,endpunktYAchseYWert+5);
 
-              // Pfeil an x-Achse zeichnen
-              context.moveTo(endpunktXAchseXWert-5,endpunktXAchseYWert+5);
-              context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
-              context.lineTo(endpunktXAchseXWert-5,endpunktXAchseYWert-5);
+                  // Pfeil an x-Achse zeichnen
+                  context.moveTo(endpunktXAchseXWert-5,endpunktXAchseYWert+5);
+                  context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
+                  context.lineTo(endpunktXAchseXWert-5,endpunktXAchseYWert-5);
 
-              // Achsenbeschriftung der y-Achse anbringen
-              context.font = "16px 'Courier New', monospace";
-              context.textBaseline = "top";
-              context.textAlign = "right";
-              context.fillText("Re I", endpunktYAchseXWert-10, endpunktYAchseYWert);
+                  // Achsenbeschriftung der y-Achse anbringen
+                  context.font = "16px 'Courier New', monospace";
+                  context.textBaseline = "top";
+                  context.textAlign = "right";
+                  context.fillText("Re I", endpunktYAchseXWert-10, endpunktYAchseYWert);
 
-              // Achsenbeschriftung der x-Achse anbringen
-              context.textBaseline = "bottom";
-              context.textAlign = "left";
-              context.fillText("-Im I", endpunktXAchseXWert+5, endpunktXAchseYWert);
+                  // Achsenbeschriftung der x-Achse anbringen
+                  context.textBaseline = "bottom";
+                  context.textAlign = "left";
+                  context.fillText("-Im I", endpunktXAchseXWert+5, endpunktXAchseYWert);
               
-              context.strokeStyle = '#000000;';
-              context.stroke();  
+                  context.strokeStyle = '#000000;';
+                  context.stroke();  
 
-              // Die Ortskurve wird gezeichnet
-              var centerX = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
-              var centerY = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
-              var radius = #{ortskurveModell.ortskurveGrafik.radiusInPixeln};
-              ortskurveZeichnen(context, centerX, centerY, radius, '#66ff66');  
+                  // Die Ortskurve wird gezeichnet
+                  var centerX = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
+                  var centerY = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
+                  var radius = #{ortskurveModell.ortskurveGrafik.radiusInPixeln};
+                  ortskurveZeichnen(context, centerX, centerY, radius, '#66ff66');  
 
-              <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null}">
-                 centerX = #{ortskurveModell.ortskurve2dGrafik.mittelpunktInPixeln.x};
-                 centerY = #{ortskurveModell.ortskurve2dGrafik.mittelpunktInPixeln.y};
-                 radius = #{ortskurveModell.ortskurve2dGrafik.radiusInPixeln};
-                 ortskurveZeichnen(context, centerX, centerY, radius, '#6699cc');  
-              </h:panelGroup>
+                  <h:panelGroup rendered="#{ortskurveModell.ortskurve2d != null}">
+                     centerX = #{ortskurveModell.ortskurve2dGrafik.mittelpunktInPixeln.x};
+                     centerY = #{ortskurveModell.ortskurve2dGrafik.mittelpunktInPixeln.y};
+                     radius = #{ortskurveModell.ortskurve2dGrafik.radiusInPixeln};
+                     ortskurveZeichnen(context, centerX, centerY, radius, '#6699cc');  
+                  </h:panelGroup>
               
-              <ui:repeat value="#{ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
-                 context.beginPath();
-                 context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
-                 context.lineWidth = 1;
-                 context.strokeStyle = '#ff6666';
-                 context.stroke(); 
-              </ui:repeat>                
-            </script> 
-         </h:panelGroup> 
+                  <ui:repeat value="#{ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
+                     context.beginPath();
+                     context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
+                     context.lineWidth = 1;
+                     context.strokeStyle = '#ff6666';
+                     context.stroke(); 
+                  </ui:repeat>                
+               </script> 
+            </h:panelGroup> 
          
             <!-- Die Beschreibung der Aktion des nächsten Knopfes                                                    -->
             <h:panelGroup layout="block" rendered="false"> 
