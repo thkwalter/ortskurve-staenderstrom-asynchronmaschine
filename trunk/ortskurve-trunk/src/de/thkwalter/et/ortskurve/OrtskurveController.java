@@ -63,7 +63,7 @@ public String problemLoesen()
       // Die Daten des Frontend-Modells werden protokolliert.
       OrtskurveController.logger.info(this.ortskurveModell.toString());
       
-      this.ortskurveModell.setOrtskurve2d(null);
+      this.ortskurveModell.setOptimalerAusgleichskreis(null);
       
       // Die Messpunkte werden aus dem Frontend-Modell gelesen.
       Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
@@ -96,8 +96,11 @@ public String problemLoesen()
          // Die berechnete Ortskurve wird protokolliert.
          OrtskurveController.logger.info(ortskurve2d.toString());
          
+         // Der optimale Ausgleichskreis mit negativem Realteil wird umgespeichert.
+         this.ortskurveModell.setOptimalerAusgleichskreis(this.ortskurveModell.getOrtskurve());
+         
          // Die Ortskurve mit Mittelpunkt auf der Imaginärachse wird im Frontend-Modell gespeichert.
-         this.ortskurveModell.setOrtskurve2d(ortskurve2d);
+         this.ortskurveModell.setOrtskurve(ortskurve2d);
          }
       
       // Die Daten der Grafik der Ortskurve werden berechnet.

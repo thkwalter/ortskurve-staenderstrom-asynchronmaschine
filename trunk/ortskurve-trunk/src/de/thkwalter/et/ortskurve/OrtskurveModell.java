@@ -56,9 +56,9 @@ private Vector2D[] messpunkte;
 private Ortskurve ortskurve;
 
 /**
- * Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt.
+ * Der optimale Ausgleichskreis.
  */
-private Ortskurve ortskurve2d;
+private Ortskurve optimalerAusgleichskreis;
 
 /**
  * Die Grafikdarstellung der Messpunkte
@@ -71,9 +71,9 @@ private MesspunkteGrafik messpunkteGrafik;
 private OrtskurveGrafik ortskurveGrafik;
 
 /**
- * Die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung
+ * Die Grafikdarstellung des optimalen Ausgleichskreises
  */
-private OrtskurveGrafik ortskurve2dGrafik;
+private OrtskurveGrafik optimalerAusgleichskreisGrafik;
 
 /**
  * Die Grafikdarstellung der Koordinatenachsen
@@ -129,11 +129,11 @@ public void grafikdatenBerechnen()
    // Die Grafikdarstellung der Ortskurve wird berechnet.
    this.ortskurveGrafik = new OrtskurveGrafik(this.ortskurve, punktPixelKonverter);
    
-   // Falls eine 2d-Ausgleichsrechnung durchgeführt worden ist, wird auch die Grafikdarstellung der entsprechenden
-   // Ortskurve berechnet.
-   if (this.ortskurve2d != null)
+   // Falls eine 2d-Ausgleichsrechnung durchgeführt worden ist, wird auch die Grafikdarstellung des optimalen
+   // Ausgleichskreises berechnet.
+   if (this.optimalerAusgleichskreis != null)
       {
-      this.ortskurve2dGrafik = new OrtskurveGrafik(this.ortskurve2d, punktPixelKonverter);
+      this.optimalerAusgleichskreisGrafik = new OrtskurveGrafik(this.optimalerAusgleichskreis, punktPixelKonverter);
       }
    
    // Die Grafikdarstellung der Messpunkte wird berechnet.
@@ -162,11 +162,11 @@ private Vector2D[] randpunkteZusammenstellen()
    // Die Randpunkte der Ortskurve werden hinzugefügt.
    randpunkte.addAll(randpunkteOrtskurveZusammenstellen(this.ortskurve));
    
-   // Falls eine 2d-Ausgleichsrechnung ausgeführt worden ist, werden die Randpunkte der entsprechenden Ortskurve 
-   // hinzugfügt.
-   if (this.ortskurve2d != null)
+   // Falls eine 2d-Ausgleichsrechnung ausgeführt worden ist, werden die Randpunkte des optimalen Ausgleichskreises 
+   // hinzugefügt.
+   if (this.optimalerAusgleichskreis != null)
       {
-      randpunkte.addAll(randpunkteOrtskurveZusammenstellen(this.ortskurve2d));
+      randpunkte.addAll(randpunkteOrtskurveZusammenstellen(this.optimalerAusgleichskreis));
       }
    
    // Die Liste der Randpunkte wird als Feld zurückgegeben.
@@ -191,14 +191,14 @@ public MesspunkteGrafik getMesspunkteGrafik()
 //=====================================================================================================================
 
 /**
- * Diese Methode gibt die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung zurück.
+ * Diese Methode gibt die Grafikdarstellung des optimalen Ausgleichskreises zurück.
  * 
- * @return Die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung
+ * @return Die Grafikdarstellung des optimalen Ausgleichskreises
  */
-public OrtskurveGrafik getOrtskurve2dGrafik()
+public OrtskurveGrafik getOptimalerAusgleichskreisGrafik()
    {
-   // Die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung wird zurückgegeben.
-   return this.ortskurve2dGrafik; 
+   // Die Grafikdarstellung des optimalen Ausgleichskreises wird zurückgegeben.
+   return this.optimalerAusgleichskreisGrafik; 
    }
 
 // =====================================================================================================================
@@ -307,10 +307,10 @@ public String toString()
       builder.append("ortskurve=").append(ortskurve).append(", ");
       }
       
-   // Die Zeichenkette, welche die Ortskurve der 2d-Berechnung repräsentiert, wird hinzugefügt. 
-   if (ortskurve2d != null)
+   // Die Zeichenkette, welche den optimalen Ausgleichskreis repräsentiert, wird hinzugefügt. 
+   if (optimalerAusgleichskreis != null)
       {
-      builder.append("ortskurve2d=").append(ortskurve2d).append(", ");
+      builder.append("optimaler Ausgleichskreis=").append(optimalerAusgleichskreis).append(", ");
       }
       
    // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
@@ -325,11 +325,11 @@ public String toString()
       builder.append("ortskurveGrafik=").append(ortskurveGrafik).append(", ");
       }
    
-   // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve der 2d-Ausgleichsrechnung repräsentiert, wird 
+   // Die Zeichenkette, welche die Grafikdarstellung des optimalen Ausgleichskreises repräsentiert, wird 
    // hinzugefügt. 
-   if (ortskurve2dGrafik != null)
+   if (optimalerAusgleichskreisGrafik != null)
       {
-      builder.append("ortskurve2dGrafik=").append(ortskurve2dGrafik).append(", ");
+      builder.append("ortskurve2dGrafik=").append(optimalerAusgleichskreisGrafik).append(", ");
       }
       
    // Die Zeichenkette, welche die Koordinatenachsen repräsentiert, wird hinzugefügt. 
@@ -377,29 +377,28 @@ public Vector2D[] getMesspunkte()
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt die Ortskurve der 2d-Berechnung zurück, deren Mittelpunkt auf der x-Achse liegt.
+ * Diese Methode gibt den optimalen Ausgeleichskreis zurück.
  * 
- * @return Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt
+ * @return Der optimale Ausgleichskreis
  */
-public Ortskurve getOrtskurve2d()
+public Ortskurve getOptimalerAusgleichskreis()
    {
-   // Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt, wird zurückgegeben.
-   return this.ortskurve2d;
+   // Der optimale Ausgleichskreis wird zurückgegeben.
+   return this.optimalerAusgleichskreis;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert die übergebene Ortskurve der 2d-Berechnung, der Mittelpunkt auf der x-Achse liegt, in diesem
- * Modell.
+ * Diese Methode speichert den übergebenen, optimalen Ausgleichskreis im Modell.
  * 
- * @param ortskurve2d Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt
+ * @param optimalerAusgleichskreis Der optimale Ausgleichskreis
  */
-public void setOrtskurve2d(Ortskurve ortskurve2d)
+public void setOptimalerAusgleichskreis(Ortskurve optimalerAusgleichskreis)
    {
-   // Die Ortskurve der 2d-Berechnung, deren Mittelpunkt auf der x-Achse liegt, wird in diesem Modell gespeichert.
-   this.ortskurve2d = ortskurve2d;
+   // Der übergebene, optimale Ausgleichskreis wird in diesem Modell gespeichert.
+   this.optimalerAusgleichskreis = optimalerAusgleichskreis;
    }
 
 // =====================================================================================================================

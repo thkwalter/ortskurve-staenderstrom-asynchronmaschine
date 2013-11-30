@@ -189,10 +189,10 @@ div#menue a
    text-align: right;
    }
    
-.eingabe-3-spalten-blau
+.eingabe-3-spalten-gelb
    {
    padding: 3px;
-   background-color: #6699cc;
+   background-color: #ffff66;
    width: 114px;
    text-align: right;
    }
@@ -209,10 +209,10 @@ div#menue a
    width: 154px;
    }
    
-.text-3-spalten-blau
+.text-3-spalten-gelb
    {
    padding: 3px;
-   background-color: #6699cc;
+   background-color: #ffff66;
    width: 154px;
    }
    
