@@ -22,8 +22,6 @@ import java.util.Arrays;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
