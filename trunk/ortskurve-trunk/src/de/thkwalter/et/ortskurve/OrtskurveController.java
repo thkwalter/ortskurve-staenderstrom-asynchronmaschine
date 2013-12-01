@@ -63,6 +63,7 @@ public String problemLoesen()
       // Die Daten des Frontend-Modells werden protokolliert.
       OrtskurveController.logger.info(this.ortskurveModell.toString());
       
+      // Der optimale Ausgleichskreis muss manuell zurückgesetzt werden, da er nicht jedesmal neu berechnet wird.
       this.ortskurveModell.setOptimalerAusgleichskreis(null);
       
       // Die Messpunkte werden aus dem Frontend-Modell gelesen.
