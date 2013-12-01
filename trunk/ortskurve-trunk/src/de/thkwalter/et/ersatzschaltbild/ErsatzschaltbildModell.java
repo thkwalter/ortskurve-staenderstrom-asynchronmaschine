@@ -19,16 +19,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
@@ -102,30 +100,6 @@ public ErsatzschaltbildModell()
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
    }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode initialisiert das Datenmodell mit Hilfe des Datenmodells der Ortskurvenberechnung.
- */
-@PostConstruct
-public void init()
-   {
-   // Der FacesContext wird gelesen.
-   FacesContext facesContext = FacesContext.getCurrentInstance();
-   
-   // Der Controller der Ortskurvenberechnung wird gelesen.
-   OrtskurveController ausgleichsproblem = (OrtskurveController) facesContext.getApplication().evaluateExpressionGet(
-      facesContext, "#{ausgleichsproblem}", OrtskurveController.class); 
-
-   // Die benötigten Daten des Datenmodells der Ortskurvenberechnung werden in das Datenmodell der 
-   // Ersatzschaltbildberechnung übernommen.
-   this.datenUebernehmen(ausgleichsproblem);
-      
-   // Das Modell des Ersatzschaltbildes wird protokolliert.
-   ErsatzschaltbildModell.logger.info(this.toString());
-   }
    
 // =====================================================================================================================
 // =====================================================================================================================
@@ -136,7 +110,7 @@ public void init()
  * 
  * @param ausgleichsproblem Der Controller der Ortskurvenberechnung
  */
-private void datenUebernehmen(OrtskurveController ausgleichsproblem)
+public void datenUebernehmen(OrtskurveController ausgleichsproblem)
    {
    // Das Datenmodell der Ortskurvenberechnung wird gelesen.
    OrtskurveModell ortskurveModell = ausgleichsproblem.getOrtskurveModell();
@@ -146,6 +120,8 @@ private void datenUebernehmen(OrtskurveController ausgleichsproblem)
    
    // Die Messpunkte werden in das Datenmodell der Ersatzschaltbildberechnung übertragen.
    Vector2D[] messpunkte = ortskurveModell.getMesspunkte();
+   
+   this.betriebspunkte = new ArrayList<Betriebspunkt>();
    
    for (Vector2D messpunkt : messpunkte)
       {

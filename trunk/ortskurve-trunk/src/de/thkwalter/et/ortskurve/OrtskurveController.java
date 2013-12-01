@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import de.thkwalter.et.ersatzschaltbild.ErsatzschaltbildModell;
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
@@ -241,5 +242,29 @@ private void messpunkteValidieren(Vector2D[] messpunkte)
       // Die Ausnahme wird erzeugt und geworfen.         
       throw new ApplicationRuntimeException(jsfMeldung);
       }
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Die Daten werden an die Ersatzschaltbildberechnung übergeben, anschließend wird zur Ersatzschaltberechnung
+ * weitergeleitet.
+ * 
+ * @return
+ */
+public String esbAufrufen()
+   {
+   // Der FacesContext wird gelesen.
+   FacesContext facesContext = FacesContext.getCurrentInstance();
+   
+   // Der Controller der Ortskurvenberechnung wird gelesen.
+   ErsatzschaltbildModell ersatzschaltbildModell = (ErsatzschaltbildModell) 
+      facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ersatzschaltbildModell}", 
+      ErsatzschaltbildModell.class); 
+   
+   ersatzschaltbildModell.datenUebernehmen(this);
+   
+   return "ersatzschaltbild";
    }
 }
