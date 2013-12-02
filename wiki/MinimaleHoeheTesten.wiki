@@ -1,6 +1,6 @@
 =Einhaltung der minimalen Seitenhöhe überprüfen=
 
  # Die Seite http://ortskurve.appspot.com aufrufen -> Die Seite "Berechnung der Ortskurve" wird angezeigt
- # Überprüfen, ob die Seitenhöhe 900 Pixel beträgt.
+ # Überprüfen, ob die Seitenhöhe ca. 600 Pixel beträgt.
  # Den Link Impressum drücken -> Das Impressum wird angezeigt
- # Überprüfen, ob die Seitenhöhe 900 Pixel beträgt.
+ # Überprüfen, ob die Seitenhöhe ca. 600 Pixel beträgt.
