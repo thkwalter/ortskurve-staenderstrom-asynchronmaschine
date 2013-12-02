@@ -10,5 +10,5 @@
 }}} 
 eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
  # Das Resultat kontrollieren -> Mittelpunkt der optimalen Ausgleichskurve (2, -0.5) und Radius 2
- # Das Resultat kontrollieren -> Mittelpunkt der Ortskurve der 2d Ausgleichsrechnung  (2,0)
+ # Das Resultat kontrollieren -> Mittelpunkt der Ortskurve (2,0) und Radius 2
  # Die Grafik kontrollieren
