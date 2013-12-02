@@ -5,3 +5,5 @@
  # Den Link Berechnung drücken -> Die Berechnungsseite wird angezeigt
  # Den Link Nutzungsbedingungen drücken -> Die Nutzungsbedingungen werden angezeigt
  # Auf die Seitenüberschrift drücken -> Die Berechnungsseite wird angezeigt
+ # Den Link Datenschutzerklärung drücken -> Die Datenschutzerklärung wird angezeigt
+ # Den Link Impressum auf der Seite Datenschutzerklärung drücken -> Das Impressum wird angezeigt
