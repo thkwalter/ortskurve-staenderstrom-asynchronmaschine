@@ -1,4 +1,4 @@
-=Berechnung der Ortskurve der 2d-Ausgleichsrechnung überprüfen
+=Berechnung der Ortskurve der 2d-Ausgleichsrechnung überprüfen=
 
  # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
  # Die Punkte 
