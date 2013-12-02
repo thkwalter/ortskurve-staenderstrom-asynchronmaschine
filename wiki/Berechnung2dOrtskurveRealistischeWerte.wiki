@@ -1,0 +1,15 @@
+=Berechnung der Ortskurve der 2d-Ausgleichsrechnung mit realistischen Werten=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte 
+{{{
+163.3, 315.6
+136.9, 253.0
+116.3, 190.5
+100.8, 126.3
+91.5, 63.4
+}}} 
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
+ # Das Resultat kontrollieren -> Mittelpunkt der optimalen Ausgleichskurve (874.73, -23.76) und Radius 788.15
+ # Das Resultat kontrollieren -> Mittelpunkt der Ortskurve (794.41, 0.00) und Radius 705.05
+ # Die Grafik kontrollieren
