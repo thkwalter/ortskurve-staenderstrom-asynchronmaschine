@@ -150,14 +150,10 @@ public void testDatenUebernehmen() throws NoSuchMethodException, SecurityExcepti
    testOrtskurveModell.setOrtskurve(testOrtskurve);
    testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(0.5, 0.0), new Vector2D(2.0, 1.5)});
    
-   // Der im Test verwendete Controller der Ortskurvenberechnung wird initialisiert.
-   OrtskurveController testAusgleichsproblem = new OrtskurveController();
-   testAusgleichsproblem.setOrtskurveModell(testOrtskurveModell);
-   
    // Die zu testende Methode wird aufgerufen.
-   Method methode = ErsatzschaltbildModell.class.getDeclaredMethod("datenUebernehmen", OrtskurveController.class);
+   Method methode = ErsatzschaltbildModell.class.getDeclaredMethod("datenUebernehmen", OrtskurveModell.class);
    methode.setAccessible(true);
-   methode.invoke(this.ersatzschaltbildModell, testAusgleichsproblem);
+   methode.invoke(this.ersatzschaltbildModell, testOrtskurveModell);
    
    // Es wird überprüft, ob die Ortskurve korrekt übernommen worden ist.
    assertEquals(testOrtskurve, this.ersatzschaltbildModell.getOrtskurve());
@@ -496,6 +492,49 @@ public void testSetX_1h()
    
    // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt gespeichert worden ist.
    assertEquals(25.0, this.ersatzschaltbildModell.getX_1h(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#getSchaltungstyp()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetSchaltungstyp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Der im Test verwendete Schaltungstyp wird im Datenmodell gespeichert.
+   Field feld = ErsatzschaltbildModell.class.getDeclaredField("schaltungstyp");
+   feld.setAccessible(true);
+   feld.set(this.ersatzschaltbildModell, Schaltungstyp.DREIECK);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Schaltungstyp schaltungstyp = this.ersatzschaltbildModell.getSchaltungstyp();
+   
+   // Es wird überprüft, ob der Schaltungstyp korrekt zurückgegeben worden ist.
+   assertEquals(Schaltungstyp.DREIECK, schaltungstyp);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#setSchaltungstyp(Schaltungstyp)}.
+ */
+@Test
+public void testSet()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.ersatzschaltbildModell.setSchaltungstyp(Schaltungstyp.STERN);
+   
+   // Es wird überprüft, ob der Schaltungstyp korrekt gespeichert worden ist.
+   assertEquals(Schaltungstyp.STERN, this.ersatzschaltbildModell.getSchaltungstyp());
    }
 
 // =====================================================================================================================

@@ -75,6 +75,12 @@
                </h:inputText> 
                
             </h:panelGrid>
+            
+            <h:selectOneRadio value="#{user.favColor1}">
+               <f:selectItem itemValue="Red" itemLabel="Color1 - Red" />
+               <f:selectItem itemValue="Green" itemLabel="Color1 - Green" />
+               <f:selectItem itemValue="Blue" itemLabel="Color1 - Blue" />
+            </h:selectOneRadio>
 	         
 	         <p:dialog id="basicDialog" header="Hilfe" widgetVar="dlg1">  
                <h:outputText value="Mit Netzspannung ist die effektive" /><br/>
