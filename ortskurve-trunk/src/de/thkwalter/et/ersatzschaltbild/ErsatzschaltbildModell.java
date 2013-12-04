@@ -62,6 +62,11 @@ private double f1;
  */
 private int p;
 
+/**
+ * Der Schaltungstyp.
+ */
+private Schaltungstyp schaltungstyp;
+
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -291,6 +296,34 @@ public void setX_1h(double x_1h)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt den Schaltungstyp zurück.
+ * 
+ * @return Der Schaltungstyp
+ */
+public Schaltungstyp getSchaltungstyp()
+   {
+   // Der Schaltungstyp wird zurückgegeben.
+   return this.schaltungstyp;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den übergebenen Schaltungstyp im Modell.
+ * 
+ * @param schaltungstyp Der Schaltungstyp
+ */
+public void setSchaltungstyp(Schaltungstyp schaltungstyp)
+   {
+   // Der übergebene Schaltungstyp wird im Modell gespeichert.
+   this.schaltungstyp = schaltungstyp;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString()
  */
 @Override
@@ -310,6 +343,12 @@ public String toString()
    if (betriebspunkte != null)
       {
       builder.append("betriebspunkte=").append(betriebspunkte).append(", ");
+      }
+   
+   // Die Zeichenkette, welche den Schaltungstyp repräsentiert, wird hinzugefügt.
+   if (schaltungstyp != null)
+      {
+      builder.append("schaltungstyp=").append(schaltungstyp).append(", ");
       }
    
    // Die Zeichenkette, welche die Leiter-Leiter-Spannung (in V) repräsentiert, wird hinzugefügt.
