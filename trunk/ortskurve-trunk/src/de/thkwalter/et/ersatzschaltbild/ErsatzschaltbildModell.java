@@ -17,7 +17,6 @@ package de.thkwalter.et.ersatzschaltbild;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -26,7 +25,6 @@ import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
-import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
@@ -73,11 +71,6 @@ private double x_1h;
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-/*
- * Der Logger dieser Klasse.
- */
-private static Logger logger = Logger.getLogger(ErsatzschaltbildModell.class.getName());
-
 /**
  * Die Serialisierungsnummer
  */
@@ -108,21 +101,18 @@ public ErsatzschaltbildModell()
  * Diese Methode übernimmt die benötigten Daten des Datenmodells der Ortskurvenberechnung in das Datenmodell der 
  * Ersatzschaltbildberechnung
  * 
- * @param ausgleichsproblem Der Controller der Ortskurvenberechnung
+ * @param ortskurveModell Das Frontend-Modell der Ortskurvenberechnung
  */
-public void datenUebernehmen(OrtskurveController ausgleichsproblem)
+public void datenUebernehmen(OrtskurveModell ortskurveModell)
    {
-   // Das Datenmodell der Ortskurvenberechnung wird gelesen.
-   OrtskurveModell ortskurveModell = ausgleichsproblem.getOrtskurveModell();
-
    // Die Ortskurve wird in das Datenmodell des Ersatzschaltbildberechnung übertragen.
    this.setOrtskurve(ortskurveModell.getOrtskurve());
    
    // Die Messpunkte werden in das Datenmodell der Ersatzschaltbildberechnung übertragen.
    Vector2D[] messpunkte = ortskurveModell.getMesspunkte();
    
+   // Für jeden Messpunkt wird ein Betriebspunkt hinzugefügt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
-   
    for (Vector2D messpunkt : messpunkte)
       {
       this.betriebspunkte.add(new Betriebspunkt(new Complex(messpunkt.getY(), -messpunkt.getX())));
