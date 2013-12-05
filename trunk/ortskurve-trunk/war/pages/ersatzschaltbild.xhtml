@@ -71,16 +71,28 @@
                <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8" required="true"
                   label="Polpaarzahl"
                   requiredMessage="Die Polpaarzahl wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
-               <f:validator validatorId="positiveIntegerValidator" />
+                  <f:validator validatorId="positiveIntegerValidator" />
                </h:inputText> 
-               
             </h:panelGrid>
             
-            <h:selectOneRadio value="#{user.favColor1}">
-               <f:selectItem itemValue="Red" itemLabel="Color1 - Red" />
-               <f:selectItem itemValue="Green" itemLabel="Color1 - Green" />
-               <f:selectItem itemValue="Blue" itemLabel="Color1 - Blue" />
-            </h:selectOneRadio>
+            <h:panelGrid columns="8" styleClass="table-3-spalten-zwei"
+               columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,
+               eingabe-3-spalten-empty,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">  
+               <h:outputLabel for="spannung" value="Schaltungstyp:"/>
+                 
+               <h:selectOneRadio value="#{ersatzschaltbildModell.schaltungstyp}" layout="pageDirection" 
+                  styleClass="radio-button-group">
+                  <f:selectItem itemValue=" STERN" itemLabel="Stern" />
+                  <f:selectItem itemValue="     DREIECK" itemLabel="Dreieck" />
+               </h:selectOneRadio>
+               
+               <h:outputText value=""/>
+               <h:outputText value=""/>  
+               <h:outputText value=""/>
+               <h:outputText value=""/> 
+               <h:outputText value=""/>
+               <h:outputText value=""/>            
+            </h:panelGrid>
 	         
 	         <p:dialog id="basicDialog" header="Hilfe" widgetVar="dlg1">  
                <h:outputText value="Mit Netzspannung ist die effektive" /><br/>
