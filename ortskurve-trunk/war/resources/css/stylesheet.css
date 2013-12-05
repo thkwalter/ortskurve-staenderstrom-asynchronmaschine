@@ -174,7 +174,14 @@ div#menue a
 /* ****************************************************************************************************************** */
 /* Formatierungsangaben für Formulare                                                                                 */
 /* ****************************************************************************************************************** */ 
-   
+
+.table-3-spalten-zwei
+   {
+   width: 860px;
+   border-collapse: collapse;
+   margin-top: 10px;
+   }
+
 .table-3-spalten
    {
    width: 860px;
@@ -229,6 +236,21 @@ div#menue a
    padding: 3px;
    background-color: #ffffff;
    width: 154px;
+   }
+   
+.radio-button-group
+   {
+   float: right;
+   }
+   
+.radio-button-group td
+   {
+   text-align: left;
+   }
+   
+.radio-button-group label
+   {
+   margin-left: 5px;
    }
  
 /* ****************************************************************************************************************** */
