@@ -65,4 +65,10 @@
       <welcome-file>index.xhtml</welcome-file>
       <welcome-file>index.html</welcome-file>
    </welcome-file-list>
+   
+   <!-- Die Ablaufzeit für Resourcen wird auf 8 Stunden festgelegt. -->
+   <context-param>
+    <param-name>com.sun.faces.defaultResourceMaxAge</param-name>
+    <param-value>28800000</param-value>
+</context-param>
 </web-app>
