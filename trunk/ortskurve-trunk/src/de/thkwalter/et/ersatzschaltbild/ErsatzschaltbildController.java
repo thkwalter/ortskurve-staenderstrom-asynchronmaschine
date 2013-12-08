@@ -58,13 +58,9 @@ public String ersatzschaltbildBerechnen()
    {
    try
       {
-      double u1 = this.ersatzschaltbildModell.getU1();
-      double m_x = this.ersatzschaltbildModell.getOrtskurve().getMittelpunktOrtskurve().getX();
-      double m_y = this.ersatzschaltbildModell.getOrtskurve().getMittelpunktOrtskurve().getY();
-      double r = this.ersatzschaltbildModell.getOrtskurve().getRadiusOrtskurve();
+      // Die Daten des Frontend-Modells werden protokolliert.
+      ErsatzschaltbildController.logger.info(this.ersatzschaltbildModell.toString());
       
-      // Die Hauptreaktanz (in Ohm) wird berechnet.
-      this.ersatzschaltbildModell.setX_1h(u1 / (m_x - r));
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.

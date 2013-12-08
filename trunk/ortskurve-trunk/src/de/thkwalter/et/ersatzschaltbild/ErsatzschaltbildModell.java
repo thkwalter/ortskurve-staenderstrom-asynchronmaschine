@@ -50,7 +50,7 @@ private ArrayList<Betriebspunkt> betriebspunkte;
 /**
  * Die Leiter-Leiter-Spannung (in V).
  */
-private double u1;
+private double u_LL;
 
 /**
  * Die Frequenz des Ständerstroms (in Hz).
@@ -92,7 +92,7 @@ public ErsatzschaltbildModell()
    // Die numerischen Attribute werden mit NaN-Werten initialisiert.
    this.f1 = Double.NaN;
    this.p = Integer.MIN_VALUE;
-   this.u1 = Double.NaN;
+   this.u_LL = Double.NaN;
    this.x_1h = Double.NaN;
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
@@ -188,10 +188,10 @@ public void setBetriebspunkte(ArrayList<Betriebspunkt> betriebspunkte)
  * 
  * @return Die Leiter-Leiter-Spannung (in V)
  */
-public Double getU1()
+public Double getU_LL()
    {
    // Die Leiter-Leiter-Spannung (in V) wird zurückgegeben.
-   return Double.isNaN(this.u1) ? null : this.u1;
+   return Double.isNaN(this.u_LL) ? null : this.u_LL;
    }
 
 // =====================================================================================================================
@@ -200,12 +200,12 @@ public Double getU1()
 /**
  * Diese Methode speichert die übergebene Leiter-Leiter-Spannung (in V) im Datenmodell.
  * 
- * @param u1 Die Leiter-Leiter-Spannung (in V)
+ * @param u_LL Die Leiter-Leiter-Spannung (in V)
  */
-public void setU1(Double u1)
+public void setU_LL(Double u_LL)
    {
    // Die übergebene Leiter-Leiter-Spannung wird im Datenmodell gespeichert.
-   this.u1 = u1;
+   this.u_LL = u_LL;
    }
 
 // =====================================================================================================================
@@ -352,7 +352,7 @@ public String toString()
       }
    
    // Die Zeichenkette, welche die Leiter-Leiter-Spannung (in V) repräsentiert, wird hinzugefügt.
-   builder.append("u1=").append(u1);
+   builder.append("u_LL=").append(u_LL);
    
    // Die Zeichenkette, welche die Frequenz des Ständerstroms (in Hz) repräsentiert, wird hinzugefügt.
    builder.append(", f1=").append(f1);

@@ -65,7 +65,7 @@ public void setUp() throws Exception
    this.testErsatzschaltbildModell.setOrtskurve(testOrtskurve);
    
    // Die im Test verwendete Strangspannung (in V) wird erzeugt und zum Modell hinzugefügt.
-   this.testErsatzschaltbildModell.setU1(400.0);
+   this.testErsatzschaltbildModell.setU_LL(400.0);
    }
 
 // =====================================================================================================================

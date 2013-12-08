@@ -48,7 +48,7 @@
 	               <h:outputLabel for="spannung" value=" in V"/>
 	            </h:panelGroup>
 	               
-               <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8" required="true" 
+               <h:inputText id="spannung" value="#{ersatzschaltbildModell.u_LL}" size="8" required="true" 
                   label="Netzspannung"
                   requiredMessage="Die Netzspannung wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
                   <f:validator validatorId="positiveDoubleValidator" />
@@ -82,8 +82,8 @@
                  
                <h:selectOneRadio value="#{ersatzschaltbildModell.schaltungstyp}" layout="pageDirection" 
                   styleClass="radio-button-group">
-                  <f:selectItem itemValue=" STERN" itemLabel="Stern" />
-                  <f:selectItem itemValue="     DREIECK" itemLabel="Dreieck" />
+                  <f:selectItem itemValue="STERN" itemLabel="Stern" />
+                  <f:selectItem itemValue="DREIECK" itemLabel="Dreieck" />
                </h:selectOneRadio>
                
                <h:outputText value=""/>
