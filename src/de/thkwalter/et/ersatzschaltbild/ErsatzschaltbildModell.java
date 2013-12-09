@@ -17,13 +17,17 @@ package de.thkwalter.et.ersatzschaltbild;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.Ortskurve;
 import de.thkwalter.et.ortskurve.OrtskurveModell;
 
@@ -50,7 +54,7 @@ private ArrayList<Betriebspunkt> betriebspunkte;
 /**
  * Die Leiter-Leiter-Spannung (in V).
  */
-private double u_LL;
+private double u1;
 
 /**
  * Die Frequenz des Ständerstroms (in Hz).
@@ -62,11 +66,6 @@ private double f1;
  */
 private int p;
 
-/**
- * Der Schaltungstyp.
- */
-private Schaltungstyp schaltungstyp;
-
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -75,6 +74,11 @@ private Schaltungstyp schaltungstyp;
 private double x_1h;
 
 // ---------------------------------------------------------------------------------------------------------------------
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger(ErsatzschaltbildModell.class.getName());
 
 /**
  * Die Serialisierungsnummer
@@ -92,11 +96,35 @@ public ErsatzschaltbildModell()
    // Die numerischen Attribute werden mit NaN-Werten initialisiert.
    this.f1 = Double.NaN;
    this.p = Integer.MIN_VALUE;
-   this.u_LL = Double.NaN;
+   this.u1 = Double.NaN;
    this.x_1h = Double.NaN;
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode initialisiert das Datenmodell mit Hilfe des Datenmodells der Ortskurvenberechnung.
+ */
+@PostConstruct
+public void init()
+   {
+   // Der FacesContext wird gelesen.
+   FacesContext facesContext = FacesContext.getCurrentInstance();
+   
+   // Der Controller der Ortskurvenberechnung wird gelesen.
+   OrtskurveController ausgleichsproblem = (OrtskurveController) facesContext.getApplication().evaluateExpressionGet(
+      facesContext, "#{ausgleichsproblem}", OrtskurveController.class); 
+
+   // Die benötigten Daten des Datenmodells der Ortskurvenberechnung werden in das Datenmodell der 
+   // Ersatzschaltbildberechnung übernommen.
+   this.datenUebernehmen(ausgleichsproblem);
+      
+   // Das Modell des Ersatzschaltbildes wird protokolliert.
+   ErsatzschaltbildModell.logger.info(this.toString());
    }
    
 // =====================================================================================================================
@@ -106,18 +134,19 @@ public ErsatzschaltbildModell()
  * Diese Methode übernimmt die benötigten Daten des Datenmodells der Ortskurvenberechnung in das Datenmodell der 
  * Ersatzschaltbildberechnung
  * 
- * @param ortskurveModell Das Frontend-Modell der Ortskurvenberechnung
+ * @param ausgleichsproblem Der Controller der Ortskurvenberechnung
  */
-public void datenUebernehmen(OrtskurveModell ortskurveModell)
+private void datenUebernehmen(OrtskurveController ausgleichsproblem)
    {
+   // Das Datenmodell der Ortskurvenberechnung wird gelesen.
+   OrtskurveModell ortskurveModell = ausgleichsproblem.getOrtskurveModell();
+
    // Die Ortskurve wird in das Datenmodell des Ersatzschaltbildberechnung übertragen.
    this.setOrtskurve(ortskurveModell.getOrtskurve());
    
    // Die Messpunkte werden in das Datenmodell der Ersatzschaltbildberechnung übertragen.
    Vector2D[] messpunkte = ortskurveModell.getMesspunkte();
    
-   // Für jeden Messpunkt wird ein Betriebspunkt hinzugefügt.
-   this.betriebspunkte = new ArrayList<Betriebspunkt>();
    for (Vector2D messpunkt : messpunkte)
       {
       this.betriebspunkte.add(new Betriebspunkt(new Complex(messpunkt.getY(), -messpunkt.getX())));
@@ -188,10 +217,10 @@ public void setBetriebspunkte(ArrayList<Betriebspunkt> betriebspunkte)
  * 
  * @return Die Leiter-Leiter-Spannung (in V)
  */
-public Double getU_LL()
+public Double getU1()
    {
    // Die Leiter-Leiter-Spannung (in V) wird zurückgegeben.
-   return Double.isNaN(this.u_LL) ? null : this.u_LL;
+   return Double.isNaN(this.u1) ? null : this.u1;
    }
 
 // =====================================================================================================================
@@ -200,12 +229,12 @@ public Double getU_LL()
 /**
  * Diese Methode speichert die übergebene Leiter-Leiter-Spannung (in V) im Datenmodell.
  * 
- * @param u_LL Die Leiter-Leiter-Spannung (in V)
+ * @param u1 Die Leiter-Leiter-Spannung (in V)
  */
-public void setU_LL(Double u_LL)
+public void setU1(Double u1)
    {
    // Die übergebene Leiter-Leiter-Spannung wird im Datenmodell gespeichert.
-   this.u_LL = u_LL;
+   this.u1 = u1;
    }
 
 // =====================================================================================================================
@@ -296,34 +325,6 @@ public void setX_1h(double x_1h)
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt den Schaltungstyp zurück.
- * 
- * @return Der Schaltungstyp
- */
-public Schaltungstyp getSchaltungstyp()
-   {
-   // Der Schaltungstyp wird zurückgegeben.
-   return this.schaltungstyp;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert den übergebenen Schaltungstyp im Modell.
- * 
- * @param schaltungstyp Der Schaltungstyp
- */
-public void setSchaltungstyp(Schaltungstyp schaltungstyp)
-   {
-   // Der übergebene Schaltungstyp wird im Modell gespeichert.
-   this.schaltungstyp = schaltungstyp;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
  * @see java.lang.Object#toString()
  */
 @Override
@@ -345,14 +346,8 @@ public String toString()
       builder.append("betriebspunkte=").append(betriebspunkte).append(", ");
       }
    
-   // Die Zeichenkette, welche den Schaltungstyp repräsentiert, wird hinzugefügt.
-   if (schaltungstyp != null)
-      {
-      builder.append("schaltungstyp=").append(schaltungstyp).append(", ");
-      }
-   
    // Die Zeichenkette, welche die Leiter-Leiter-Spannung (in V) repräsentiert, wird hinzugefügt.
-   builder.append("u_LL=").append(u_LL);
+   builder.append("u1=").append(u1);
    
    // Die Zeichenkette, welche die Frequenz des Ständerstroms (in Hz) repräsentiert, wird hinzugefügt.
    builder.append(", f1=").append(f1);

@@ -48,7 +48,7 @@
 	               <h:outputLabel for="spannung" value=" in V"/>
 	            </h:panelGroup>
 	               
-               <h:inputText id="spannung" value="#{ersatzschaltbildModell.u_LL}" size="8" required="true" 
+               <h:inputText id="spannung" value="#{ersatzschaltbildModell.u1}" size="8" required="true" 
                   label="Netzspannung"
                   requiredMessage="Die Netzspannung wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
                   <f:validator validatorId="positiveDoubleValidator" />
@@ -71,27 +71,9 @@
                <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8" required="true"
                   label="Polpaarzahl"
                   requiredMessage="Die Polpaarzahl wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
-                  <f:validator validatorId="positiveIntegerValidator" />
+               <f:validator validatorId="positiveIntegerValidator" />
                </h:inputText> 
-            </h:panelGrid>
-            
-            <h:panelGrid columns="8" styleClass="table-3-spalten-zwei"
-               columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,
-               eingabe-3-spalten-empty,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">  
-               <h:outputLabel for="spannung" value="Schaltungstyp:"/>
-                 
-               <h:selectOneRadio value="#{ersatzschaltbildModell.schaltungstyp}" layout="pageDirection" 
-                  styleClass="radio-button-group">
-                  <f:selectItem itemValue="STERN" itemLabel="Stern" />
-                  <f:selectItem itemValue="DREIECK" itemLabel="Dreieck" />
-               </h:selectOneRadio>
                
-               <h:outputText value=""/>
-               <h:outputText value=""/>  
-               <h:outputText value=""/>
-               <h:outputText value=""/> 
-               <h:outputText value=""/>
-               <h:outputText value=""/>            
             </h:panelGrid>
 	         
 	         <p:dialog id="basicDialog" header="Hilfe" widgetVar="dlg1">  

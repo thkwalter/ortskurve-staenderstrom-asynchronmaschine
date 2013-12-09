@@ -108,7 +108,7 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
    assertTrue(Double.isNaN(f1));
    
    // Die effektive Leiter-Leiter-Spannung (in V) wird gelesen.
-   feld = ErsatzschaltbildModell.class.getDeclaredField("u_LL");
+   feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
    feld.setAccessible(true);
    Double u1 = feld.getDouble(this.ersatzschaltbildModell);
    
@@ -150,10 +150,14 @@ public void testDatenUebernehmen() throws NoSuchMethodException, SecurityExcepti
    testOrtskurveModell.setOrtskurve(testOrtskurve);
    testOrtskurveModell.setMesspunkte(new Vector2D[]{new Vector2D(0.5, 0.0), new Vector2D(2.0, 1.5)});
    
+   // Der im Test verwendete Controller der Ortskurvenberechnung wird initialisiert.
+   OrtskurveController testAusgleichsproblem = new OrtskurveController();
+   testAusgleichsproblem.setOrtskurveModell(testOrtskurveModell);
+   
    // Die zu testende Methode wird aufgerufen.
-   Method methode = ErsatzschaltbildModell.class.getDeclaredMethod("datenUebernehmen", OrtskurveModell.class);
+   Method methode = ErsatzschaltbildModell.class.getDeclaredMethod("datenUebernehmen", OrtskurveController.class);
    methode.setAccessible(true);
-   methode.invoke(this.ersatzschaltbildModell, testOrtskurveModell);
+   methode.invoke(this.ersatzschaltbildModell, testAusgleichsproblem);
    
    // Es wird überprüft, ob die Ortskurve korrekt übernommen worden ist.
    assertEquals(testOrtskurve, this.ersatzschaltbildModell.getOrtskurve());
@@ -256,7 +260,7 @@ public void testSetBetriebspunkte()
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link ErsatzschaltbildModell#getU_LL()}.
+ * Test für die Methode {@link ErsatzschaltbildModell#getU1()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -264,26 +268,25 @@ public void testSetBetriebspunkte()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetU_LL_1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
-   IllegalAccessException
+public void testGetU1_1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
    // Die im Test verwendete Leiter-Leiter-Spannung (in V) wird im Datenmodell gespeichert.
-   Field u1Feld = ErsatzschaltbildModell.class.getDeclaredField("u_LL");
+   Field u1Feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
    u1Feld.setAccessible(true);
    u1Feld.setDouble(this.ersatzschaltbildModell, 400.0);
    
    // Die zu testende Methode wird aufgerufen.
-   double u_LL = this.ersatzschaltbildModell.getU_LL();
+   double u1 = this.ersatzschaltbildModell.getU1();
    
    // Es wird überprüft, ob die Leiter-Leiter-Spannung (in V) korrekt zurückgegeben worden ist.
-   assertEquals(400.0, u_LL, 0.0);
+   assertEquals(400.0, u1, 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link ErsatzschaltbildModell#getU_LL()}.
+ * Test für die Methode {@link ErsatzschaltbildModell#getU1()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -291,16 +294,15 @@ public void testGetU_LL_1() throws NoSuchFieldException, SecurityException, Ille
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetU_LL_2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
-   IllegalAccessException
+public void testGetU1_2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
    // Die im Test verwendete Leiter-Leiter-Spannung (in V) wird im Datenmodell gespeichert.
-   Field feld = ErsatzschaltbildModell.class.getDeclaredField("u_LL");
-   feld.setAccessible(true);
-   feld.setDouble(this.ersatzschaltbildModell, Double.NaN);
+   Field u1Feld = ErsatzschaltbildModell.class.getDeclaredField("u1");
+   u1Feld.setAccessible(true);
+   u1Feld.setDouble(this.ersatzschaltbildModell, Double.NaN);
    
    // Die zu testende Methode wird aufgerufen.
-   assertNull(this.ersatzschaltbildModell.getU_LL());
+   assertNull(this.ersatzschaltbildModell.getU1());
    }
 
 // =====================================================================================================================
@@ -310,13 +312,13 @@ public void testGetU_LL_2() throws NoSuchFieldException, SecurityException, Ille
  * Test method for {@link de.thkwalter.et.ersatzschaltbild.ErsatzschaltbildModell#setU1(double)}.
  */
 @Test
-public void testSetU_LL()
+public void testSetU1()
    {
    // Die zu testende Methode wird aufgerufen.
-   this.ersatzschaltbildModell.setU_LL(400.0);
+   this.ersatzschaltbildModell.setU1(400.0);
    
    // Es wird überprüft, ob die Leiter-Leiter-Spannung (in V) korrekt gespeichert worden ist.
-   assertEquals(400.0, this.ersatzschaltbildModell.getU_LL(), 0.0);
+   assertEquals(400.0, this.ersatzschaltbildModell.getU1(), 0.0);
    }
 
 // =====================================================================================================================
@@ -500,42 +502,37 @@ public void testSetX_1h()
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link ErsatzschaltbildModell#getSchaltungstyp()}.
- * 
- * @throws SecurityException 
- * @throws NoSuchFieldException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
+ * Test für die Methode {@link ErsatzschaltbildModell#toString()}.
  */
 @Test
-public void testGetSchaltungstyp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
-   IllegalAccessException
+public void testToString1()
    {
-   // Der im Test verwendete Schaltungstyp wird im Datenmodell gespeichert.
-   Field feld = ErsatzschaltbildModell.class.getDeclaredField("schaltungstyp");
-   feld.setAccessible(true);
-   feld.set(this.ersatzschaltbildModell, Schaltungstyp.DREIECK);
+   // Das Objekt der zu testenden Klasse wird initalisiert.
+   this.ersatzschaltbildModell.setOrtskurve(this.testOrtskurve);
+   this.ersatzschaltbildModell.setBetriebspunkte(this.testBetriebspunkte);
+   this.testBetriebspunkte.add(new Betriebspunkt(new Complex(2, 0)));
+   this.ersatzschaltbildModell.setF1(50d);
+   this.ersatzschaltbildModell.setU1(400d);
+   this.ersatzschaltbildModell.setP(1);
+   this.ersatzschaltbildModell.setX_1h(25.0);
    
-   // Die zu testende Methode wird aufgerufen.
-   Schaltungstyp schaltungstyp = this.ersatzschaltbildModell.getSchaltungstyp();
-   
-   // Es wird überprüft, ob der Schaltungstyp korrekt zurückgegeben worden ist.
-   assertEquals(Schaltungstyp.DREIECK, schaltungstyp);
+   // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
+   String meldung = "ErsatzschaltbildModell [ortskurve=Ortskurve [mittelpunktOrtskurve={2; 0}, radiusOrtskurve=2.0], " +
+      "betriebspunkte=[Betriebspunkt [i1=(2.0, 0.0), n=NaN]], u1=400.0, f1=50.0, p=1, x_1h=25.0]";
+   assertEquals(meldung, this.ersatzschaltbildModell.toString());
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link ErsatzschaltbildModell#setSchaltungstyp(Schaltungstyp)}.
+ * Test für die Methode {@link ErsatzschaltbildModell#toString()}.
  */
 @Test
-public void testSet()
-   {
-   // Die zu testende Methode wird aufgerufen.
-   this.ersatzschaltbildModell.setSchaltungstyp(Schaltungstyp.STERN);
-   
-   // Es wird überprüft, ob der Schaltungstyp korrekt gespeichert worden ist.
-   assertEquals(Schaltungstyp.STERN, this.ersatzschaltbildModell.getSchaltungstyp());
+public void testToString2()
+   {   
+   // Es wird überprüft, ob die Zeichenkette, die das zu testende Objekt repräsentiert, korrekt zusammengebaut wird.
+   String meldung = "ErsatzschaltbildModell [betriebspunkte=[], u1=NaN, f1=NaN, p=-2147483648, x_1h=NaN]";
+   assertEquals(meldung, this.ersatzschaltbildModell.toString());
    }
 }

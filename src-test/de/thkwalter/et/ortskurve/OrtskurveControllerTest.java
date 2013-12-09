@@ -156,36 +156,4 @@ public void testMesspunkteValidieren2() throws Throwable
    methode.setAccessible(true);
    methode.invoke(this.ortskurveController, (Object) testMesspunkte);
    }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test für die Methode {@link OrtskurveController#ortskurveBestimmen(Vector2D[], double[])}.
- * @throws SecurityException 
- * @throws NoSuchMethodException 
- * @throws InvocationTargetException 
- * @throws IllegalArgumentException 
- * @throws IllegalAccessException 
- */
-@Test
-public void testOrtskurveBestimmen() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
-   IllegalArgumentException, InvocationTargetException
-   {
-   // Die in diesem Test verwendeten Messpunkte werden deklariert.
-   Vector2D[] testMesspunkte = new Vector2D[]{new Vector2D(2.0, 0.0), new Vector2D(3.0, 1.0), new Vector2D(3.0, -1.0)};
-   
-   // Der in diesem Test verwendete Startpunkt wird deklariert.
-   double[] testStartpunkt = new double[]{3.0, 0.0, 1.0};
-   
-   // Die zu testenden Methode wird aufgerufen.
-   Method methode = OrtskurveController.class.getDeclaredMethod("ortskurveBestimmen", Vector2D[].class, double[].class);
-   methode.setAccessible(true);
-   Ortskurve ortskurve = (Ortskurve) methode.invoke(this.ortskurveController, testMesspunkte, testStartpunkt);
-   
-   // Es wird überprüft, ob der Startpunkt als Ortskurve zurückgegeben worden ist.
-   assertEquals(testStartpunkt[0], ortskurve.getMittelpunktOrtskurve().getX(), 0.0);
-   assertEquals(testStartpunkt[1], ortskurve.getMittelpunktOrtskurve().getY(), 0.0);
-   assertEquals(testStartpunkt[2], ortskurve.getRadiusOrtskurve(), 0.0);
-   }
 }
