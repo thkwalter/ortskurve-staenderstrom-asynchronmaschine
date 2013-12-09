@@ -123,6 +123,14 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
    // Es wird überprüft, ob die Polpaarzahl initialisiert worden ist.
    assertEquals(Integer.MIN_VALUE, p.intValue());
    
+   // Der Schaltungstyp wird gelesen.
+   feld = ErsatzschaltbildModell.class.getDeclaredField("schaltungstyp");
+   feld.setAccessible(true);
+   Schaltungstyp schaltungstyp = (Schaltungstyp) feld.get(this.ersatzschaltbildModell);
+   
+   // Es wird überprüft, ob der Schaltungstyp initialisiert worden ist.
+   assertEquals(Schaltungstyp.STERN, schaltungstyp);
+   
    // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.ersatzschaltbildModell.getX_1h()));
    }
