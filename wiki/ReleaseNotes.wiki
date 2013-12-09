@@ -18,3 +18,4 @@
   * Die Bibliothek javax.faces-2.2.x.jar auf Version 2.2.4 aktualisiert
   * Auf das Google App Engine-SDK der Version 1.8.8 umgestellt
   * Layout von konstanter Höhe auf minimale Höhe umgestellt.
+  * Ist der Realteil des optimalen Ausgleichskreises negativ, so wird die Ortskurve nochmals berechnet, wobei die Randbedingung beachtet wird, dass der Mittelpunkt auf der Imaginärachse liegt.
