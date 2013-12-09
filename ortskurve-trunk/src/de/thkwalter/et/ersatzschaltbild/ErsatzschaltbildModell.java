@@ -97,6 +97,9 @@ public ErsatzschaltbildModell()
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
+   
+   // Der Radiobutton wird mit STERN vorbelegt.
+   this.schaltungstyp = Schaltungstyp.STERN;
    }
    
 // =====================================================================================================================
