@@ -38,9 +38,31 @@ public class OrtskurveImpedanz
  */
 public static Ortskurve ortskurveImpedanzBerechnen(Ortskurve ortskurve, double u_LL, Schaltungstyp schaltungstyp)
    {
+   // Die Ortskurve für 1/Z(s) wird berechnet.
+   Ortskurve skalierteOrtskurve = OrtskurveImpedanz.ortskurveInverseImpedanzBerechnen(ortskurve, u_LL, schaltungstyp);
+   
+   // 
+   return null;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Die Ortskurve für 1/Z(s) wird berechnet.
+ * 
+ * @param ortskurve Die Stromortskurve
+ * @param u_LL Die Netzspannung (Leiter-Leiter; in V)
+ * @param schaltungstyp Der Schaltungstyp (Stern oder Dreieck)
+ * 
+ * @return Die
+ */
+private static Ortskurve ortskurveInverseImpedanzBerechnen(Ortskurve ortskurve, double u_LL, 
+   Schaltungstyp schaltungstyp)
+   {
    // In Abhängigkeit vom Schaltungstyp wird die Strangspannung berechnet.
    double u1 = Double.NaN;
-   if (schaltungstyp.STERN == schaltungstyp)
+   if (Schaltungstyp.STERN == schaltungstyp)
       {
       u1 = u_LL / Math.sqrt(3.0);
       }
@@ -49,8 +71,8 @@ public static Ortskurve ortskurveImpedanzBerechnen(Ortskurve ortskurve, double u
       throw new RuntimeException("Noch nicht implementiert!");
       }
    
-   // 
-   return null;
+   // Die Ortskurve für 1/Z(s) wird berechnet und zurückgegeben.
+   return ortskurve.skalierteOrtskurveBerechnen(u1);
    }
 
 // =====================================================================================================================
@@ -63,7 +85,7 @@ public static Ortskurve ortskurveImpedanzBerechnen(Ortskurve ortskurve, double u
  * 
  * @return Die invertierte Ortskurve
  */
-public static Ortskurve kreisInvertieren(Ortskurve ortskurve)
+private static Ortskurve kreisInvertieren(Ortskurve ortskurve)
    {
    // Die Parameter a und b werden bestimmt. a wird reell gewählt.
    double r = ortskurve.getRadiusOrtskurve();
