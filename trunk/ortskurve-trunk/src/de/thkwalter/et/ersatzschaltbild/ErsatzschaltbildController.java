@@ -24,6 +24,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import de.thkwalter.et.ortskurve.Ortskurve;
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
@@ -61,6 +62,8 @@ public String ersatzschaltbildBerechnen()
       // Die Daten des Frontend-Modells werden protokolliert.
       ErsatzschaltbildController.logger.info(this.ersatzschaltbildModell.toString());
       
+      // Das Ersatzschaltbild wird berechnet.
+      this.ersatzschaltbildBerechnenIntern();
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
@@ -80,6 +83,20 @@ public String ersatzschaltbildBerechnen()
    
    // Es wird wieder zur Seite ersatzschaltbild.xhtml weitergeleitet.
    return null;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Das Ersatzschaltbild wird berechnet.
+ */
+private void ersatzschaltbildBerechnenIntern()
+   {
+   // Die Ortskurve der Impedanz wird berechnet.
+   Ortskurve ortskurveImpedanz = OrtskurveImpedanz.ortskurveImpedanzBerechnen(
+      this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
+      this.ersatzschaltbildModell.getSchaltungstyp());
    }
 
 // =====================================================================================================================

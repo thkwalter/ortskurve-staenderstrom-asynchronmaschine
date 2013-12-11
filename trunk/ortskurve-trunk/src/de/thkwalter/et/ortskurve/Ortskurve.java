@@ -90,6 +90,28 @@ public double getRadiusOrtskurve()
 // =====================================================================================================================
 
 /**
+ * Diese Methode berechnet eine skalierte Ortskurve.
+ * 
+ * @param skalierungsfaktor Der Faktor, mit dem die Ortskurve, die durch dieses Objekt repräsentiert wird, 
+ * skaliert wird.
+ *
+ * @return Die skalierte Ortskurve
+ */
+public Ortskurve skalierteOrtskurveBerechnen(double skalierungsfaktor)
+   {
+   // Die skalierten Werte werden berechnet.
+   double radius_skaliert = this.radiusOrtskurve / skalierungsfaktor;
+   double mx_skaliert = this.getMittelpunktOrtskurve().getX() / skalierungsfaktor;
+   double my_skaliert = this.getMittelpunktOrtskurve().getY() / skalierungsfaktor;
+   
+   // Die skalierte Ortskurve wird erstellt und zurückgegeben.
+   return new Ortskurve(new Vector2D(mx_skaliert, my_skaliert), radius_skaliert);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString()
  */
 @Override

@@ -126,4 +126,21 @@ public void testGetRadiusOrtskurve()
    assertEquals(this.testRadiusOrtskurve, this.ortskurve.getRadiusOrtskurve(), 0.0);
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link Ortskurve#skalierteOrtskurveBerechnen(double)}.
+ */
+@Test
+public void testSkalierteOrtskurveBerechnen()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   Ortskurve skalierteOrtskurve = this.ortskurve.skalierteOrtskurveBerechnen(2.0);
+   
+   // Es wird überprüft, ob die skalierte Ortskurve korrekt berechnet worden ist.
+   assertEquals(0.5, skalierteOrtskurve.getRadiusOrtskurve(), 0.5/1000.0);
+   assertEquals(0.5, skalierteOrtskurve.getMittelpunktOrtskurve().getX(), 0.5/1000.0);
+   assertEquals(0.0, skalierteOrtskurve.getMittelpunktOrtskurve().getY(), 0.5/1000.0);
+   }
 }

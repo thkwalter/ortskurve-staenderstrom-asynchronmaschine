@@ -27,7 +27,34 @@ import de.thkwalter.et.ortskurve.Ortskurve;
  */
 public class OrtskurveImpedanz
 {
+/**
+ * Diese Methode berechnet die Ortskurve der Impedanz.
+ * 
+ * @param ortskurve Die Stromortskurve
+ * @param u_LL Die Netzspannung (Leiter-Leiter; in V)
+ * @param schaltungstyp Der Schaltungstyp (Stern oder Dreieck)
+ * 
+ * @return
+ */
+public static Ortskurve ortskurveImpedanzBerechnen(Ortskurve ortskurve, double u_LL, Schaltungstyp schaltungstyp)
+   {
+   // In Abhängigkeit vom Schaltungstyp wird die Strangspannung berechnet.
+   double u1 = Double.NaN;
+   if (schaltungstyp.STERN == schaltungstyp)
+      {
+      u1 = u_LL / Math.sqrt(3.0);
+      }
+   else
+      {
+      throw new RuntimeException("Noch nicht implementiert!");
+      }
+   
+   // 
+   return null;
+   }
 
+// =====================================================================================================================
+// =====================================================================================================================
 
 /**
  * Diese Methode invertiert eine kreisförmige Ortskurve.
