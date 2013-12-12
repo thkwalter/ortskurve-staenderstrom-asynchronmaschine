@@ -34,28 +34,28 @@ public class OrtskurveImpedanz
  * @param u_LL Die Netzspannung (Leiter-Leiter; in V)
  * @param schaltungstyp Der Schaltungstyp (Stern oder Dreieck)
  * 
- * @return
+ * @return Die Ortskurve der Impedanz
  */
 public static Ortskurve ortskurveImpedanzBerechnen(Ortskurve ortskurve, double u_LL, Schaltungstyp schaltungstyp)
    {
    // Die Ortskurve für 1/Z(s) wird berechnet.
    Ortskurve skalierteOrtskurve = OrtskurveImpedanz.ortskurveInverseImpedanzBerechnen(ortskurve, u_LL, schaltungstyp);
    
-   // 
-   return null;
+   // Die skalierte Ortskurve wird invertiert und die berechnete Ortskurve der Impedanz zurückgegeben.
+   return OrtskurveImpedanz.ortskurveInvertieren(skalierteOrtskurve);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Die Ortskurve für 1/Z(s) wird berechnet.
+ * Die Ortskurve der inversen Impedanz (in 1/Ohm) wird berechnet.
  * 
- * @param ortskurve Die Stromortskurve
+ * @param ortskurve Die Stromortskurve (in A)
  * @param u_LL Die Netzspannung (Leiter-Leiter; in V)
  * @param schaltungstyp Der Schaltungstyp (Stern oder Dreieck)
  * 
- * @return Die
+ * @return Die Ortskurve der inversen Impedanz (in 1/Ohm)
  */
 private static Ortskurve ortskurveInverseImpedanzBerechnen(Ortskurve ortskurve, double u_LL, 
    Schaltungstyp schaltungstyp)
@@ -71,7 +71,7 @@ private static Ortskurve ortskurveInverseImpedanzBerechnen(Ortskurve ortskurve, 
       throw new RuntimeException("Noch nicht implementiert!");
       }
    
-   // Die Ortskurve für 1/Z(s) wird berechnet und zurückgegeben.
+   // Die Ortskurve der inversen Impedanz wird berechnet und zurückgegeben.
    return ortskurve.skalierteOrtskurveBerechnen(u1);
    }
 
@@ -81,17 +81,17 @@ private static Ortskurve ortskurveInverseImpedanzBerechnen(Ortskurve ortskurve, 
 /**
  * Diese Methode invertiert eine kreisförmige Ortskurve.
  * 
- * @param ortskurve Die gegebene {@link Ortskurve}
+ * @param ortskurve Die Ausgangskurve
  * 
  * @return Die invertierte Ortskurve
  */
-private static Ortskurve kreisInvertieren(Ortskurve ortskurve)
+private static Ortskurve ortskurveInvertieren(Ortskurve ortskurve)
    {
    // Die Parameter a und b werden bestimmt. a wird reell gewählt.
    double r = ortskurve.getRadiusOrtskurve();
-   Complex a = new Complex(r);
-   Complex b = 
-      new Complex(ortskurve.getMittelpunktOrtskurve().getY() - 0.5 * r, - ortskurve.getMittelpunktOrtskurve().getX());
+   Complex a = new Complex(2*r);
+   Complex b = new Complex(ortskurve.getMittelpunktOrtskurve().getY() - 0.5 * a.getReal(), 
+      - ortskurve.getMittelpunktOrtskurve().getX());
    
    // Eine Hilfsgröße wird ermittelt.
    Complex hilf = (b.add(a)).multiply(b).multiply(2);
