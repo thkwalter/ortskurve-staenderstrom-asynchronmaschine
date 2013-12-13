@@ -21,7 +21,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.junit.Before;
 import org.junit.Test;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
@@ -33,17 +32,6 @@ import de.thkwalter.et.ortskurve.Ortskurve;
  */
 public class OrtskurveImpedanzTest
 {
-/**
- * @throws java.lang.Exception
- */
-@Before
-public void setUp() throws Exception
-   {
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
 /**
  * Test der Methode {@link OrtskurveImpedanz#ortskurveImpedanzBerechnen(Ortskurve, double, Schaltungstyp)}.
  */
