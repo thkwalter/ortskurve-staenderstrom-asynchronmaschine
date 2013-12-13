@@ -115,6 +115,14 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
    // Es wird überprüft, ob die Leiter-Leiter-Spannung (in V) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(u1));
    
+   // Der ohmsche Widerstand des Ständers (in Ohm) wird gelesen.
+   feld = ErsatzschaltbildModell.class.getDeclaredField("r1");
+   feld.setAccessible(true);
+   Double r1 = feld.getDouble(this.ersatzschaltbildModell);
+   
+   // Es wird überprüft, ob der ohmsche Widerstand des Ständers (in ohm) korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(r1));
+   
    // Die Polpaarzahl wird gelesen.
    feld = ErsatzschaltbildModell.class.getDeclaredField("p");
    feld.setAccessible(true);
@@ -508,6 +516,49 @@ public void testSetX_1h()
 // =====================================================================================================================
 
 /**
+ * Test für die Methode {@link ErsatzschaltbildModell#getR1()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetR1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Der im Test verwendete ohmsche Widerstand des Ständers (in Ohm) wird im Datenmodell gespeichert.
+   Field feld = ErsatzschaltbildModell.class.getDeclaredField("r1");
+   feld.setAccessible(true);
+   feld.setDouble(this.ersatzschaltbildModell, 10.0);
+   
+   // Die zu testende Methode wird aufgerufen.
+   double r1 = this.ersatzschaltbildModell.getR1();
+   
+   // Es wird überprüft, ob der ohmsche Widerstand des Ständers (in Ohm) korrekt zurückgegeben worden ist.
+   assertEquals(10.0, r1, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#setR1(double)}.
+ */
+@Test
+public void testSetR1()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.ersatzschaltbildModell.setR1(12.0);
+   
+   // Es wird überprüft, ob der ohmsche Widerstand des Ständers (in Ohm) korrekt gespeichert worden ist.
+   assertEquals(12.0, this.ersatzschaltbildModell.getR1(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test für die Methode {@link ErsatzschaltbildModell#getSchaltungstyp()}.
  * 
  * @throws SecurityException 
@@ -538,7 +589,7 @@ public void testGetSchaltungstyp() throws NoSuchFieldException, SecurityExceptio
  * Test für die Methode {@link ErsatzschaltbildModell#setSchaltungstyp(Schaltungstyp)}.
  */
 @Test
-public void testSet()
+public void testSetSchaltungstyp()
    {
    // Die zu testende Methode wird aufgerufen.
    this.ersatzschaltbildModell.setSchaltungstyp(Schaltungstyp.STERN);

@@ -70,6 +70,11 @@ private Schaltungstyp schaltungstyp;
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
+ * Der ohmsche Widerstand des Ständers (in Ohm).
+ */
+private double r1;
+
+/**
  * Die Hauptreaktanz (in Ohm)
  */
 private double x_1h;
@@ -94,6 +99,7 @@ public ErsatzschaltbildModell()
    this.p = Integer.MIN_VALUE;
    this.u_LL = Double.NaN;
    this.x_1h = Double.NaN;
+   this.r1 = Double.NaN;
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
@@ -327,6 +333,34 @@ public void setSchaltungstyp(Schaltungstyp schaltungstyp)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt den ohmschen Widerstand des Ständers (in Ohm) zurück.
+ * 
+ * @return Der ohmsche Widerstand des Ständers (in Ohm)
+ */
+public double getR1()
+   {
+   // Der ohmsche Widerstand des Ständers (in Ohm) wird zurückgegeben.
+   return this.r1;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den ohmschen Widerstand des Ständers (in Ohm) im Datenmodell.
+ * 
+ * @param r1 Der ohmsche Widerstand des Ständers (in Ohm)
+ */
+public void setR1(double r1)
+   {
+   // Der ohmsche Widerstand des Ständers (in Ohm) wird im Datenmodell gespeichert.
+   this.r1 = r1;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString()
  */
 @Override
@@ -339,29 +373,32 @@ public String toString()
    // Die Zeichenkette, welche die Ortskurve repräsentiert, wird hinzugefügt.
    if (ortskurve != null)
       {
-      builder.append("ortskurve=").append(ortskurve).append(", ");
+      builder.append("ortskurve=").append(this.ortskurve).append(", ");
       }
    
    // Die Zeichenkette, welche die Daten der Betriebspunkte repräsentiert, wird hinzugefügt.
    if (betriebspunkte != null)
       {
-      builder.append("betriebspunkte=").append(betriebspunkte).append(", ");
+      builder.append("betriebspunkte=").append(this.betriebspunkte).append(", ");
       }
    
    // Die Zeichenkette, welche den Schaltungstyp repräsentiert, wird hinzugefügt.
    if (schaltungstyp != null)
       {
-      builder.append("schaltungstyp=").append(schaltungstyp).append(", ");
+      builder.append("schaltungstyp=").append(this.schaltungstyp).append(", ");
       }
    
    // Die Zeichenkette, welche die Leiter-Leiter-Spannung (in V) repräsentiert, wird hinzugefügt.
-   builder.append("u_LL=").append(u_LL);
+   builder.append("u_LL=").append(this.u_LL);
    
    // Die Zeichenkette, welche die Frequenz des Ständerstroms (in Hz) repräsentiert, wird hinzugefügt.
-   builder.append(", f1=").append(f1);
+   builder.append(", f1=").append(this.f1);
    
    // Die Zeichenkette, welche die Polpaarzahl repräsentiert, wird hinzugefügt.
-   builder.append(", p=").append(p);
+   builder.append(", p=").append(this.p);
+   
+   // Die Zeichenkette, welche den ohmschen Widerstand des Ständers (in Ohm) repräsentiert, wird hinzugefügt.
+   builder.append("r1=").append(this.r1);
    
    // Die Zeichenkette, welche die Hauptreaktanz repräsentiert, wird hinzugefügt.
    builder.append(", x_1h=").append(this.x_1h).append("]");

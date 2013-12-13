@@ -97,6 +97,8 @@ private void ersatzschaltbildBerechnenIntern()
    Ortskurve ortskurveImpedanz = OrtskurveImpedanz.ortskurveImpedanzBerechnen(
       this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
       this.ersatzschaltbildModell.getSchaltungstyp());
+   
+   
    }
 
 // =====================================================================================================================
