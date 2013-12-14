@@ -43,29 +43,34 @@ public class ErsatzschaltbildModell implements Serializable
 private Ortskurve ortskurve;
 
 /**
- * Die Daten der verschiedenen Betriebspunkte.
+ * Die Daten der verschiedenen Betriebspunkte
  */
 private ArrayList<Betriebspunkt> betriebspunkte;
 
 /**
- * Die Leiter-Leiter-Spannung (in V).
+ * Die Leiter-Leiter-Spannung (in V)
  */
 private double u_LL;
 
 /**
- * Die Frequenz des Ständerstroms (in Hz).
+ * Die Frequenz des Ständerstroms (in Hz)
  */
 private double f1;
 
 /**
- * Die Polpaarzahl.
+ * Die Polpaarzahl
  */
 private int p;
 
 /**
- * Der Schaltungstyp.
+ * Der Schaltungstyp
  */
 private Schaltungstyp schaltungstyp;
+
+/**
+ * Die Repräsentation des Ersatzschaltbilds
+ */
+private Ersatzschaltbild ersatzschaltbild;
 
 /**
  * Die Serialisierungsnummer
@@ -290,7 +295,30 @@ public void setSchaltungstyp(Schaltungstyp schaltungstyp)
 // =====================================================================================================================
 // =====================================================================================================================
 
+/**
+ * Diese Methode gibt die Repräsentation des Ersatzschaltbilds zurück.
+ * 
+ * @return Die Repräsentation des Ersatzschaltbilds
+ */
+public Ersatzschaltbild getErsatzschaltbild()
+   {
+   // Die Repräsentations des Ersatzschaltbilds wird zurückgegeben.
+   return this.ersatzschaltbild;
+   }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die Repräsentation des Ersatzschaltbilds im Datenmodell.
+ * 
+ * @param ersatzschaltbild Die Repräsentation des Ersatzschaltbilds
+ */
+public void setErsatzschaltbild(Ersatzschaltbild ersatzschaltbild)
+   {
+   // Die Repräsentation des Ersatzschaltbilds wird im Datenmodell gespeichert.
+   this.ersatzschaltbild = ersatzschaltbild;
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================

@@ -500,4 +500,53 @@ public void testSetSchaltungstyp()
    // Es wird überprüft, ob der Schaltungstyp korrekt gespeichert worden ist.
    assertEquals(Schaltungstyp.STERN, this.ersatzschaltbildModell.getSchaltungstyp());
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link ErsatzschaltbildModell#getErsatzschaltbild()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGet() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die im Test verwendete Repräsentation des Ersatzschaltbilds wird erzeugt.
+   Ersatzschaltbild testErsatzschaltbild = new Ersatzschaltbild();
+   
+   // Die im Test verwendete Repräsentation des Ersatzschaltbilds wird im Datenmodell gespeichert.
+   Field feld = ErsatzschaltbildModell.class.getDeclaredField("ersatzschaltbild");
+   feld.setAccessible(true);
+   feld.set(this.ersatzschaltbildModell, testErsatzschaltbild);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Ersatzschaltbild ersatzschaltbild = this.ersatzschaltbildModell.getErsatzschaltbild();
+   
+   // Es wird überprüft, ob die Repräsentation des Ersatzschaltbildes korrekt zurückgegeben worden ist.
+   assertEquals(testErsatzschaltbild, ersatzschaltbild);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#setSchaltungstyp(Schaltungstyp)}.
+ */
+@Test
+public void testSet()
+   {
+   // Die im Test verwendete Repräsentation des Ersatzschaltbilds wird erzeugt.
+   Ersatzschaltbild testErsatzschaltbild = new Ersatzschaltbild();
+   
+   // Die zu testende Methode wird aufgerufen.
+   this.ersatzschaltbildModell.setErsatzschaltbild(testErsatzschaltbild);
+   
+   // Es wird überprüft, ob die Repräsentation des Ersatzschaltbilds korrekt gespeichert worden ist.
+   assertEquals(testErsatzschaltbild, this.ersatzschaltbildModell.getErsatzschaltbild());
+   }
 }
