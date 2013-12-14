@@ -33,6 +33,11 @@ private double r1;
 private double x1_sigma;
 
 /**
+ * Die auf den Ständer bezogene Läuferstreuung (in Ohm).
+ */
+private double x2_sigma_strich;
+
+/**
  * Die Hauptreaktanz (in Ohm)
  */
 private double x_1h;
@@ -48,6 +53,7 @@ public Ersatzschaltbild()
    this.x_1h = Double.NaN;
    this.r1 = Double.NaN;
    this.x1_sigma = Double.NaN;
+   this.x2_sigma_strich = Double.NaN;
    }
 
 // =====================================================================================================================
@@ -138,6 +144,34 @@ public void setX1_sigma(double x1_sigma)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt die auf den Ständer bezogene Läuferstreuung (in Ohm) zurück.
+ * 
+ * @return Die auf den Ständer bezogene Läuferstreuung (in Ohm)
+ */
+public double getX2_sigma_strich()
+   {
+   // Die auf den Ständer bezogene Läuferstreuung (in Ohm) wird zurückgegeben.
+   return this.x2_sigma_strich;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die auf den Ständer bezogene Läuferstreuung (in Ohm) im Datenmodell.
+ * 
+ * @param Die auf den Ständer bezogene Läuferstreuung (in Ohm)
+ */
+public void setX2_sigma_strich(double x2_sigma_strich)
+   {
+   // Die auf den Ständer bezogene Läuferstreuung (in Ohm) wird im Datenmodell gespeichert.
+   this.x2_sigma_strich = x2_sigma_strich;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString()
  */
 @Override
@@ -147,13 +181,16 @@ public String toString()
    StringBuilder builder = new StringBuilder("Ersatzschaltbild [");
    
    // Die Zeichenkette, welche den ohmschen Widerstand des Ständers (in Ohm) repräsentiert, wird hinzugefügt.
-   builder.append("r1=").append(r1);
+   builder.append("r1=").append(this.r1);
    
    // Die Zeichenkette, welche die Ständerstreuung (in Ohm) repräsentiert, wird hinzugefügt.
-   builder.append(", x1_sigma=").append(x1_sigma);
+   builder.append(", x1_sigma=").append(this.x1_sigma);
+   
+   // Die Zeichenkette, welche die auf den Ständer bezogene Läuferstreuung (in Ohm) repräsentiert, wird hinzugefügt.
+   builder.append(", x2_sigma_strich=").append(this.x2_sigma_strich);
    
    // Die Zeichenkette, welche die Hauptreaktanz repräsentiert, wird hinzugefügt.
-   builder.append(", x_1h=").append(x_1h).append("]");
+   builder.append(", x_1h=").append(this.x_1h).append("]");
    
    // Die Zeichenkette, die die dieses Datenmodell repräsentiert, wird zurückgegeben.
    return builder.toString();
