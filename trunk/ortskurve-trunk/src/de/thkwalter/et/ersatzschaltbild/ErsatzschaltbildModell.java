@@ -67,20 +67,6 @@ private int p;
  */
 private Schaltungstyp schaltungstyp;
 
-// ---------------------------------------------------------------------------------------------------------------------
-
-/**
- * Der ohmsche Widerstand des Ständers (in Ohm).
- */
-private double r1;
-
-/**
- * Die Hauptreaktanz (in Ohm)
- */
-private double x_1h;
-
-// ---------------------------------------------------------------------------------------------------------------------
-
 /**
  * Die Serialisierungsnummer
  */
@@ -98,8 +84,6 @@ public ErsatzschaltbildModell()
    this.f1 = Double.NaN;
    this.p = Integer.MIN_VALUE;
    this.u_LL = Double.NaN;
-   this.x_1h = Double.NaN;
-   this.r1 = Double.NaN;
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
@@ -273,33 +257,7 @@ public void setP(Integer p)
    this.p = p;
    }
 
-// =====================================================================================================================
-// =====================================================================================================================
 
-/**
- * Diese Methode gibt die Hauptreaktanz (in Ohm) zurück.
- * 
- * @return Die Hauptreaktanz (in Ohm)
- */
-public double getX_1h()
-   {
-   // Die Hauptreaktanz (in Ohm) wird zurückgegeben.
-   return this.x_1h;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert die übergebene Hauptreaktanz (in Ohm) in diesem Modell.
- * 
- * @param x_1h Die Hauptreaktanz (in Ohm)
- */
-public void setX_1h(double x_1h)
-   {
-   // Die übergebene Hauptreaktanz (in Ohm) wird in diesem Modell gespeichert.
-   this.x_1h = x_1h;
-   }
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -332,30 +290,7 @@ public void setSchaltungstyp(Schaltungstyp schaltungstyp)
 // =====================================================================================================================
 // =====================================================================================================================
 
-/**
- * Diese Methode gibt den ohmschen Widerstand des Ständers (in Ohm) zurück.
- * 
- * @return Der ohmsche Widerstand des Ständers (in Ohm)
- */
-public double getR1()
-   {
-   // Der ohmsche Widerstand des Ständers (in Ohm) wird zurückgegeben.
-   return this.r1;
-   }
 
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert den ohmschen Widerstand des Ständers (in Ohm) im Datenmodell.
- * 
- * @param r1 Der ohmsche Widerstand des Ständers (in Ohm)
- */
-public void setR1(double r1)
-   {
-   // Der ohmsche Widerstand des Ständers (in Ohm) wird im Datenmodell gespeichert.
-   this.r1 = r1;
-   }
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -367,8 +302,7 @@ public void setR1(double r1)
 public String toString()
    {
    // Die Zeichenkette, die dieses Datenmodell repräsentiert, wird erzeugt.
-   StringBuilder builder = new StringBuilder();
-   builder.append("ErsatzschaltbildModell [");
+   StringBuilder builder = new StringBuilder("ErsatzschaltbildModell [");
    
    // Die Zeichenkette, welche die Ortskurve repräsentiert, wird hinzugefügt.
    if (ortskurve != null)
@@ -395,13 +329,7 @@ public String toString()
    builder.append(", f1=").append(this.f1);
    
    // Die Zeichenkette, welche die Polpaarzahl repräsentiert, wird hinzugefügt.
-   builder.append(", p=").append(this.p);
-   
-   // Die Zeichenkette, welche den ohmschen Widerstand des Ständers (in Ohm) repräsentiert, wird hinzugefügt.
-   builder.append("r1=").append(this.r1);
-   
-   // Die Zeichenkette, welche die Hauptreaktanz repräsentiert, wird hinzugefügt.
-   builder.append(", x_1h=").append(this.x_1h).append("]");
+   builder.append(", p=").append(this.p).append("]");
    
    // Die Zeichenkette, die die dieses Datenmodell repräsentiert, wird zurückgegeben.
    return builder.toString();
