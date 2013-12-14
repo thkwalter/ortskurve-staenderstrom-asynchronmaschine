@@ -64,8 +64,14 @@ public void testErsatzschaltbild()
    // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.ersatzschaltbild.getX_1h()));
    
-   // Es wird überprüft, ob der ohmsche Widerstand des Ständers (in ohm) korrekt initialisiert worden ist.
+   // Es wird überprüft, ob der ohmsche Widerstand des Ständers (in Ohm) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.ersatzschaltbild.getR1()));
+   
+   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(this.ersatzschaltbild.getX_1h()));
+   
+   // Es wird überprüft, ob die auf den Ständer bezogene Läuferstreuung (in Ohm) korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(this.ersatzschaltbild.getX2_sigma_strich()));
    }
 
 // =====================================================================================================================
@@ -185,5 +191,48 @@ public void testSetX1_sigma()
    
    // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt gespeichert worden ist.
    assertEquals(3.4, this.ersatzschaltbild.getX1_sigma(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Ersatzschaltbild#getX2_sigma_strich()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetX2_sigma_strich() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die im Test verwendete Ständerstreuung (in Ohm) wird im Datenmodell gespeichert.
+   Field feld = Ersatzschaltbild.class.getDeclaredField("x2_sigma_strich");
+   feld.setAccessible(true);
+   feld.setDouble(this.ersatzschaltbild, 17.34);
+   
+   // Die zu testende Methode wird aufgerufen.
+   double x2_sigma_strich = this.ersatzschaltbild.getX2_sigma_strich();
+   
+   // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt zurückgegeben worden ist.
+   assertEquals(17.34, x2_sigma_strich, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Ersatzschaltbild#setX2_sigma_strich(double)}.
+ */
+@Test
+public void testSetX2_sigma_strich()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.ersatzschaltbild.setX2_sigma_strich(67.1);
+   
+   // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt gespeichert worden ist.
+   assertEquals(67.1, this.ersatzschaltbild.getX2_sigma_strich(), 0.0);
    }
 }
