@@ -72,6 +72,10 @@ public void testErsatzschaltbild()
    
    // Es wird überprüft, ob die auf den Ständer bezogene Läuferstreuung (in Ohm) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.ersatzschaltbild.getX2_sigma_strich()));
+   
+   // Es wird überprüft, ob der auf den Ständer bezogene ohmsche Läuferwiderstand (in Ohm) korrekt initialisiert 
+   // worden ist.
+   assertTrue(Double.isNaN(this.ersatzschaltbild.getR2_strich()));
    }
 
 // =====================================================================================================================
@@ -234,5 +238,49 @@ public void testSetX2_sigma_strich()
    
    // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt gespeichert worden ist.
    assertEquals(67.1, this.ersatzschaltbild.getX2_sigma_strich(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Ersatzschaltbild#getR2_strich()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetR2_strich() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Der im Test verwendete, auf den Ständer bezogene ohmsche Läuferwiderstand (in Ohm) wird im Datenmodell 
+   // gespeichert.
+   Field feld = Ersatzschaltbild.class.getDeclaredField("r2_strich");
+   feld.setAccessible(true);
+   feld.setDouble(this.ersatzschaltbild, 2.9);
+   
+   // Die zu testende Methode wird aufgerufen.
+   double r2_strich = this.ersatzschaltbild.getR2_strich();
+   
+   // Es wird überprüft, ob der auf den Ständer bezogene ohmsche Widerstand (in Ohm) korrekt zurückgegeben worden ist.
+   assertEquals(2.9, r2_strich, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Ersatzschaltbild#setR2_strich(double)}.
+ */
+@Test
+public void testSetR2_strich()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.ersatzschaltbild.setR2_strich(38.5);
+   
+   // Es wird überprüft, ob der auf den Ständer bezogene ohmsche Widerstand (in Ohm) korrekt gespeichert worden ist.
+   assertEquals(38.5, this.ersatzschaltbild.getR2_strich(), 0.0);
    }
 }

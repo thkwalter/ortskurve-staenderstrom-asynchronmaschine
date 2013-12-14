@@ -28,6 +28,11 @@ public class Ersatzschaltbild
 private double r1;
 
 /**
+ * Der auf den Ständer bezogene ohmsche Widerstand des Läufers (in Ohm).
+ */
+private double r2_strich;
+
+/**
  * Die Ständerstreuung (in Ohm).
  */
 private double x1_sigma;
@@ -54,6 +59,7 @@ public Ersatzschaltbild()
    this.r1 = Double.NaN;
    this.x1_sigma = Double.NaN;
    this.x2_sigma_strich = Double.NaN;
+   this.r2_strich = Double.NaN; 
    }
 
 // =====================================================================================================================
@@ -172,6 +178,34 @@ public void setX2_sigma_strich(double x2_sigma_strich)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt den auf den Ständer bezogenen ohmschen Läuferwiderstand (in Ohm) zurück.
+ * 
+ * @return Der auf den Ständer bezogene ohmsche Läuferwiderstand (in Ohm)
+ */
+public double getR2_strich()
+   {
+   // Der auf den Ständer bezogene ohmsche Läuferwiderstand (in Ohm) wird zurückgegeben.
+   return this.r2_strich;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den auf den Ständer bezogenen ohmschen Läuferwiderstand (in Ohm) im Datenmodell.
+ * 
+ * @param r2_strich Der auf den Ständer bezogene ohmsche Läuferwiderstand (in Ohm)
+ */
+public void setR2_strich(double r2_strich)
+   {
+   // Der auf den Ständer bezogene ohmsche Läuferwiderstand (in Ohm) wird im Datenmodell gespeichert.
+   this.r2_strich = r2_strich;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * @see java.lang.Object#toString()
  */
 @Override
@@ -188,6 +222,10 @@ public String toString()
    
    // Die Zeichenkette, welche die auf den Ständer bezogene Läuferstreuung (in Ohm) repräsentiert, wird hinzugefügt.
    builder.append(", x2_sigma_strich=").append(this.x2_sigma_strich);
+   
+   // Die Zeichenkette, welche den auf den Ständer bezogenen ohmschen Läuferwiderstand (in Ohm) repräsentiert, wird 
+   // hinzugefügt.
+   builder.append(", r2_strich=").append(this.r2_strich);
    
    // Die Zeichenkette, welche die Hauptreaktanz repräsentiert, wird hinzugefügt.
    builder.append(", x_1h=").append(this.x_1h).append("]");
