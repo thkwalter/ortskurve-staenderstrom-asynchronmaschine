@@ -60,19 +60,19 @@ public static Ortskurve ortskurveImpedanzBerechnen(Ortskurve ortskurve, double u
 private static Ortskurve ortskurveInverseImpedanzBerechnen(Ortskurve ortskurve, double u_LL, 
    Schaltungstyp schaltungstyp)
    {
-   // In Abhängigkeit vom Schaltungstyp wird die Strangspannung berechnet.
-   double u1 = Double.NaN;
+   // In Abhängigkeit vom Schaltungstyp und Netzspannung wird der Skalierungsfaktor berechnet.
+   double skalierungsfaktor = Double.NaN;
    if (Schaltungstyp.STERN == schaltungstyp)
       {
-      u1 = u_LL / Math.sqrt(3.0);
+      skalierungsfaktor = u_LL / Math.sqrt(3.0);
       }
    else
       {
-      throw new RuntimeException("Noch nicht implementiert!");
+      skalierungsfaktor = u_LL * Math.sqrt(3.0);
       }
    
    // Die Ortskurve der inversen Impedanz wird berechnet und zurückgegeben.
-   return ortskurve.skalierteOrtskurveBerechnen(u1);
+   return ortskurve.skalierteOrtskurveBerechnen(skalierungsfaktor);
    }
 
 // =====================================================================================================================

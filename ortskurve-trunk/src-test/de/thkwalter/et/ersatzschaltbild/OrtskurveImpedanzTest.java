@@ -63,7 +63,7 @@ public void testOrtskurveImpedanzBerechnen()
  * @throws IllegalAccessException 
  */
 @Test
-public void testOrtskurveInverseImpedanzBerechnen() throws NoSuchMethodException, SecurityException, 
+public void testOrtskurveInverseImpedanzBerechnen1() throws NoSuchMethodException, SecurityException, 
    IllegalAccessException, IllegalArgumentException, InvocationTargetException
    {
    // Die im Test verwendete Ortskurve
@@ -80,6 +80,38 @@ public void testOrtskurveInverseImpedanzBerechnen() throws NoSuchMethodException
    assertEquals(0.00866, ortskurveInverseImpedanz.getRadiusOrtskurve(), 0.00866/1000);
    assertEquals(0.01732, ortskurveInverseImpedanz.getMittelpunktOrtskurve().getX(), 0.01732/1000);
    assertEquals(0.00433, ortskurveInverseImpedanz.getMittelpunktOrtskurve().getY(), 0.00433/1000);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link OrtskurveImpedanz#ortskurveInverseImpedanzBerechnen(Ortskurve, double, Schaltungstyp)}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testOrtskurveInverseImpedanzBerechnen2() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {
+   // Die im Test verwendete Ortskurve
+   Ortskurve ortskurve = new Ortskurve(new Vector2D(4.0, 1.0), 2.0);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = OrtskurveImpedanz.class.getDeclaredMethod("ortskurveInverseImpedanzBerechnen", Ortskurve.class, 
+      double.class, Schaltungstyp.class);
+   methode.setAccessible(true);
+   Ortskurve ortskurveInverseImpedanz = 
+      (Ortskurve) methode.invoke(OrtskurveImpedanz.class, ortskurve, 400.0, Schaltungstyp.DREIECK);
+   
+   // Es wird überprüft, ob die berechnete Ortskurve der inversen Impedanz korrekt berechnet worden ist.
+   assertEquals(0.002887, ortskurveInverseImpedanz.getRadiusOrtskurve(), 0.002887/1000);
+   assertEquals(0.00577, ortskurveInverseImpedanz.getMittelpunktOrtskurve().getX(), 0.00577/1000);
+   assertEquals(0.001443, ortskurveInverseImpedanz.getMittelpunktOrtskurve().getY(), 0.001443/1000);
    }
 
 // =====================================================================================================================
