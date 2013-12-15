@@ -22,7 +22,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
 import de.thkwalter.jsf.ApplicationRuntimeException;
@@ -69,9 +68,8 @@ public String ersatzschaltbildBerechnen()
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
    catch (ApplicationRuntimeException exception)
       {
-      // Das Flag wird auf true gesetzt, so dass die Lösung des Ausgleichsproblems angezeigt wird. 
-      HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-      session.setAttribute("ersatzschaltbildAnzeigen", "false"); 
+      // Die Referenz auf das Ersatzschaltbild wird auf null gesetzt, um die Ergebnisanzeige zu unterdrücken.
+      this.ersatzschaltbildModell.setErsatzschaltbild(null);
       
       // Eine Fehlermeldung für die Oberfläche wird erstellt.
       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -98,7 +96,12 @@ private void ersatzschaltbildBerechnenIntern()
       this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
       this.ersatzschaltbildModell.getSchaltungstyp());
    
+   // Die Repräsentation des Ersatzschaltbilds wird erzeugt.
+   Ersatzschaltbild ersatzschaltbild = new Ersatzschaltbild();
+   ersatzschaltbild.setR1(ortskurveImpedanz.getMittelpunktOrtskurve().getY());
    
+   // Das Ersatzschaltbild wird zum Frontend-Modell hinzugefügt.
+   ersatzschaltbildModell.setErsatzschaltbild(ersatzschaltbild);
    }
 
 // =====================================================================================================================
