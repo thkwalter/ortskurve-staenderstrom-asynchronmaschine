@@ -18,6 +18,8 @@ package de.thkwalter.et.ersatzschaltbild;
 import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
@@ -66,6 +68,9 @@ public void setUp() throws Exception
    
    // Die im Test verwendete Strangspannung (in V) wird erzeugt und zum Modell hinzugefügt.
    this.testErsatzschaltbildModell.setU_LL(400.0);
+   
+   // Der im Test verwendete Schaltungstyp wird im Frontend-Modell gespeichert.
+   this.testErsatzschaltbildModell.setSchaltungstyp(Schaltungstyp.STERN);
    }
 
 // =====================================================================================================================
@@ -99,15 +104,31 @@ public void testSetErsatzschaltbildModell() throws NoSuchFieldException, Securit
 // =====================================================================================================================
 
 /**
- * Test für die Methode {@link ErsatzschaltbildController#ersatzschaltbildBerechnen()}.
+ * Test für die Methode {@link ErsatzschaltbildController#ersatzschaltbildBerechnenIntern()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
  */
 @Test
-public void testErsatzschaltbildBerechnen()
+public void testErsatzschaltbildBerechnenIntern() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
    {
    // Die zu testende Methode wird aufgerufen.
- //  this.ersatzschaltbildController.ersatzschaltbildBerechnen();
+   this.ersatzschaltbildController.setErsatzschaltbildModell(this.testErsatzschaltbildModell);
    
-   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt berechnet worden ist.
-//   assertEquals(12.0 ,this.testErsatzschaltbildModell.getX_1h(), 0.0);
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = 
+      ErsatzschaltbildController.class.getDeclaredMethod("ersatzschaltbildBerechnenIntern", (Class<?>[]) null);
+   methode.setAccessible(true);
+   methode.invoke(this.ersatzschaltbildController, (Object[]) null);
+   
+   // Die Repräsentation des Ersatzschaltbildes wird gelesen.
+   Ersatzschaltbild ersatzschaltbild = this.testErsatzschaltbildModell.getErsatzschaltbild();
+   
+   // Es wir überprüft, ob der ohmsche Ständerwiderstand korrekt berechnet worden ist.
+   assertEquals(14.13, ersatzschaltbild.getR1(), 14.13 / 1000.0);
    }
 }
