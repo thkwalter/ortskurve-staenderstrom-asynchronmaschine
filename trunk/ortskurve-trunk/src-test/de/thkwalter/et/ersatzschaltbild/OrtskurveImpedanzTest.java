@@ -45,9 +45,9 @@ public void testOrtskurveImpedanzBerechnen()
    Ortskurve ortskurveImpedanz = OrtskurveImpedanz.ortskurveImpedanzBerechnen(ortskurve, 400.0, Schaltungstyp.STERN);
    
    // Es wird überprüft, ob die invertierte Ortskurve korrekt berechnet worden ist.
-   assertEquals(0.1491, ortskurveImpedanz.getRadiusOrtskurve(), 0.1491/1000);
-   assertEquals(0.2333, ortskurveImpedanz.getMittelpunktOrtskurve().getX(), 0.2333/1000);
-   assertEquals(0.03333, ortskurveImpedanz.getMittelpunktOrtskurve().getY(), 0.033333/1000);
+   assertEquals(0.3333, ortskurveImpedanz.getRadiusOrtskurve(), 0.3333/1000);
+   assertEquals(0.5, ortskurveImpedanz.getMittelpunktOrtskurve().getX(), 0.5/1000);
+   assertEquals(0.1667, ortskurveImpedanz.getMittelpunktOrtskurve().getY(), 0.1667/1000);
    }
 
 // =====================================================================================================================
@@ -139,8 +139,8 @@ public void testOrtskurveInvertieren() throws NoSuchMethodException, SecurityExc
    Ortskurve ortskurveImpedanz = (Ortskurve) methode.invoke(OrtskurveImpedanz.class, ortskurve);
    
    // Es wird überprüft, ob die invertierte Ortskurve korrekt berechnet worden ist.
-   assertEquals(0.1491, ortskurveImpedanz.getRadiusOrtskurve(), 0.1491/1000);
-   assertEquals(0.2333, ortskurveImpedanz.getMittelpunktOrtskurve().getX(), 0.2333/1000);
-   assertEquals(0.03333, ortskurveImpedanz.getMittelpunktOrtskurve().getY(), 0.03333/1000);
+   assertEquals(0.3333, ortskurveImpedanz.getRadiusOrtskurve(), 0.3333/1000);
+   assertEquals(0.5, ortskurveImpedanz.getMittelpunktOrtskurve().getX(), 0.5/1000);
+   assertEquals(0.1667, ortskurveImpedanz.getMittelpunktOrtskurve().getY(), 0.1667/1000);
    }
 }
