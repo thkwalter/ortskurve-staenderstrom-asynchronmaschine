@@ -129,6 +129,6 @@ public void testErsatzschaltbildBerechnenIntern() throws NoSuchMethodException, 
    Ersatzschaltbild ersatzschaltbild = this.testErsatzschaltbildModell.getErsatzschaltbild();
    
    // Es wir überprüft, ob der ohmsche Ständerwiderstand korrekt berechnet worden ist.
-   assertEquals(14.13, ersatzschaltbild.getR1(), 14.13 / 1000.0);
+   assertEquals(35.53, ersatzschaltbild.getR1(), 35.53 / 1000.0);
    }
 }

@@ -15,10 +15,12 @@
  */
 package de.thkwalter.et.ersatzschaltbild;
 
-import org.apache.commons.math3.complex.Complex;
+import java.util.logging.Logger;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse repräsentiert die Ortskurve der Impedanz des Ersatzschaltbildes.
@@ -27,6 +29,15 @@ import de.thkwalter.et.ortskurve.Ortskurve;
  */
 public class OrtskurveImpedanz
 {
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger(OrtskurveImpedanz.class.getName());
+
+// =====================================================================================================================
+// =====================================================================================================================
+
 /**
  * Diese Methode berechnet die Ortskurve der Impedanz.
  * 
@@ -87,20 +98,36 @@ private static Ortskurve ortskurveInverseImpedanzBerechnen(Ortskurve ortskurve, 
  */
 private static Ortskurve ortskurveInvertieren(Ortskurve ortskurve)
    {
-   // Die Parameter a und b werden bestimmt. a wird reell gewählt.
+   // Die Ortskurvenparameter werden gelesen. 
+   double m_re = ortskurve.getMittelpunktOrtskurve().getY();
+   double m_im = - ortskurve.getMittelpunktOrtskurve().getX();
    double r = ortskurve.getRadiusOrtskurve();
-   Complex a = new Complex(2*r);
-   Complex b = new Complex(ortskurve.getMittelpunktOrtskurve().getY() - 0.5 * a.getReal(), 
-      - ortskurve.getMittelpunktOrtskurve().getX());
    
-   // Eine Hilfsgröße wird ermittelt.
-   Complex hilf = (b.add(a)).multiply(b).multiply(2);
+   // Eine Hilfsgröße wird definiert. 
+   double d_hilf = m_re*m_re + m_im*m_im - r*r;
    
-   // Radius und Mittelpunkt des invertierten Kreises werden berechnet.
-   double r_inv = a.divide(hilf).abs();
-   Complex m_inv = (a.add(b.multiply(2))).divide(hilf);
+   // Falls die Hilfsgröße gleich null ist.
+   if (d_hilf == 0.0)
+      {
+      // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
+      String fehlermeldung = "Die Ortskurve der inversen Impedanz geht durch den Ursprung!";
+      OrtskurveImpedanz.logger.severe(fehlermeldung);
+      
+      // Die Ausnahme wird erzeugt und mit der Fehlermeldung für den Benutzer initialisiert.
+      String jsfMeldung = "Die Ortskurve der inversen Impedanz geht durch den Ursprung! " +
+         "Überprüfen Sie bitte die Messpunkte der Ortskurve des Ständerstroms auf Korrektheit.";
+      ApplicationRuntimeException applicationRuntimeException = new ApplicationRuntimeException(jsfMeldung);
+      
+      // Die Ausnahme wird geworfen.
+      throw applicationRuntimeException;
+      }
    
-   // Die neue Ortskurve wird erzeugt und zurückgegeben.
-   return new Ortskurve(new Vector2D(- m_inv.getImaginary(), m_inv.getReal()), r_inv);
+   // Die Parameter der inversen Ortskurve werden berechent.
+   double mx_re_invertiert = m_re / d_hilf;
+   double my_im_invertiert = - m_im / d_hilf;
+   double r_invertiert = r / d_hilf;
+   
+   // Die invertierte Ortskurve wird erzeugt und zurückgegeben.
+   return new Ortskurve(new Vector2D(- my_im_invertiert, mx_re_invertiert), r_invertiert);
    }
 }
