@@ -33,19 +33,14 @@ private double r1;
 private double r2_strich;
 
 /**
- * Die Ständerstreuung (in Ohm).
+ * Der Streureaktanz (in Ohm).
  */
-private double x1_sigma;
+private double x_k;
 
 /**
- * Die auf den Ständer bezogene Läuferstreuung (in Ohm).
+ * Die Reaktanz x_1 (in Ohm)
  */
-private double x2_sigma_strich;
-
-/**
- * Die Hauptreaktanz (in Ohm)
- */
-private double x_1h;
+private double x1;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -55,10 +50,9 @@ private double x_1h;
  */
 public Ersatzschaltbild()
    {
-   this.x_1h = Double.NaN;
+   this.x1 = Double.NaN;
    this.r1 = Double.NaN;
-   this.x1_sigma = Double.NaN;
-   this.x2_sigma_strich = Double.NaN;
+   this.x_k = Double.NaN;
    this.r2_strich = Double.NaN; 
    }
 
@@ -66,28 +60,28 @@ public Ersatzschaltbild()
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt die Hauptreaktanz (in Ohm) zurück.
+ * Diese Methode gibt die Reaktanz x_1 (in Ohm) zurück.
  * 
- * @return Die Hauptreaktanz (in Ohm)
+ * @return Die Reaktanz x_1 (in Ohm)
  */
-public double getX_1h()
+public double getX1()
    {
-   // Die Hauptreaktanz (in Ohm) wird zurückgegeben.
-   return this.x_1h;
+   // Die Reaktanz x_1 (in Ohm) wird zurückgegeben.
+   return this.x1;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert die übergebene Hauptreaktanz (in Ohm) in diesem Modell.
+ * Diese Methode speichert die Reaktanz x_1 (in Ohm) in diesem Modell.
  * 
- * @param x_1h Die Hauptreaktanz (in Ohm)
+ * @param x_1h Die Reaktanz x_1 (in Ohm)
  */
-public void setX_1h(double x_1h)
+public void setX1(double x1)
    {
-   // Die übergebene Hauptreaktanz (in Ohm) wird in diesem Modell gespeichert.
-   this.x_1h = x_1h;
+   // Die Reaktanz x_1 (in Ohm) wird in diesem Modell gespeichert.
+   this.x1 = x1;
    }
 
 // =====================================================================================================================
@@ -122,56 +116,28 @@ public void setR1(double r1)
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt die Ständerstreuung (in Ohm) zurück.
+ * Diese Methode gibt die Streureaktanz (in Ohm) zurück.
  * 
- * @return Die Ständerstreuung (in Ohm)
+ * @return Die Streureaktanz (in Ohm)
  */
-public double getX1_sigma()
+public double getX_k()
    {
-   // Die Ständerstreuung (in Ohm) wird zurückgegeben.
-   return this.x1_sigma;
+   // Die Streureaktanz (in Ohm) wird zurückgegeben.
+   return this.x_k;
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert die übergebene Ständerstreuung im Datenmodell.
+ * Diese Methode speichert die Streureaktanz (in Ohm) im Datenmodell.
  * 
- * @param x1_sigma Die Ständerstreuung (in Ohm)
+ * @param x_k Die Streureaktanz (in Ohm)
  */
-public void setX1_sigma(double x1_sigma)
+public void setX_k(double x_k)
    {
-   // Die übergebene Ständerstreuung (in Ohm) wird im Datenmodell gespeichert.
-   this.x1_sigma = x1_sigma;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode gibt die auf den Ständer bezogene Läuferstreuung (in Ohm) zurück.
- * 
- * @return Die auf den Ständer bezogene Läuferstreuung (in Ohm)
- */
-public double getX2_sigma_strich()
-   {
-   // Die auf den Ständer bezogene Läuferstreuung (in Ohm) wird zurückgegeben.
-   return this.x2_sigma_strich;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert die auf den Ständer bezogene Läuferstreuung (in Ohm) im Datenmodell.
- * 
- * @param Die auf den Ständer bezogene Läuferstreuung (in Ohm)
- */
-public void setX2_sigma_strich(double x2_sigma_strich)
-   {
-   // Die auf den Ständer bezogene Läuferstreuung (in Ohm) wird im Datenmodell gespeichert.
-   this.x2_sigma_strich = x2_sigma_strich;
+   // Die Streureaktanz (in Ohm) wird im Datenmodell gespeichert.
+   this.x_k = x_k;
    }
 
 // =====================================================================================================================
@@ -217,18 +183,15 @@ public String toString()
    // Die Zeichenkette, welche den ohmschen Widerstand des Ständers (in Ohm) repräsentiert, wird hinzugefügt.
    builder.append("r1=").append(this.r1);
    
-   // Die Zeichenkette, welche die Ständerstreuung (in Ohm) repräsentiert, wird hinzugefügt.
-   builder.append(", x1_sigma=").append(this.x1_sigma);
-   
-   // Die Zeichenkette, welche die auf den Ständer bezogene Läuferstreuung (in Ohm) repräsentiert, wird hinzugefügt.
-   builder.append(", x2_sigma_strich=").append(this.x2_sigma_strich);
+   // Die Zeichenkette, welche den  Ständerstreuung (in Ohm) repräsentiert, wird hinzugefügt.
+   builder.append(", x_k=").append(this.x_k);
    
    // Die Zeichenkette, welche den auf den Ständer bezogenen ohmschen Läuferwiderstand (in Ohm) repräsentiert, wird 
    // hinzugefügt.
    builder.append(", r2_strich=").append(this.r2_strich);
    
-   // Die Zeichenkette, welche die Hauptreaktanz repräsentiert, wird hinzugefügt.
-   builder.append(", x_1h=").append(this.x_1h).append("]");
+   // Die Zeichenkette, welche die Reaktanz x_1repräsentiert, wird hinzugefügt.
+   builder.append(", x1=").append(this.x1).append("]");
    
    // Die Zeichenkette, die die dieses Datenmodell repräsentiert, wird zurückgegeben.
    return builder.toString();

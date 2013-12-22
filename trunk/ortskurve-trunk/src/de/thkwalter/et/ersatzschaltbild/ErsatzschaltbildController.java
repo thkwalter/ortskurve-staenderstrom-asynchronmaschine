@@ -96,7 +96,7 @@ private void ersatzschaltbildBerechnenIntern()
       this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
       this.ersatzschaltbildModell.getSchaltungstyp());
    
-   // Die Repräsentation des Ersatzschaltbilds wird erzeugt.
+   // Die Repräsentation des Ersatzschaltbilds wird erzeugt und die verschiedenen Widerstände berechnet.
    Ersatzschaltbild ersatzschaltbild = new Ersatzschaltbild();
    ersatzschaltbild.setR1(ortskurveImpedanz.getMittelpunktOrtskurve().getY());
    
