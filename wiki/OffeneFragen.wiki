@@ -1,0 +1,3 @@
+=Offene Fragen=
+
+ * R1 ist der ohmsche Widerstand des Ständers, R2' der auf den Ständer bezogene ohmsche Widerstand des Läufers. Was ist die physikalische Bedeutung von X1 und X_k?
