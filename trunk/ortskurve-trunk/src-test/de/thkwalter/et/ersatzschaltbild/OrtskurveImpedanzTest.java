@@ -16,6 +16,7 @@
 package de.thkwalter.et.ersatzschaltbild;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -24,6 +25,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Test;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link OrtskurveImpedanz}.
@@ -127,7 +129,7 @@ public void testOrtskurveInverseImpedanzBerechnen2() throws NoSuchMethodExceptio
  * @throws IllegalAccessException 
  */
 @Test
-public void testOrtskurveInvertieren() throws NoSuchMethodException, SecurityException, 
+public void testOrtskurveInvertieren1() throws NoSuchMethodException, SecurityException, 
    IllegalAccessException, IllegalArgumentException, InvocationTargetException
    {
    // Die im Test verwendete Ortskurve
@@ -142,5 +144,40 @@ public void testOrtskurveInvertieren() throws NoSuchMethodException, SecurityExc
    assertEquals(0.3333, ortskurveImpedanz.getRadiusOrtskurve(), 0.3333/1000);
    assertEquals(0.5, ortskurveImpedanz.getMittelpunktOrtskurve().getX(), 0.5/1000);
    assertEquals(0.1667, ortskurveImpedanz.getMittelpunktOrtskurve().getY(), 0.1667/1000);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link OrtskurveImpedanz#ortskurveInvertieren(Ortskurve)}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testOrtskurveInvertieren2() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {
+   // Die im Test verwendete Ortskurve
+   Ortskurve ortskurve = new Ortskurve(new Vector2D(2.0, 0.0), 2.0);
+   
+   try
+      {
+      // Die zu testende Methode wird aufgerufen.
+      Method methode = OrtskurveImpedanz.class.getDeclaredMethod("ortskurveInvertieren", Ortskurve.class);
+      methode.setAccessible(true);
+      methode.invoke(OrtskurveImpedanz.class, ortskurve);
+      
+      // Falls keine Ausnahme geworfen worden ist, ist der Test fehlgeschlagen.
+      assertTrue(false);
+      }
+   catch (InvocationTargetException invocationTargetException)
+      {
+      assertTrue(invocationTargetException.getCause() instanceof ApplicationRuntimeException);
+      }
    }
 }

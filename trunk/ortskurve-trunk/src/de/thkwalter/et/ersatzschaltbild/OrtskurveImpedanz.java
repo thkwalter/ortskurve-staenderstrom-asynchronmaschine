@@ -107,7 +107,7 @@ private static Ortskurve ortskurveInvertieren(Ortskurve ortskurve)
    double d_hilf = m_re*m_re + m_im*m_im - r*r;
    
    // Falls die Hilfsgröße gleich null ist.
-   if (d_hilf == 0.0)
+   if (d_hilf < 1E-6)
       {
       // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
       String fehlermeldung = "Die Ortskurve der inversen Impedanz geht durch den Ursprung!";
