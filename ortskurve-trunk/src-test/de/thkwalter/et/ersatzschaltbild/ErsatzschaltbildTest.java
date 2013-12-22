@@ -61,17 +61,14 @@ public void testErsatzschaltbild()
    // Es wird überprüft, ob das Testobjekt erzeugt worden ist.
    assertNotNull(this.ersatzschaltbild);
    
-   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt initialisiert worden ist.
-   assertTrue(Double.isNaN(this.ersatzschaltbild.getX_1h()));
+   // Es wird überprüft, ob die Reaktanz x_1 (in Ohm) korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(this.ersatzschaltbild.getX1()));
    
    // Es wird überprüft, ob der ohmsche Widerstand des Ständers (in Ohm) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.ersatzschaltbild.getR1()));
    
-   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt initialisiert worden ist.
-   assertTrue(Double.isNaN(this.ersatzschaltbild.getX_1h()));
-   
-   // Es wird überprüft, ob die auf den Ständer bezogene Läuferstreuung (in Ohm) korrekt initialisiert worden ist.
-   assertTrue(Double.isNaN(this.ersatzschaltbild.getX2_sigma_strich()));
+   // Es wird überprüft, ob die Streureaktanz (in Ohm) korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(this.ersatzschaltbild.getX_k()));
    
    // Es wird überprüft, ob der auf den Ständer bezogene ohmsche Läuferwiderstand (in Ohm) korrekt initialisiert 
    // worden ist.
@@ -82,38 +79,38 @@ public void testErsatzschaltbild()
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Ersatzschaltbild#getX_1h()}.
+ * Test der Methode {@link Ersatzschaltbild#getX1()}.
  */
 @Test
-public void testGetX_1h() throws NoSuchFieldException, SecurityException, IllegalArgumentException,
+public void testGetX1() throws NoSuchFieldException, SecurityException, IllegalArgumentException,
    IllegalAccessException
    {
-   // Die im Test verwendete Hauptreaktanz (in Ohm) wird im Datenmodell gespeichert.
-   Field feld = Ersatzschaltbild.class.getDeclaredField("x_1h");
+   // Die im Test verwendete Reaktanz x_1 (in Ohm) wird im Datenmodell gespeichert.
+   Field feld = Ersatzschaltbild.class.getDeclaredField("x1");
    feld.setAccessible(true);
    feld.setDouble(this.ersatzschaltbild, 25.0);
 
    // Die zu testende Methode wird aufgerufen.
-   double x_1h = this.ersatzschaltbild.getX_1h();
+   double x1 = this.ersatzschaltbild.getX1();
 
-   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt zurückgegeben worden ist.
-   assertEquals(25.0, x_1h, 0.0);
+   // Es wird überprüft, ob die Reaktanz x_1 (in Ohm) korrekt zurückgegeben worden ist.
+   assertEquals(25.0, x1, 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Ersatzschaltbild#setX_1h(double)}.
+ * Test der Methode {@link Ersatzschaltbild#setX1(double)}.
  */
 @Test
-public void testSetX_1h()
+public void testSetX1()
    {
    // Die zu testende Methode wird aufgerufen.
-   this.ersatzschaltbild.setX_1h(25.0);
+   this.ersatzschaltbild.setX1(25.0);
    
-   // Es wird überprüft, ob die Hauptreaktanz (in Ohm) korrekt gespeichert worden ist.
-   assertEquals(25.0, this.ersatzschaltbild.getX_1h(), 0.0);
+   // Es wird überprüft, ob die Reaktanz x_1 (in Ohm) korrekt gespeichert worden ist.
+   assertEquals(25.0, this.ersatzschaltbild.getX1(), 0.0);
    }
 
 // =====================================================================================================================
@@ -158,7 +155,7 @@ public void testSetR1()
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Ersatzschaltbild#getX1_sigma()}.
+ * Test der Methode {@link Ersatzschaltbild#getX_k()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -166,78 +163,35 @@ public void testSetR1()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetX1_sigma() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+public void testGetX_k() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
    IllegalAccessException
    {
-   // Die im Test verwendete Ständerstreuung (in Ohm) wird im Datenmodell gespeichert.
-   Field feld = Ersatzschaltbild.class.getDeclaredField("x1_sigma");
+   // Die im Test verwendete Streureaktanz (in Ohm) wird im Datenmodell gespeichert.
+   Field feld = Ersatzschaltbild.class.getDeclaredField("x_k");
    feld.setAccessible(true);
    feld.setDouble(this.ersatzschaltbild, 6.0);
    
    // Die zu testende Methode wird aufgerufen.
-   double x1_sigma = this.ersatzschaltbild.getX1_sigma();
+   double x_k = this.ersatzschaltbild.getX_k();
    
-   // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt zurückgegeben worden ist.
-   assertEquals(6.0, x1_sigma, 0.0);
+   // Es wird überprüft, ob die Streureaktanz (in Ohm) korrekt zurückgegeben worden ist.
+   assertEquals(6.0, x_k, 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Ersatzschaltbild#setX1_sigma(double)}.
+ * Test der Methode {@link Ersatzschaltbild#setX_k(double)}.
  */
 @Test
-public void testSetX1_sigma()
+public void testSetX_k()
    {
    // Die zu testende Methode wird aufgerufen.
-   this.ersatzschaltbild.setX1_sigma(3.4);
+   this.ersatzschaltbild.setX_k(3.4);
    
-   // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt gespeichert worden ist.
-   assertEquals(3.4, this.ersatzschaltbild.getX1_sigma(), 0.0);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test der Methode {@link Ersatzschaltbild#getX2_sigma_strich()}.
- * 
- * @throws SecurityException 
- * @throws NoSuchFieldException 
- * @throws IllegalAccessException 
- * @throws IllegalArgumentException 
- */
-@Test
-public void testGetX2_sigma_strich() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
-   IllegalAccessException
-   {
-   // Die im Test verwendete Ständerstreuung (in Ohm) wird im Datenmodell gespeichert.
-   Field feld = Ersatzschaltbild.class.getDeclaredField("x2_sigma_strich");
-   feld.setAccessible(true);
-   feld.setDouble(this.ersatzschaltbild, 17.34);
-   
-   // Die zu testende Methode wird aufgerufen.
-   double x2_sigma_strich = this.ersatzschaltbild.getX2_sigma_strich();
-   
-   // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt zurückgegeben worden ist.
-   assertEquals(17.34, x2_sigma_strich, 0.0);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test der Methode {@link Ersatzschaltbild#setX2_sigma_strich(double)}.
- */
-@Test
-public void testSetX2_sigma_strich()
-   {
-   // Die zu testende Methode wird aufgerufen.
-   this.ersatzschaltbild.setX2_sigma_strich(67.1);
-   
-   // Es wird überprüft, ob die Ständerstreuung (in Ohm) korrekt gespeichert worden ist.
-   assertEquals(67.1, this.ersatzschaltbild.getX2_sigma_strich(), 0.0);
+   // Es wird überprüft, ob die Streureaktanz (in Ohm) korrekt gespeichert worden ist.
+   assertEquals(3.4, this.ersatzschaltbild.getX_k(), 0.0);
    }
 
 // =====================================================================================================================
