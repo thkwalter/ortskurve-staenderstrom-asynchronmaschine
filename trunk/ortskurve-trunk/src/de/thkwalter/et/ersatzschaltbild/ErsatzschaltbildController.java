@@ -100,6 +100,14 @@ private void ersatzschaltbildBerechnenIntern()
    Ersatzschaltbild ersatzschaltbild = new Ersatzschaltbild();
    ersatzschaltbild.setR1(ortskurveImpedanz.getMittelpunktOrtskurve().getY());
    
+   // Die Reaktanz x1 (in Ohm) wird berechnet und in der Repräsentation des Ersatzschaltbildes gespeichert.
+   double x1 = -ortskurveImpedanz.getMittelpunktOrtskurve().getX() + ortskurveImpedanz.getRadiusOrtskurve();
+   ersatzschaltbild.setX1(x1);
+   
+   // Die Streureaktanz (in Ohm) wird berechnet und in der Repräsentation des Ersatzschaltbildes gespeichert.
+   double x_k = 0.5 * x1 * x1 / ortskurveImpedanz.getRadiusOrtskurve() - x1;
+   ersatzschaltbild.setX_k(x_k);
+   
    // Das Ersatzschaltbild wird zum Frontend-Modell hinzugefügt.
    ersatzschaltbildModell.setErsatzschaltbild(ersatzschaltbild);
    }
