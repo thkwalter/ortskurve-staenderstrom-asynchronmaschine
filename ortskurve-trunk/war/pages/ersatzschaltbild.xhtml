@@ -167,7 +167,47 @@
            <h:panelGroup class="knopfzeile" layout="block">
                <h:commandButton value="ESB berechnen" action="#{ersatzschaltbildController.ersatzschaltbildBerechnen}" class="knopf"/>
                <p:spacer width="1" height="21" />
-            </h:panelGroup>    
+            </h:panelGroup> 
+            
+            <!-- Die Ausgabe der Ersatzschaltbilddaten ============================================================= -->
+            <h:panelGroup 
+               rendered="#{(ersatzschaltbildModell.ersatzschaltbild != null) and (empty facesContext.messageList)}">
+               
+               <h4>Das berechnete Ersatzschaltbild besitzt folgende Widerstände:</h4>
+               <br/>
+               
+               <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
+                  platzhalter-3-spalten,text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten,
+                  eingabe-3-spalten">
+                  <h:outputText value="ohm. Ständerwiderstand"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.r1}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                  </h:panelGroup>
+               
+                  <h:outputText value=""/>
+          
+                  <h:outputText value="Streureaktanz"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x_k}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                  </h:panelGroup>
+               
+                  <h:outputText value=""/>
+          
+                  <h:outputText value="Reaktanz"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x1}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                  </h:panelGroup>
+               </h:panelGrid>
+            </h:panelGroup> 
          </h:form>
       </ui:define>
    </ui:composition>
