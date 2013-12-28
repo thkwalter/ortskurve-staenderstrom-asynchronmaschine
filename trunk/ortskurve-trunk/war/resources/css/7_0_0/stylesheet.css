@@ -478,7 +478,29 @@ table.esb-tabelle td
 /* Formatierungen auf der Seite Ersatzschaltbildberechnung                                                            */
 /* ****************************************************************************************************************** */
    
-.image-2-spalten
+.ersatzschaltbild-ergebnis-tabelle
+   {
+   width: 860px;
+   border-collapse: collapse;
+   }   
+   
+.ersatzschaltbild-ergebnis-tabelle-bild
    {
    width: 570px;
+   margin-right: 10px;
+   }
+   
+.ersatzschaltbild-ergebnis-tabelle-text
+   {
+   width: 280px;
+   }
+   
+/* ****************************************************************************************************************** */
+/* Formatierungen für eine einspaltige Tabelle                                                                        */
+/* ****************************************************************************************************************** */
+
+.tabelle-1-spalte
+   {
+   width: 280px;
+   border-collapse: collapse;
    }

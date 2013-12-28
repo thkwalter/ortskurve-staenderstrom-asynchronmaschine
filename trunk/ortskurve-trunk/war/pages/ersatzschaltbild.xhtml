@@ -173,14 +173,26 @@
             <h:panelGroup 
                rendered="#{(ersatzschaltbildModell.ersatzschaltbild != null) and (empty facesContext.messageList)}">
                
-               <h4>Erläuterungen zur Berechnung des Ersatzschaltbildes:</h4>
+               <h4>Ergebnisse der Ersatzschaltbildberechnung:</h4>
                <br/>
                
-               <h:graphicImage library="images" name="ersatzschaltbild.png" styleClass="image-2-spalten"/>
-               <br/>
-               
-               <h4>Das berechnete Ersatzschaltbild besitzt folgende Widerstände:</h4>
-               <br/>
+               <h:panelGrid columns="2" styleClass="ersatzschaltbild-ergebnis-tabelle" 
+                  columnClasses="ersatzschaltbild-ergebnis-tabelle-bild,ersatzschaltbild-ergebnis-tabelle-text">
+                  <h:graphicImage library="images" name="ersatzschaltbild.png" 
+                     styleClass="ersatzschaltbild-ergebnis-tabelle-bild"/>
+                           
+                  <h:panelGrid columns="2" styleClass="tabelle-1-spalte" 
+                     columnClasses="text-3-spalten,eingabe-3-spalten">
+                     <h:outputText value="R in &#937;"/>
+                  
+                     <h:panelGroup styleClass="zahl">
+                        <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.r1}">
+                           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                        </h:outputText>
+                     </h:panelGroup>
+                  </h:panelGrid>
+               </h:panelGrid>
+               <br/><br/>
                
                <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
                   platzhalter-3-spalten,text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten,
