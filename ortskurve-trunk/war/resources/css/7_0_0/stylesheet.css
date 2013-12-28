@@ -504,3 +504,8 @@ table.esb-tabelle td
    width: 280px;
    border-collapse: collapse;
    }
+   
+.zeilenabstand
+   {
+   margin-bottom: 10px;
+   }
