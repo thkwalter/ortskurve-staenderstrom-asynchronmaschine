@@ -176,12 +176,13 @@
                <h4>Ergebnisse der Ersatzschaltbildberechnung:</h4>
                <br/>
                
-               <h:panelGrid columns="2" styleClass="ersatzschaltbild-ergebnis-tabelle" 
+               <h:panelGrid columns="2" styleClass="letztes-element ersatzschaltbild-ergebnis-tabelle" 
                   columnClasses="ersatzschaltbild-ergebnis-tabelle-bild,ersatzschaltbild-ergebnis-tabelle-text">
                   <h:graphicImage library="images" name="ersatzschaltbild.png" 
                      styleClass="ersatzschaltbild-ergebnis-tabelle-bild"/>
-                           
-                  <h:panelGrid columns="2" styleClass="tabelle-1-spalte" 
+                        
+                  <h:panelGroup> 
+                  <h:panelGrid columns="2" styleClass="zeilenabstand tabelle-1-spalte" 
                      columnClasses="text-3-spalten,eingabe-3-spalten">
                      <h:outputText value="R in &#937;"/>
                   
@@ -190,40 +191,33 @@
                            <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
                         </h:outputText>
                      </h:panelGroup>
+                     
                   </h:panelGrid>
-               </h:panelGrid>
-               <br/><br/>
-               
-               <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
-                  platzhalter-3-spalten,text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten,
-                  eingabe-3-spalten">
-                  <h:outputText value="ohm. Ständerwiderstand"/>
                   
-                  <h:panelGroup styleClass="zahl">
-                     <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.r1}">
-                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                     </h:outputText>
-                  </h:panelGroup>
-               
-                  <h:outputText value=""/>
+                  <h:panelGrid columns="2" styleClass="zeilenabstand tabelle-1-spalte" 
+                     columnClasses="text-3-spalten,eingabe-3-spalten">
+                     
+                     <h:outputText value="Xk in &#937;"/>
+                  
+                     <h:panelGroup styleClass="zahl">
+                        <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x_k}">
+                           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                        </h:outputText>
+                     </h:panelGroup>
+                     
+                  </h:panelGrid>
+                  <h:panelGrid columns="2" styleClass="tabelle-1-spalte" 
+                     columnClasses="text-3-spalten,eingabe-3-spalten">
           
-                  <h:outputText value="Streureaktanz"/>
+                     <h:outputText value="X1 in &#937;"/>
                   
-                  <h:panelGroup styleClass="zahl">
-                     <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x_k}">
-                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                     </h:outputText>
-                  </h:panelGroup>
-               
-                  <h:outputText value=""/>
-          
-                  <h:outputText value="Reaktanz"/>
-                  
-                  <h:panelGroup styleClass="zahl">
-                     <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x1}">
-                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                     </h:outputText>
-                  </h:panelGroup>
+                     <h:panelGroup styleClass="zahl">
+                        <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x1}">
+                           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                        </h:outputText>
+                     </h:panelGroup>
+                  </h:panelGrid>
+                  </h:panelGroup>  
                </h:panelGrid>
             </h:panelGroup> 
          </h:form>
