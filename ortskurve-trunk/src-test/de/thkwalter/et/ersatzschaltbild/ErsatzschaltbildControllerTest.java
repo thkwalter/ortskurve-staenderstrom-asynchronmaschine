@@ -20,7 +20,9 @@ import static org.junit.Assert.assertEquals;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,6 +70,25 @@ public void setUp() throws Exception
    
    // Die im Test verwendete Strangspannung (in V) wird erzeugt und zum Modell hinzugefügt.
    this.testErsatzschaltbildModell.setU_LL(400.0);
+   
+   // Das im Test verwendete Feld der Betriebspunkte wird erstellt und zum Modell hinzugefügt.
+   ArrayList<Betriebspunkt> betriebspunkte = new ArrayList<>();
+   this.testErsatzschaltbildModell.setBetriebspunkte(betriebspunkte);
+   
+   // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
+   Betriebspunkt betriebspunkt = new Betriebspunkt(new Complex(0.1774324324, -1.0645945946));
+   betriebspunkt.setN(50.0);
+   betriebspunkte.add(betriebspunkt);
+   
+   // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
+   betriebspunkt = new Betriebspunkt(new Complex(1.4031595206, -2.3741399308));
+   betriebspunkt.setN(0.0);
+   betriebspunkte.add(betriebspunkt);
+   
+   // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
+   betriebspunkt = new Betriebspunkt(new Complex(1.4658019328, -2.1740196055));
+   betriebspunkt.setN(25.0);
+   betriebspunkte.add(betriebspunkt);
    
    // Der im Test verwendete Schaltungstyp wird im Frontend-Modell gespeichert.
    this.testErsatzschaltbildModell.setSchaltungstyp(Schaltungstyp.STERN);
