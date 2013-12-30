@@ -108,6 +108,11 @@ private void ersatzschaltbildBerechnenIntern()
    double x_k = 0.5 * x1 * x1 / ortskurveImpedanz.getRadiusOrtskurve() - x1;
    ersatzschaltbild.setX_k(x_k);
    
+   // Der auf den Ständer bezogene, ohmsche Widerstand wird berechnet und in der Repräsentation des Ersatzschaltbildes
+   // gespeichert.
+   double r2_strich = R2Berechnen.r2Berechnen(this.ersatzschaltbildModell.getBetriebspunkte());
+   ersatzschaltbild.setR2_strich(r2_strich);
+   
    // Das Ersatzschaltbild wird zum Frontend-Modell hinzugefügt.
    ersatzschaltbildModell.setErsatzschaltbild(ersatzschaltbild);
    }
