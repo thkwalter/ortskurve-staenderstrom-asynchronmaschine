@@ -110,8 +110,8 @@ private void ersatzschaltbildBerechnenIntern()
    
    // Der auf den Ständer bezogene, ohmsche Widerstand wird berechnet und in der Repräsentation des Ersatzschaltbildes
    // gespeichert.
-   double r2_strich = R2Berechnen.r2Berechnen(this.ersatzschaltbildModell.getBetriebspunkte());
-   ersatzschaltbild.setR2_strich(r2_strich);
+//   double r2_strich = R2Berechnen.r2Berechnen(this.ersatzschaltbildModell.getBetriebspunkte());
+//   ersatzschaltbild.setR2_strich(r2_strich);
    
    // Das Ersatzschaltbild wird zum Frontend-Modell hinzugefügt.
    ersatzschaltbildModell.setErsatzschaltbild(ersatzschaltbild);
