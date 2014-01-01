@@ -43,11 +43,11 @@ public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve)
    double radiusOrtskurve = ortskurve.getRadiusOrtskurve();
    
    // In einer Schleife wird für jeden Betriebspunkt der auf den Ständer bezogene, ohmsche Läuferwiderstand berechnet.
-   Betriebspunkt projezierterBetriebspunkt = null;
+   Complex projezierterI1 = null;
    for (Betriebspunkt betriebspunkt : betriebspunkte)
       {
-      // Der Betriebspunkt wird auf die Ortskurve projeziert.
-      projezierterBetriebspunkt = this.aufOrtskurveProjezieren(betriebspunkt, mittelpunktOrtskurve, radiusOrtskurve);
+      // Der Strommesspunkt wird auf die Ortskurve projeziert.
+      projezierterI1 = this.aufOrtskurveProjezieren(betriebspunkt, mittelpunktOrtskurve, radiusOrtskurve);
       }
    }
 
@@ -55,26 +55,21 @@ public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve)
 // =====================================================================================================================
 
 /**
- * Diese Methode projeziert einen Betriebspunkt auf die Ortskurve
+ * Diese Methode projeziert einen Strommesspunkt auf die Ortskurve
  * 
- * @param originalBetriebspunkt Der originale Betriebspunkt (in A)
+ * @param originalBetriebspunkt Der originale Betriebspunkt
  * @param mittelpunktOrtskurve Der Mittelpunkt der Ortskurve (in realen Koordinaten; in A)
  * @param radiusOrtskurve Der Radius der Ortskurve (in A)
  * 
- * @return Der auf die Ortskurve projezierte Betriebspunkt
+ * @return Der auf die Ortskurve projezierte Strommesspunkt
  */
-private Betriebspunkt aufOrtskurveProjezieren(Betriebspunkt originalBetriebspunkt, Complex mittelpunktOrtskurve, 
+private Complex aufOrtskurveProjezieren(Betriebspunkt originalBetriebspunkt, Complex mittelpunktOrtskurve, 
    double radiusOrtskurve)
    {
    // Der Polarwinkel phi des Betriebspunkts vom Mittelpunkt der Ortskurve aus wird bestimmt.
    double phi = originalBetriebspunkt.getI1().subtract(mittelpunktOrtskurve).getArgument();
    
-   // Der projezierte Betriebspunkt wird berechnet.
-   Complex projezierterI1 = ComplexUtils.polar2Complex(radiusOrtskurve, phi).add(mittelpunktOrtskurve);
-   Betriebspunkt projezierterBetriebspunkt = new Betriebspunkt(projezierterI1);
-   projezierterBetriebspunkt.setN(originalBetriebspunkt.getN());
-   
-   // Der projezierte Betriebspunkt wird zurückgegeben.
-   return projezierterBetriebspunkt;
+   // Der projezierte Strommesspunkt wird berechnet und zurückgegeben.
+   return ComplexUtils.polar2Complex(radiusOrtskurve, phi).add(mittelpunktOrtskurve);
    }
 }
