@@ -72,15 +72,7 @@ private static Ortskurve ortskurveInverseImpedanzBerechnen(Ortskurve ortskurve, 
    Schaltungstyp schaltungstyp)
    {
    // In Abhängigkeit vom Schaltungstyp und Netzspannung wird der Skalierungsfaktor berechnet.
-   double skalierungsfaktor = Double.NaN;
-   if (Schaltungstyp.STERN == schaltungstyp)
-      {
-      skalierungsfaktor = u_LL / Math.sqrt(3.0);
-      }
-   else
-      {
-      skalierungsfaktor = u_LL * Math.sqrt(3.0);
-      }
+   double skalierungsfaktor = Ersatzschaltbildformeln.skalierungsfaktorBestimmen(u_LL, schaltungstyp);
    
    // Die Ortskurve der inversen Impedanz wird berechnet und zurückgegeben.
    return ortskurve.skalierteOrtskurveBerechnen(skalierungsfaktor);
