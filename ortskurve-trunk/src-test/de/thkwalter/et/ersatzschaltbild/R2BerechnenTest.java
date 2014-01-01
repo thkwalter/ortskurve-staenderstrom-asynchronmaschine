@@ -130,13 +130,12 @@ public void testAufOrtskurveProjezieren1() throws NoSuchMethodException, Securit
    Method methode = 
       R2Berechnen.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
    methode.setAccessible(true);
-   Betriebspunkt projezierterBetriebspunkt = 
-      (Betriebspunkt) methode.invoke(this.r2Berechnen, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
+   Complex projezierterI1 = 
+      (Complex) methode.invoke(this.r2Berechnen, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
    
-   // Es wird überprüft, ob der projezierte Betriebspunkt korrekt berechnet worden ist.
-   assertEquals(originalBetriebspunkt.getN(), projezierterBetriebspunkt.getN(), 0.0);
-   assertEquals(1.207, projezierterBetriebspunkt.getI1().getReal(), 1.207/1000.0);
-   assertEquals(-2.707, projezierterBetriebspunkt.getI1().getImaginary(), 2.707/1000.0);
+   // Es wird überprüft, ob der projezierte Strommesspunkt korrekt berechnet worden ist.
+   assertEquals(1.207, projezierterI1.getReal(), 1.207/1000.0);
+   assertEquals(-2.707, projezierterI1.getImaginary(), 2.707/1000.0);
    }
 
 // =====================================================================================================================
@@ -169,12 +168,11 @@ public void testAufOrtskurveProjezieren2() throws NoSuchMethodException, Securit
    Method methode = 
       R2Berechnen.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
    methode.setAccessible(true);
-   Betriebspunkt projezierterBetriebspunkt = 
-      (Betriebspunkt) methode.invoke(this.r2Berechnen, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
+   Complex projezierterI1 = 
+         (Complex) methode.invoke(this.r2Berechnen, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
    
    // Es wird überprüft, ob der projezierte Betriebspunkt korrekt berechnet worden ist.
-   assertEquals(originalBetriebspunkt.getN(), projezierterBetriebspunkt.getN(), 0.0);
-   assertEquals(-0.5, projezierterBetriebspunkt.getI1().getReal(), 0.5/1000.0);
-   assertEquals(-2.0, projezierterBetriebspunkt.getI1().getImaginary(), 2.0/1000.0);
+   assertEquals(-0.5, projezierterI1.getReal(), 0.5/1000.0);
+   assertEquals(-2.0, projezierterI1.getImaginary(), 2.0/1000.0);
    }
 }
