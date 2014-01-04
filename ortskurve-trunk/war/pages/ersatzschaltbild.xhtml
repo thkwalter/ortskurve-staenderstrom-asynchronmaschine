@@ -214,7 +214,7 @@
                         </h:panelGroup>   
                      </h:panelGrid>
                   
-                     <h:panelGrid columns="2" styleClass="tabelle-1-spalte" 
+                     <h:panelGrid columns="2" styleClass="zeilenabstand tabelle-1-spalte" 
                         columnClasses="text-3-spalten,eingabe-3-spalten">
                         <h:panelGroup>
                            X<sub>1</sub> in &#937;
@@ -222,6 +222,19 @@
                   
                         <h:panelGroup styleClass="zahl">
                            <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x1}">
+                              <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                           </h:outputText>
+                        </h:panelGroup>
+                     </h:panelGrid>
+                     
+                     <h:panelGrid columns="2" styleClass="tabelle-1-spalte" 
+                        columnClasses="text-3-spalten,eingabe-3-spalten">
+                        <h:panelGroup>
+                           R'<sub>2</sub> in &#937;
+                        </h:panelGroup>
+                  
+                        <h:panelGroup styleClass="zahl">
+                           <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.r2_strich}">
                               <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
                            </h:outputText>
                         </h:panelGroup>

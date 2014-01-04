@@ -108,10 +108,15 @@ private void ersatzschaltbildBerechnenIntern()
    double x_k = 0.5 * x1 * x1 / ortskurveImpedanz.getRadiusOrtskurve() - x1;
    ersatzschaltbild.setX_k(x_k);
    
+   // Die synchrone Drehzahl (in Hz) wird berechnet.
+   double n_s = this.ersatzschaltbildModell.getF1() / this.ersatzschaltbildModell.getP();
+   
    // Der auf den Ständer bezogene, ohmsche Widerstand wird berechnet und in der Repräsentation des Ersatzschaltbildes
    // gespeichert.
-//   double r2_strich = R2Berechnen.r2Berechnen(this.ersatzschaltbildModell.getBetriebspunkte());
-//   ersatzschaltbild.setR2_strich(r2_strich);
+   R2Berechnen r2Berechnen = new R2Berechnen(this.ersatzschaltbildModell.getBetriebspunkte(), 
+      this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
+      this.ersatzschaltbildModell.getSchaltungstyp(), ersatzschaltbild.getR1(), x1, x_k, n_s);
+   ersatzschaltbild.setR2_strich(r2Berechnen.getR_2());
    
    // Das Ersatzschaltbild wird zum Frontend-Modell hinzugefügt.
    ersatzschaltbildModell.setErsatzschaltbild(ersatzschaltbild);

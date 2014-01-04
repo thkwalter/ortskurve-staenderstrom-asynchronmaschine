@@ -16,9 +16,11 @@
 package de.thkwalter.et.ersatzschaltbild;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.complex.ComplexUtils;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
 
@@ -29,6 +31,19 @@ import de.thkwalter.et.ortskurve.Ortskurve;
  */
 public class R2Berechnen
 {
+/**
+ * Das Objekt zur Berechnung der statistischen Werte
+ */
+private DescriptiveStatistics descriptiveStatistics;
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger(R2Berechnen.class.getName());
+
+// =====================================================================================================================
+// =====================================================================================================================
+
 /**
  * Dieser Konstruktor berechnet den auf den Ständer bezogenen, ohmschen Läuferwiderstand.
  * 
@@ -43,7 +58,10 @@ public class R2Berechnen
  */
 public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve, double u_LL, 
    Schaltungstyp schaltungstyp, double r_1, double x_1, double x_k, double n_s)
-   {   
+   {      
+   // Das Objekt zur Berechnung der statistischen Werte wird initialisiert.
+   this.descriptiveStatistics = new DescriptiveStatistics();
+   
    // Der Mittelpunkt (in realen Koordinaten) und der Radius der Ortskurve werden gelesen (in A).
    Complex mittelpunktOrtskurve = 
       new Complex(ortskurve.getMittelpunktOrtskurve().getY(), - ortskurve.getMittelpunktOrtskurve().getX());
@@ -52,11 +70,16 @@ public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve,
    // Der Skalierungsfaktor, mit dessen Hilfe Leiterströme in Leitwerte umgerechnet werden können, wird berechnet.
    double skalierungsfaktor = Ersatzschaltbildformeln.skalierungsfaktorBestimmen(u_LL, schaltungstyp);
    
-   // In einer Schleife wird für jeden Betriebspunkt der auf den Ständer bezogene, ohmsche Läuferwiderstand berechnet.
+   // Einige in der folgenden Schleife verwendeten Variablen und Referenzen werden deklariert.
    Complex projezierterI1 = null;
    Complex z_1 = null;
    Complex r_2_komplex = null;
    double s = Double.NaN;
+   
+   // Das Objekt zur Berechnung des Mittelwerts wird erzeugt.
+   this.descriptiveStatistics = new DescriptiveStatistics();
+   
+   // In einer Schleife wird für jeden Betriebspunkt der auf den Ständer bezogene, ohmsche Läuferwiderstand berechnet.
    for (Betriebspunkt betriebspunkt : betriebspunkte)
       {
       // Der Strommesspunkt wird auf die Ortskurve projeziert.
@@ -74,6 +97,18 @@ public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve,
          {
          // Der auf den Ständer bezogene Läuferwicklungswiderstand dieses Messpunkts wird (in Ohm) berechnet.
          r_2_komplex = this.r_2_komplex(z_1, r_1, x_1, x_k, s);
+      
+         // Der auf der Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) sollte real sein. Ergibt sich bei 
+         // der Berechnung ein nicht zu vernachlässigender Imaginärteil, so wird eine Warnung protokolliert.
+         if (r_2_komplex.getImaginary() > 0.01 * r_2_komplex.getReal())
+            {
+            R2Berechnen.logger.warning("Der Widerstand R2 mit dem Wert " + r_2_komplex + "besitzt einen sehr großen "
+               + "Imaginärteil!");
+            }
+         
+         // Der berechnete, auf der Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) wird zur Statistik
+         // hinzugefügt.
+         descriptiveStatistics.addValue(r_2_komplex.getReal());
          }
       }
    }
@@ -125,5 +160,19 @@ private Complex r_2_komplex(Complex z_1, double r_1, double x_1, double x_k, dou
          
    // Der auf den Ständer bezogene, ohmesche Läuferwicklungswiderstand wird berechnet und zurückgegeben.
    return (zaehler.divide(nenner)).multiply(s);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den auf den Ständer bezogenen, ohmschen Läuferwicklungswiderstand (in Ohm) zurück.
+ * 
+ * @return Der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm)
+ */
+public double getR_2()
+   {
+   // Der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) wird zurückgegeben.
+   return this.descriptiveStatistics.getMean();
    }
 }
