@@ -84,7 +84,8 @@ public void setUp() throws Exception
    this.testOrtskurve = new Ortskurve(new Vector2D(2.0, 0.5), 1.0);
    
    // Das Testobjekt wird erzeugt.
-   this.r2Berechnen = new R2Berechnen(this.testBetriebspunkte, this.testOrtskurve);
+   this.r2Berechnen = new R2Berechnen(this.testBetriebspunkte, this.testOrtskurve, 400.0, Schaltungstyp.STERN, 35.5,
+      213.2, 106.6, 50);
    }
 
 // =====================================================================================================================
@@ -174,5 +175,42 @@ public void testAufOrtskurveProjezieren2() throws NoSuchMethodException, Securit
    // Es wird überprüft, ob der projezierte Betriebspunkt korrekt berechnet worden ist.
    assertEquals(-0.5, projezierterI1.getReal(), 0.5/1000.0);
    assertEquals(-2.0, projezierterI1.getImaginary(), 2.0/1000.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link R2Berechnen#r_2_komplex(z_1, r_1, x_1, x_k, s)}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testr_2_komplex() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
+   IllegalArgumentException, InvocationTargetException
+   {
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = R2Berechnen.class.getDeclaredMethod("r_2_komplex", Complex.class, double.class, double.class, 
+      double.class, double.class);
+   methode.setAccessible(true);
+   Complex r_2_komplex = 
+      (Complex) methode.invoke(this.r2Berechnen, new Complex(42.18, 71.37), 35.5, 213.2, 106.6, 1.0);
+   
+   // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand korrekt berechnet worden 
+   // ist.
+   assertEquals(15.0, r_2_komplex.getReal(), 15.0 / 100);
+   assertEquals(0.0, r_2_komplex.getImaginary(), 15.0 / 100);
+   
+   // Die zu testende Methode wird aufgerufen.
+   r_2_komplex = (Complex) methode.invoke(this.r2Berechnen, new Complex(48.75, 72.30), 35.5, 213.2, 106.6, 0.5);
+      
+   // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand korrekt berechnet worden 
+   // ist.
+   assertEquals(15.0, r_2_komplex.getReal(), 15.0 / 100);
+   assertEquals(0.0, r_2_komplex.getImaginary(), 15.0 / 100);
    }
 }
