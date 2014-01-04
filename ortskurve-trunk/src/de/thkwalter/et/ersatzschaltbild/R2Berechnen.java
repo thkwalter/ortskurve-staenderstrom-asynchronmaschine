@@ -34,20 +34,47 @@ public class R2Berechnen
  * 
  * @param betriebspunkte Die gemessenen Betriebspunkte
  * @param ortskurve Die Stromortskurve
+ * @param u_LL Die Netzspannung (Leiter-Leiter; in V)
+ * @param schaltungstyp Der Schaltungstyp (Stern oder Dreieck)
+ * @param r_1 Der ohmsche Ständerwicklungswiderstand (in Ohm)
+ * @param x_1 (in Ohm)
+ * @param x_k Die Hauptreaktanz (in Ohm)
+ * @param n_s Die synchrone Drehzahl (in Hz)
  */
-public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve)
+public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve, double u_LL, 
+   Schaltungstyp schaltungstyp, double r_1, double x_1, double x_k, double n_s)
    {   
    // Der Mittelpunkt (in realen Koordinaten) und der Radius der Ortskurve werden gelesen (in A).
    Complex mittelpunktOrtskurve = 
       new Complex(ortskurve.getMittelpunktOrtskurve().getY(), - ortskurve.getMittelpunktOrtskurve().getX());
    double radiusOrtskurve = ortskurve.getRadiusOrtskurve();
    
+   // Der Skalierungsfaktor, mit dessen Hilfe Leiterströme in Leitwerte umgerechnet werden können, wird berechnet.
+   double skalierungsfaktor = Ersatzschaltbildformeln.skalierungsfaktorBestimmen(u_LL, schaltungstyp);
+   
    // In einer Schleife wird für jeden Betriebspunkt der auf den Ständer bezogene, ohmsche Läuferwiderstand berechnet.
    Complex projezierterI1 = null;
+   Complex z_1 = null;
+   Complex r_2_komplex = null;
+   double s = Double.NaN;
    for (Betriebspunkt betriebspunkt : betriebspunkte)
       {
       // Der Strommesspunkt wird auf die Ortskurve projeziert.
       projezierterI1 = this.aufOrtskurveProjezieren(betriebspunkt, mittelpunktOrtskurve, radiusOrtskurve);
+      
+      // Die Impedanz des Messpunkts wird berechnet.
+      z_1 = projezierterI1.reciprocal().multiply(skalierungsfaktor);
+      
+      // Der Schlupf wird berechnet.
+      s = 1 - betriebspunkt.getN() / n_s;
+
+      // Der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) kann für Schlupf gleich 0 nicht berechnet 
+      // werden.
+      if (s >= 0.01)
+         {
+         // Der auf den Ständer bezogene Läuferwicklungswiderstand dieses Messpunkts wird (in Ohm) berechnet.
+         r_2_komplex = this.r_2_komplex(z_1, r_1, x_1, x_k, s);
+         }
       }
    }
 
@@ -71,5 +98,32 @@ private Complex aufOrtskurveProjezieren(Betriebspunkt originalBetriebspunkt, Com
    
    // Der projezierte Strommesspunkt wird berechnet und zurückgegeben.
    return ComplexUtils.polar2Complex(radiusOrtskurve, phi).add(mittelpunktOrtskurve);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet den auf den Ständer bezogenen, ohmschen Läuferwicklungswiderstand für einen Messpunkt.
+ * 
+ * @param z_1 Die Impedanz, die zum Messpunkt gehört (in Ohm)
+ * @param r_1 Der ohmsche Ständerwicklungswiderstand (in Ohm)
+ * @param x_1 (in Ohm)
+ * @param x_k Die Hauptreaktanz (in Ohm)
+ * @param s Der Schlupf
+ * 
+ * @return Der auf den Ständer bezogene, ohmschen Läuferwicklungswiderstand.
+ */
+private Complex r_2_komplex(Complex z_1, double r_1, double x_1, double x_k, double s)
+   {
+   // Eine Hilfsgröße wird berechnet.
+   Complex hilf1 = z_1.subtract(r_1);
+   
+   // Zähler und Nenner werden berechnet.
+   Complex zaehler = (hilf1.multiply(new Complex(0.0, x_1+x_k))).add(x_k * x_1);
+   Complex nenner = (new Complex(0.0, x_1)).subtract(hilf1);
+         
+   // Der auf den Ständer bezogene, ohmesche Läuferwicklungswiderstand wird berechnet und zurückgegeben.
+   return (zaehler.divide(nenner)).multiply(s);
    }
 }
