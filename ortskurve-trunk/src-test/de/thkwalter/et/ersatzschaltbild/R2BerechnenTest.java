@@ -18,12 +18,14 @@ package de.thkwalter.et.ersatzschaltbild;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -212,5 +214,34 @@ public void testr_2_komplex() throws NoSuchMethodException, SecurityException, I
    // ist.
    assertEquals(15.0, r_2_komplex.getReal(), 15.0 / 100);
    assertEquals(0.0, r_2_komplex.getImaginary(), 15.0 / 100);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link R2Berechnen#getR_2()}.
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetR2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+   {
+   // Das Objekt, das für die Statistikberechnungen genutzt wird, wird gelesen.
+   Field feld = R2Berechnen.class.getDeclaredField("descriptiveStatistics");
+   feld.setAccessible(true);
+   DescriptiveStatistics descriptiveStatistics = (DescriptiveStatistics) feld.get(this.r2Berechnen);
+  
+   // Ein Wert wird in dem Objekt, das für die Statistikberechnung benutzt wird, gespeichert.
+   descriptiveStatistics.addValue(16.0);
+   
+   // Die zu testende Methode wird aufgerufen.
+   double r2 = this.r2Berechnen.getR_2();
+   
+   // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) korrekt 
+   // zurückgegeben worden ist.
+   assertEquals(16.0, r2, 16.0/1000);
    }
 }
