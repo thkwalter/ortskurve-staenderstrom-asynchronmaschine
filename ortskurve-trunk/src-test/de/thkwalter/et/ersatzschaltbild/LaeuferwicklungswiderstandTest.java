@@ -183,7 +183,8 @@ public void testAufOrtskurveProjezieren2() throws NoSuchMethodException, Securit
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Laeuferwicklungswiderstand#r_2_komplex(z_1, r_1, x_1, x_k, s)}.
+ * Test der Methode {@link Laeuferwicklungswiderstand#r2_komplex(z_1, r_1, x_1, x_k, s)}. Der Test ist spezifiziert im
+ * Tabellenwerk ersatzschaltbild.ods.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -192,17 +193,17 @@ public void testAufOrtskurveProjezieren2() throws NoSuchMethodException, Securit
  * @throws IllegalAccessException 
  */
 @Test
-public void testr_2_komplex() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
+public void testR2_komplex() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
    IllegalArgumentException, InvocationTargetException
    {
    // Die zu testende Methode wird aufgerufen.
-   Method methode = Laeuferwicklungswiderstand.class.getDeclaredMethod("r_2_komplex", Complex.class, double.class, double.class, 
-      double.class, double.class);
+   Method methode = Laeuferwicklungswiderstand.class.getDeclaredMethod("r2_komplex", Complex.class, double.class, 
+      double.class, double.class, double.class);
    methode.setAccessible(true);
    Complex r_2_komplex = 
       (Complex) methode.invoke(this.laeuferwicklungswiderstand, new Complex(42.18, 71.37), 35.5, 213.2, 106.6, 1.0);
    
-   // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand korrekt berechnet worden 
+   // Es wird überprüft, ob der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) korrekt berechnet worden 
    // ist.
    assertEquals(15.0, r_2_komplex.getReal(), 15.0 / 100);
    assertEquals(0.0, r_2_komplex.getImaginary(), 15.0 / 100);
@@ -210,7 +211,7 @@ public void testr_2_komplex() throws NoSuchMethodException, SecurityException, I
    // Die zu testende Methode wird aufgerufen.
    r_2_komplex = (Complex) methode.invoke(this.laeuferwicklungswiderstand, new Complex(48.75, 72.30), 35.5, 213.2, 106.6, 0.5);
       
-   // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand korrekt berechnet worden 
+   // Es wird überprüft, ob der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) korrekt berechnet worden 
    // ist.
    assertEquals(15.0, r_2_komplex.getReal(), 15.0 / 100);
    assertEquals(0.0, r_2_komplex.getImaginary(), 15.0 / 100);
@@ -233,6 +234,7 @@ public void testGetR2() throws NoSuchFieldException, SecurityException, IllegalA
    // Das Objekt, das im Test für die Statistikberechnungen genutzt wird, wird erzeugt und initialisiert.
    DescriptiveStatistics testDescriptiveStatistics = new DescriptiveStatistics();
    testDescriptiveStatistics.addValue(16.0);
+   testDescriptiveStatistics.addValue(18.0);
    
    // Das Objekt, das im Test für die Statistikberechnungen genutzt wird, wird gespeichert.
    Field feld = Laeuferwicklungswiderstand.class.getDeclaredField("descriptiveStatistics");
@@ -244,6 +246,6 @@ public void testGetR2() throws NoSuchFieldException, SecurityException, IllegalA
    
    // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) korrekt 
    // zurückgegeben worden ist.
-   assertEquals(16.0, r2, 16.0/1000);
+   assertEquals(17.0, r2, 17.0/1000);
    }
 }
