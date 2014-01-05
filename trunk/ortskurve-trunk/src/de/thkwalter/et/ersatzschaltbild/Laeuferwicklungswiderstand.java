@@ -96,7 +96,7 @@ public Laeuferwicklungswiderstand(ArrayList<Betriebspunkt> betriebspunkte, Ortsk
       if (s >= 0.01)
          {
          // Der auf den Ständer bezogene Läuferwicklungswiderstand dieses Messpunkts wird (in Ohm) berechnet.
-         r_2_komplex = this.r_2_komplex(z_1, r_1, x_1, x_k, s);
+         r_2_komplex = this.r2_komplex(z_1, r_1, x_1, x_k, s);
       
          // Der auf der Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) sollte real sein. Ergibt sich bei 
          // der Berechnung ein nicht zu vernachlässigender Imaginärteil, so wird eine Warnung protokolliert.
@@ -139,26 +139,26 @@ private Complex aufOrtskurveProjezieren(Betriebspunkt originalBetriebspunkt, Com
 // =====================================================================================================================
 
 /**
- * Diese Methode berechnet den auf den Ständer bezogenen, ohmschen Läuferwicklungswiderstand für einen Messpunkt.
+ * Diese Methode berechnet den auf den Ständer bezogenen Läuferwicklungswiderstand (in Ohm) für einen Messpunkt.
  * 
- * @param z_1 Die Impedanz, die zum Messpunkt gehört (in Ohm)
- * @param r_1 Der ohmsche Ständerwicklungswiderstand (in Ohm)
+ * @param z_1 Die Impedanz (in Ohm), die zu dem Messpunkt gehört
+ * @param r_1 Der Ständerwicklungswiderstand (in Ohm)
  * @param x_1 (in Ohm)
- * @param x_k Die Hauptreaktanz (in Ohm)
+ * @param x_k Die Streureaktanz (in Ohm)
  * @param s Der Schlupf
  * 
- * @return Der auf den Ständer bezogene, ohmschen Läuferwicklungswiderstand.
+ * @return Der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm)
  */
-private Complex r_2_komplex(Complex z_1, double r_1, double x_1, double x_k, double s)
+private Complex r2_komplex(Complex z_1, double r_1, double x_1, double x_k, double s)
    {
    // Eine Hilfsgröße wird berechnet.
    Complex hilf1 = z_1.subtract(r_1);
    
    // Zähler und Nenner werden berechnet.
-   Complex zaehler = (hilf1.multiply(new Complex(0.0, x_1+x_k))).add(x_k * x_1);
+   Complex zaehler = (hilf1.multiply(new Complex(0.0, x_1 + x_k))).add(x_k * x_1);
    Complex nenner = (new Complex(0.0, x_1)).subtract(hilf1);
          
-   // Der auf den Ständer bezogene, ohmesche Läuferwicklungswiderstand wird berechnet und zurückgegeben.
+   // Der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) wird berechnet und zurückgegeben.
    return (zaehler.divide(nenner)).multiply(s);
    }
 
