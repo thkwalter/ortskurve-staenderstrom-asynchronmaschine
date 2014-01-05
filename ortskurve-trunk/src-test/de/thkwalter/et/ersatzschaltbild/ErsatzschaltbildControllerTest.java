@@ -71,6 +71,12 @@ public void setUp() throws Exception
    // Die im Test verwendete Strangspannung (in V) wird erzeugt und zum Modell hinzugefügt.
    this.testErsatzschaltbildModell.setU_LL(400.0);
    
+   // Die im Test verwendete Polpaarzahl wird im Modell gespeichert.
+   this.testErsatzschaltbildModell.setP(1);
+   
+   // Die in den Tests verwendete Netzfrequenz wird im Datenmodell gespeichert.
+   this.testErsatzschaltbildModell.setF1(50.0);
+   
    // Das im Test verwendete Feld der Betriebspunkte wird erstellt und zum Modell hinzugefügt.
    ArrayList<Betriebspunkt> betriebspunkte = new ArrayList<>();
    this.testErsatzschaltbildModell.setBetriebspunkte(betriebspunkte);

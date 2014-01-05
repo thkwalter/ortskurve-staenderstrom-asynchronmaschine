@@ -32,16 +32,16 @@ import org.junit.Test;
 import de.thkwalter.et.ortskurve.Ortskurve;
 
 /**
- * Diese Klasse enthält Tests für die Klasse {@link R2Berechnen}.
+ * Diese Klasse enthält Tests für die Klasse {@link Laeuferwicklungswiderstand}.
  * 
  * @author Th. K. Walter
  */
-public class R2BerechnenTest
+public class LaeuferwicklungswiderstandTest
 {
 /**
- * Das Testobjekt der Klasse {@link R2Berechnen}
+ * Das Testobjekt der Klasse {@link Laeuferwicklungswiderstand}
  */
-private R2Berechnen r2Berechnen;
+private Laeuferwicklungswiderstand laeuferwicklungswiderstand;
 
 /**
  * Die in den Tests verwendeten Betriebspunkte
@@ -86,7 +86,7 @@ public void setUp() throws Exception
    this.testOrtskurve = new Ortskurve(new Vector2D(2.0, 0.5), 1.0);
    
    // Das Testobjekt wird erzeugt.
-   this.r2Berechnen = new R2Berechnen(this.testBetriebspunkte, this.testOrtskurve, 400.0, Schaltungstyp.STERN, 35.5,
+   this.laeuferwicklungswiderstand = new Laeuferwicklungswiderstand(this.testBetriebspunkte, this.testOrtskurve, 400.0, Schaltungstyp.STERN, 35.5,
       213.2, 106.6, 50);
    }
 
@@ -94,20 +94,20 @@ public void setUp() throws Exception
 // =====================================================================================================================
 
 /**
- * Test des Konstruktors {@link R2Berechnen#R2Berechnen(ArrayList)}.
+ * Test des Konstruktors {@link Laeuferwicklungswiderstand#R2Berechnen(ArrayList)}.
  */
 @Test
 public void testR2Berechnen()
    {
    // Es wird überprüft, ob das Testobjekt korrekt erzeugt worden ist.
-   assertNotNull(this.r2Berechnen);
+   assertNotNull(this.laeuferwicklungswiderstand);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link R2Berechnen#aufOrtskurveProjezieren(Betriebspunkt, Complex, double)}.
+ * Test der Methode {@link Laeuferwicklungswiderstand#aufOrtskurveProjezieren(Betriebspunkt, Complex, double)}.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -131,10 +131,10 @@ public void testAufOrtskurveProjezieren1() throws NoSuchMethodException, Securit
    
    // Die zu testende Methode wird ausgeführt.
    Method methode = 
-      R2Berechnen.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
+      Laeuferwicklungswiderstand.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
    methode.setAccessible(true);
    Complex projezierterI1 = 
-      (Complex) methode.invoke(this.r2Berechnen, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
+      (Complex) methode.invoke(this.laeuferwicklungswiderstand, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
    
    // Es wird überprüft, ob der projezierte Strommesspunkt korrekt berechnet worden ist.
    assertEquals(1.207, projezierterI1.getReal(), 1.207/1000.0);
@@ -145,7 +145,7 @@ public void testAufOrtskurveProjezieren1() throws NoSuchMethodException, Securit
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link R2Berechnen#aufOrtskurveProjezieren(Betriebspunkt, Complex, double)}.
+ * Test der Methode {@link Laeuferwicklungswiderstand#aufOrtskurveProjezieren(Betriebspunkt, Complex, double)}.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -169,10 +169,10 @@ public void testAufOrtskurveProjezieren2() throws NoSuchMethodException, Securit
    
    // Die zu testende Methode wird ausgeführt.
    Method methode = 
-      R2Berechnen.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
+      Laeuferwicklungswiderstand.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
    methode.setAccessible(true);
    Complex projezierterI1 = 
-         (Complex) methode.invoke(this.r2Berechnen, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
+         (Complex) methode.invoke(this.laeuferwicklungswiderstand, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
    
    // Es wird überprüft, ob der projezierte Betriebspunkt korrekt berechnet worden ist.
    assertEquals(-0.5, projezierterI1.getReal(), 0.5/1000.0);
@@ -183,7 +183,7 @@ public void testAufOrtskurveProjezieren2() throws NoSuchMethodException, Securit
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link R2Berechnen#r_2_komplex(z_1, r_1, x_1, x_k, s)}.
+ * Test der Methode {@link Laeuferwicklungswiderstand#r_2_komplex(z_1, r_1, x_1, x_k, s)}.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -196,11 +196,11 @@ public void testr_2_komplex() throws NoSuchMethodException, SecurityException, I
    IllegalArgumentException, InvocationTargetException
    {
    // Die zu testende Methode wird aufgerufen.
-   Method methode = R2Berechnen.class.getDeclaredMethod("r_2_komplex", Complex.class, double.class, double.class, 
+   Method methode = Laeuferwicklungswiderstand.class.getDeclaredMethod("r_2_komplex", Complex.class, double.class, double.class, 
       double.class, double.class);
    methode.setAccessible(true);
    Complex r_2_komplex = 
-      (Complex) methode.invoke(this.r2Berechnen, new Complex(42.18, 71.37), 35.5, 213.2, 106.6, 1.0);
+      (Complex) methode.invoke(this.laeuferwicklungswiderstand, new Complex(42.18, 71.37), 35.5, 213.2, 106.6, 1.0);
    
    // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand korrekt berechnet worden 
    // ist.
@@ -208,7 +208,7 @@ public void testr_2_komplex() throws NoSuchMethodException, SecurityException, I
    assertEquals(0.0, r_2_komplex.getImaginary(), 15.0 / 100);
    
    // Die zu testende Methode wird aufgerufen.
-   r_2_komplex = (Complex) methode.invoke(this.r2Berechnen, new Complex(48.75, 72.30), 35.5, 213.2, 106.6, 0.5);
+   r_2_komplex = (Complex) methode.invoke(this.laeuferwicklungswiderstand, new Complex(48.75, 72.30), 35.5, 213.2, 106.6, 0.5);
       
    // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand korrekt berechnet worden 
    // ist.
@@ -220,7 +220,8 @@ public void testr_2_komplex() throws NoSuchMethodException, SecurityException, I
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link R2Berechnen#getR_2()}.
+ * Test der Methode {@link Laeuferwicklungswiderstand#getR2()}.
+ * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
  * @throws IllegalAccessException 
@@ -229,16 +230,17 @@ public void testr_2_komplex() throws NoSuchMethodException, SecurityException, I
 @Test
 public void testGetR2() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
-   // Das Objekt, das für die Statistikberechnungen genutzt wird, wird gelesen.
-   Field feld = R2Berechnen.class.getDeclaredField("descriptiveStatistics");
+   // Das Objekt, das im Test für die Statistikberechnungen genutzt wird, wird erzeugt und initialisiert.
+   DescriptiveStatistics testDescriptiveStatistics = new DescriptiveStatistics();
+   testDescriptiveStatistics.addValue(16.0);
+   
+   // Das Objekt, das im Test für die Statistikberechnungen genutzt wird, wird gespeichert.
+   Field feld = Laeuferwicklungswiderstand.class.getDeclaredField("descriptiveStatistics");
    feld.setAccessible(true);
-   DescriptiveStatistics descriptiveStatistics = (DescriptiveStatistics) feld.get(this.r2Berechnen);
-  
-   // Ein Wert wird in dem Objekt, das für die Statistikberechnung benutzt wird, gespeichert.
-   descriptiveStatistics.addValue(16.0);
+   feld.set(this.laeuferwicklungswiderstand, testDescriptiveStatistics);
    
    // Die zu testende Methode wird aufgerufen.
-   double r2 = this.r2Berechnen.getR_2();
+   double r2 = this.laeuferwicklungswiderstand.getR2();
    
    // Es wird überprüft, ob der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) korrekt 
    // zurückgegeben worden ist.

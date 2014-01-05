@@ -25,21 +25,21 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import de.thkwalter.et.ortskurve.Ortskurve;
 
 /**
- * Diese Klasse dient zum Berechnen des auf den Ständer bezogenen, ohmschen Läuferwiderstands.
+ * Diese Klasse dient zur Berechnung des auf den Ständer bezogenen Läuferwicklungswiderstands.
  * 
  * @author thomas
  */
-public class R2Berechnen
+public class Laeuferwicklungswiderstand
 {
 /**
- * Das Objekt zur Berechnung der statistischen Werte
+ * Das Objekt, das für die Statistikberechnungen genutzt wird
  */
 private DescriptiveStatistics descriptiveStatistics;
 
 /*
  * Der Logger dieser Klasse.
  */
-private static Logger logger = Logger.getLogger(R2Berechnen.class.getName());
+private static Logger logger = Logger.getLogger(Laeuferwicklungswiderstand.class.getName());
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -56,7 +56,7 @@ private static Logger logger = Logger.getLogger(R2Berechnen.class.getName());
  * @param x_k Die Hauptreaktanz (in Ohm)
  * @param n_s Die synchrone Drehzahl (in Hz)
  */
-public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve, double u_LL, 
+public Laeuferwicklungswiderstand(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve, double u_LL, 
    Schaltungstyp schaltungstyp, double r_1, double x_1, double x_k, double n_s)
    {      
    // Das Objekt zur Berechnung der statistischen Werte wird initialisiert.
@@ -102,7 +102,7 @@ public R2Berechnen(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve,
          // der Berechnung ein nicht zu vernachlässigender Imaginärteil, so wird eine Warnung protokolliert.
          if (r_2_komplex.getImaginary() > 0.01 * r_2_komplex.getReal())
             {
-            R2Berechnen.logger.warning("Der Widerstand R2 mit dem Wert " + r_2_komplex + "besitzt einen sehr großen "
+            Laeuferwicklungswiderstand.logger.warning("Der Widerstand R2 mit dem Wert " + r_2_komplex + "besitzt einen sehr großen "
                + "Imaginärteil!");
             }
          
@@ -166,13 +166,15 @@ private Complex r_2_komplex(Complex z_1, double r_1, double x_1, double x_k, dou
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt den auf den Ständer bezogenen, ohmschen Läuferwicklungswiderstand (in Ohm) zurück.
+ * Diese Methode gibt den auf den Ständer bezogenen Läuferwicklungswiderstand (in Ohm) zurück. Der zurückgegebene Wert
+ * ist der Mittelwert der für die verschiedenen Messpunkte berechneten Werte.
  * 
- * @return Der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm)
+ * @return Der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm)
  */
-public double getR_2()
+public double getR2()
    {
-   // Der auf den Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) wird zurückgegeben.
+   // Der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) wird zurückgegeben. Der zurückgegebene Wert ist 
+   // der Mittelwert der für die verschiedenen Messpunkte berechneten Werte.
    return this.descriptiveStatistics.getMean();
    }
 }
