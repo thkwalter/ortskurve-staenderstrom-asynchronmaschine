@@ -78,23 +78,23 @@ public void setUp() throws Exception
    this.testErsatzschaltbildModell.setF1(50.0);
    
    // Das im Test verwendete Feld der Betriebspunkte wird erstellt und zum Modell hinzugefügt.
-   ArrayList<Betriebspunkt> betriebspunkte = new ArrayList<>();
-   this.testErsatzschaltbildModell.setBetriebspunkte(betriebspunkte);
+   ArrayList<Betriebspunkt> testBetriebspunkte = new ArrayList<>();
+   this.testErsatzschaltbildModell.setBetriebspunkte(testBetriebspunkte);
    
    // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
-   Betriebspunkt betriebspunkt = new Betriebspunkt(new Complex(0.1774324324, -1.0645945946));
+   Betriebspunkt betriebspunkt = new Betriebspunkt(new Complex(0.1724324324, -1.0445945946));
    betriebspunkt.setN(50.0);
-   betriebspunkte.add(betriebspunkt);
+   testBetriebspunkte.add(betriebspunkt);
    
    // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
-   betriebspunkt = new Betriebspunkt(new Complex(1.4031595206, -2.3741399308));
+   betriebspunkt = new Betriebspunkt(new Complex(1.4081595206, -2.3941399308));
    betriebspunkt.setN(0.0);
-   betriebspunkte.add(betriebspunkt);
+   testBetriebspunkte.add(betriebspunkt);
    
    // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
-   betriebspunkt = new Betriebspunkt(new Complex(1.4658019328, -2.1740196055));
+   betriebspunkt = new Betriebspunkt(new Complex(1.4708019328, -2.1940196055));
    betriebspunkt.setN(25.0);
-   betriebspunkte.add(betriebspunkt);
+   testBetriebspunkte.add(betriebspunkt);
    
    // Der im Test verwendete Schaltungstyp wird im Frontend-Modell gespeichert.
    this.testErsatzschaltbildModell.setSchaltungstyp(Schaltungstyp.STERN);
@@ -159,5 +159,6 @@ public void testErsatzschaltbildBerechnenIntern() throws NoSuchMethodException, 
    assertEquals(35.53, ersatzschaltbild.getR1(), 35.53 / 1000.0);
    assertEquals(213.2, ersatzschaltbild.getX1(), 213.2 / 1000.0);
    assertEquals(106.6, ersatzschaltbild.getX_k(), 106.6 / 1000.0);
+   assertEquals(15.0, ersatzschaltbild.getR2_strich(), 15.0 / 100.0);
    }
 }
