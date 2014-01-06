@@ -20,6 +20,8 @@
    # [BerechnungOrtskurveRealistischeWerte Berechnung der Ortskurve mit realistischen Werten]
    # [Berechnung2dOrtskurve Berechnung der Ortskurve der 2d-Ausgleichsrechnung]
    # [Berechnung2dOrtskurveRealistischeWerte Berechnung der Ortskurve der 2d-Ausgleichsrechnung mit realistischen Werten]
+ * Berechnung des Ersatzschaltbildes prüfen
+   # [BerechneteWiderstaende Berechnete Widerstände überprüfen] 
  * Fehlerbehandlungen auf der Seite "Berechnung der Ortskurve"
    # [FehlerbehandlungFalschesFormat Fehlerbehandlung bei Eingabe im falschen Format überprüfen]
    # [FehlerbehandlungZuWenigeMesspunkte Fehlerbehandlung bei Eingabe zu weniger Messpunkte überprüfen]
