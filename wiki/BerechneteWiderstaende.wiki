@@ -3,9 +3,9 @@
  # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
  # Die Punkte 
 {{{
-1.054,0.176
-2.398,1.417
-2.196,1.481
+1.0541,0.1757
+2.3981,1.4173
+2.1960,1.4806
 }}} 
 eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
  # Das Resultat kontrollieren -> Mittelpunkt (2, 0.5) und Radius 1
@@ -16,7 +16,7 @@ eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angez
  # Die Drehzahlen eingeben
 {{{
 50 für 1.054,0.176
- 0  für 2.398,1.417
+ 0 für 2.398,1.417
 25 für 2.196,1.481
 }}} 
  # Die Widerstände kontrollieren
