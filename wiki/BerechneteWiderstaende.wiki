@@ -15,9 +15,9 @@ eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angez
  # Die Netzspannung (400 V), die Netzfrequenz (50 Hz), die Polpaarzahl (1) und den Schaltungstyp (STERN) eingeben.
  # Die Drehzahlen eingeben
 {{{
-50 für 1.054,0.176
- 0 für 2.398,1.417
-25 für 2.196,1.481
+50 für 1.0541,0.1757
+ 0 für 2.3981,1.4173
+25 für 2.1960,1.4806
 }}} 
  # Die Widerstände kontrollieren
 {{{
