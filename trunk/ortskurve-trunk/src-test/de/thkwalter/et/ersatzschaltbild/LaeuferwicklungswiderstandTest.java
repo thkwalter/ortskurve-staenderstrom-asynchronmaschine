@@ -68,17 +68,17 @@ public void setUp() throws Exception
    this.testBetriebspunkte = new ArrayList<>();
    
    // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
-   Betriebspunkt betriebspunkt = new Betriebspunkt(new Complex(0.1774324324, -1.0645945946));
+   Betriebspunkt betriebspunkt = new Betriebspunkt(new Complex(0.1724324324, -1.0445945946));
    betriebspunkt.setN(50.0);
    this.testBetriebspunkte.add(betriebspunkt);
    
    // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
-   betriebspunkt = new Betriebspunkt(new Complex(1.4031595206, -2.3741399308));
+   betriebspunkt = new Betriebspunkt(new Complex(1.4081595206, -2.3941399308));
    betriebspunkt.setN(0.0);
    this.testBetriebspunkte.add(betriebspunkt);
    
    // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
-   betriebspunkt = new Betriebspunkt(new Complex(1.4658019328, -2.1740196055));
+   betriebspunkt = new Betriebspunkt(new Complex(1.4708019328, -2.1940196055));
    betriebspunkt.setN(25.0);
    this.testBetriebspunkte.add(betriebspunkt);
    
@@ -86,8 +86,8 @@ public void setUp() throws Exception
    this.testOrtskurve = new Ortskurve(new Vector2D(2.0, 0.5), 1.0);
    
    // Das Testobjekt wird erzeugt.
-   this.laeuferwicklungswiderstand = new Laeuferwicklungswiderstand(this.testBetriebspunkte, this.testOrtskurve, 400.0, Schaltungstyp.STERN, 35.5,
-      213.2, 106.6, 50);
+   this.laeuferwicklungswiderstand = new Laeuferwicklungswiderstand(this.testBetriebspunkte, 
+      this.testOrtskurve, 400.0, Schaltungstyp.STERN, 35.5, 213.2, 106.6, 50);
    }
 
 // =====================================================================================================================
@@ -95,12 +95,30 @@ public void setUp() throws Exception
 
 /**
  * Test des Konstruktors {@link Laeuferwicklungswiderstand#R2Berechnen(ArrayList)}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test
-public void testR2Berechnen()
+public void testR2Berechnen() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Es wird überprüft, ob das Testobjekt korrekt erzeugt worden ist.
    assertNotNull(this.laeuferwicklungswiderstand);
+   
+   // Es wird überprüft, ob der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) korrekt berechnet worden 
+   // ist.
+   assertEquals(15.0, this.laeuferwicklungswiderstand.getR2(), 15.0 / 100);
+   
+   // Das Objekt, das im Test für die Statistikberechnungen genutzt wird, wird gelesen.
+   Field feld = Laeuferwicklungswiderstand.class.getDeclaredField("descriptiveStatistics");
+   feld.setAccessible(true);
+   DescriptiveStatistics descriptiveStatistics = (DescriptiveStatistics) feld.get(this.laeuferwicklungswiderstand);
+   
+   // Es wird überprüft, ob zwei Werte für den bezogenen Läuferwicklungswiderstand gespeichert worden sind.
+   assertEquals(2, descriptiveStatistics.getN(), 0);
    }
 
 // =====================================================================================================================
@@ -116,65 +134,37 @@ public void testR2Berechnen()
  * @throws IllegalAccessException 
  */
 @Test
-public void testAufOrtskurveProjezieren1() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
+public void testAufOrtskurveProjezieren() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
    IllegalArgumentException, InvocationTargetException
    {
-   // Der im Test verwendete Mittelpunkt der Stromortskurve (in realen Koordinaten) wird erzeugt.
+   // Der im Test verwendete Mittelpunkt der Stromortskurve (in realen Koordinaten; in A) wird erzeugt.
    Complex testMittelpunkt = new Complex(0.5, -2.0);
    
-   // Der im Test verwendete Radius der Stromortskurve wird erzeugt.
+   // Der im Test verwendete Radius der Stromortskurve (in A) wird erzeugt.
    double testRadiusOrtskurve = 1.0;
    
-   // Ein Betriebspunkt, der nicht auf der Kreislinie liegt, wird erzeugt.
+   // Ein Betriebspunkt, der nicht auf der Ortskurve liegt, wird erzeugt.
    Betriebspunkt originalBetriebspunkt = new Betriebspunkt(new Complex(1.5, -3.0));
-   originalBetriebspunkt.setN(1000.0);
    
    // Die zu testende Methode wird ausgeführt.
-   Method methode = 
-      Laeuferwicklungswiderstand.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
+   Method methode = Laeuferwicklungswiderstand.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, 
+      Complex.class, double.class);
    methode.setAccessible(true);
-   Complex projezierterI1 = 
-      (Complex) methode.invoke(this.laeuferwicklungswiderstand, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
+   Complex projezierterI1 = (Complex) methode.invoke(this.laeuferwicklungswiderstand, originalBetriebspunkt, 
+      testMittelpunkt, testRadiusOrtskurve);
    
-   // Es wird überprüft, ob der projezierte Strommesspunkt korrekt berechnet worden ist.
+   // Es wird überprüft, ob der auf die Ortskurve projezierte Leiterstrom (in A) korrekt berechnet worden ist.
    assertEquals(1.207, projezierterI1.getReal(), 1.207/1000.0);
    assertEquals(-2.707, projezierterI1.getImaginary(), 2.707/1000.0);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test der Methode {@link Laeuferwicklungswiderstand#aufOrtskurveProjezieren(Betriebspunkt, Complex, double)}.
- * 
- * @throws SecurityException 
- * @throws NoSuchMethodException 
- * @throws InvocationTargetException 
- * @throws IllegalArgumentException 
- * @throws IllegalAccessException 
- */
-@Test
-public void testAufOrtskurveProjezieren2() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
-   IllegalArgumentException, InvocationTargetException
-   {
-   // Der im Test verwendete Mittelpunkt der Stromortskurve (in realen Koordinaten) wird erzeugt.
-   Complex testMittelpunkt = new Complex(0.5, -2.0);
    
-   // Der im Test verwendete Radius der Stromortskurve wird erzeugt.
-   double testRadiusOrtskurve = 1.0;
-   
-   // Ein Betriebspunkt, der nicht auf der Kreislinie liegt, wird erzeugt.
-   Betriebspunkt originalBetriebspunkt = new Betriebspunkt(new Complex(-0.3, -2.0));
-   originalBetriebspunkt.setN(1000.0);
+   // Ein Betriebspunkt, der nicht auf der Ortskurve liegt, wird erzeugt.
+   originalBetriebspunkt = new Betriebspunkt(new Complex(-0.3, -2.0));
    
    // Die zu testende Methode wird ausgeführt.
-   Method methode = 
-      Laeuferwicklungswiderstand.class.getDeclaredMethod("aufOrtskurveProjezieren", Betriebspunkt.class, Complex.class, double.class);
-   methode.setAccessible(true);
-   Complex projezierterI1 = 
-         (Complex) methode.invoke(this.laeuferwicklungswiderstand, originalBetriebspunkt, testMittelpunkt, testRadiusOrtskurve);
+   projezierterI1 = (Complex) methode.invoke(this.laeuferwicklungswiderstand, originalBetriebspunkt, testMittelpunkt, 
+      testRadiusOrtskurve);
    
-   // Es wird überprüft, ob der projezierte Betriebspunkt korrekt berechnet worden ist.
+   // Es wird überprüft, ob der auf die Ortskurve projezierte Leiterstrom (in A) korrekt berechnet worden ist.
    assertEquals(-0.5, projezierterI1.getReal(), 0.5/1000.0);
    assertEquals(-2.0, projezierterI1.getImaginary(), 2.0/1000.0);
    }
@@ -209,7 +199,8 @@ public void testR2_komplex() throws NoSuchMethodException, SecurityException, Il
    assertEquals(0.0, r_2_komplex.getImaginary(), 15.0 / 100);
    
    // Die zu testende Methode wird aufgerufen.
-   r_2_komplex = (Complex) methode.invoke(this.laeuferwicklungswiderstand, new Complex(48.75, 72.30), 35.5, 213.2, 106.6, 0.5);
+   r_2_komplex = 
+      (Complex) methode.invoke(this.laeuferwicklungswiderstand, new Complex(48.75, 72.30), 35.5, 213.2, 106.6, 0.5);
       
    // Es wird überprüft, ob der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) korrekt berechnet worden 
    // ist.

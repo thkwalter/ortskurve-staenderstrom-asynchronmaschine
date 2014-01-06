@@ -27,7 +27,7 @@ import de.thkwalter.et.ortskurve.Ortskurve;
 /**
  * Diese Klasse dient zur Berechnung des auf den Ständer bezogenen Läuferwicklungswiderstands.
  * 
- * @author thomas
+ * @author Th. K. Walter
  */
 public class Laeuferwicklungswiderstand
 {
@@ -45,21 +45,21 @@ private static Logger logger = Logger.getLogger(Laeuferwicklungswiderstand.class
 // =====================================================================================================================
 
 /**
- * Dieser Konstruktor berechnet den auf den Ständer bezogenen, ohmschen Läuferwiderstand.
+ * Dieser Konstruktor berechnet den auf den Ständer bezogenen Läuferwicklungswiderstand.
  * 
  * @param betriebspunkte Die gemessenen Betriebspunkte
  * @param ortskurve Die Stromortskurve
  * @param u_LL Die Netzspannung (Leiter-Leiter; in V)
  * @param schaltungstyp Der Schaltungstyp (Stern oder Dreieck)
- * @param r_1 Der ohmsche Ständerwicklungswiderstand (in Ohm)
+ * @param r_1 Der Ständerwicklungswiderstand (in Ohm)
  * @param x_1 (in Ohm)
- * @param x_k Die Hauptreaktanz (in Ohm)
+ * @param x_k Die Streureaktanz (in Ohm)
  * @param n_s Die synchrone Drehzahl (in Hz)
  */
 public Laeuferwicklungswiderstand(ArrayList<Betriebspunkt> betriebspunkte, Ortskurve ortskurve, double u_LL, 
    Schaltungstyp schaltungstyp, double r_1, double x_1, double x_k, double n_s)
    {      
-   // Das Objekt zur Berechnung der statistischen Werte wird initialisiert.
+   // Das Objekt, das für die Statistikberechnungen genutzt wird, wird initialisiert.
    this.descriptiveStatistics = new DescriptiveStatistics();
    
    // Der Mittelpunkt (in realen Koordinaten) und der Radius der Ortskurve werden gelesen (in A).
@@ -67,7 +67,8 @@ public Laeuferwicklungswiderstand(ArrayList<Betriebspunkt> betriebspunkte, Ortsk
       new Complex(ortskurve.getMittelpunktOrtskurve().getY(), - ortskurve.getMittelpunktOrtskurve().getX());
    double radiusOrtskurve = ortskurve.getRadiusOrtskurve();
    
-   // Der Skalierungsfaktor, mit dessen Hilfe Leiterströme in Leitwerte umgerechnet werden können, wird berechnet.
+   // Der Skalierungsfaktor, mit dessen Hilfe Leiterströme (in A) in Leitwerte (in 1/Ohm) umgerechnet werden können, 
+   // wird berechnet.
    double skalierungsfaktor = Ersatzschaltbildformeln.skalierungsfaktorBestimmen(u_LL, schaltungstyp);
    
    // Einige in der folgenden Schleife verwendeten Variablen und Referenzen werden deklariert.
@@ -76,38 +77,36 @@ public Laeuferwicklungswiderstand(ArrayList<Betriebspunkt> betriebspunkte, Ortsk
    Complex r_2_komplex = null;
    double s = Double.NaN;
    
-   // Das Objekt zur Berechnung des Mittelwerts wird erzeugt.
-   this.descriptiveStatistics = new DescriptiveStatistics();
-   
-   // In einer Schleife wird für jeden Betriebspunkt der auf den Ständer bezogene, ohmsche Läuferwiderstand berechnet.
+   // In einer Schleife wird für jeden Betriebspunkt der bezogene Läuferwicklungswiderstand (in Ohm) berechnet.
    for (Betriebspunkt betriebspunkt : betriebspunkte)
       {
-      // Der Strommesspunkt wird auf die Ortskurve projeziert.
+      // Der Strommesspunkt (Leiterstrom in A) wird auf die Ortskurve projeziert.
       projezierterI1 = this.aufOrtskurveProjezieren(betriebspunkt, mittelpunktOrtskurve, radiusOrtskurve);
       
-      // Die Impedanz des Messpunkts wird berechnet.
+      // Die Impedanz (in Ohm) zum Schlupf des Messpunkts wird berechnet.
       z_1 = projezierterI1.reciprocal().multiply(skalierungsfaktor);
       
       // Der Schlupf wird berechnet.
       s = 1 - betriebspunkt.getN() / n_s;
 
-      // Der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) kann für Schlupf gleich 0 nicht berechnet 
-      // werden.
+      // Der bezogene Läuferwicklungswiderstand (in Ohm) kann für Schlupf gleich 0 nicht berechnet werden.
       if (s >= 0.01)
          {
          // Der auf den Ständer bezogene Läuferwicklungswiderstand dieses Messpunkts wird (in Ohm) berechnet.
          r_2_komplex = this.r2_komplex(z_1, r_1, x_1, x_k, s);
       
-         // Der auf der Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) sollte real sein. Ergibt sich bei 
-         // der Berechnung ein nicht zu vernachlässigender Imaginärteil, so wird eine Warnung protokolliert.
+         // Der bezogene Läuferwicklungswiderstand sollte real sein. Ergibt sich bei der Berechnung ein nicht zu 
+         // vernachlässigender Imaginärteil, so wird eine Warnung protokolliert.
          if (r_2_komplex.getImaginary() > 0.01 * r_2_komplex.getReal())
             {
-            Laeuferwicklungswiderstand.logger.warning("Der Widerstand R2 mit dem Wert " + r_2_komplex + "besitzt einen sehr großen "
-               + "Imaginärteil!");
+            Laeuferwicklungswiderstand.logger.warning("Der Widerstand R2 mit dem Wert " + r_2_komplex + "besitzt "
+               + "einen sehr großen Imaginärteil!");
+            
+            continue;
             }
          
-         // Der berechnete, auf der Ständer bezogene, ohmsche Läuferwicklungswiderstand (in Ohm) wird zur Statistik
-         // hinzugefügt.
+         // Der für diesen Messpunkt berechnete, auf der Ständer bezogene Läuferwicklungswiderstand (in Ohm) wird zu 
+         // dem Objekt, das für die Statistikberechnungen genutzt wird, hinzugefügt.
          descriptiveStatistics.addValue(r_2_komplex.getReal());
          }
       }
@@ -117,7 +116,7 @@ public Laeuferwicklungswiderstand(ArrayList<Betriebspunkt> betriebspunkte, Ortsk
 // =====================================================================================================================
 
 /**
- * Diese Methode projeziert einen Strommesspunkt auf die Ortskurve
+ * Diese Methode projeziert einen Messpunkt (Leiterstrom in A) auf die Ortskurve.
  * 
  * @param originalBetriebspunkt Der originale Betriebspunkt
  * @param mittelpunktOrtskurve Der Mittelpunkt der Ortskurve (in realen Koordinaten; in A)
@@ -131,7 +130,7 @@ private Complex aufOrtskurveProjezieren(Betriebspunkt originalBetriebspunkt, Com
    // Der Polarwinkel phi des Betriebspunkts vom Mittelpunkt der Ortskurve aus wird bestimmt.
    double phi = originalBetriebspunkt.getI1().subtract(mittelpunktOrtskurve).getArgument();
    
-   // Der projezierte Strommesspunkt wird berechnet und zurückgegeben.
+   // Der projezierte Messpunkt (Leiterstrom in A) wird berechnet und zurückgegeben.
    return ComplexUtils.polar2Complex(radiusOrtskurve, phi).add(mittelpunktOrtskurve);
    }
 
