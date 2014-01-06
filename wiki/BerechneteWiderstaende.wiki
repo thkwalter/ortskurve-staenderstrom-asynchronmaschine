@@ -1,0 +1,27 @@
+=Berechnung der Ortskurve mit drei Punkten überprüfen=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte 
+{{{
+1.054,0.176
+2.398,1.417
+2.196,1.481
+}}} 
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
+ # Das Resultat kontrollieren -> Mittelpunkt (2, 0.5) und Radius 1
+ # Den Knopf "Zur ESB-Berechnung" drücken -> Die Seite "Berechnung der Ersatzschaltbildgrößen" erscheint
+ # Die übernommenen Messpunkte kontrollieren
+ # Die übernommenen Ortskurvendaten kontrollieren
+ # Die Drehzahlen eingeben
+{{{
+50 für 1.054,0.176
+ 0 für  2.398,1.417
+25 für 2.196,1.481
+}}} 
+ # Die Widerstände kontrollieren
+{{{
+R1:   35.5 Ohm
+X1: 213.2 Ohm
+Xk: 106.6 Ohm
+R2:   15.0 Ohm
+}}} 
