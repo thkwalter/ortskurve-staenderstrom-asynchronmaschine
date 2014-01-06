@@ -16,13 +16,13 @@ eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angez
  # Die Drehzahlen eingeben
 {{{
 50 für 1.054,0.176
- 0 für  2.398,1.417
+ 0  für 2.398,1.417
 25 für 2.196,1.481
 }}} 
  # Die Widerstände kontrollieren
 {{{
-R1:   35.5 Ohm
-X1: 213.2 Ohm
-Xk: 106.6 Ohm
-R2:   15.0 Ohm
+R1:  35.8 Ohm (korrekter Wert:   35.5 Ohm)
+X1: 213.2 Ohm (korrekter Wert:  213.2 Ohm)
+Xk: 106.7 Ohm (korrekter Wert:  106.6 Ohm)
+R2:  14.6 Ohm (korrekter Wert:   15.0 Ohm)
 }}} 
