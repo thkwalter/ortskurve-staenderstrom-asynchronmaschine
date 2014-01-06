@@ -12,6 +12,7 @@ eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angez
  # Den Knopf "Zur ESB-Berechnung" drücken -> Die Seite "Berechnung der Ersatzschaltbildgrößen" erscheint
  # Die übernommenen Messpunkte kontrollieren
  # Die übernommenen Ortskurvendaten kontrollieren
+ # Die Netzspannung (400 V), die Netzfrequenz (50 Hz), die Polpaarzahl (1) und den Schaltungstyp (STERN) eingeben.
  # Die Drehzahlen eingeben
 {{{
 50 für 1.054,0.176
