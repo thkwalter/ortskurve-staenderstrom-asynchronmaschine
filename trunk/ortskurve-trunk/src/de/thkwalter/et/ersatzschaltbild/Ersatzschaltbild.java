@@ -15,12 +15,14 @@
  */
 package de.thkwalter.et.ersatzschaltbild;
 
+import java.io.Serializable;
+
 /**
  * Diese Klasse repräsentiert das Ersatzschaltbild.
  * 
  * @author Th. K. Walter
  */
-public class Ersatzschaltbild
+public class Ersatzschaltbild implements Serializable
 {
 /**
  * Der ohmsche Widerstand des Ständers (in Ohm).
@@ -41,6 +43,11 @@ private double x_k;
  * Die Reaktanz x_1 (in Ohm)
  */
 private double x1;
+
+/**
+ * Die Serialisierungs-ID
+ */
+private static final long serialVersionUID = -6306287105391842968L;
 
 // =====================================================================================================================
 // =====================================================================================================================
