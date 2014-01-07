@@ -85,6 +85,17 @@ private static final long serialVersionUID = -8101831504048593878L;
  */
 public ErsatzschaltbildModell()
    {
+   this.init();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode initialisiert das Objekt.
+ */
+private void init()
+   {
    // Die numerischen Attribute werden mit NaN-Werten initialisiert.
    this.f1 = Double.NaN;
    this.p = Integer.MIN_VALUE;
@@ -95,6 +106,9 @@ public ErsatzschaltbildModell()
    
    // Der Radiobutton wird mit STERN vorbelegt.
    this.schaltungstyp = Schaltungstyp.STERN;
+   
+   // Das Ersatzschaltbild wird auf null gesetzt, damit alte Berechnungsergebnisse nicht angezeigt werden.
+   this.ersatzschaltbild = null;
    }
    
 // =====================================================================================================================
@@ -108,6 +122,9 @@ public ErsatzschaltbildModell()
  */
 public void datenUebernehmen(OrtskurveModell ortskurveModell)
    {
+   // Das Frontend-Modell wird zurückgesetzt.
+   this.init();
+   
    // Die Ortskurve wird in das Datenmodell des Ersatzschaltbildberechnung übertragen.
    this.setOrtskurve(ortskurveModell.getOrtskurve());
    
