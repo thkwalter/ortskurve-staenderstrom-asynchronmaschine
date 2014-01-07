@@ -21,8 +21,8 @@ eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angez
 }}} 
  # Die Widerstände kontrollieren
 {{{
-R1:  35.8 Ohm (korrekter Wert:   35.5 Ohm)
+R1:  35.6 Ohm (korrekter Wert:   35.5 Ohm)
 X1: 213.2 Ohm (korrekter Wert:  213.2 Ohm)
-Xk: 106.7 Ohm (korrekter Wert:  106.6 Ohm)
-R2:  14.6 Ohm (korrekter Wert:   15.0 Ohm)
+Xk: 106.6 Ohm (korrekter Wert:  106.6 Ohm)
+R2:  15.0 Ohm (korrekter Wert:   15.0 Ohm)
 }}} 
