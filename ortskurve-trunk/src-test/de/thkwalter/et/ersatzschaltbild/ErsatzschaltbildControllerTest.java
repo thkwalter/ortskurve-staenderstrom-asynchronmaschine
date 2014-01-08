@@ -38,7 +38,7 @@ import de.thkwalter.et.ortskurve.Ortskurve;
 public class ErsatzschaltbildControllerTest
 {
 /**
- * Das Objekt der zu testenden Klasse {@link ErsatzschaltbildController}
+ * Das Testbjekt der Klasse {@link ErsatzschaltbildController}
  */
 private ErsatzschaltbildController ersatzschaltbildController;
 
@@ -51,7 +51,7 @@ private ErsatzschaltbildModell testErsatzschaltbildModell;
 // =====================================================================================================================
 
 /**
- * Diese Methode initialisiert die Tests.
+ * Diese Methode initialisiert die Tests. Dieser Test wird spezifiziert im Tabellenwerk ersatzschaltbild.ods.
  * 
  * @throws java.lang.Exception
  */
@@ -64,39 +64,39 @@ public void setUp() throws Exception
    // Das in den Tests verwendete Modell der Ersatzschaltbildberechnung wird erzeugt.
    this.testErsatzschaltbildModell = new ErsatzschaltbildModell();
    
-   // Die im Test verwendete Ortskurve wird erstellt und zum Modell hinzugefügt.
+   // Die im Test verwendete Ortskurve wird erstellt und zum Modell der Ersatzschaltbildberechnung hinzugefügt.
    Ortskurve testOrtskurve = new Ortskurve(new Vector2D(2.0, 0.5), 1.0);
    this.testErsatzschaltbildModell.setOrtskurve(testOrtskurve);
    
-   // Die im Test verwendete Strangspannung (in V) wird erzeugt und zum Modell hinzugefügt.
+   // Die im Test verwendete Strangspannung (in V) wird im Modell der Ersatzschaltbildberechnung gespeichert.
    this.testErsatzschaltbildModell.setU_LL(400.0);
    
-   // Die im Test verwendete Polpaarzahl wird im Modell gespeichert.
+   // Die im Test verwendete Polpaarzahl wird im Modell der Ersatzschaltbildberechnung gespeichert.
    this.testErsatzschaltbildModell.setP(1);
    
-   // Die in den Tests verwendete Netzfrequenz wird im Datenmodell gespeichert.
+   // Die in den Tests verwendete Netzfrequenz wird im Datenmodell der Ersatzschaltbildberechnung gespeichert.
    this.testErsatzschaltbildModell.setF1(50.0);
    
    // Das im Test verwendete Feld der Betriebspunkte wird erstellt und zum Modell hinzugefügt.
    ArrayList<Betriebspunkt> testBetriebspunkte = new ArrayList<>();
    this.testErsatzschaltbildModell.setBetriebspunkte(testBetriebspunkte);
    
-   // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
+   // Ein im Test verwendeter Betriebspunkt wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
    Betriebspunkt betriebspunkt = new Betriebspunkt(new Complex(0.1724324324, -1.0445945946));
    betriebspunkt.setN(50.0);
    testBetriebspunkte.add(betriebspunkt);
    
-   // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
+   // Ein im Test verwendeter Betriebspunkt wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
    betriebspunkt = new Betriebspunkt(new Complex(1.4081595206, -2.3941399308));
    betriebspunkt.setN(0.0);
    testBetriebspunkte.add(betriebspunkt);
    
-   // Ein im Test verwendeter Betriebspunkte wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
+   // Ein im Test verwendeter Betriebspunkt wird erstellt und zum Feld der Betriebspunkte hinzugefügt.
    betriebspunkt = new Betriebspunkt(new Complex(1.4708019328, -2.1940196055));
    betriebspunkt.setN(25.0);
    testBetriebspunkte.add(betriebspunkt);
    
-   // Der im Test verwendete Schaltungstyp wird im Frontend-Modell gespeichert.
+   // Der im Test verwendete Schaltungstyp wird im Datenmodell der Ersatzschaltbildberechnung gespeichert.
    this.testErsatzschaltbildModell.setSchaltungstyp(Schaltungstyp.STERN);
    }
 
