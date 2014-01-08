@@ -63,9 +63,12 @@ public String ersatzschaltbildBerechnen()
       
       // Das Ersatzschaltbild wird berechnet.
       this.ersatzschaltbildBerechnenIntern();
+      
+      // Die Daten des Frontend-Modells werden protokolliert.
+      ErsatzschaltbildController.logger.info(this.ersatzschaltbildModell.toString());
       }
    
-   // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
+   // Falls eine Ausnahme geworfen worden ist, wird diese behandelt.
    catch (ApplicationRuntimeException exception)
       {
       // Die Referenz auf das Ersatzschaltbild wird auf null gesetzt, um die Ergebnisanzeige zu unterdrücken.
@@ -76,10 +79,10 @@ public String ersatzschaltbildBerechnen()
          exception.getMessage(), ""));
       
       // Der Nachrichtentext der Ausnahme wird protokolliert.
-      ErsatzschaltbildController.logger.info(exception.getMessage());
+      ErsatzschaltbildController.logger.severe(exception.getMessage());
       }
    
-   // Es wird wieder zur Seite ersatzschaltbild.xhtml weitergeleitet.
+   // Es wird wieder zur aufrufenden Seite weitergeleitet.
    return null;
    }
 
@@ -91,34 +94,37 @@ public String ersatzschaltbildBerechnen()
  */
 private void ersatzschaltbildBerechnenIntern()
    {
-   // Die Ortskurve der Impedanz wird berechnet.
+   // Die Ortskurve der Impedanz (in Ohm) wird berechnet.
    Ortskurve ortskurveImpedanz = OrtskurveImpedanz.ortskurveImpedanzBerechnen(
       this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
       this.ersatzschaltbildModell.getSchaltungstyp());
    
-   // Die Repräsentation des Ersatzschaltbilds wird erzeugt und die verschiedenen Widerstände berechnet.
+   // Das Ersatzschaltbild wird erzeugt.
    Ersatzschaltbild ersatzschaltbild = new Ersatzschaltbild();
+   
+   // Der Ständerwicklungswiderstand (in Ohm) wird berechnet und im Ersatzschaltbild gespeichert.
    ersatzschaltbild.setR1(ortskurveImpedanz.getMittelpunktOrtskurve().getY());
    
-   // Die Reaktanz x1 (in Ohm) wird berechnet und in der Repräsentation des Ersatzschaltbildes gespeichert.
+   // Die Reaktanz x1 (in Ohm) wird berechnet und im Ersatzschaltbild gespeichert.
    double x1 = -ortskurveImpedanz.getMittelpunktOrtskurve().getX() + ortskurveImpedanz.getRadiusOrtskurve();
    ersatzschaltbild.setX1(x1);
    
-   // Die Streureaktanz (in Ohm) wird berechnet und in der Repräsentation des Ersatzschaltbildes gespeichert.
+   // Die Streureaktanz (in Ohm) wird berechnet und im Ersatzschaltbild gespeichert.
    double x_k = 0.5 * x1 * x1 / ortskurveImpedanz.getRadiusOrtskurve() - x1;
    ersatzschaltbild.setX_k(x_k);
    
    // Die synchrone Drehzahl (in Hz) wird berechnet.
    double n_s = this.ersatzschaltbildModell.getF1() / this.ersatzschaltbildModell.getP();
    
-   // Der auf den Ständer bezogene, ohmsche Widerstand wird berechnet und in der Repräsentation des Ersatzschaltbildes
+   // Der auf den Ständer bezogene Läuferwicklungswiderstand (in Ohm) wird berechnet und im Ersatzschaltbild 
    // gespeichert.
-   Laeuferwicklungswiderstand r2Berechnen = new Laeuferwicklungswiderstand(this.ersatzschaltbildModell.getBetriebspunkte(), 
-      this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
-      this.ersatzschaltbildModell.getSchaltungstyp(), ersatzschaltbild.getR1(), x1, x_k, n_s);
+   Laeuferwicklungswiderstand r2Berechnen = new Laeuferwicklungswiderstand(
+      this.ersatzschaltbildModell.getBetriebspunkte(), this.ersatzschaltbildModell.getOrtskurve(), 
+      this.ersatzschaltbildModell.getU_LL(), this.ersatzschaltbildModell.getSchaltungstyp(), 
+      ersatzschaltbild.getR1(), x1, x_k, n_s);
    ersatzschaltbild.setR2_strich(r2Berechnen.getR2());
    
-   // Das Ersatzschaltbild wird zum Frontend-Modell hinzugefügt.
+   // Das Ersatzschaltbild wird zum Frontend-Modell der Ersatzschaltbildberechnung hinzugefügt.
    ersatzschaltbildModell.setErsatzschaltbild(ersatzschaltbild);
    }
 
@@ -126,13 +132,13 @@ private void ersatzschaltbildBerechnenIntern()
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert das übergebene Datenmodell des Ersatzschaltbildes in diesem Controller.
+ * Diese Methode speichert das Datenmodell der Ersatzschaltbildberechnung in diesem Controller.
  * 
- * @param ersatzschaltbildModell Das Datenmodell des Ersatzschaltbildes
+ * @param ersatzschaltbildModell Das Datenmodell der Ersatzschaltbildberechnung
  */
 public void setErsatzschaltbildModell(ErsatzschaltbildModell ersatzschaltbildModell)
    {
-   // Das Datenmodell der Ortskurve wird gespeichert.
+   // Das Datenmodell der Ersatzschaltbildberechnung wird gespeichert.
    this.ersatzschaltbildModell = ersatzschaltbildModell;
    }
 }
