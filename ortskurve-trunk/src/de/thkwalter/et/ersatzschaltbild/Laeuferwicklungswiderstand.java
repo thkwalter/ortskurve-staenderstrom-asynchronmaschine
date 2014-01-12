@@ -25,7 +25,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import de.thkwalter.et.ortskurve.Ortskurve;
 
 /**
- * Diese Klasse dient zur Berechnung des auf den Ständer bezogenen Läuferwicklungswiderstands.
+ * Diese Klasse repräsentiert den auf den Ständer bezogenen Läuferwicklungswiderstands (in Ohm).
  * 
  * @author Th. K. Walter
  */

@@ -130,6 +130,14 @@ public void testErsatzschaltbildModell() throws NoSuchFieldException, SecurityEx
    
    // Es wird überprüft, ob der Schaltungstyp initialisiert worden ist.
    assertEquals(Schaltungstyp.STERN, schaltungstyp);
+   
+   // Die Eisenverluste (in W) werden gelesen.
+   feld = ErsatzschaltbildModell.class.getDeclaredField("p_Fe");
+   feld.setAccessible(true);
+   Double p_Fe = feld.getDouble(this.ersatzschaltbildModell);
+   
+   // Es wird überprüft, ob die Eisenverluste initialisiert worden ist.
+   assertTrue(Double.isNaN(p_Fe));
    }
 
 // =====================================================================================================================
@@ -513,7 +521,7 @@ public void testSetSchaltungstyp()
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGet() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+public void testGetErsatzschaltbild() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
    IllegalAccessException
    {
    // Die im Test verwendete Repräsentation des Ersatzschaltbilds wird erzeugt.
@@ -538,7 +546,7 @@ public void testGet() throws NoSuchFieldException, SecurityException, IllegalArg
  * Test für die Methode {@link ErsatzschaltbildModell#setSchaltungstyp(Schaltungstyp)}.
  */
 @Test
-public void testSet()
+public void testSetErsatzschaltbild()
    {
    // Die im Test verwendete Repräsentation des Ersatzschaltbilds wird erzeugt.
    Ersatzschaltbild testErsatzschaltbild = new Ersatzschaltbild();
@@ -548,5 +556,48 @@ public void testSet()
    
    // Es wird überprüft, ob die Repräsentation des Ersatzschaltbilds korrekt gespeichert worden ist.
    assertEquals(testErsatzschaltbild, this.ersatzschaltbildModell.getErsatzschaltbild());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link ErsatzschaltbildModell#getP_Fe()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetP_Fe() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die im Test verwendete Eisenverluste (in W) werden im Datenmodell gespeichert.
+   Field feld = ErsatzschaltbildModell.class.getDeclaredField("p_Fe");
+   feld.setAccessible(true);
+   feld.setDouble(this.ersatzschaltbildModell, 8.0);
+   
+   // Die zu testende Methode wird aufgerufen.
+   double p_Fe = this.ersatzschaltbildModell.getP_Fe();
+   
+   // Es wird überprüft, ob die Eisenverluste (in W) korrekt zurückgegeben worden sind.
+   assertEquals(8.0, p_Fe, 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link ErsatzschaltbildModell#setP_Fe(double)}.
+ */
+@Test
+public void testSetP_Fe()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.ersatzschaltbildModell.setP_Fe(7.0);
+   
+   // Es wird überprüft, ob die Eisenverluste (in W) korrekt zurückgegeben worden sind.
+   assertEquals(7.0, this.ersatzschaltbildModell.getP_Fe(), 0.0);
    }
 }
