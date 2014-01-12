@@ -73,6 +73,11 @@ private Schaltungstyp schaltungstyp;
 private Ersatzschaltbild ersatzschaltbild;
 
 /**
+ * Die Eisenverluste (in W)
+ */
+private double p_Fe;
+
+/**
  * Die Serialisierungsnummer
  */
 private static final long serialVersionUID = -8101831504048593878L;
@@ -100,6 +105,7 @@ private void init()
    this.f1 = Double.NaN;
    this.p = Integer.MIN_VALUE;
    this.u_LL = Double.NaN;
+   this.p_Fe = Double.NaN;
    
    // Die Liste für die Daten der Betriebspunkte wird erzeugt.
    this.betriebspunkte = new ArrayList<Betriebspunkt>();
@@ -335,6 +341,34 @@ public void setErsatzschaltbild(Ersatzschaltbild ersatzschaltbild)
    {
    // Die Repräsentation des Ersatzschaltbilds wird im Datenmodell gespeichert.
    this.ersatzschaltbild = ersatzschaltbild;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Eisenverluste (in W) zurück.
+ * 
+ * @return Die Eisenverluste (in W)
+ */
+public double getP_Fe()
+   {
+   // Die Eisenverluste (in W) wird zurückgegeben.
+   return this.p_Fe;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die Eisenverluste (in W) im Frontend-Modell.
+ * 
+ * @param p_Fe Die Eisenverluste (in W)
+ */
+public void setP_Fe(double p_Fe)
+   {
+   // Die Eisenverluste (in W) werden im Frontend-Modell gespeichert.
+   this.p_Fe = p_Fe;
    }
 
 // =====================================================================================================================
