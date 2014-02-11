@@ -30,10 +30,15 @@
          <h:link value="Ortskurve des Ständerstroms der Asynchronmaschine" outcome="startseite" styleClass="titellink"/>
       </div> 
       
+      <!-- Die Menüleiste ========================================================================================== -->
       <div id="menue">  
          <ul>
-            <li>
-               <h:link value="Berechnung" outcome="startseite"/>
+            <li class="linkliste-eintrag">
+               <h:link value="Einleitung" outcome="einleitung" styleClass="linkliste-link"/>
+            </li>
+            
+            <li class="linkliste-eintrag">
+               <h:link value="Ortskurve" outcome="startseite" styleClass="linkliste-link"/>
             </li>
          </ul>
       </div> 
@@ -45,14 +50,14 @@
       <div id="fusszeile">
          <h:outputText value="&#169; 2014 Th. K. Walter, Nürnberg" styleClass="copyright"/>
          <ul>
-            <li>
-               <h:link value="Impressum" outcome="impressum"/>
+            <li class="linkliste-eintrag">
+               <h:link value="Impressum" outcome="impressum" styleClass="linkliste-link" />
             </li>
-            <li>
-               <h:link value="Nutzungsbedingungen" outcome="nutzungsbedingungen"/>
+            <li class="linkliste-eintrag">
+               <h:link value="Nutzungsbedingungen" outcome="nutzungsbedingungen" styleClass="linkliste-link"/>
             </li>
-            <li>
-               <h:link value="Datenschutzerklärung" outcome="datenschutz"/>
+            <li class="linkliste-eintrag">
+               <h:link value="Datenschutzerklärung" outcome="datenschutz" styleClass="linkliste-link"/>
             </li>
          </ul>
       </div>

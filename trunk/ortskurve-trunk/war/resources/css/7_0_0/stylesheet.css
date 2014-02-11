@@ -67,27 +67,11 @@ a.titellink
 #menue
    {
    height: 25px;
+   line-height: 25px;
    
    padding-left: 20px;
    
    background-color: #009900;
-   
-   line-height: 25px;
-   }
-   
-div#menue li 
-   {
-   list-style: none;
-   
-   display: inline;
-   }
-   
-div#menue a
-   {
-   padding-right: 5px;
-   
-   color: #ffffff;
-   text-decoration: none;
    }
    
 /* ****************************************************************************************************************** */
@@ -260,28 +244,12 @@ div#menue a
 #fusszeile
    {
    height: 25px;
+   line-height: 25px;
    
    padding-left: 20px;
    padding-right: 20px;
    
    background-color: #009900;
-   
-   line-height: 25px;
-   }
-   
-div#fusszeile li 
-   {
-   list-style: none;
-   
-   display: inline;
-   }
-   
-div#fusszeile a
-   {
-   padding-right: 20px;
-   
-   color: #ffffff;
-   text-decoration: none;
    }
    
 span.copyright
@@ -308,6 +276,29 @@ span.copyright
 /* ****************************************************************************************************************** */
 /* Allgemeine Formatierungsangaben                                                                                    */
 /* ****************************************************************************************************************** */
+
+/* --- Klasse für einen Link in einer Liste von Links --------------------------------------------------------------- */
+.linkliste-link
+   {
+   padding-right: 20px;
+   
+   color: #ffffff;
+   text-decoration: none;
+   }
+   
+/** --- Klasse für Listenelemente in einer Linkliste ---------------------------------------------------------------- */
+.linkliste-eintrag
+   {
+   list-style: none;
+   display: inline;
+   }
+   
+.zentriertes-bild
+   {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   }
 
 .zeiger
    {
