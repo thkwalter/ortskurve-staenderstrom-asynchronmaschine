@@ -28,7 +28,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 public class Ortskurve implements Serializable
 {
 /**
- * Der Mittelpunkt der Ortskurve
+ * Der Mittelpunkt der Ortskurve in gedrehter Darstellung.
  */
 private Vector2D mittelpunktOrtskurve;
 
@@ -46,9 +46,9 @@ private static final long serialVersionUID = 7836381800872312359L;
 // =====================================================================================================================
 
 /**
- * Diese Methode speichert die übergebenen Parameter in diesem Objekt.
+ * Dieser Kontruktor erzeugt eine Ortskurve.
  * 
- * @param mittelpunktOrtskurve Der Mittelpunkt der Ortskurve
+ * @param mittelpunktOrtskurve Der Mittelpunkt der Ortskurve im gedrehten Koordinatensystem.
  * @param radiusOrtskurve Der Radius der Ortskurve
  */
 public Ortskurve(Vector2D mittelpunktOrtskurve, double radiusOrtskurve)
@@ -62,13 +62,13 @@ public Ortskurve(Vector2D mittelpunktOrtskurve, double radiusOrtskurve)
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt den Mittelpunkt der Ortskurve zurück.
+ * Diese Methode gibt den Mittelpunkt der Ortskurve in gedrehter Darstellung zurück.
  * 
- * @return Der Mittelpunkt der Ortskurve
+ * @return Der Mittelpunkt der Ortskurve in gedrehter Darstellung
  */
 public Vector2D getMittelpunktOrtskurve()
    {
-   // Der Mittelpunkt der Ortskurve wird zurückgegeben.
+   // Der Mittelpunkt der Ortskurve wird in gedrehter Darstellung zurückgegeben.
    return this.mittelpunktOrtskurve;
    }
 
