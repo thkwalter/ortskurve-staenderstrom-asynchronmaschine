@@ -105,6 +105,9 @@ public String problemLoesen()
          this.ortskurveModell.setOrtskurve(ortskurve2d);
          }
       
+      // Der Leerlaufpunkt wird berechnet.
+      Leerlauf leerlauf = new Leerlauf(this.ortskurveModell.getOrtskurve());
+      
       // Die Daten der Grafik der Ortskurve werden berechnet.
       this.ortskurveModell.grafikdatenBerechnen();
       }
