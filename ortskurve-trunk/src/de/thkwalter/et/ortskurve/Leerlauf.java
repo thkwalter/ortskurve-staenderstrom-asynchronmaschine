@@ -50,47 +50,61 @@ private static Logger logger = Logger.getLogger(Leerlauf.class.getName());
  */
 public Leerlauf(Ortskurve ortskurve)
    {
-   // x-Koordinate des Kreismittelpunkts.
-   double x = this.schnittpunktOrtskuveXAchseBerechnen(ortskurve) / 2.0;
+   // Die x-Koordinate des Mittelpunkts des Hilfskreises für die nächste Iteration wird initialisiert.
+   double mx_hilf = this.schnittpunktOrtskuveXAchseBerechnen(ortskurve) / 2.0;
    
-   // Die Schrittweite wird deklariert.
-   double schritt = x;
+   // Die Schrittweite wird initialisiert.
+   double schritt = mx_hilf;
    
-   // Der Abstand der Ortskurve zum Kreismittelpunkt wird deklariert.
+   // Der Abstand der Ortskurve zum Mittelpunkt des Hilfskreises wird deklariert.
    double d = Double.NaN;
    
-   // Die relative Abweichung der beiden Strecken wird deklariert.
+   // Die relative Abweichung zwischen der Streckenlänge vom Ursprung zum Mittelpunkt des Hilfskreises und der 
+   // Streckenlänge vom Mittelpunkt des Hilfskreises zur Ortskurve wird deklariert.
    double relativeAbweichung = Double.NaN;
    
+   // Der Vektor zum Leerlaufpunkt wird deklariert.
    Vector2D leerlaufVektor = null;
-   Vector2D xAchseOrtskurve = null;
+   
+   // Der Vektor vom Mittelpunkt des Hilfskreises zur Ortskurve wird deklariert.
+   Vector2D mittepunktHilfskeisOrtskurve = null;
+   
+   // Der Vektor zum Mittelpunkt des Hilfskreises wird deklariert.
+   Vector2D mittelpunktHilfskreis = null;
+   
+   // Der Vektor vom Mittelpunkt des Hilfskreises zum Mittelpunkt der Ortskurve wird deklariert.
+   Vector2D verbindungsvektorMittelpunkte = null;
        
    // Die Iteration zur Bestimmung des Leerlaufpunkts
    do
       {
       // Der Strahl vom Kreismittelpunkt zum Mittelpunkt der Ortskurve wird berechnet.
-      Vector2D mittelpunkt = new Vector2D(x, 0);
-      Vector2D strahl = ortskurve.getMittelpunktOrtskurve().subtract(mittelpunkt);
+      mittelpunktHilfskreis = new Vector2D(mx_hilf, 0);
+      verbindungsvektorMittelpunkte = ortskurve.getMittelpunktOrtskurve().subtract(mittelpunktHilfskreis);
       
-      // Der Abstand der Ortskurve zum Kreismittelpunkt wird bestimmt.
-      d = strahl.getNorm() - ortskurve.getRadiusOrtskurve();
+      // Der Abstand der Ortskurve vom Mittelpunkt des Hilfskreises wird berechnet.
+      d = verbindungsvektorMittelpunkte.getNorm() - ortskurve.getRadiusOrtskurve();
       
       // Der Vektor zus Schnittpunkt von Strahl und Ortskurve wird bestimmt.
-      xAchseOrtskurve = strahl.scalarMultiply((d - ortskurve.getRadiusOrtskurve()) / d);
-      leerlaufVektor = mittelpunkt.add(xAchseOrtskurve);
+      mittepunktHilfskeisOrtskurve = verbindungsvektorMittelpunkte.scalarMultiply((d - ortskurve.getRadiusOrtskurve()) / d);
+      leerlaufVektor = mittelpunktHilfskreis.add(mittepunktHilfskeisOrtskurve);
       
       // Die relative Abweichung wird berechnet.
-      relativeAbweichung = (d - x) / x;
+      relativeAbweichung = (d - mx_hilf) / mx_hilf;
       
       // Die Schrittweite wird für die nächste Iteration halbiert.
       schritt = schritt / 2.0;
       
-      // Die x-Koordinate des Kreismittelpunkts des nächsten Iterationsschritts wird berechnet.
-      x = relativeAbweichung > 0 ? x + schritt : x - schritt;
+      // Die x-Koordinate des Mittelpunkts des Hilfskreises wird für die nächste Iteration berechnet.
+      mx_hilf = relativeAbweichung > 0 ? mx_hilf + schritt : mx_hilf - schritt;
       }
    while(relativeAbweichung < 1E-5);
    
+   // Der Leerlaufpunkt wird gespeichert.
    this.leerlaufpunkt = new Betriebspunkt(new Complex(leerlaufVektor.getY(), -leerlaufVektor.getX()));
+   
+   // Das Ergebnis wir protokolliert.
+   Leerlauf.logger.info("Leerlauf: " + this.leerlaufpunkt.toString());
    }
 
 // =====================================================================================================================
@@ -133,6 +147,22 @@ private double schnittpunktOrtskuveXAchseBerechnen(Ortskurve ortskurve)
    
    // Der Schnittpunkt wird berechnet und zurückgegeben.
    return  mx - Math.sqrt(hilf);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Ständerstrom im Leerlauf (in A) zurück.
+ * 
+ * @return Der Ständerstrom im Leerlauf (in A)
+ * 
+ * @see de.thkwalter.et.ersatzschaltbild.Betriebspunkt#getI1()
+ */
+public Complex getI1()
+   {
+   // Den Ständerstrom im Leerlauf (in A) wird zurückgegeben.
+   return this.leerlaufpunkt.getI1();
    }
 
 // =====================================================================================================================
