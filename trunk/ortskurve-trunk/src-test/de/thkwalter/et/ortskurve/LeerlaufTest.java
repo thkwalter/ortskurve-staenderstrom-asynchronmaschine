@@ -16,14 +16,18 @@
 package de.thkwalter.et.ortskurve;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.thkwalter.et.ersatzschaltbild.Betriebspunkt;
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
@@ -48,20 +52,23 @@ private Leerlauf leerlauf;
 public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
-   this.leerlauf = new Leerlauf(new Ortskurve(new Vector2D(11.0, 6.0), 10.0));
+   this.leerlauf = new Leerlauf(new Ortskurve(new Vector2D(17.0, 9.0), 10.0));
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
-///**
-// * Test für der Konstruktor {@link Leerlauf#Leerlauf(Ortskurve)}.
-// */
-//@Test
-//public void testLeerlauf()
-//   {
-//   fail("Not yet implemented");
-//   }
+/**
+ * Test für der Konstruktor {@link Leerlauf#Leerlauf(Ortskurve)}.
+ */
+@Test
+public void testLeerlauf()
+   {
+   // Es wird überprüft, ob der Prüfling korrekt erzeugt worden ist.
+   assertNotNull(this.leerlauf);
+   
+   // Der Betriebspunkt "Leerlauf" wird gelesen
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -111,6 +118,35 @@ public void testSchnittpunktOrtskuveXAchseBerechnen2() throws Throwable
       {
       throw invocationTargetException.getCause();
       }
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Leerlauf#getI1()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetI1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+   {
+   // Der in diesem Test verwendete Ständerstom im Leerlauf (in A) wird definiert.
+   Complex test_i1 = new Complex(0.5, -1.5);
+   
+   // Der in diesem Test verwendete Betriebspunkt wird erzeugt.
+   Betriebspunkt test_leerlauf = new Betriebspunkt(test_i1);
+   
+   // Der in diesem Test verwendete Betriebspunkt wird im Prüfling gespeichert.
+   Field feld = Leerlauf.class.getDeclaredField("leerlaufpunkt");
+   feld.setAccessible(true);
+   feld.set(this.leerlauf, test_leerlauf);
+   
+   // Es wird überprüft, ob der Ständerstrom im Leerlauf (in A) korrekt zurückgegeben wird.
+   assertEquals(test_i1, this.leerlauf.getI1());
    }
 
 // =====================================================================================================================
