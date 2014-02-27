@@ -74,56 +74,6 @@ public void testLeerlauf()
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Leerlauf#schnittpunktOrtskuveXAchseBerechnen(Ortskurve)}.
- * 
- * @throws SecurityException 
- * @throws NoSuchMethodException 
- * @throws InvocationTargetException 
- * @throws IllegalArgumentException 
- * @throws IllegalAccessException 
- */
-@Test
-public void testSchnittpunktOrtskuveXAchseBerechnen1() throws NoSuchMethodException, SecurityException, 
-   IllegalAccessException, IllegalArgumentException, InvocationTargetException
-   {
-   // Die zu testende Methode wird aufgerufen.
-   Method methode = Leerlauf.class.getDeclaredMethod("schnittpunktOrtskuveXAchseBerechnen", Ortskurve.class);
-   methode.setAccessible(true);
-   double schnittpunkt = (Double) methode.invoke(this.leerlauf, new Ortskurve(new Vector2D(11.0, 6.0), 10.0));
-   
-   // Es wird überprüft, ob der Schnittpunkt korrekt berechnet worden ist.
-   assertEquals(3.0, schnittpunkt, 3.0 / 1000.0);
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Test der Methode {@link Leerlauf#schnittpunktOrtskuveXAchseBerechnen(Ortskurve)} für den Fall, dass die Ortskurve
- * nicht die x-Achse schneidet.
- * 
- * @throws Throwable 
- */
-@Test(expected=ApplicationRuntimeException.class)
-public void testSchnittpunktOrtskuveXAchseBerechnen2() throws Throwable
-   {
-   try
-      {
-      // Die zu testende Methode wird aufgerufen.
-      Method methode = Leerlauf.class.getDeclaredMethod("schnittpunktOrtskuveXAchseBerechnen", Ortskurve.class);
-      methode.setAccessible(true);
-      methode.invoke(this.leerlauf, new Ortskurve(new Vector2D(11.0, 6.0), 1.0));
-      }
-   catch (InvocationTargetException invocationTargetException)
-      {
-      throw invocationTargetException.getCause();
-      }
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
  * Test der Methode {@link Leerlauf#getI1()}.
  * 
  * @throws SecurityException 
@@ -137,27 +87,12 @@ public void testGetI1() throws NoSuchFieldException, SecurityException, IllegalA
    // Der in diesem Test verwendete Ständerstom im Leerlauf (in A) wird definiert.
    Complex test_i1 = new Complex(0.5, -1.5);
    
-   // Der in diesem Test verwendete Betriebspunkt wird erzeugt.
-   Betriebspunkt test_leerlauf = new Betriebspunkt(test_i1);
-   
-   // Der in diesem Test verwendete Betriebspunkt wird im Prüfling gespeichert.
-   Field feld = Leerlauf.class.getDeclaredField("leerlaufpunkt");
+   // Der in diesem Test verwendete Ständerstrom im Leerlauf (in A) wird im Prüfling gespeichert.
+   Field feld = Leerlauf.class.getDeclaredField("i1");
    feld.setAccessible(true);
-   feld.set(this.leerlauf, test_leerlauf);
+   feld.set(this.leerlauf, test_i1);
    
    // Es wird überprüft, ob der Ständerstrom im Leerlauf (in A) korrekt zurückgegeben wird.
    assertEquals(test_i1, this.leerlauf.getI1());
    }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-///**
-// * Test der Methode {@link Leerlauf#toString()}.
-// */
-//@Test
-//public void testToString()
-//   {
-//   fail("Not yet implemented");
-//   }
 }
