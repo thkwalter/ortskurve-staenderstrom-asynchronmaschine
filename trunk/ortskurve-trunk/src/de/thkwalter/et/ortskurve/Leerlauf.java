@@ -63,7 +63,7 @@ public Leerlauf(Ortskurve ortskurve)
    double x0 = 0.5 * (mx*mx + my*my - r*r) / (r + mx);
    
    // Eine Hilfsgröße wird definiert.
-   double skalierungsfaktor = r / (r + x0);
+   double skalierungsfaktor = x0 / (r + x0);
    
    // Die x-Komponente des Ständerstroms (in A) im Leerlaufpunkt.
    double p0x = x0 + skalierungsfaktor * (mx - x0);

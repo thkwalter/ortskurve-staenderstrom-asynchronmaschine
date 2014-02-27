@@ -67,7 +67,11 @@ public void testLeerlauf()
    // Es wird überprüft, ob der Prüfling korrekt erzeugt worden ist.
    assertNotNull(this.leerlauf);
    
-   // Der Betriebspunkt "Leerlauf" wird gelesen
+   // Der Leerlaufpunkt (in A) wird gelesen.
+   Complex i1 = this.leerlauf.getI1();
+   
+   //
+   assertEquals(new Complex(3.0, -9.0), i1);
    }
 
 // =====================================================================================================================
