@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
@@ -167,6 +168,53 @@ public void testSetOrtskurve()
    
    // Es wird überprüft, ob die Ortskurve korrekt im Objekt der zu testenden Klasse gespeichert worden ist.
    assertEquals(this.ortskurve, this.ortskurveModell.getOrtskurve());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#getI1_0()}.
+ * 
+ * @throws NoSuchFieldException 
+ * @throws SecurityException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetI1_0() throws SecurityException, NoSuchFieldException, IllegalArgumentException, 
+   IllegalAccessException 
+   {   
+   // Der in diesem Test verwendete, komplexe Zeiger des Ständerstroms im Leerlauf (in A) wird erstellt.
+   Complex test_i1_0 = new Complex(1, -2);
+   
+   // Der in diesem Test verwendete, komplexe Zeiger des Ständerstroms im Leerlauf (in A) wird im Prüfling gespeichert.
+   Field feld = OrtskurveModell.class.getDeclaredField("i1_0");
+   feld.setAccessible(true);
+   feld.set(this.ortskurveModell, test_i1_0);
+   
+   // Es wird überprüft, ob der komplexe Zeiger des Ständerstroms im Leerlauf (in A) korrekt zurückgegeben wird. 
+   assertEquals(test_i1_0, this.ortskurveModell.getI1_0());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test für die Methode {@link OrtskurveModell#setI1_0(Complex)}.
+ */
+@Test
+public void testSetI1_0() 
+   {
+   // Der in diesem Test verwendete, komplexe Zeiger des Ständerstroms im Leerlauf (in A) wird erstellt.
+   Complex test_i1_0 = new Complex(1, -2);
+   
+   // Die zu testende Methode wird ausgeführt.
+   this.ortskurveModell.setI1_0(test_i1_0);
+   
+   // Es wird überprüft, ob der komplexe Zeiger des Ständerstroms im Leerlauf (in A) der zu testenden Klasse gespeichert 
+   // worden ist.
+   assertEquals(test_i1_0, this.ortskurveModell.getI1_0());
    }
 
 // =====================================================================================================================

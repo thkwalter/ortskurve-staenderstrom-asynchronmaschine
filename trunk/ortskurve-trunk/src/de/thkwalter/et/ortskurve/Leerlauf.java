@@ -18,10 +18,6 @@ package de.thkwalter.et.ortskurve;
 import java.util.logging.Logger;
 
 import org.apache.commons.math3.complex.Complex;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-
-import de.thkwalter.et.ersatzschaltbild.Betriebspunkt;
-import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse repräsentiert den Leerlauf.

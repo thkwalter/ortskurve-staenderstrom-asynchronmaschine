@@ -23,6 +23,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.koordinatensystem.Achsendimensionierung;
@@ -89,6 +90,11 @@ private final int xPixelGrafik = 550;
  * Die Anzahl der Pixel der Grafik in y-Richtung.
  */
 private final int yPixelGrafik = 275;
+
+/**
+ * Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf
+ */
+private Complex i1_0;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -261,6 +267,34 @@ public void setOrtskurve(Ortskurve ortskurve)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt den komplexen Zeiger des Ständerstroms (in A) im Leerlauf zurück.
+ * 
+ * @return Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf
+ */
+public Complex getI1_0()
+   {
+   // Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf wird zurückgegeben.
+   return this.i1_0;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den komplexen Zeiger des Ständerstroms (in A) im Leerlauf in diesem Modell.
+ * 
+ * @param ortskurve Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf
+ */
+public void setI1_0(Complex i1_0)
+   {
+   // Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf wird in diesem Modell gespeichert.
+   this.i1_0 = i1_0;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Diese Methode gibt die Anzahl der Pixel der Grafik in x-Richtung zurück.
  * 
  * @return Die Anzahl der Pixel der Grafik in x-Richtung.
@@ -296,46 +330,53 @@ public String toString()
    StringBuilder builder = new StringBuilder("OrtskurveModell [");
    
    // Die Zeichenkette, welche die Messpunkte repräsentiert, wird hinzugefügt. 
-   if (messpunkte != null)
+   if (this.messpunkte != null)
       {
-      builder.append("messpunkte=").append(Arrays.toString(messpunkte)).append(", ");
+      builder.append("messpunkte=").append(Arrays.toString(this.messpunkte)).append(", ");
       }
       
    // Die Zeichenkette, welche die Ortskurve repräsentiert, wird hinzugefügt. 
-   if (ortskurve != null)
+   if (this.ortskurve != null)
       {
-      builder.append("ortskurve=").append(ortskurve).append(", ");
+      builder.append("ortskurve=").append(this.ortskurve).append(", ");
       }
       
    // Die Zeichenkette, welche den optimalen Ausgleichskreis repräsentiert, wird hinzugefügt. 
-   if (optimalerAusgleichskreis != null)
+   if (this.optimalerAusgleichskreis != null)
       {
-      builder.append("optimaler Ausgleichskreis=").append(optimalerAusgleichskreis).append(", ");
+      builder.append("optimaler Ausgleichskreis=").append(this.optimalerAusgleichskreis).append(", ");
       }
       
    // Die Zeichenkette, welche die Grafikdarstellung der Messpunkte repräsentiert, wird hinzugefügt. 
-   if (messpunkteGrafik != null)
+   if (this.messpunkteGrafik != null)
       {
-      builder.append("messpunkteGrafik=").append(messpunkteGrafik).append(", ");
+      builder.append("messpunkteGrafik=").append(this.messpunkteGrafik).append(", ");
       }   
       
    // Die Zeichenkette, welche die Grafikdarstellung der Ortskurve repräsentiert, wird hinzugefügt. 
-   if (ortskurveGrafik != null)
+   if (this.ortskurveGrafik != null)
       {
-      builder.append("ortskurveGrafik=").append(ortskurveGrafik).append(", ");
+      builder.append("ortskurveGrafik=").append(this.ortskurveGrafik).append(", ");
       }
    
    // Die Zeichenkette, welche die Grafikdarstellung des optimalen Ausgleichskreises repräsentiert, wird 
    // hinzugefügt. 
-   if (optimalerAusgleichskreisGrafik != null)
+   if (this.optimalerAusgleichskreisGrafik != null)
       {
-      builder.append("ortskurve2dGrafik=").append(optimalerAusgleichskreisGrafik).append(", ");
+      builder.append("ortskurve2dGrafik=").append(this.optimalerAusgleichskreisGrafik).append(", ");
       }
       
    // Die Zeichenkette, welche die Koordinatenachsen repräsentiert, wird hinzugefügt. 
-   if (koordinatenachsen != null)
+   if (this.koordinatenachsen != null)
       {
-      builder.append("koordinatenachsen=").append(koordinatenachsen).append(", ");
+      builder.append("koordinatenachsen=").append(this.koordinatenachsen).append(", ");
+      }
+   
+   // Die Zeichenkette, welche den komplexen Zeiger des Ständerstroms im Leerlauf (in A) repräsentiert, wird 
+   // hinzugefügt. 
+   if (this.i1_0 != null)
+      {
+      builder.append("i1_0=").append(this.i1_0).append(", ");
       }
       
    // Die restlichen Parameter werden zur Zeichenkette hinzugefügt.

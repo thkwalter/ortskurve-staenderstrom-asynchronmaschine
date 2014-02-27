@@ -108,6 +108,9 @@ public String problemLoesen()
       // Der Leerlaufpunkt wird berechnet.
       Leerlauf leerlauf = new Leerlauf(this.ortskurveModell.getOrtskurve());
       
+      // Der komplexe Zeiger des Ständerstroms im Leerlauf (in A) wird zum Frontend-Modell hinzugefügt.
+      this.ortskurveModell.setI1_0(leerlauf.getI1());
+      
       // Die Daten der Grafik der Ortskurve werden berechnet.
       this.ortskurveModell.grafikdatenBerechnen();
       }
