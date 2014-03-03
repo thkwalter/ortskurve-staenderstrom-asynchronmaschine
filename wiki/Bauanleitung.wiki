@@ -4,9 +4,9 @@
  # Checken Sie das Projekt ortskurve-trunk des Repositories http://ortskurve-staenderstrom-asynchronmaschine.googlecode.com/svn/trunk/ unter den Namen ortskurve aus.
  # Wählen Sie im Kontextmenü des Projektes den Eintrag "Properties" aus. Der Dialog "Properties for ortskurve" erscheint.
  # Wählen Sie links im Baum den Eintrag "Java Build Path" aus und dann rechts die Karteikarte "Libraries". Die drei Bibliotheken commons-fileupload-1.3.jar, commons-math3-3.2.jar und java.faces-2.2.3.jar werden als nicht vorhanden angezeigt. Ignorieren Sie das vorerst.
- # Markieren Sie den Eintrag "App Engine SDK (App Engine - 1.8.7) und drücken Sie den Knopf "Remove". Die markierte Bibliothek verschwindet aus der Liste.
+ # Markieren Sie den Eintrag "App Engine SDK (App Engine - 1.9.0) und drücken Sie den Knopf "Remove". Die markierte Bibliothek verschwindet aus der Liste.
  # Drücken Sie den Knopf "Add Library ...". Der Dialog "Add Library" erscheint.
  # Wählen Sie den Knopf "Google App Engine" aus und drücken Sie den Knopf "Next".
- # Aktivieren Sie die Optionsschaltfläche "Use default SDK (App Engine - 1.8.8)" und drücken Sie den Knopf "Finish". Die vorher gelöscht Bibliothek erscheint wieder in der Liste. Gleichzeitig werden die zugehörigen Bibliotheken ins Verzeichnis ortskurve/war/WEB-INF/lib kopiert.
+ # Aktivieren Sie die Optionsschaltfläche "Use default SDK (App Engine - 1.9.0)" und drücken Sie den Knopf "Finish". Die vorher gelöscht Bibliothek erscheint wieder in der Liste. Gleichzeitig werden die zugehörigen Bibliotheken ins Verzeichnis ortskurve/war/WEB-INF/lib kopiert.
  # Kopieren Sie die auf der Wiki-Seite [Bibliotheken Bibliotheken] aufgezählten Bibliotheken ins Verzeichnis ortskurve/war/WEB-INF/lib.
  # Erzeugen Sie im Verzeichnis ortskurve/war/pages/ die Seiten impressum.xhtml, datenschutz.xhtml und nutzungsbedingungen.xhtml.
