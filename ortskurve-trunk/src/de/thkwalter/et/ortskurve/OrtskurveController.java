@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import de.thkwalter.et.ersatzschaltbild.ErsatzschaltbildModell;
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
@@ -64,55 +63,11 @@ public String problemLoesen()
       // Die Daten des Frontend-Modells werden protokolliert.
       OrtskurveController.logger.info(this.ortskurveModell.toString());
       
-      // Der optimale Ausgleichskreis muss manuell zurückgesetzt werden, da er nicht jedesmal neu berechnet wird.
-      this.ortskurveModell.setOptimalerAusgleichskreis(null);
+      // Die Ortskurve und der Leerlaufpunkt werden berechnet.
+      this.ortskurveBerechnenIntern();
       
-      // Die Messpunkte werden aus dem Frontend-Modell gelesen.
-      Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
-      
-      // Die eingegebenen Messpunkte werden validiert.
-      this.messpunkteValidieren(messpunkte);
-      
-      // Die Startparameter werden bestimmt.
-      double[] startpunkt = Startpunktbestimmung.startpunktBerechnen(messpunkte);
-      
-      // Die Ortskurve wird bestimmt.    
-      Ortskurve ortskurve = this.ortskurveBestimmen(messpunkte, startpunkt);
-      
-      // Die Ortskurve wird im Datenmodell gespeichert.
-      this.ortskurveModell.setOrtskurve(ortskurve);
-      
-      // Falls der Mittelpunkt einen negativen Realteil besitzt, wird das Ausgleichsproblem noch einmal unter der Rand-
-      // bedingung gelöst, dass der Mittelpunkt auf der imaginären Achse liegt.
-      if (ortskurve.getMittelpunktOrtskurve().getY() < 0)
-         {
-         // Der Startpunkt für die Lösung des 2d-Ausgleichsproblems wird festgelegt.
-         double[] startpunkt2d = 
-            new double[]{ortskurve.getMittelpunktOrtskurve().getX(), ortskurve.getRadiusOrtskurve()};
-         
-         // Das 2d-Ausgleichsproblem word gelöst.
-         Ausgleichsproblem ausgleichsproblem = new Ausgleichsproblem(messpunkte);
-         Ortskurve ortskurve2d = 
-            ausgleichsproblem.ausgleichsproblemLoesen(startpunkt2d, Ausgleichsproblemtyp.ORTSKURVE_2d);
-         
-         // Die berechnete Ortskurve wird protokolliert.
-         OrtskurveController.logger.info(ortskurve2d.toString());
-         
-         // Der optimale Ausgleichskreis mit negativem Realteil wird umgespeichert.
-         this.ortskurveModell.setOptimalerAusgleichskreis(this.ortskurveModell.getOrtskurve());
-         
-         // Die Ortskurve mit Mittelpunkt auf der Imaginärachse wird im Frontend-Modell gespeichert.
-         this.ortskurveModell.setOrtskurve(ortskurve2d);
-         }
-      
-      // Der Leerlaufpunkt wird berechnet.
-      Leerlauf leerlauf = new Leerlauf(this.ortskurveModell.getOrtskurve());
-      
-      // Der komplexe Zeiger des Ständerstroms im Leerlauf (in A) wird zum Frontend-Modell hinzugefügt.
-      this.ortskurveModell.setI1_0(leerlauf.getI1());
-      
-      // Die Daten der Grafik der Ortskurve werden berechnet.
-      this.ortskurveModell.grafikdatenBerechnen();
+      // Die Daten des Frontend-Modells werden protokolliert.
+      OrtskurveController.logger.info(this.ortskurveModell.toString());
       }
    
    // Falls eine Ausnahme geworfen worden ist, wird diese in eine FacesMessage umgewandelt.
@@ -126,11 +81,70 @@ public String problemLoesen()
          exception.getMessage(), ""));
       
       // Der Nachrichtentext der Ausnahme wird protokolliert.
-      OrtskurveController.logger.info(exception.getMessage());
+      OrtskurveController.logger.severe(exception.getMessage());
       }
    
    // Die Startseite wird wieder angezeigt.
    return null;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Die Ortskurve und der Leerlaufpunkt werden berechnet.
+ */
+private void ortskurveBerechnenIntern()
+   {
+   // Der optimale Ausgleichskreis muss manuell zurückgesetzt werden, da er nicht jedesmal neu berechnet wird.
+   this.ortskurveModell.setOptimalerAusgleichskreis(null);
+   
+   // Die Messpunkte werden aus dem Frontend-Modell gelesen.
+   Vector2D[] messpunkte = this.ortskurveModell.getMesspunkte();
+   
+   // Die eingegebenen Messpunkte werden validiert.
+   this.messpunkteValidieren(messpunkte);
+   
+   // Die Startparameter werden bestimmt.
+   double[] startpunkt = Startpunktbestimmung.startpunktBerechnen(messpunkte);
+   
+   // Die Ortskurve wird bestimmt.    
+   Ortskurve ortskurve = this.ortskurveBestimmen(messpunkte, startpunkt);
+   
+   // Die Ortskurve wird im Datenmodell gespeichert.
+   this.ortskurveModell.setOrtskurve(ortskurve);
+   
+   // Falls der Mittelpunkt einen negativen Realteil besitzt, wird das Ausgleichsproblem noch einmal unter der Rand-
+   // bedingung gelöst, dass der Mittelpunkt auf der imaginären Achse liegt.
+   if (ortskurve.getMittelpunktOrtskurve().getY() < 0)
+      {
+      // Der Startpunkt für die Lösung des 2d-Ausgleichsproblems wird festgelegt.
+      double[] startpunkt2d = 
+         new double[]{ortskurve.getMittelpunktOrtskurve().getX(), ortskurve.getRadiusOrtskurve()};
+      
+      // Das 2d-Ausgleichsproblem word gelöst.
+      Ausgleichsproblem ausgleichsproblem = new Ausgleichsproblem(messpunkte);
+      Ortskurve ortskurve2d = 
+         ausgleichsproblem.ausgleichsproblemLoesen(startpunkt2d, Ausgleichsproblemtyp.ORTSKURVE_2d);
+      
+      // Die berechnete Ortskurve wird protokolliert.
+      OrtskurveController.logger.info(ortskurve2d.toString());
+      
+      // Der optimale Ausgleichskreis mit negativem Realteil wird umgespeichert.
+      this.ortskurveModell.setOptimalerAusgleichskreis(this.ortskurveModell.getOrtskurve());
+      
+      // Die Ortskurve mit Mittelpunkt auf der Imaginärachse wird im Frontend-Modell gespeichert.
+      this.ortskurveModell.setOrtskurve(ortskurve2d);
+      }
+   
+   // Der Leerlaufpunkt wird berechnet.
+   Leerlauf leerlauf = new Leerlauf(this.ortskurveModell.getOrtskurve());
+   
+   // Der komplexe Zeiger des Ständerstroms im Leerlauf (in A) wird zum Frontend-Modell hinzugefügt.
+   this.ortskurveModell.setI1_0(leerlauf.getI1());
+   
+   // Die Daten der Grafik der Ortskurve werden berechnet.
+   this.ortskurveModell.grafikdatenBerechnen();
    }
 
 // =====================================================================================================================
