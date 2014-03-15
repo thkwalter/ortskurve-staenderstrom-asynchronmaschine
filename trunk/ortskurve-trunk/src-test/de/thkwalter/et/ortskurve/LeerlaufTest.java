@@ -19,16 +19,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
-
-import de.thkwalter.et.ersatzschaltbild.Betriebspunkt;
-import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link Leerlauf}.
