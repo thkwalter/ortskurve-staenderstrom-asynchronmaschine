@@ -250,8 +250,7 @@
          
             <!-- Die Beschreibung der Aktion des nächsten Knopfes                                                    -->
             <h:panelGroup layout="block" 
-               rendered="false">
-               <!-- rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}" -->
+               rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}" >
             <br/><br/>
             <p>
                Auf der nächsten Seite können Sie mit Hilfe der berechneten Ortskurve und einiger weiterer Messwerte die
@@ -261,8 +260,7 @@
          
             <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                               -->
             <h:panelGroup class="knopfzeile" layout="block"
-               rendered="false">
-               <!-- rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}" -->
+               rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}">
                           
                <h:commandButton value="Zur ESB-Berechnung" action="#{ausgleichsproblem.esbAufrufen}" class="knopf"/>
                <p:spacer width="1" height="20" />

@@ -30,8 +30,8 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.et.ortskurve.OrtskurveController;
 import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**

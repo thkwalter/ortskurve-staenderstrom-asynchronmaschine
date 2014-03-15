@@ -15,7 +15,8 @@
  */
 package de.thkwalter.et.ortskurve;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Field;
 

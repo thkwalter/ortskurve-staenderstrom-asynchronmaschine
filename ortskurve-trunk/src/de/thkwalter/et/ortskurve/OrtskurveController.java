@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import de.thkwalter.et.ersatzschaltbild.ErsatzschaltbildModell;
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
@@ -267,26 +268,26 @@ private void messpunkteValidieren(Vector2D[] messpunkte)
 // =====================================================================================================================
 // =====================================================================================================================
 
-///**
-// * Die Daten werden an die Ersatzschaltbildberechnung übergeben, anschließend wird zur Ersatzschaltberechnung
-// * weitergeleitet.
-// * 
-// * @return Die Zeichenkette "ersatzschaltbild"
-// */
-//public String esbAufrufen()
-//   {
-//   // Der FacesContext wird gelesen.
-//   FacesContext facesContext = FacesContext.getCurrentInstance();
-//   
-//   // Das Frontend-Modell der Ersatzschaltbildberechnung wird gelesen.
-//   ErsatzschaltbildModell ersatzschaltbildModell = (ErsatzschaltbildModell) 
-//      facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ersatzschaltbildModell}", 
-//      ErsatzschaltbildModell.class); 
-//   
-//   // Die benötigten Daten werden an das Frontendmodell der Ersatzschaltbildberechnung übergeben.
-//   ersatzschaltbildModell.datenUebernehmen(this.ortskurveModell);
-//   
-//   // Die Zeichenkette, die zur Weiterleitung zur Ersatzschaltbildberechnung führt, wird zurückgegeben.
-//   return "ersatzschaltbild";
-//   }
+/**
+ * Die Daten werden an die Ersatzschaltbildberechnung übergeben, anschließend wird zur Ersatzschaltberechnung
+ * weitergeleitet.
+ * 
+ * @return Die Zeichenkette "ersatzschaltbild"
+ */
+public String esbAufrufen()
+   {
+   // Der FacesContext wird gelesen.
+   FacesContext facesContext = FacesContext.getCurrentInstance();
+   
+   // Das Frontend-Modell der Ersatzschaltbildberechnung wird gelesen.
+   ErsatzschaltbildModell ersatzschaltbildModell = (ErsatzschaltbildModell) 
+      facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ersatzschaltbildModell}", 
+      ErsatzschaltbildModell.class); 
+   
+   // Die benötigten Daten werden an das Frontendmodell der Ersatzschaltbildberechnung übergeben.
+   ersatzschaltbildModell.datenUebernehmen(this.ortskurveModell);
+   
+   // Die Zeichenkette, die zur Weiterleitung zur Ersatzschaltbildberechnung führt, wird zurückgegeben.
+   return "ersatzschaltbild";
+   }
 }

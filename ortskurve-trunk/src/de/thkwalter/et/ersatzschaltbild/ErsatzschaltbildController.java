@@ -99,6 +99,9 @@ private void ersatzschaltbildBerechnenIntern()
       this.ersatzschaltbildModell.getOrtskurve(), this.ersatzschaltbildModell.getU_LL(), 
       this.ersatzschaltbildModell.getSchaltungstyp());
    
+   // Die Impedanzortskurve wird protokolliert.
+   ErsatzschaltbildController.logger.fine("Ortskurve Impedanz: " + ortskurveImpedanz.toString());
+   
    // Das Ersatzschaltbild wird erzeugt.
    Ersatzschaltbild ersatzschaltbild = new Ersatzschaltbild();
    
