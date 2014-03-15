@@ -384,21 +384,27 @@ public String toString()
    StringBuilder builder = new StringBuilder("ErsatzschaltbildModell [");
    
    // Die Zeichenkette, welche die Ortskurve repräsentiert, wird hinzugefügt.
-   if (ortskurve != null)
+   if (this.ortskurve != null)
       {
       builder.append("ortskurve=").append(this.ortskurve).append(", ");
       }
    
    // Die Zeichenkette, welche die Daten der Betriebspunkte repräsentiert, wird hinzugefügt.
-   if (betriebspunkte != null)
+   if (this.betriebspunkte != null)
       {
       builder.append("betriebspunkte=").append(this.betriebspunkte).append(", ");
       }
    
    // Die Zeichenkette, welche den Schaltungstyp repräsentiert, wird hinzugefügt.
-   if (schaltungstyp != null)
+   if (this.schaltungstyp != null)
       {
       builder.append("schaltungstyp=").append(this.schaltungstyp).append(", ");
+      }
+   
+   // Die Zeichenkette, welche das Ersatzschaltbild repräsentiert, wird hinzugefügt.
+   if (this.ersatzschaltbild != null)
+      {
+      builder.append("ersatzschaltbild=").append(this.ersatzschaltbild).append(", ");
       }
    
    // Die Zeichenkette, welche die Leiter-Leiter-Spannung (in V) repräsentiert, wird hinzugefügt.
