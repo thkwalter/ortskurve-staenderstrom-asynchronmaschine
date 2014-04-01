@@ -23,7 +23,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.koordinatensystem.Achsendimensionierung;
@@ -90,11 +89,6 @@ private final int xPixelGrafik = 550;
  * Die Anzahl der Pixel der Grafik in y-Richtung.
  */
 private final int yPixelGrafik = 275;
-
-/**
- * Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf
- */
-private Complex i1_0;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -267,34 +261,6 @@ public void setOrtskurve(Ortskurve ortskurve)
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt den komplexen Zeiger des Ständerstroms (in A) im Leerlauf zurück.
- * 
- * @return Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf
- */
-public Complex getI1_0()
-   {
-   // Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf wird zurückgegeben.
-   return this.i1_0;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
- * Diese Methode speichert den komplexen Zeiger des Ständerstroms (in A) im Leerlauf in diesem Modell.
- * 
- * @param ortskurve Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf
- */
-public void setI1_0(Complex i1_0)
-   {
-   // Der komplexe Zeiger des Ständerstroms (in A) im Leerlauf wird in diesem Modell gespeichert.
-   this.i1_0 = i1_0;
-   }
-
-// =====================================================================================================================
-// =====================================================================================================================
-
-/**
  * Diese Methode gibt die Anzahl der Pixel der Grafik in x-Richtung zurück.
  * 
  * @return Die Anzahl der Pixel der Grafik in x-Richtung.
@@ -370,13 +336,6 @@ public String toString()
    if (this.koordinatenachsen != null)
       {
       builder.append("koordinatenachsen=").append(this.koordinatenachsen).append(", ");
-      }
-   
-   // Die Zeichenkette, welche den komplexen Zeiger des Ständerstroms im Leerlauf (in A) repräsentiert, wird 
-   // hinzugefügt. 
-   if (this.i1_0 != null)
-      {
-      builder.append("i1_0=").append(this.i1_0).append(", ");
       }
       
    // Die restlichen Parameter werden zur Zeichenkette hinzugefügt.

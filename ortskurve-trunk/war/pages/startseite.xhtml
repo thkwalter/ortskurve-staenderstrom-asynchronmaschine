@@ -265,38 +265,6 @@
                <h:commandButton value="Zur ESB-Berechnung" action="#{ausgleichsproblem.esbAufrufen}" class="knopf"/>
                <p:spacer width="1" height="20" />
             </h:panelGroup>
-            
-            <h:panelGroup layout="block" styleClass="letztes-element"
-               rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}">
-               <br/><br/>
-               <h4>Leerlaufpunkt:</h4>
-               <br/>
-               
-               <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
-                  platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty,platzhalter-3-spalten,text-3-spalten-empty,
-                  eingabe-3-spalten-empty">
-                  <h:outputText value="Ständerstrom in A"/>
-                  
-                  <h:panelGroup styleClass="zahl">
-                     (<h:outputText value="#{-ortskurveModell.i1_0.imaginary}">
-                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                     </h:outputText>
-                     
-                     <h:outputText value=", "/>
-                     
-                     <h:outputText value="#{ortskurveModell.i1_0.real}">
-                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-                     </h:outputText>)
-                  </h:panelGroup>
-                  
-                  <h:outputText value=""/>
-                  <h:outputText value=""/>
-                  <h:outputText value=""/>
-                  <h:outputText value=""/>
-                  <h:outputText value=""/>
-                  <h:outputText value=""/>
-               </h:panelGrid>
-            </h:panelGroup>
          </h:form> 
       </ui:define>
    </ui:composition>
