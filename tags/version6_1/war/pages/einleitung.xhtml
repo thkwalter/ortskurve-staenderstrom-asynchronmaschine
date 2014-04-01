@@ -1,0 +1,80 @@
+<!-- ===================================================================================================================
+     Copyright 2014 Th. K. Walter, Nürnberg.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+==================================================================================================================== -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" 
+   xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+   <ui:composition template="./template.xhtml">
+      <ui:define name="inhalt">         
+         <h2>Einleitung</h2>
+         <br/><br/>
+        
+         <p>
+         Wir verwenden im Folgenden das unten dargestellte, einsträngige Ersatzschaltbild als Modell der 
+         Drehstrom-Asynchronmaschine. Dieses Ersatzschaltbild vernachlässigt die Eisenverluste und die Auswirkungen von 
+         Stromverdrängung und Sättigung.
+         </p>
+         <br/><br/>
+        
+         <h:graphicImage library="images" name="ersatzschaltbild.png" width="500px" styleClass="zentriertes-bild"/>
+         <br/><br/>
+         
+         <p>
+         Legt man dieses Ersatzschaltbild zugrunde, so wird die Ortskurve des Ständerstroms (Strangstroms) durch die 
+         folgende Gleichung beschrieben
+         </p>
+         <br/><br/>
+         
+         <h:graphicImage library="images" name="gl_ortskurve.png" width="525px" styleClass="zentriertes-bild"/>
+         <br/><br/>
+         
+         <p>
+         und bildet einen Kreis, den sog. Ossanna-Kreis. 
+         </p>
+         <br/>
+         
+         <p>
+         Bei der Bestimmung der komplexen Zeiger des Strangstroms <span class="zeiger">I</span><sub>1</sub> und der 
+         Strangspannung <span class="zeiger">U</span><sub>1</sub> kann man einen der beiden Nullphasenwinkel 
+         &#966;<sub>u</sub> bzw. &#966;<sub>i</sub> frei wählen. Um spätere Rechnungen zu vereinfachen, setzt man 
+         üblicherweise den Nullphasenwinkel der Spannung gleich Null, so dass der Spannungszeiger rein reell wird. 
+         Außerdem stellt man das Koordinatensystem normalerweise um 90 Grad gegen den Uhrzeigensinn gedreht dar. In
+         diesem Fall besitzt der Ossanna-Kreis in etwa die folgende Lage:
+         </p>
+         <br/><br/>
+         
+         <h:graphicImage library="images" name="ortskurve.png" width="300px" styleClass="zentriertes-bild"/>
+         <br/><br/>
+         
+         <p>
+            Hat man den Zeiger des Strangstroms für verschiedene Betriebspunkte mit Hilfe von Messungen ermittelt, so 
+            kann man die Ortskurve bestimmen. Eine einfache Möglichkeit besteht darin, die Ortskurve mittels Zirkel und
+            Lineal aus drei Punkten zu konstruieren. Allerdings kann es bei einer ungünstigen Auswahl der drei Punkte
+            passieren, dass die konstruierte Ortskurve die restlichen Punkte nicht sehr gut beschreibt. Um dieses 
+            Problem zu vermeiden, berechnet unser Programm die Ortskurve mittels einer Ausgleichsrechnung auf Basis
+            aller vorhandenen Punkte.
+         </p>
+         <br/><br/>
+      </ui:define>
+   </ui:composition>
+</h:body>
+
+</html>

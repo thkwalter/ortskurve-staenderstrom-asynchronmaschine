@@ -1,0 +1,250 @@
+<!-- ===================================================================================================================
+     Copyright 2013 Th. K. Walter, Nürnberg.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+==================================================================================================================== -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" 
+   xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+   <ui:composition template="./template.xhtml">
+      <ui:define name="inhalt">   
+         <h2>Berechnung der Ersatzschaltbildgrößen</h2>
+         <br/><br/>
+         
+         <h:form>
+            <!-- Die Fehlermeldungen =============================================================================== -->
+            <h:panelGroup rendered="#{not empty facesContext.messageList}" styleClass="nachrichten" layout="block">
+               Das Ersatzschaltbild konnte aus folgenden Gründen leider nicht berechnet werden:
+               <br/><br/>
+            
+               <h:messages errorClass="error-messages" tooltip="true"/>
+            </h:panelGroup>
+            
+            <p>Bitte geben Sie Werte für folgende Größen ein:</p>
+            <br/>
+            
+            <!-- Die Tabelle mit den Eingabefeldern für die Netzspannung, die Netzfrequenz und die Polpaarzahl ===== -->
+            <h:panelGrid columns="8" styleClass="table-3-spalten"
+               columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
+                  text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten,eingabe-3-spalten">  
+                  
+               <h:panelGroup>
+	               <h:outputLabel for="spannung" value="Netzspannung "/>
+	               <a onclick="dlg1.show();" class="hilfe">(?)</a>
+	               <h:outputLabel for="spannung" value=" in V"/>
+	            </h:panelGroup>
+	               
+               <h:inputText id="spannung" value="#{ersatzschaltbildModell.u_LL}" size="8" required="true" 
+                  label="Netzspannung" 
+                  requiredMessage="Die Netzspannung wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
+                  <f:validator validatorId="positiveDoubleValidator" />
+               </h:inputText>
+               
+               <h:outputText value=""/>
+               
+               <h:outputLabel for="frequenz" value="Netzfrequenz in Hz"/>
+               
+               <h:inputText id="frequenz" value="#{ersatzschaltbildModell.f1}" size="8" required="true" 
+                  label="Netzfrequenz"
+                  requiredMessage="Die Netzfrequenz wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
+                  <f:validator validatorId="positiveDoubleValidator" />
+               </h:inputText>
+               
+               <h:outputText value=""/>
+               
+	            <h:outputLabel for="polpaarzahl" value="Polpaarzahl"/>
+	               
+               <h:inputText id="polpaarzahl" value="#{ersatzschaltbildModell.p}" size="8" required="true"
+                  label="Polpaarzahl"
+                  requiredMessage="Die Polpaarzahl wird benötigt, um das Ersatzschaltbild berechnen zu können! Geben Sie bitte einen Wert ein.">
+                  <f:validator validatorId="positiveIntegerValidator" />
+               </h:inputText> 
+            </h:panelGrid>
+            
+            <!-- Die Tabelle mit dem Eingabefeld für den Schaltungstyp ============================================= -->
+            <h:panelGrid columns="8" styleClass="table-3-spalten-zwei"
+               columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,
+               eingabe-3-spalten-empty,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">  
+               <h:outputLabel for="spannung" value="Schaltungstyp:"/>
+                 
+               <h:selectOneRadio value="#{ersatzschaltbildModell.schaltungstyp}" layout="pageDirection" 
+                  styleClass="radio-button-group">
+                  <f:selectItem itemValue="STERN" itemLabel="Stern" />
+                  <f:selectItem itemValue="DREIECK" itemLabel="Dreieck" />
+               </h:selectOneRadio>
+               
+               <h:outputText value=""/>
+               <h:outputText value=""/>  
+               <h:outputText value=""/>
+               <h:outputText value=""/> 
+               <h:outputText value=""/>
+               <h:outputText value=""/>            
+            </h:panelGrid>
+	         
+	         <!-- Der Dialog mit der Erläuterung für die Netzspannung =============================================== -->
+	         <p:dialog id="basicDialog" header="Hilfe" widgetVar="dlg1">  
+               <h:outputText value="Mit Netzspannung ist die effektive" /><br/>
+               <h:outputText value="Leiter-Leiter-Spannung gemeint." /> 
+            </p:dialog> 
+	         <br/><br/>
+	         
+	         <p>Ergänzen Sie bitte in der folgenden Tabelle die Drehzahlen:</p>
+            <br/>
+            
+            <!-- Die Tabelle zur Eingabe der Drehzahlen ============================================================ -->
+            <h:dataTable value="#{ersatzschaltbildModell.betriebspunkte}" var="betriebspunkt" styleClass="esb-tabelle">
+               <h:column headerClass="esb-tabelle-column">
+                  <f:facet name="header">
+                     -Im <span class="zeiger">I</span><sub>1</sub> in A
+                  </f:facet> 
+                  <h:outputText value="#{-betriebspunkt.i1.imaginary}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
+               </h:column>
+            
+               <h:column headerClass="esb-tabelle-column">
+                  <f:facet name="header">
+                     Re <span class="zeiger">I</span><sub>1</sub> in A
+                  </f:facet>   
+                  <h:outputText value="#{betriebspunkt.i1.real}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
+               </h:column>
+               
+               <h:column headerClass="esb-tabelle-column-letzte">
+                  <f:facet name="header">
+                     Drehzahl in Hz
+                  </f:facet> 
+                  <h:inputText value="#{betriebspunkt.n}" label="Drehzahl" size="8"/>  
+               </h:column>
+            </h:dataTable>
+            <br/><br/>
+	         
+	         <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
+            <br/>
+	               
+	         <!-- Die Tabelle, welche die Parameter der Ortskurve enthält =========================================== -->
+	         <h:panelGrid columns="8" styleClass="table-3-spalten" 
+               columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
+                  text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
+	            <h:outputText value="Mittelpunkt in A"/>
+	            <h:panelGroup styleClass="zahl">
+	               (<h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.x}">
+	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+	               </h:outputText>
+	               <h:outputText value=", "/>
+	               <h:outputText value="#{ersatzschaltbildModell.ortskurve.mittelpunktOrtskurve.y}">
+	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+	               </h:outputText>)
+	            </h:panelGroup>
+	            
+	            <h:outputText value=""/>
+	       
+	            <h:outputText value="Radius in A"/>
+	            <h:panelGroup styleClass="zahl">
+	               <h:outputText value="#{ersatzschaltbildModell.ortskurve.radiusOrtskurve}">
+	                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+	               </h:outputText>
+	            </h:panelGroup>
+	            
+	            <h:outputText value=""/>
+	            <h:outputText value=""/>
+	            <h:outputText value=""/>
+	         </h:panelGrid>
+         
+            <!-- Der Knopf zum Berechnen der Ersatzschaltbildwiderstände =========================================== -->
+           <h:panelGroup class="knopfzeile" layout="block">
+               <h:commandButton value="ESB berechnen" action="#{ersatzschaltbildController.ersatzschaltbildBerechnen}" 
+                  class="knopf"/>
+               <p:spacer width="1" height="21" />
+            </h:panelGroup> 
+            
+            <!-- Die Ausgabe der Ersatzschaltbilddaten ============================================================= -->
+            <h:panelGroup 
+               rendered="#{(ersatzschaltbildModell.ersatzschaltbild != null) and (empty facesContext.messageList)}">
+               
+               <h4>Ergebnisse der Ersatzschaltbildberechnung:</h4>
+               <br/>
+               
+               <h:panelGrid columns="2" styleClass="letztes-element ersatzschaltbild-ergebnis-tabelle" 
+                  columnClasses="ersatzschaltbild-ergebnis-tabelle-bild,ersatzschaltbild-ergebnis-tabelle-text">
+                  <h:graphicImage library="images" name="ersatzschaltbild.png" 
+                     styleClass="ersatzschaltbild-ergebnis-tabelle-bild"/>
+                        
+                  <h:panelGroup> 
+                     <h:panelGrid columns="2" styleClass="zeilenabstand tabelle-1-spalte" 
+                        columnClasses="text-3-spalten,eingabe-3-spalten">
+                        <h:panelGroup>
+                           R<sub>1</sub> in &#937;
+                        </h:panelGroup>
+                  
+                        <h:panelGroup styleClass="zahl">
+                           <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.r1}">
+                              <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                           </h:outputText>
+                        </h:panelGroup>
+                     </h:panelGrid>
+                  
+                     <h:panelGrid columns="2" styleClass="zeilenabstand tabelle-1-spalte" 
+                        columnClasses="text-3-spalten,eingabe-3-spalten">
+                        <h:panelGroup>
+                           X<sub>k</sub> in &#937;
+                        </h:panelGroup>
+                  
+                        <h:panelGroup styleClass="zahl">
+                           <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x_k}">
+                              <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                           </h:outputText>
+                        </h:panelGroup>   
+                     </h:panelGrid>
+                  
+                     <h:panelGrid columns="2" styleClass="zeilenabstand tabelle-1-spalte" 
+                        columnClasses="text-3-spalten,eingabe-3-spalten">
+                        <h:panelGroup>
+                           X<sub>1</sub> in &#937;
+                        </h:panelGroup>
+                  
+                        <h:panelGroup styleClass="zahl">
+                           <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.x1}">
+                              <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                           </h:outputText>
+                        </h:panelGroup>
+                     </h:panelGrid>
+                     
+                     <h:panelGrid columns="2" styleClass="tabelle-1-spalte" 
+                        columnClasses="text-3-spalten,eingabe-3-spalten">
+                        <h:panelGroup>
+                           R'<sub>2</sub> in &#937;
+                        </h:panelGroup>
+                  
+                        <h:panelGroup styleClass="zahl">
+                           <h:outputText value="#{ersatzschaltbildModell.ersatzschaltbild.r2_strich}">
+                              <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                           </h:outputText>
+                        </h:panelGroup>
+                     </h:panelGrid>
+                  </h:panelGroup>  
+               </h:panelGrid>
+            </h:panelGroup> 
+         </h:form>
+      </ui:define>
+   </ui:composition>
+</h:body>
+
+</html>

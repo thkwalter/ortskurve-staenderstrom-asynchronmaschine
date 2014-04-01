@@ -1,0 +1,305 @@
+<!-- ===================================================================================================================
+     Copyright 2013 Th. K. Walter, Nürnberg.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+==================================================================================================================== -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" 
+   xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+   <ui:composition template="./template.xhtml">
+      <ui:define name="inhalt">         
+         <h2>Berechnung der Ortskurve</h2>
+         <br/><br/>
+        
+         <h:form>
+            <!-- Die Fehlermeldungen =============================================================================== -->
+            <h:panelGroup rendered="#{not empty facesContext.messageList}" styleClass="nachrichten" layout="block">
+               Die Ortskurve konnte aus folgenden Gründen leider nicht berechnet werden:
+               <br/><br/>
+            
+               <h:messages errorClass="error-messages" globalOnly="true" tooltip="true"/>
+            </h:panelGroup>
+         
+            <!-- Der einleitende Absatz =========================================================================== -->
+            <p>
+               Um die Ortskurve berechnen zu können, müssen Sie den komplexen Zeiger des Ständerstroms
+               <span class="zeiger">I</span><sub>1</sub> in mindestens drei verschiedenen Betriebspunkten bestimmen.
+               Nehmen Sie dabei an, dass der Zeiger <span class="zeiger">U</span><sub>1</sub> der Netzspannung rein
+               real ist.
+            </p>
+            <br/><br/>
+         
+            <!-- Das Texteingabefeld und seine Beschreibung ======================================================== -->
+            <h:panelGrid columns="2" styleClass="eingabe" columnClasses="eingabe-column-0, eingabe-column-1">
+               <h:panelGroup>
+                  <p id="eingabehilfe">                  
+                     Geben Sie bitte die Stromstärken in den verschiedenen Betriebspunkten ein. Verwenden Sie 
+                     eine Zeile pro Betriebspunkt und schreiben Sie die komplexe Stromstärke eines Betriebspunkts im 
+                     Format -Im <span class="zeiger">I</span><sub>1</sub>, Re <span class="zeiger">I</span><sub>1</sub>
+                     <a onclick="formatDlg.show();" class="hilfe">(?)</a>. Geben Sie die Stromstärken in Ampere an. 
+                     Beispiel:
+                     <br/><br/>
+                     
+                     <span id="eingabehilfe-beispiel">
+                     2.11,2.94<br/>
+                     0.36,0.51<br/>
+                     0.40,0.16<br/>
+                     1.48,-1.60<br/>
+                     </span>
+                  </p>
+               </h:panelGroup>
+               
+               <h:inputTextarea value="#{ortskurveModell.messpunkte}" styleClass="eingabefeld" id="eingabe"
+                  converter="CSVConverter"/>
+            </h:panelGrid>
+            
+            <!-- Der Dialog mit der Erläuterung des Koordinatensystems ============================================= -->
+            <p:dialog id="basicDialog" header="Erläuterung" widgetVar="formatDlg">  
+               Wir stellen das Koordinatensystem der Ortskurve wie in der Literatur üblich um<br/> 
+               90 Grad gedreht dar. Die Eingabe der komplexen Stromstärke im Format 
+               -Im <span class="zeiger">I</span><sub>1</sub>, Re <span class="zeiger">I</span><sub>1</sub><br/> 
+               erleichtert Ihnen später das Auffinden der Messpunkte in der Grafik der Ortskurve.
+            </p:dialog>
+            
+            <!-- Der Knopf für die Berechnung der Ortskurve ======================================================== -->
+            <h:panelGroup class="knopfzeile" layout="block">
+               <h:commandButton value="Ortskurve berechnen" action="#{ausgleichsproblem.problemLoesen}" class="knopf"/>
+               <p:spacer width="1" height="21" />
+            </h:panelGroup>  
+            
+            <!-- Die Datei mit den Javascript-Methoden der Ortskurvengrafik wird eingebunden ======================= -->
+            <h:outputScript library="javascript" name="ortskurve.js" target="head" />  
+          
+            <!-- Die Ausgabe der Ortskurve bzw. des optimalen Ausgleichskreises ==================================== -->
+            <h:panelGroup rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}">
+               <h:panelGroup rendered="#{ortskurveModell.optimalerAusgleichskreis != null}">
+                  <h4>Der optimale Ausgleichskreis besitzt folgende Parameter:</h4>
+                  
+                  <br/>
+                  
+                  <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten-blau,
+                     eingabe-3-spalten-blau,platzhalter-3-spalten,text-3-spalten-blau,eingabe-3-spalten-blau,
+                     platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
+               
+                     <h:outputText value="Mittelpunkt in A"/>
+                  
+                     <h:panelGroup styleClass="zahl">
+                        (<h:outputText value="#{ortskurveModell.optimalerAusgleichskreis.mittelpunktOrtskurve.x}">
+                           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                        </h:outputText>
+                  
+                        <h:outputText value=", "/>
+                     
+                        <h:outputText value="#{ortskurveModell.optimalerAusgleichskreis.mittelpunktOrtskurve.y}">
+                           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                        </h:outputText>)
+                     </h:panelGroup>
+               
+                     <h:outputText value=""/>
+          
+                     <h:outputText value="Radius in A"/>
+                     
+                     <h:panelGroup styleClass="zahl">
+                        <h:outputText value="#{ortskurveModell.optimalerAusgleichskreis.radiusOrtskurve}">
+                           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                        </h:outputText>
+                     </h:panelGroup>
+               
+                     <h:outputText value=""/>
+                     <h:outputText value=""/>
+                     <h:outputText value=""/>
+                  </h:panelGrid>
+                  
+                  <br/>
+               
+                  <p>     
+                     Der Realteil des Mittelpunkts des optimalen Ausgleichskreises ist negativ. Das ist jedoch aus 
+                     technischen Gründen nicht möglich. Daher wurde die Ortskurve ein weiteres Mal berechnet, diesmal 
+                     jedoch unter Berücksichtigung der Randbedingung, dass der Mittelpunkt der Ortskurve auf der 
+                     Imaginärachse liegen muss.
+                  </p>
+                  <br/><br/>
+               </h:panelGroup>
+           
+               <h4>Die berechnete Ortskurve besitzt folgende Kreisparameter:</h4>
+               <br/>
+ 
+               <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
+                  platzhalter-3-spalten,text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,
+                  eingabe-3-spalten-empty">
+                  <h:outputText value="Mittelpunkt in A"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     (<h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.x}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                     
+                     <h:outputText value=", "/>
+                     
+                     <h:outputText value="#{ortskurveModell.ortskurve.mittelpunktOrtskurve.y}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>)
+                  </h:panelGroup>
+               
+                  <h:outputText value=""/>
+          
+                  <h:outputText value="Radius in A"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     <h:outputText value="#{ortskurveModell.ortskurve.radiusOrtskurve}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                  </h:panelGroup>
+               
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+               </h:panelGrid>
+            </h:panelGroup>
+         
+
+         
+            <!-- Die Grafik der Ortskurve ========================================================================== -->
+            <h:panelGroup rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}"  
+               class="grafik-ortskurve" layout="block">
+               <canvas id="grafik" width="#{ortskurveModell.xPixelGrafik}" height="#{ortskurveModell.yPixelGrafik}"/>
+            
+               <script type="text/javascript">
+                  var canvas = document.getElementById('grafik');
+                  var context = canvas.getContext('2d');
+
+                  // Koordinatenachsen zeichnen
+                  var startpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.x};
+                  var startpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktXAchse.y};
+                  var endpunktXAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.x};
+                  var endpunktXAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktXAchse.y};
+
+                  var startpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.x};
+                  var startpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.startPunktYAchse.y};
+                  var endpunktYAchseXWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.x};
+                  var endpunktYAchseYWert = #{ortskurveModell.koordinatenachsen.endPunktYAchse.y}; 
+
+                  context.beginPath();
+                  context.moveTo(startpunktXAchseXWert, startpunktXAchseYWert);
+                  context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
+                  context.moveTo(startpunktYAchseXWert, startpunktYAchseYWert);
+                  context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
+
+                  // Pfeil an y-Achse zeichnen
+                  context.moveTo(endpunktYAchseXWert-5,endpunktYAchseYWert+5);
+                  context.lineTo(endpunktYAchseXWert,endpunktYAchseYWert);
+                  context.lineTo(endpunktYAchseXWert+5,endpunktYAchseYWert+5);
+
+                  // Pfeil an x-Achse zeichnen
+                  context.moveTo(endpunktXAchseXWert-5,endpunktXAchseYWert+5);
+                  context.lineTo(endpunktXAchseXWert,endpunktXAchseYWert);
+                  context.lineTo(endpunktXAchseXWert-5,endpunktXAchseYWert-5);
+
+                  // Achsenbeschriftung der y-Achse anbringen
+                  context.font = "16px 'Courier New', monospace";
+                  context.textBaseline = "top";
+                  context.textAlign = "right";
+                  context.fillText("Re I", endpunktYAchseXWert-10, endpunktYAchseYWert);
+
+                  // Achsenbeschriftung der x-Achse anbringen
+                  context.textBaseline = "bottom";
+                  context.textAlign = "left";
+                  context.fillText("-Im I", endpunktXAchseXWert+5, endpunktXAchseYWert);
+              
+                  context.strokeStyle = '#000000;';
+                  context.stroke();  
+
+                  // Die Ortskurve wird gezeichnet
+                  var centerX = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.x};
+                  var centerY = #{ortskurveModell.ortskurveGrafik.mittelpunktInPixeln.y};
+                  var radius = #{ortskurveModell.ortskurveGrafik.radiusInPixeln};
+                  ortskurveZeichnen(context, centerX, centerY, radius, '#66ff66');  
+
+                  <h:panelGroup rendered="#{ortskurveModell.optimalerAusgleichskreis != null}">
+                     centerX = #{ortskurveModell.optimalerAusgleichskreisGrafik.mittelpunktInPixeln.x};
+                     centerY = #{ortskurveModell.optimalerAusgleichskreisGrafik.mittelpunktInPixeln.y};
+                     radius = #{ortskurveModell.optimalerAusgleichskreisGrafik.radiusInPixeln};
+                     ortskurveZeichnen(context, centerX, centerY, radius, '#6699cc');  
+                  </h:panelGroup>
+              
+                  <ui:repeat value="#{ortskurveModell.messpunkteGrafik.messpunkteInPixeln}" var="messpunkt">
+                     context.beginPath();
+                     context.arc(#{messpunkt.x}, #{messpunkt.y}, 2, 0, 2 * Math.PI, false);
+                     context.lineWidth = 1;
+                     context.strokeStyle = '#ff6666';
+                     context.stroke(); 
+                  </ui:repeat>                
+               </script> 
+            </h:panelGroup> 
+         
+            <!-- Die Beschreibung der Aktion des nächsten Knopfes                                                    -->
+            <h:panelGroup layout="block" 
+               rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}" >
+            <br/><br/>
+            <p>
+               Auf der nächsten Seite können Sie mit Hilfe der berechneten Ortskurve und einiger weiterer Messwerte die
+               Werte der Größen des Ersatzschaltbildes (im Folgenden mit ESB abgekürzt) berechnen.
+            </p>
+            </h:panelGroup>
+         
+            <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                               -->
+            <h:panelGroup class="knopfzeile" layout="block"
+               rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}">
+                          
+               <h:commandButton value="Zur ESB-Berechnung" action="#{ausgleichsproblem.esbAufrufen}" class="knopf"/>
+               <p:spacer width="1" height="20" />
+            </h:panelGroup>
+            
+            <h:panelGroup layout="block" styleClass="letztes-element"
+               rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}">
+               <br/><br/>
+               <h4>Leerlaufpunkt:</h4>
+               <br/>
+               
+               <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
+                  platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty,platzhalter-3-spalten,text-3-spalten-empty,
+                  eingabe-3-spalten-empty">
+                  <h:outputText value="Ständerstrom in A"/>
+                  
+                  <h:panelGroup styleClass="zahl">
+                     (<h:outputText value="#{-ortskurveModell.i1_0.imaginary}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>
+                     
+                     <h:outputText value=", "/>
+                     
+                     <h:outputText value="#{ortskurveModell.i1_0.real}">
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                     </h:outputText>)
+                  </h:panelGroup>
+                  
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+                  <h:outputText value=""/>
+               </h:panelGrid>
+            </h:panelGroup>
+         </h:form> 
+      </ui:define>
+   </ui:composition>
+</h:body>
+
+</html>
