@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import de.thkwalter.et.ersatzschaltbild.ErsatzschaltbildModell;
 import de.thkwalter.jsf.ApplicationRuntimeException;
 
 /**
@@ -137,12 +136,6 @@ private void ortskurveBerechnenIntern()
       // Die Ortskurve mit Mittelpunkt auf der Imaginärachse wird im Frontend-Modell gespeichert.
       this.ortskurveModell.setOrtskurve(ortskurve2d);
       }
-   
-   // Der Leerlaufpunkt wird berechnet.
-   Leerlauf leerlauf = new Leerlauf(this.ortskurveModell.getOrtskurve());
-   
-   // Der komplexe Zeiger des Ständerstroms im Leerlauf (in A) wird zum Frontend-Modell hinzugefügt.
-   this.ortskurveModell.setI1_0(leerlauf.getI1());
    
    // Die Daten der Grafik der Ortskurve werden berechnet.
    this.ortskurveModell.grafikdatenBerechnen();
@@ -279,13 +272,13 @@ public String esbAufrufen()
    // Der FacesContext wird gelesen.
    FacesContext facesContext = FacesContext.getCurrentInstance();
    
-   // Das Frontend-Modell der Ersatzschaltbildberechnung wird gelesen.
-   ErsatzschaltbildModell ersatzschaltbildModell = (ErsatzschaltbildModell) 
-      facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ersatzschaltbildModell}", 
-      ErsatzschaltbildModell.class); 
-   
-   // Die benötigten Daten werden an das Frontendmodell der Ersatzschaltbildberechnung übergeben.
-   ersatzschaltbildModell.datenUebernehmen(this.ortskurveModell);
+//   // Das Frontend-Modell der Ersatzschaltbildberechnung wird gelesen.
+//   ErsatzschaltbildModell ersatzschaltbildModell = (ErsatzschaltbildModell) 
+//      facesContext.getApplication().evaluateExpressionGet(facesContext, "#{ersatzschaltbildModell}", 
+//      ErsatzschaltbildModell.class); 
+//   
+//   // Die benötigten Daten werden an das Frontendmodell der Ersatzschaltbildberechnung übergeben.
+//   ersatzschaltbildModell.datenUebernehmen(this.ortskurveModell);
    
    // Die Zeichenkette, die zur Weiterleitung zur Ersatzschaltbildberechnung führt, wird zurückgegeben.
    return "ersatzschaltbild";
