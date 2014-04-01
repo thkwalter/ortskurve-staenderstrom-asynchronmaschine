@@ -267,7 +267,7 @@ private void messpunkteValidieren(Vector2D[] messpunkte)
  * 
  * @return Die Zeichenkette "ersatzschaltbild"
  */
-public String esbAufrufen()
+public String schlupfbezifferungAufrufen()
    {
    // Der FacesContext wird gelesen.
    FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -281,6 +281,6 @@ public String esbAufrufen()
 //   ersatzschaltbildModell.datenUebernehmen(this.ortskurveModell);
    
    // Die Zeichenkette, die zur Weiterleitung zur Ersatzschaltbildberechnung führt, wird zurückgegeben.
-   return "ersatzschaltbild";
+   return "schlupfbezifferung";
    }
 }
