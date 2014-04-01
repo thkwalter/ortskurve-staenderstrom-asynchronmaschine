@@ -253,16 +253,17 @@
                rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}" >
             <br/><br/>
             <p>
-               Auf der nächsten Seite können Sie mit Hilfe der berechneten Ortskurve und einiger weiterer Messwerte die
-               Werte der Größen des Ersatzschaltbildes (im Folgenden mit ESB abgekürzt) berechnen.
+               Auf der nächsten Seite können Sie mit Hilfe der berechneten Ortskurve und der von Ihnen 
+               gemessenen Drehzahlen die Schlupfbezifferung bestimmen.
             </p>
             </h:panelGroup>
          
-            <!-- Das Formular mit dem Knopf zum Aurufen der Ersatzschaltbildberechnung                               -->
+            <!-- Das Formular mit dem Knopf zum Aurufen der Seite "Schlupfbezifferung bestimmen"                     -->
             <h:panelGroup class="knopfzeile" layout="block"
                rendered="#{(ortskurveModell.ortskurve != null) and (empty facesContext.messageList)}">
                           
-               <h:commandButton value="Zur ESB-Berechnung" action="#{ausgleichsproblem.esbAufrufen}" class="knopf"/>
+               <h:commandButton value="Zur Schlupfbezifferung" action="#{ausgleichsproblem.schlupfbezifferungAufrufen}" 
+                  class="knopf"/>
                <p:spacer width="1" height="20" />
             </h:panelGroup>
          </h:form> 
