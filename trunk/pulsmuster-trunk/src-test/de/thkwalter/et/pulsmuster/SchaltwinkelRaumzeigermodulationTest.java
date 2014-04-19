@@ -15,7 +15,10 @@
  */
 package de.thkwalter.et.pulsmuster;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.lang.reflect.Field;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,8 +46,11 @@ private SchaltwinkelRaumzeigermodulation schaltwinkelRaumzeigermodulation;
 @Before
 public void setUp() throws Exception
    {
+   // Die in den Tests verwendete Pulszahl wird festgelegt.
+   int testPulszahl = 15;
+   
    // Der Prüfling wird erzeugt.
-   this.schaltwinkelRaumzeigermodulation = new SchaltwinkelRaumzeigermodulation();
+   this.schaltwinkelRaumzeigermodulation = new SchaltwinkelRaumzeigermodulation(testPulszahl);
    }
 
 // =====================================================================================================================
@@ -58,5 +64,36 @@ public void testSchaltwinkelRaumzeigermodulation()
    {
    // Es wird überprüft, ob der Prüfling erzeugt worden ist.
    assertNotNull(this.schaltwinkelRaumzeigermodulation);
+   
+   // Es wird überprüft, ob die absolute Genauigkeit der berechneten Schaltwinkel (im Bogenmaß), bei der die Iteration 
+   // abgebrochen wird, korrekt initialisiert worden ist.
+   
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchaltwinkelRaumzeigermodulation#getSchaltwinkel()}
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetSchaltwinkel() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die in diesem Test verwendeten Schaltwinkel (im Bogenmaß) werden erzeugt.
+   double[] testSchaltwinkel = new double[0];
+   
+   // Die in diesem Test verwendeten Schaltwinkel (im Bogenmaß) werden im Prüfling gespeichert.
+   Field schaltwinkelFeld = SchaltwinkelRaumzeigermodulation.class.getDeclaredField("schaltwinkel");
+   schaltwinkelFeld.setAccessible(true);
+   schaltwinkelFeld.set(this.schaltwinkelRaumzeigermodulation, testSchaltwinkel);
+   
+   // Es wird überprüft, ob die Schaltwinkel (im Bogenmaß) korrekt zurückgegeben werden.
+   assertEquals(testSchaltwinkel, this.schaltwinkelRaumzeigermodulation.getSchaltwinkel());
    }
 }
