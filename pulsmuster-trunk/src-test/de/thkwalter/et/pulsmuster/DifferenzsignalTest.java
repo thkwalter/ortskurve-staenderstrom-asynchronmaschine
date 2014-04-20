@@ -47,7 +47,7 @@ private Differenzsignal differenzsignal;
 public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
-   this.differenzsignal = new Differenzsignal(2.0944, 0.5, 2.3038, -0.5);
+   this.differenzsignal = new Differenzsignal(2.0944, 2.0, 2.3038, -2.0);
    }
 
 // =====================================================================================================================
@@ -74,7 +74,7 @@ public void testDifferenzsignal1() throws NoSuchFieldException, SecurityExceptio
    double m = mFeld.getDouble(this.differenzsignal);
    
    // Es wird überprüft, ob die Steigung der Flanke korrekt berechnet worden ist.
-   assertEquals(-4.775, m, 4.775/1000.0);
+   assertEquals(-19.099, m, 19.099/1000.0);
    
    // Der Achsenabschnitt der Flanke wird gelesen.
    Field tFeld = Differenzsignal.class.getDeclaredField("t");
@@ -82,7 +82,7 @@ public void testDifferenzsignal1() throws NoSuchFieldException, SecurityExceptio
    double t = tFeld.getDouble(this.differenzsignal);
    
    // Es wird überprüft, ob der Achsenabschnitt korrekt berechnet worden ist.
-   assertEquals(10.5, t, 10.5/1000.0);
+   assertEquals(42.0, t, 42.0/1000.0);
    }
 
 // =====================================================================================================================
@@ -102,7 +102,7 @@ public void testDifferenzsignal2() throws NoSuchFieldException, SecurityExceptio
    IllegalAccessException
    {
    // Ein Prüfling wird erzeugt.
-   Differenzsignal differenzsignal2 = new Differenzsignal(6.0737, -0.5, 6.2832, 0.5);
+   Differenzsignal differenzsignal2 = new Differenzsignal(6.0737, -2.0, 6.2832, 2.0);
    
    // Es wird überprüft, ob der Prüfling erzeugt worden ist.
    assertNotNull(differenzsignal2);
@@ -113,7 +113,7 @@ public void testDifferenzsignal2() throws NoSuchFieldException, SecurityExceptio
    double m = mFeld.getDouble(differenzsignal2);
    
    // Es wird überprüft, ob die Steigung der Flanke korrekt berechnet worden ist.
-   assertEquals(4.775, m, 4.775/1000.0);
+   assertEquals(19.099, m, 19.099/1000.0);
    
    // Der Achsenabschnitt der Flanke wird gelesen.
    Field tFeld = Differenzsignal.class.getDeclaredField("t");
@@ -121,7 +121,7 @@ public void testDifferenzsignal2() throws NoSuchFieldException, SecurityExceptio
    double t = tFeld.getDouble(differenzsignal2);
    
    // Es wird überprüft, ob der Achsenabschnitt korrekt berechnet worden ist.
-   assertEquals(-29.5, t, 29.5/1000.0);
+   assertEquals(-118.0, t, 118.0/1000.0);
    }
 
 // =====================================================================================================================
@@ -137,6 +137,6 @@ public void testValue()
    double differenz = this.differenzsignal.value(2.2);
    
    // Es wird überprüft, ob der Wert des Differenzsignals korrekt berechnet wird.
-   assertEquals(-0.8127, differenz, 0.8127 / 1000.0);
+   assertEquals(-0.8254, differenz, 0.8254/1000.0);
    }
 }

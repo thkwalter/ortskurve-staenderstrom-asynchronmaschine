@@ -68,6 +68,8 @@ public void testSchaltwinkelRaumzeigermodulation()
    // Es wird überprüft, ob die absolute Genauigkeit der berechneten Schaltwinkel (im Bogenmaß), bei der die Iteration 
    // abgebrochen wird, korrekt initialisiert worden ist.
    
+   // Es wird überprüft, ob die Schaltwinkel korrekt berechnet worden sind.
+   
    }
 
 // =====================================================================================================================

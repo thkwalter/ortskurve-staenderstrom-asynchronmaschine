@@ -15,8 +15,7 @@
  */
 package de.thkwalter.et.pulsmuster;
 
-import org.apache.commons.math3.analysis.solvers.AllowedSolution;
-import org.apache.commons.math3.analysis.solvers.RegulaFalsiSolver;
+import org.apache.commons.math3.analysis.solvers.BisectionSolver;
 
 /**
  * Diese Klasse berechnet die Schaltwinkel bei Raumzeigermodulation.
@@ -36,11 +35,6 @@ private final static double ABBRUCHKRITERIUM_ABSOLUTE_GENAUIGKEIT_SCHALTWINKEL =
 private final static double ABBRUCHKRITERIUM_RELATIVE_GENAUIGKEIT_SCHALTWINKEL = 0.0; 
 
 /**
- * Die maximale Abweichung von Referenzsignal und Sägezahn, bei der die Iteration abgebrochen wird.
- */
-private final static double ABBRUCHKRITERIUM_ABSOLUTE_GENAUIGKEIT_SIGNALDIFFERENZ = 0.0; 
-
-/**
  * Die maximale Anzahl von Iterationen.
  */
 private final static int MAX_ANZAHL_ITERATIONEN = 100;
@@ -51,6 +45,38 @@ private final static int MAX_ANZAHL_ITERATIONEN = 100;
  * Die berechneten Schaltwinkel (im Bogenmaß).
  */
 private double[] schaltwinkel;
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode bildet den Einsprungpunkt in die Berechnung der Schaltwinkel. 
+ * 
+ * @param args Die Kommandozeilenparameter. Das Programm muss mit genau einem Kommandozeilenparameter aufgerufen werden, 
+ * nämlich mit der Pulszahl.
+ */
+public static void main(String[] args)
+   {
+   if (args == null || args.length != 1)
+      {
+      
+      }
+   else
+      {
+      // Das erste Kommandozeilenargument wird in die Pulszahl umgewandelt.
+      int pulszahl = Integer.parseInt(args[0]);
+      
+      // Die Schaltwinkel werden berechnet.
+      SchaltwinkelRaumzeigermodulation schaltwinkelRaumzeigermodulation = 
+         new SchaltwinkelRaumzeigermodulation(pulszahl);
+      
+      // Die berechneten Schaltwinkel werden gelesen und auf der Kommandozeile ausgegeben.
+      for (double schaltwinkel : schaltwinkelRaumzeigermodulation.getSchaltwinkel())
+         {
+         System.out.println(schaltwinkel);
+         }
+      }
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -70,14 +96,15 @@ public SchaltwinkelRaumzeigermodulation(int pulszahl)
    double min = Double.NaN;
    double max = Double.NaN;
    
-   // Der Regula-Falsi-Algorithmus wird erzeugt.
-   RegulaFalsiSolver regulaFalsiSolver = new RegulaFalsiSolver(
+   BisectionSolver bisectionSolver = new BisectionSolver(
       SchaltwinkelRaumzeigermodulation.ABBRUCHKRITERIUM_RELATIVE_GENAUIGKEIT_SCHALTWINKEL,
-      SchaltwinkelRaumzeigermodulation.ABBRUCHKRITERIUM_ABSOLUTE_GENAUIGKEIT_SCHALTWINKEL, 
-      SchaltwinkelRaumzeigermodulation.ABBRUCHKRITERIUM_ABSOLUTE_GENAUIGKEIT_SIGNALDIFFERENZ);
+      SchaltwinkelRaumzeigermodulation.ABBRUCHKRITERIUM_ABSOLUTE_GENAUIGKEIT_SCHALTWINKEL);
    
    // Das Feld für die Schaltwinkel (im Bogenmaß) wird erzeugt.
    this.schaltwinkel = new double[nSchnittpunkte];
+   
+   // Das Differnezsignal wird deklariert.
+   Differenzsignal differenzsignal = null;
    
    // In der folgenden Schleife werden die Schnittpunkte (Schaltwinkel) berechnet.
    for (int i = 0; i < nSchnittpunkte; i++)
@@ -87,9 +114,12 @@ public SchaltwinkelRaumzeigermodulation(int pulszahl)
       min = i * Math.PI / pulszahl;
       max = (i+1) * Math.PI / pulszahl;
       
+      // Das Differenzsignal für diese Flanke wird erzeugt.
+      differenzsignal = new Differenzsignal(min, 2.0 * Math.pow(-1, i), max, 2.0 * Math.pow(-1, i+1));
+      
       // Der Schaltwinkel wird berechnet und gespeichert.
-//      this.schaltwinkel[i] = regulaFalsiSolver.solve(SchaltwinkelRaumzeigermodulation.MAX_ANZAHL_ITERATIONEN, 
-//         f, min, max, AllowedSolution.RIGHT_SIDE);
+      this.schaltwinkel[i] = bisectionSolver.solve(SchaltwinkelRaumzeigermodulation.MAX_ANZAHL_ITERATIONEN, 
+         differenzsignal, min, max);
       }
    }
 
