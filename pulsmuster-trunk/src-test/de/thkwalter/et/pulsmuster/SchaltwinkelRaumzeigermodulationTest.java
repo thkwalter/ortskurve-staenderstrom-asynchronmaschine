@@ -69,7 +69,19 @@ public void testSchaltwinkelRaumzeigermodulation()
    // abgebrochen wird, korrekt initialisiert worden ist.
    
    // Es wird überprüft, ob die Schaltwinkel korrekt berechnet worden sind.
+   double[] schaltwinkel = this.schaltwinkelRaumzeigermodulation.getSchaltwinkel();
    
+   // Es wird überprüft, ob die korrekte Anzahl von Schaltwinkeln berechnet worden ist.
+   assertEquals(30, schaltwinkel.length);
+   
+   // Es wird überprüft, ob die korrekten Schaltwinkel berechnet worden sind.
+   double[] korrekteSchaltwinkel = {0.09952, 0.3312, 0.4986, 0.7695, 0.9014, 1.2007, 1.3108, 1.6231, 1.7285, 2.0365,
+      2.1555, 2.4423, 2.5906, 2.8428, 3.0311, 3.2411, 3.4728, 3.6402, 3.9111, 4.0430, 4.3423, 4.4524, 4.7647, 4.8701,
+      5.1781, 5.2970, 5.5839, 5.7322, 5.9844, 6.1727};
+   for (int i = 0; i < schaltwinkel.length; i++)
+      {
+      assertEquals(korrekteSchaltwinkel[i], schaltwinkel[i], korrekteSchaltwinkel[i]/1000.0);
+      }
    }
 
 // =====================================================================================================================

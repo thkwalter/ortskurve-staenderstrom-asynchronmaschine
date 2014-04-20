@@ -57,23 +57,42 @@ private double[] schaltwinkel;
  */
 public static void main(String[] args)
    {
+   // Falls das Programm nicht mit genau einem Parameter gestartet wurde, wird eine Fehlermeldung ausgegeben.
    if (args == null || args.length != 1)
       {
-      
+      System.out.println("Das Programm muss mit genau einem Parameter gestartet werden, nämlich mit der Pulszahl!");
       }
+   
+   // Falls das Programm mit genau einem Programm gestartet wurde, ...
    else
       {
       // Das erste Kommandozeilenargument wird in die Pulszahl umgewandelt.
-      int pulszahl = Integer.parseInt(args[0]);
-      
-      // Die Schaltwinkel werden berechnet.
-      SchaltwinkelRaumzeigermodulation schaltwinkelRaumzeigermodulation = 
-         new SchaltwinkelRaumzeigermodulation(pulszahl);
-      
-      // Die berechneten Schaltwinkel werden gelesen und auf der Kommandozeile ausgegeben.
-      for (double schaltwinkel : schaltwinkelRaumzeigermodulation.getSchaltwinkel())
+      int pulszahl = Integer.MIN_VALUE;
+      try
          {
-         System.out.println(schaltwinkel);
+         pulszahl = Integer.parseInt(args[0]);
+         }
+      catch (NumberFormatException e)
+         {
+         System.out.println("Der Parameter muss eine ");
+         }
+       
+      if (pulszahl < 0)
+         {
+         System.out.println("Der Parameter");
+         }
+      
+      else
+         { 
+         // Die Schaltwinkel werden berechnet.
+         SchaltwinkelRaumzeigermodulation schaltwinkelRaumzeigermodulation = 
+            new SchaltwinkelRaumzeigermodulation(pulszahl);
+         
+         // Die berechneten Schaltwinkel werden gelesen und auf der Kommandozeile ausgegeben.
+         for (double schaltwinkel : schaltwinkelRaumzeigermodulation.getSchaltwinkel())
+            {
+            System.out.println(schaltwinkel);
+            }
          }
       }
    }
