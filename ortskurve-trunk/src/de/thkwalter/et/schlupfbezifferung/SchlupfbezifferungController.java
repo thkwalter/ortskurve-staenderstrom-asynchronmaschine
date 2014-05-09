@@ -45,12 +45,27 @@ private void schlupfbezifferungBestimmenIntern()
 // =====================================================================================================================
 
 /**
- * Diese Methode berechnet das Inversionszentrum (in A).
+ * Diese Methode berechnet das Inversionszentrum (in A). Das Inversionszentrum liegt auf der gedrehten Ortskurve unter 
+ * dem Polarwinkel von 315 Grad.
  * 
  * @return Das Inversionzentrum (in A)
  */
 private Vector2D inversionszentrumBerechnen()
    {
-   return null;
+   // Der Mittelpunkt der gedrehten Ortskurve (in A) wird gelesen.
+   Vector2D mittelpunktOrtskurve = this.schlupfbezifferungModell.getOrtskurve().getMittelpunktOrtskurve();
+   double m_x = mittelpunktOrtskurve.getX();
+   double m_y = mittelpunktOrtskurve.getY();
+   
+   // Der Radius der Ortskurve (in A) wird gelesen.
+   double r = this.schlupfbezifferungModell.getOrtskurve().getRadiusOrtskurve();
+   
+   // Das Inversionszentrum (in A) wird berechnet. 
+   double x_0 = m_x + r * Math.cos(7 * Math.PI / 4);
+   double y_0 = m_y + r * Math.sin(7 * Math.PI / 4);
+   Vector2D inversionszentrum = new Vector2D(x_0, y_0);
+   
+   // Das Inversionszentrum (in A) wird zurückgegeben.
+   return inversionszentrum;
    }
 }
