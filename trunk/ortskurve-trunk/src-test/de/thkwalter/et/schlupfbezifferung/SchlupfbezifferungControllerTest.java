@@ -15,10 +15,18 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.thkwalter.et.ortskurve.Ortskurve;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link SchlupfbezifferungController}.
@@ -45,6 +53,19 @@ public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
    this.schlupfbezifferungController = new SchlupfbezifferungController();
+   
+   // Die in den Tests verwendete Ortskurve wird erzeugt und initialisiert.
+   Ortskurve testOrtskurve = new Ortskurve(new Vector2D(6.0768, 1.8413), 4.4975);
+   
+   // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird erzeugt und initialisiert.
+   SchlupfbezifferungModell testSchlupfbezifferungModell = new SchlupfbezifferungModell();
+   testSchlupfbezifferungModell.setOrtskurve(testOrtskurve);
+   
+   // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird im Controller der 
+   // Schlupfbezifferungsbestimmung gespeichert.
+   Field feldSchlupfbezifferungModell = SchlupfbezifferungController.class.getDeclaredField("schlupfbezifferungModell");
+   feldSchlupfbezifferungModell.setAccessible(true);
+   feldSchlupfbezifferungModell.set(this.schlupfbezifferungController, testSchlupfbezifferungModell);
    }
 
 // =====================================================================================================================
@@ -59,4 +80,32 @@ public void testSchlupfbezifferungController()
    // Es wird überprüft, ob der Prüfling erzeugt worden ist.
    assertNotNull(this.schlupfbezifferungController);
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungController#inversionszentrumBerechnen}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testInversionszentrumBerechnen() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
+   IllegalArgumentException, InvocationTargetException
+   {
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = 
+      SchlupfbezifferungController.class.getDeclaredMethod("inversionszentrumBerechnen", (Class<?>[]) null);
+   methode.setAccessible(true);
+   Vector2D inversionszentrum = (Vector2D) methode.invoke(this.schlupfbezifferungController, (Object[]) null);
+   
+   // Es wird überprüft, ob das Inversionszentrum korrekt berechnet worden ist.
+   assertEquals(9.257, inversionszentrum.getX(), 9.257 / 1000.0);
+   assertEquals(-1.339, inversionszentrum.getY(), 1.339 / 1000.0);
+   }
+
 }
