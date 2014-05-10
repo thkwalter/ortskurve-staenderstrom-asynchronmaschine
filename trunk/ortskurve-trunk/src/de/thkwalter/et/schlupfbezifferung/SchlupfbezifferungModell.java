@@ -38,6 +38,11 @@ private Ortskurve ortskurve;
  */
 private Vector2D inversionszentrum;
 
+/**
+ * Der Drehpunkt der Schlupfgerade (in A)
+ */
+private Vector2D drehpunktSchlupfgerade;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -92,5 +97,33 @@ public void setOrtskurve(Ortskurve ortskurve)
    {
    // Die Ortskurve wird in diesem Datenmodell gespeichert.
    this.ortskurve = ortskurve;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Drehpunkt der Schlupfgeraden (in A) zurück.
+ * 
+ * @return Der Drehpunkt der Schlupfgeraden (in A).
+ */
+public Vector2D getDrehpunktSchlupfgerade()
+   {
+   // Der Drehpunkt der Schlupfgeraden (in A) wird zurückgegeben.
+   return this.drehpunktSchlupfgerade;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den Drehpunkt der Schlupfgeraden (in A) in diesem Datenmodell.
+ * 
+ * @param Der Drehpunkt der Schlupfgeraden (in A).
+ */
+public void setDrehpunktSchlupfgerade(Vector2D drehpunktSchlupfgerade)
+   {
+   // Der Drehpunkt der Schlupfgeraden (in A) wird in diesem Datenmodell gespeichert.
+   this.drehpunktSchlupfgerade = drehpunktSchlupfgerade;
    }
 }
