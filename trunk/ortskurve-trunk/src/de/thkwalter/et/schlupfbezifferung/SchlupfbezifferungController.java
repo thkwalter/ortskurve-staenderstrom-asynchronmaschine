@@ -68,4 +68,28 @@ private Vector2D inversionszentrumBerechnen()
    // Das Inversionszentrum (in A) wird zurückgegeben.
    return inversionszentrum;
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet den Drehpunkt der Schlupfgerade (in A). Der Drehpunkt liegt auf der gedrehten Ortskurve 
+ * senkrecht unter dem Mittelpunkt.
+ * 
+ * @return Der Drehpunkt der Schlupfgerade (in A)
+ */
+private Vector2D drehpunktSchlupfgeradeBerechnen()
+   {
+   // Der Mittelpunkt der gedrehten Ortskurve (in A) wird gelesen.
+   Vector2D mittelpunktOrtskurve = this.schlupfbezifferungModell.getOrtskurve().getMittelpunktOrtskurve();
+   
+   // Der Radius der Ortskurve (in A) wird gelesen.
+   double r = this.schlupfbezifferungModell.getOrtskurve().getRadiusOrtskurve();
+   
+   // Der Drehpunkt der Schupfgerade (in A) wird berechnet.
+   Vector2D drehpunkt = mittelpunktOrtskurve.subtract(new Vector2D(0.0, r));
+   
+   // Der Drehpunkt der Schlupfgerade (in A) wird zurückgegeben.
+   return drehpunkt;
+   }
 }

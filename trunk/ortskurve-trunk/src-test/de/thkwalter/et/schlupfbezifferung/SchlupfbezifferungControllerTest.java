@@ -143,4 +143,31 @@ public void testSchlupfbezifferungBestimmenIntern() throws NoSuchMethodException
    assertEquals(-1.339, this.testSchlupfbezifferungModell.getInversionszentrum().getY(), 1.339 / 1000.0);
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungController#drehpunktSchlupfgeradeBerechnen()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testDrehpunktSchlupfgeradeBerechnen() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = 
+      SchlupfbezifferungController.class.getDeclaredMethod("drehpunktSchlupfgeradeBerechnen", (Class<?>[]) null);
+   methode.setAccessible(true);
+   Vector2D drehpunktSchlupfgerade = (Vector2D) methode.invoke(this.schlupfbezifferungController, (Object[]) null);
+   
+   // Es wird überprüft, ob das Inversionszentrum korrekt berechnet worden ist.
+   assertEquals(6.077, drehpunktSchlupfgerade.getX(), 6.077 / 1000.0);
+   assertEquals(-2.656, drehpunktSchlupfgerade.getY(), 2.656 / 1000.0);
+   }
+
 }
