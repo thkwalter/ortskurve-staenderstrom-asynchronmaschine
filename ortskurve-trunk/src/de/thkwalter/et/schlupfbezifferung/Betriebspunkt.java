@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+
 /**
  * Diese Klasse repräsentiert einen Betriebspunkt.
  * 
@@ -22,5 +24,57 @@ package de.thkwalter.et.schlupfbezifferung;
  */
 public class Betriebspunkt
 {
+/**
+ * Die komplexe Ständerstromstärke (in A)
+ */
+private Vector2D i_1;
 
+/**
+ * Der Schlupf
+ */
+private double s;
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Dieser Konstruktor initialisiert den Betriebspunkt
+ * 
+ * @param i_1 Die komplexe Ständerstromstärke (in A)
+ * @param s Der Schlupf
+ */
+public Betriebspunkt(Vector2D i_1, double s)
+   {
+   // Die Attribute werden initialisiert.
+   this.i_1 = i_1;
+   this.s = s;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die komplexe Ständerstromstärke (in A) zurück.
+ * 
+ * @return Die komplexe Ständerstromstärke (in A)
+ */
+public Vector2D getI_1()
+   {
+   // Die komplexe Ständerstromstärke (in A) wird zurückgegeben.
+   return this.i_1;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Schlupf zurück.
+ * 
+ * @return Der Schlupf
+ */
+public double getS()
+   {
+   // Der Schlupf wird zurückgegeben.
+   return this.s;
+   }
 }
