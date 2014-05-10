@@ -159,4 +159,51 @@ public void testSetOrtskurve()
    // ist.
    assertEquals(testOrtskurve, this.schlupfbezifferungModell.getOrtskurve());
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungModell#getDrehpunktSchlupfgerade()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetDrehpunktSchlupfgerade() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Der in diesem Test verwendete Drehpunkt der Schlupfgerade (in A) wird erzeugt.
+   Vector2D testDrehpunktSchlupfgerade = new Vector2D(0.0, 0.0);
+   
+   // Der in diesem Test verwendete Drehpunkt der Schlupfgerade (in A) wird im Datenmodell gespeichert.
+   Field feldDrehpunktSchlupfgerade = SchlupfbezifferungModell.class.getDeclaredField("drehpunktSchlupfgerade");
+   feldDrehpunktSchlupfgerade.setAccessible(true);
+   feldDrehpunktSchlupfgerade.set(this.schlupfbezifferungModell, testDrehpunktSchlupfgerade);
+   
+   // Es wird überprüft, ob die Ortskurve korrekt zurückgegeben wird.
+   assertEquals(testDrehpunktSchlupfgerade, this.schlupfbezifferungModell.getDrehpunktSchlupfgerade());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungModell#setDrehpunktSchlupfgerade(Vector2D)}.
+ */
+@Test
+public void testSetDrehpunktSchlupfgerade()
+   { 
+   // Der in diesem Test verwendete Drehpunkt der Schlupfgerade (in A) wird erzeugt.
+   Vector2D testDrehpunktSchlupfgerade = new Vector2D(0.0, 0.0);
+   
+   // Die zu testende Methode wird aufgerufen.
+   this.schlupfbezifferungModell.setDrehpunktSchlupfgerade(testDrehpunktSchlupfgerade);
+   
+   // Es wird überprüft, ob der Drehpunkt der Schlupfgerade (in A) korrekt im Datenmodell der 
+   // Schlupfbezifferungsbestimmung gespeichert worden ist.
+   assertEquals(testDrehpunktSchlupfgerade, this.schlupfbezifferungModell.getDrehpunktSchlupfgerade());
+   }
 }
