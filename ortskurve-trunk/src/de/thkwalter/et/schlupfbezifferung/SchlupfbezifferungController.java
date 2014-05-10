@@ -39,6 +39,10 @@ private void schlupfbezifferungBestimmenIntern()
    {
    // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
    this.schlupfbezifferungModell.setInversionszentrum(this.inversionszentrumBerechnen());
+   
+   // Der Drehpunkt der Schlupfgerade (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung 
+   // gespeichert.
+   this.schlupfbezifferungModell.setDrehpunktSchlupfgerade(this.drehpunktSchlupfgeradeBerechnen());
    }
 
 // =====================================================================================================================
