@@ -38,7 +38,7 @@ private SchlupfbezifferungModell schlupfbezifferungModell;
 private void schlupfbezifferungBestimmenIntern()
    {
    // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
-//   this.schlupfbezifferungModell.setInversionszentrum(this.inversionszentrumBerechnen());
+   this.schlupfbezifferungModell.setInversionszentrum(this.inversionszentrumBerechnen());
    }
 
 // =====================================================================================================================
