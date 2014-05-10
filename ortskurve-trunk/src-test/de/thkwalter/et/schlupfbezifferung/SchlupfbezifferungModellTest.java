@@ -16,6 +16,7 @@
 package de.thkwalter.et.schlupfbezifferung;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
@@ -205,5 +206,56 @@ public void testSetDrehpunktSchlupfgerade()
    // Es wird überprüft, ob der Drehpunkt der Schlupfgerade (in A) korrekt im Datenmodell der 
    // Schlupfbezifferungsbestimmung gespeichert worden ist.
    assertEquals(testDrehpunktSchlupfgerade, this.schlupfbezifferungModell.getDrehpunktSchlupfgerade());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungModell#getBetriebspunkte()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetBetriebspunkte() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die in diesem Test verwendeten Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, 
+   // werden erzeugt.
+   Betriebspunkt[] testBetriebspunkte = new Betriebspunkt[0];
+   
+   // Die in diesem Test verwendeten Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden,
+   // werden im Datenmodell gespeichert.
+   Field feldBetriebspunkte = SchlupfbezifferungModell.class.getDeclaredField("betriebspunkte");
+   feldBetriebspunkte.setAccessible(true);
+   feldBetriebspunkte.set(this.schlupfbezifferungModell, testBetriebspunkte);
+   
+   // Es wird überprüft, ob die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, korrekt 
+   // zurückgegeben wird.
+   assertArrayEquals(testBetriebspunkte, this.schlupfbezifferungModell.getBetriebspunkte());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungModell#setBetriebspunkte(Betriebspunkt[])}.
+ */
+@Test
+public void testSetBetriebspunkte()
+   { 
+   // Die in diesem Test verwendeten Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, 
+   // werden erzeugt.
+   Betriebspunkt[] testBetriebspunkte = new Betriebspunkt[0];
+   
+   // Die zu testende Methode wird aufgerufen.
+   this.schlupfbezifferungModell.setBetriebspunkte(testBetriebspunkte);
+   
+   // Es wird überprüft, ob die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, korrekt im 
+   // Datenmodell der Schlupfbezifferungsbestimmung gespeichert worden sind.
+   assertArrayEquals(testBetriebspunkte, this.schlupfbezifferungModell.getBetriebspunkte());
    }
 }

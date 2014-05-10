@@ -43,6 +43,11 @@ private Vector2D inversionszentrum;
  */
 private Vector2D drehpunktSchlupfgerade;
 
+/**
+ * Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden.
+ */
+private Betriebspunkt[] betriebspunkte;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -119,11 +124,41 @@ public Vector2D getDrehpunktSchlupfgerade()
 /**
  * Diese Methode speichert den Drehpunkt der Schlupfgeraden (in A) in diesem Datenmodell.
  * 
- * @param Der Drehpunkt der Schlupfgeraden (in A).
+ * @param drehpunktSchlupfgerade Der Drehpunkt der Schlupfgeraden (in A).
  */
 public void setDrehpunktSchlupfgerade(Vector2D drehpunktSchlupfgerade)
    {
    // Der Drehpunkt der Schlupfgeraden (in A) wird in diesem Datenmodell gespeichert.
    this.drehpunktSchlupfgerade = drehpunktSchlupfgerade;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die Betriebspunkte zurück, die zur Bestimmung der Schlupfbezifferung verwendet werden.
+ * 
+ * @return Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden.
+ */
+public Betriebspunkt[] getBetriebspunkte()
+   {
+   // Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, werden zurückgegeben.
+   return this.betriebspunkte;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, in diesem
+ * Datenmodell.
+ * 
+ * @param betriebspunkte Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden.
+ */
+public void setBetriebspunkte(Betriebspunkt[] betriebspunkte)
+   {
+   // Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, werden in diesem Datenmodell
+   // gespeichert.
+   this.betriebspunkte = betriebspunkte;
    }
 }
