@@ -137,10 +137,15 @@ public void testSchlupfbezifferungBestimmenIntern() throws NoSuchMethodException
    methode.setAccessible(true);
    methode.invoke(this.schlupfbezifferungController, (Object[]) null);
    
-   // Es wird überprüft, ob das berechnete Inversionszentrum korrekt berechnet und im Datenmodell der
+   // Es wird überprüft, ob das berechnete Inversionszentrum (in A) korrekt berechnet und im Datenmodell der
    // Schlupfbezifferungsbestimmung gespeichert worden ist.
    assertEquals(9.257, this.testSchlupfbezifferungModell.getInversionszentrum().getX(), 9.257 / 1000.0);
    assertEquals(-1.339, this.testSchlupfbezifferungModell.getInversionszentrum().getY(), 1.339 / 1000.0);
+   
+   // Es wird überprüft, ob der Drehpunkt der Schlupfgeraden (inA) korrekt berechnet und im Datenmodell der
+   // Schlupfbezifferungsbestimmung gespeichert worden ist.
+   assertEquals(6.077, this.testSchlupfbezifferungModell.getDrehpunktSchlupfgerade().getX(), 6.077 / 1000.0);
+   assertEquals(-2.656, this.testSchlupfbezifferungModell.getDrehpunktSchlupfgerade().getY(), 2.656 / 1000.0);
    }
 
 // =====================================================================================================================
