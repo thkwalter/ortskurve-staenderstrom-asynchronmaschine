@@ -40,6 +40,13 @@ public class SchlupfbezifferungControllerTest
  */
 private SchlupfbezifferungController schlupfbezifferungController;
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung
+ */
+private SchlupfbezifferungModell testSchlupfbezifferungModell;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -58,14 +65,14 @@ public void setUp() throws Exception
    Ortskurve testOrtskurve = new Ortskurve(new Vector2D(6.0768, 1.8413), 4.4975);
    
    // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird erzeugt und initialisiert.
-   SchlupfbezifferungModell testSchlupfbezifferungModell = new SchlupfbezifferungModell();
-   testSchlupfbezifferungModell.setOrtskurve(testOrtskurve);
+   this.testSchlupfbezifferungModell = new SchlupfbezifferungModell();
+   this.testSchlupfbezifferungModell.setOrtskurve(testOrtskurve);
    
    // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird im Controller der 
    // Schlupfbezifferungsbestimmung gespeichert.
    Field feldSchlupfbezifferungModell = SchlupfbezifferungController.class.getDeclaredField("schlupfbezifferungModell");
    feldSchlupfbezifferungModell.setAccessible(true);
-   feldSchlupfbezifferungModell.set(this.schlupfbezifferungController, testSchlupfbezifferungModell);
+   feldSchlupfbezifferungModell.set(this.schlupfbezifferungController, this.testSchlupfbezifferungModell);
    }
 
 // =====================================================================================================================
@@ -106,6 +113,34 @@ public void testInversionszentrumBerechnen() throws NoSuchMethodException, Secur
    // Es wird überprüft, ob das Inversionszentrum korrekt berechnet worden ist.
    assertEquals(9.257, inversionszentrum.getX(), 9.257 / 1000.0);
    assertEquals(-1.339, inversionszentrum.getY(), 1.339 / 1000.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungController#schlupfbezifferungBestimmenIntern()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testSchlupfbezifferungBestimmenIntern() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = 
+      SchlupfbezifferungController.class.getDeclaredMethod("schlupfbezifferungBestimmenIntern", (Class<?>[]) null);
+   methode.setAccessible(true);
+   methode.invoke(this.schlupfbezifferungController, (Object[]) null);
+   
+   // Es wird überprüft, ob das berechnete Inversionszentrum korrekt berechnet und im Datenmodell der
+   // Schlupfbezifferungsbestimmung gespeichert worden ist.
+   assertEquals(9.257, this.testSchlupfbezifferungModell.getInversionszentrum().getX(), 9.257 / 1000.0);
+   assertEquals(-1.339, this.testSchlupfbezifferungModell.getInversionszentrum().getY(), 1.339 / 1000.0);
    }
 
 }
