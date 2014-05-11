@@ -43,6 +43,17 @@ private void schlupfbezifferungBestimmenIntern()
    // Der Drehpunkt der Schlupfgerade (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung 
    // gespeichert.
    this.schlupfbezifferungModell.setDrehpunktSchlupfgerade(this.drehpunktSchlupfgeradeBerechnen());
+   
+   // Die Variable für die Steigung eines Strahls vom Inversionszentrum zu einem Betriebspunkt wird deklariert.
+   double m = Double.NaN;
+   
+   // In dieser Schleife werden die Schnittpunkte der Schlupfgeraden mit den verschiedenen Strahlen vom 
+   // Inversionszentrum zu den Betriebspunkten berechnet.
+   for (Betriebspunkt betriebspunkt: this.schlupfbezifferungModell.getBetriebspunkte())
+      {
+      // Die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt wird berechnet.
+      m = this.steigungStrahlBerechnen(betriebspunkt);
+      }
    }
 
 // =====================================================================================================================
@@ -105,7 +116,7 @@ private Vector2D drehpunktSchlupfgeradeBerechnen()
  * 
  * @param betriebspunkt Der Betriebspunkt
  * 
- * @return Die Steigung des Strahls zwischen Inversionszentrum und Betriebspunkt
+ * @return Die Steigung des Strahls vom Inversionszentrum und Betriebspunkt
  */
 private double steigungStrahlBerechnen(Betriebspunkt betriebspunkt)
    {
