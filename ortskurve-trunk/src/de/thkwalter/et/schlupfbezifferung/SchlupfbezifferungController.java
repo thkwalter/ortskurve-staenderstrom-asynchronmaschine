@@ -96,4 +96,29 @@ private Vector2D drehpunktSchlupfgeradeBerechnen()
    // Der Drehpunkt der Schlupfgerade (in A) wird zurückgegeben.
    return drehpunkt;
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt.
+ * 
+ * @param betriebspunkt Der Betriebspunkt
+ * 
+ * @return Die Steigung des Strahls zwischen Inversionszentrum und Betriebspunkt
+ */
+private double steigungStrahlBerechnen(Betriebspunkt betriebspunkt)
+   {
+   // Die komplexe Ständerstromstärke (in A) wird gelesen.
+   Vector2D i_1 = betriebspunkt.getI_1();
+   
+   // Das Inversionszentrum (in A) wird gelesen.
+   Vector2D inversionszentrum = this.schlupfbezifferungModell.getInversionszentrum();
+   
+   // Die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt wird berechnet.
+   double m = (i_1.getY() - inversionszentrum.getY()) / (i_1.getX() - inversionszentrum.getX());
+   
+   // Die Variable für die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt wird zurückgegeben.
+   return m;
+   }
 }
