@@ -31,6 +31,11 @@ public class SchlupfbezifferungModell
  */
 private Ortskurve ortskurve;
 
+/**
+ * Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden.
+ */
+private Betriebspunkt[] betriebspunkte;
+
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -44,9 +49,9 @@ private Vector2D inversionszentrum;
 private Vector2D drehpunktSchlupfgerade;
 
 /**
- * Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden.
+ * Der Steigungswinkel der Schlupfgeraden
  */
-private Betriebspunkt[] betriebspunkte;
+private double phi;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -160,5 +165,33 @@ public void setBetriebspunkte(Betriebspunkt[] betriebspunkte)
    // Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, werden in diesem Datenmodell
    // gespeichert.
    this.betriebspunkte = betriebspunkte;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Steigungswinkel der Schlupfgeraden zurück.
+ * 
+ * @return Der Steigungswinkel der Schlupfgeraden 
+ */
+public double getPhi()
+   {
+   // Der Steigungswinkel der Schlupfgeraden wird zurückgegeben.
+   return this.phi;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den Steigungswinkel der Schlupfgeraden in diesem Datenmodell.
+ * 
+ * @param phi Der Steigungswinkel der Schlupfgeraden 
+ */
+public void setPhi(double phi)
+   {
+   // Der Steigungswinkel der Schlupfgeraden wird in diesem Datenmodell gespeichert.
+   this.phi = phi;
    }
 }

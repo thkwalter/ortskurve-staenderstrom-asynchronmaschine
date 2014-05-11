@@ -258,4 +258,45 @@ public void testSetBetriebspunkte()
    // Datenmodell der Schlupfbezifferungsbestimmung gespeichert worden sind.
    assertArrayEquals(testBetriebspunkte, this.schlupfbezifferungModell.getBetriebspunkte());
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungModell#getPhi()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetPhi() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {   
+   // Der in diesem Test verwendete Steigungswinkel der Schlupfgeraden wird im Datenmodell gespeichert.
+   Field feld_phi = SchlupfbezifferungModell.class.getDeclaredField("phi");
+   feld_phi.setAccessible(true);
+   feld_phi.set(this.schlupfbezifferungModell, Math.PI / 4);
+   
+   // Es wird überprüft, ob der Steigungswinkel der Schlupfgeraden korrekt zurückgegeben wird.
+   assertEquals(Math.PI / 4, this.schlupfbezifferungModell.getPhi(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungModell#setPhi(double)}.
+ */
+@Test
+public void testSetPhi()
+   { 
+   // Die zu testende Methode wird aufgerufen.
+   this.schlupfbezifferungModell.setPhi(Math.PI / 4);
+   
+   // Es wird überprüft, ob der Steigungswinkel der Schlupfgeraden korrekt im Datenmodell der 
+   // Schlupfbezifferungsbestimmung gespeichert worden ist.
+   assertEquals(Math.PI / 4, this.schlupfbezifferungModell.getPhi(), 0.0);
+   }
 }

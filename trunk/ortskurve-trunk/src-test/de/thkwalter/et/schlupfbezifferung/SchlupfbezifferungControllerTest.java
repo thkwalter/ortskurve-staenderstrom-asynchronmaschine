@@ -64,9 +64,14 @@ public void setUp() throws Exception
    // Die in den Tests verwendete Ortskurve wird erzeugt und initialisiert.
    Ortskurve testOrtskurve = new Ortskurve(new Vector2D(6.0768, 1.8413), 4.4975);
    
+   // Die in den Tests verwendeten Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, werden
+   // erzeugt.
+   Betriebspunkt[] testBetriebspunkte = new Betriebspunkt[0];
+   
    // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird erzeugt und initialisiert.
    this.testSchlupfbezifferungModell = new SchlupfbezifferungModell();
    this.testSchlupfbezifferungModell.setOrtskurve(testOrtskurve);
+   this.testSchlupfbezifferungModell.setBetriebspunkte(testBetriebspunkte);
    
    // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird im Controller der 
    // Schlupfbezifferungsbestimmung gespeichert.
