@@ -175,4 +175,40 @@ public void testDrehpunktSchlupfgeradeBerechnen() throws NoSuchMethodException, 
    assertEquals(-2.656, drehpunktSchlupfgerade.getY(), 2.656 / 1000.0);
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungController#steigungStrahlBerechnen(Betriebspunkt)}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testSteigungStrahlBerechnen() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {
+   // Der in diesem Test verwendete Betriebspunkt wird erzeugt.
+   Betriebspunkt testBetriebspunkt = new Betriebspunkt(new Vector2D(1.8843, 0.22026), 3.2133E-3);
+   
+   // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
+   Method methodeInversionszentrumBerechnen = 
+      SchlupfbezifferungController.class.getDeclaredMethod("inversionszentrumBerechnen", (Class<?>[]) null);
+   methodeInversionszentrumBerechnen.setAccessible(true);
+   Vector2D inversionszentrum = 
+      (Vector2D) methodeInversionszentrumBerechnen.invoke(this.schlupfbezifferungController, (Object[]) null);
+   this.testSchlupfbezifferungModell.setInversionszentrum(inversionszentrum);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = 
+      SchlupfbezifferungController.class.getDeclaredMethod("steigungStrahlBerechnen", Betriebspunkt.class);
+   methode.setAccessible(true);
+   double m = (Double) methode.invoke(this.schlupfbezifferungController, testBetriebspunkt);
+   
+   // Es wird überprüft, ob die Steigung korrekt berechnet worden ist.
+   assertEquals(-0.2115, m, 0.2115 / 1000.0);
+   }
 }
