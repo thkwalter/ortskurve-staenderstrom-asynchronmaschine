@@ -17,12 +17,14 @@ package de.thkwalter.et.schlupfbezifferung;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -66,7 +68,10 @@ public void setUp() throws Exception
    
    // Die in den Tests verwendeten Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, werden
    // erzeugt.
-   Betriebspunkt[] testBetriebspunkte = new Betriebspunkt[0];
+   Betriebspunkt[] testBetriebspunkte = new Betriebspunkt[3];
+   testBetriebspunkte[0] = new Betriebspunkt(new Vector2D(1.8843, 0.22026), 3.2133E-3);
+   testBetriebspunkte[1] = new Betriebspunkt(new Vector2D(1.6135, 1.2989), 3.3633E-2);
+   testBetriebspunkte[2] = new Betriebspunkt(new Vector2D(1.6639, 2.7199), 7.9420E-2);
    
    // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird erzeugt und initialisiert.
    this.testSchlupfbezifferungModell = new SchlupfbezifferungModell();
@@ -184,7 +189,7 @@ public void testDrehpunktSchlupfgeradeBerechnen() throws NoSuchMethodException, 
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link SchlupfbezifferungController#steigungStrahlBerechnen(Betriebspunkt)}.
+ * Test der Methode {@link SchlupfbezifferungController#steigungenBerechnen()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -193,12 +198,9 @@ public void testDrehpunktSchlupfgeradeBerechnen() throws NoSuchMethodException, 
  * @throws IllegalAccessException 
  */
 @Test
-public void testSteigungStrahlBerechnen() throws NoSuchMethodException, SecurityException, 
+public void testSteigungenBerechnen() throws NoSuchMethodException, SecurityException, 
    IllegalAccessException, IllegalArgumentException, InvocationTargetException
-   {
-   // Der in diesem Test verwendete Betriebspunkt wird erzeugt.
-   Betriebspunkt testBetriebspunkt = new Betriebspunkt(new Vector2D(1.8843, 0.22026), 3.2133E-3);
-   
+   {      
    // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
    Method methodeInversionszentrumBerechnen = 
       SchlupfbezifferungController.class.getDeclaredMethod("inversionszentrumBerechnen", (Class<?>[]) null);
@@ -208,12 +210,61 @@ public void testSteigungStrahlBerechnen() throws NoSuchMethodException, Security
    this.testSchlupfbezifferungModell.setInversionszentrum(inversionszentrum);
    
    // Die zu testende Methode wird aufgerufen.
-   Method methode = 
-      SchlupfbezifferungController.class.getDeclaredMethod("steigungStrahlBerechnen", Betriebspunkt.class);
+   Method methode = SchlupfbezifferungController.class.getDeclaredMethod("steigungenBerechnen", (Class<?>[]) null);
    methode.setAccessible(true);
-   double m = (Double) methode.invoke(this.schlupfbezifferungController, testBetriebspunkt);
+   double[] steigungen = (double[]) methode.invoke(this.schlupfbezifferungController, (Object[]) null);
    
-   // Es wird überprüft, ob die Steigung korrekt berechnet worden ist.
-   assertEquals(-0.2115, m, 0.2115 / 1000.0);
+   // Es wird überprüft, ob die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten korrekt 
+   // berechnet worden sind
+   assertEquals(3, steigungen.length);
+   assertEquals(-0.2115, steigungen[0], 0.2115 / 1000.0);
+   assertEquals(-0.3451, steigungen[1], 0.3451 / 1000.0);
+   assertEquals(-0.5345, steigungen[2], 0.5345 / 1000.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungController#steigungenBerechnen()} für den Fall, dass die Ausnahme 
+ * geworfen wird
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ */
+@Test
+public void testSteigungenBerechnenMitException() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {         
+   // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
+   Method methodeInversionszentrumBerechnen = 
+      SchlupfbezifferungController.class.getDeclaredMethod("inversionszentrumBerechnen", (Class<?>[]) null);
+   methodeInversionszentrumBerechnen.setAccessible(true);
+   Vector2D inversionszentrum = 
+      (Vector2D) methodeInversionszentrumBerechnen.invoke(this.schlupfbezifferungController, (Object[]) null);
+   this.testSchlupfbezifferungModell.setInversionszentrum(inversionszentrum);
+   
+   // Ein in diesem Test verwendeter Betriebspunkt wird erzeugt und im Datenmodell der Schlupfbezifferungsbestimmung
+   // gespeichert.
+   Betriebspunkt testBetriebspunkt = new Betriebspunkt(new Vector2D(inversionszentrum.getX(), 1.2989), 3.3633E-2);
+   this.testSchlupfbezifferungModell.getBetriebspunkte()[1] = testBetriebspunkt;
+   
+   // Die zu testende Methode wird aufgerufen.
+   try
+      {
+      Method methode = SchlupfbezifferungController.class.getDeclaredMethod("steigungenBerechnen", (Class<?>[]) null);
+      methode.setAccessible(true);
+      methode.invoke(this.schlupfbezifferungController, (Object[]) null);
+      
+      // Falls keine Ausnahme geworfen worden ist, liegt ein Fehler vor.
+      Assert.fail("Eine Ausnahme hätte geworfen werden müssen!");
+      }
+   catch (Exception e)
+      {
+      System.out.println(e.getCause().getMessage());
+      
+      // Anhand des Fehlertextes wird überprüft, ob die korrekte Ausnahme geworfen worden ist.
+      assertTrue(e.getCause().getMessage().contains("liegt über dem Inversionszentrum"));
+      }
    }
 }

@@ -15,14 +15,52 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
+import org.apache.commons.math3.analysis.UnivariateFunction;
+
 /**
- * Die Abweichung des Schlupfs des dritten Betriebspunkts (berechnet aus dem Schlupf der anderen beiden Betriebspunkte) 
- * von seinem Sollwert.
+ * Das Residuum des Schlupfs eines Betriebspunkts in Abhängigkeit vom Steigungswinkel der Schlupfgeraden.
  * 
  * @author Th. K. Walter
  */
-public class Schlupfresiduum
+public class Schlupfresiduum implements UnivariateFunction
 {
+/**
+ * Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten
+ */
+private double[] steigungen;
 
+// =====================================================================================================================
+// =====================================================================================================================
 
+/**
+ * Diese Methode initialisiert die Funktion
+ * 
+ * @param steigungen Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten
+ */
+public Schlupfresiduum(double[] steigungen)
+   {
+   // Die Attribute werden initialisiert.
+   this.steigungen = steigungen;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet das Residuum des Schlupfs eines Betriebspunkts in Abhängigkeit vom Steigungswinkel der 
+ * Schlupfgeraden.
+ * 
+ * @param phi Der Steigungswinkel der Schlupfgeraden
+ * 
+ * @return Das Residuum des Schlupfs eines Betriebspunkts
+ */
+@Override
+public double value(double phi)
+   {
+   // Die Variable für das Residuum des Schlupfs eines Betriebspunkts wird deklariert.
+   double residuum = Double.NaN;
+   
+   // Das Residuum des Schlupfs eines Betriebspunkts wird zurückgegeben.
+   return residuum;
+   }
 }
