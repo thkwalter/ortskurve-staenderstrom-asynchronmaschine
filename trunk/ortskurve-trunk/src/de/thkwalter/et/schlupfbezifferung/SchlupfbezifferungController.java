@@ -17,6 +17,8 @@ package de.thkwalter.et.schlupfbezifferung;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import de.thkwalter.jsf.ApplicationRuntimeException;
+
 /**
  * Dieser Klasse steuert die Bestimmung der Schlupfbezifferung.
  * 
@@ -44,16 +46,8 @@ private void schlupfbezifferungBestimmenIntern()
    // gespeichert.
    this.schlupfbezifferungModell.setDrehpunktSchlupfgerade(this.drehpunktSchlupfgeradeBerechnen());
    
-   // Die Variable für die Steigung eines Strahls vom Inversionszentrum zu einem Betriebspunkt wird deklariert.
-   double m = Double.NaN;
-   
-   // In dieser Schleife werden die Schnittpunkte der Schlupfgeraden mit den verschiedenen Strahlen vom 
-   // Inversionszentrum zu den Betriebspunkten berechnet.
-   for (Betriebspunkt betriebspunkt: this.schlupfbezifferungModell.getBetriebspunkte())
-      {
-      // Die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt wird berechnet.
-      m = this.steigungStrahlBerechnen(betriebspunkt);
-      }
+   // Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten werden berechnet.
+   double[] steigungen = this.steigungenBerechnen();
    }
 
 // =====================================================================================================================
@@ -112,24 +106,50 @@ private Vector2D drehpunktSchlupfgeradeBerechnen()
 // =====================================================================================================================
 
 /**
- * Diese Methode berechnet die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt.
+ * Diese Methode berechnet die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten.
  * 
- * @param betriebspunkt Der Betriebspunkt
- * 
- * @return Die Steigung des Strahls vom Inversionszentrum und Betriebspunkt
+ * @return Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten
  */
-private double steigungStrahlBerechnen(Betriebspunkt betriebspunkt)
+private double[] steigungenBerechnen()
    {
-   // Die komplexe Ständerstromstärke (in A) wird gelesen.
-   Vector2D i_1 = betriebspunkt.getI_1();
+   // Das Feld der Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten wird erzeugt.
+   double[] steigungen = new double[3];
+   
+   // Die Betriebspunkte werden gelesen.
+   Betriebspunkt[] betriebspunkte = this.schlupfbezifferungModell.getBetriebspunkte();
    
    // Das Inversionszentrum (in A) wird gelesen.
    Vector2D inversionszentrum = this.schlupfbezifferungModell.getInversionszentrum();
    
-   // Die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt wird berechnet.
-   double m = (i_1.getY() - inversionszentrum.getY()) / (i_1.getX() - inversionszentrum.getX());
+   // Eine Hilfsvariable wird deklariert.
+   double nenner = Double.NaN;
    
-   // Die Variable für die Steigung des Strahls vom Inversionszentrum zum Betriebspunkt wird zurückgegeben.
-   return m;
+   // In der folgenden Schleife werden die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten 
+   // berechnet.
+   for (int i = 0; i < betriebspunkte.length; i++)
+      {
+      // Die komplexe Ständerstromstärke des aktuellen Betriebspunkts (in A) wird gelesen.
+      Vector2D i_1 = betriebspunkte[i].getI_1();
+      
+      // Eine Hilfsgröße (in A) wird berechnet.
+      nenner = (i_1.getX() - inversionszentrum.getX());
+      
+      // Falls die Hilfsfröße zu klein wird, wird eine Ausnahme geworfen.
+      if (Math.abs(nenner) / inversionszentrum.getX() < 1E-10)
+         {
+         // Die Fehlermeldung wird erstellt.
+         String message = "Der Punkt " + betriebspunkte[i].getI_1() + " A liegt über dem Inversionszentrum und ist " +
+            "daher zur Bestimmung der Schlupfbezifferung ungeeignet! Wählen Sie bitte einen anderen Punkt aus.";
+         
+         // Die Ausnahme wird geworfen.
+         throw new ApplicationRuntimeException(message);
+         }
+      
+      // Die Steigung des Strahls vom Inversionszentrum zum aktuellen Betriebspunkt wird berechnet.
+      steigungen[i] = (i_1.getY() - inversionszentrum.getY()) / nenner;
+      }
+   
+   // Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten werden zurückgegeben.
+   return steigungen;
    }
 }

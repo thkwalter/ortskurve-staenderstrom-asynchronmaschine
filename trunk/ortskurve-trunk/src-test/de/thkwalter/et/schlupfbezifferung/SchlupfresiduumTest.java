@@ -44,7 +44,7 @@ private Schlupfresiduum schlupfresiduum;
 public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
-   this.schlupfresiduum = new Schlupfresiduum();
+   this.schlupfresiduum = new Schlupfresiduum(new double[2]);
    }
 
 // =====================================================================================================================
@@ -60,4 +60,15 @@ public void testSchlupfresiduum()
    assertNotNull(this.schlupfresiduum);
    }
 
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Schlupfresiduum#value(double))}.
+ */
+@Test
+public void testValue()
+   {
+   
+   }
 }
