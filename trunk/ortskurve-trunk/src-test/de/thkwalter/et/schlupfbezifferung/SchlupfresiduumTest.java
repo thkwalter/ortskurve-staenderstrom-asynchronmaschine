@@ -20,6 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.junit.Before;
@@ -96,6 +98,7 @@ public void setUp() throws Exception
 
 /**
  * Test des Konstruktors {@link Schlupfresiduum#Schlupfresiduum()}.
+ * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
  * @throws IllegalAccessException 
@@ -145,5 +148,37 @@ public void testSchlupfresiduum() throws NoSuchFieldException, SecurityException
 public void testValue()
    {
    
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Schlupfresiduum#xKomponentenSchnittpunktBerechnen(double)}
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testXKomponentenSchnittpunktBerechnen() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {
+   // Der in diesem Test verwendete Steigungswinkel der Schlupfgeraden wird definiert.
+   double phi = Math.PI * (1.0 + 1.0E-7);
+   
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = Schlupfresiduum.class.getDeclaredMethod("xKomponentenSchnittpunktBerechnen", double.class);
+   methode.setAccessible(true);
+   double[] xKomponentenSchnittpunkte = (double[]) methode.invoke(this.schlupfresiduum, phi);
+   
+   // Es wird überprüft, ob die x-Komponenten der Schnittpunkte der Schlupfgeraden mit den Strahlen vom 
+   // Inversionszentrum zu den Betriebspunkten korrekt berechnet worden sind.
+   assertEquals(3, xKomponentenSchnittpunkte.length);
+   assertEquals(this.testDrehpunktSchlupfgerade.getX(), xKomponentenSchnittpunkte[0], 0.0);
+   assertEquals(this.testDrehpunktSchlupfgerade.getX(), xKomponentenSchnittpunkte[1], 0.0);
+   assertEquals(this.testDrehpunktSchlupfgerade.getX(), xKomponentenSchnittpunkte[2], 0.0);
    }
 }
