@@ -90,12 +90,23 @@ public void setUp() throws Exception
 
 /**
  * Test des Konstruktors {@link SchlupfbezifferungController#SchlupfbezifferungController()}.
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test
-public void testSchlupfbezifferungController()
+public void testSchlupfbezifferungController() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Es wird überprüft, ob der Prüfling erzeugt worden ist.
    assertNotNull(this.schlupfbezifferungController);
+   
+   // Es wird überprüft, ob der Lösungsalgorithmus zur Bestimmung des Steigungswinkels der Schlupfgeraden erzeugt 
+   // worden ist.
+   Field feldBisectionSolver = SchlupfbezifferungController.class.getDeclaredField("bisectionSolver");
+   feldBisectionSolver.setAccessible(true);
+   assertNotNull(feldBisectionSolver.get(this.schlupfbezifferungController));
    }
 
 // =====================================================================================================================

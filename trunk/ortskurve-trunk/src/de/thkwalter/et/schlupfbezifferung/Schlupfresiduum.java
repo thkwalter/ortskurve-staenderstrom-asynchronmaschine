@@ -16,6 +16,7 @@
 package de.thkwalter.et.schlupfbezifferung;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 /**
  * Das Residuum des Schlupfs eines Betriebspunkts in Abhängigkeit vom Steigungswinkel der Schlupfgeraden.
@@ -29,18 +30,41 @@ public class Schlupfresiduum implements UnivariateFunction
  */
 private double[] steigungen;
 
+/**
+ * Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden
+ */
+private Betriebspunkt[] betriebspunkte;
+
+/**
+ * Das Inversionszentrum (in A)
+ */
+private Vector2D inversionszentrum;
+
+/**
+ * Der Drehpunkt der Schlupfgerade (in A)
+ */
+private Vector2D drehpunktSchlupfgerade;
+
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode initialisiert die Funktion
+ * Diese Methode initialisiert das Residuum des Schlupfs eines Betriebspunkts in Abhängigkeit vom Steigungswinkel der 
+ * Schlupfgeraden.
  * 
  * @param steigungen Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten
+ * @param betriebspunkte Die Betriebspunkte
+ * @param inversionszentrum Das Inversionszentrum (in A)
+ * @param drehpunktSchlupfgerade Der Drehpunkt der Schlupfgerade (in A)
  */
-public Schlupfresiduum(double[] steigungen)
+public Schlupfresiduum(double[] steigungen, Betriebspunkt[] betriebspunkte, Vector2D inversionszentrum, 
+   Vector2D drehpunktSchlupfgerade)
    {
    // Die Attribute werden initialisiert.
    this.steigungen = steigungen;
+   this.betriebspunkte = betriebspunkte;
+   this.inversionszentrum = inversionszentrum;
+   this.drehpunktSchlupfgerade = drehpunktSchlupfgerade;
    }
 
 // =====================================================================================================================
@@ -62,5 +86,79 @@ public double value(double phi)
    
    // Das Residuum des Schlupfs eines Betriebspunkts wird zurückgegeben.
    return residuum;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet die Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu den 
+ * Betriebspunkten.
+ * 
+ * @param phi Der Steigungswinkel der Schlupfgeraden
+ * 
+ * @return Die Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu den Betriebspunkten
+ */
+private Vector2D[] schnittpunkteBerechnen(double phi)
+   {
+   // Das Feld der Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu den Betriebspunkten wird 
+   // erzeugt.
+   Vector2D[] schnittpunkte = new Vector2D[3];
+   
+   // Die Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu den Betriebspunkten werden 
+   // zurückgegeben.
+   return schnittpunkte;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet die x-Komponenten der Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum 
+ * zu den Betriebspunkten.
+ * 
+ * @param phi Der Steigungswinkel der Schlupfgeraden
+ * 
+ * @return Die x-Komponenten der Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu den 
+ * Betriebspunkten.
+ */
+private double[] xKomponentenSchnittpunktBerechnen(double phi)
+   {
+   // Das Feld für die x-Komponenten der Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu den 
+   // Betriebspunkten wird deklariert.
+   double[] xKomponentenSchnittpunkt = new double[3];
+   
+   // Die x-Komponente des Drehpunkts der Schlupfgeraden wird gelesen.
+   double xDrehpunktSchlupfgerade = this.drehpunktSchlupfgerade.getX();
+   
+   // Falls der Steigungswinkel der Schlupfgeraden nahe bei pi liegt, wird die Steigung der Schlupfgeraden unendlich 
+   // groß.
+   if (Math.abs((phi- Math.PI)/Math.PI) < 1E-6)
+      {
+      // Die x-Komponente der Schnittpunkte ist mit der x-Komponente des Drehpunkts identisch.
+      xKomponentenSchnittpunkt[0] = xDrehpunktSchlupfgerade;
+      xKomponentenSchnittpunkt[1] = xDrehpunktSchlupfgerade;
+      xKomponentenSchnittpunkt[2] = xDrehpunktSchlupfgerade;
+      }
+   
+   // Falls der Steigungswinkel endlich ist, ...
+   else
+      {
+      // Eine Hilfsgröße wird berechnet.
+      double hilf = this.drehpunktSchlupfgerade.getY() - Math.tan(phi) * this.drehpunktSchlupfgerade.getX() - 
+         this.inversionszentrum.getY();
+      
+      // In der folgenden Schleife werden die Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu 
+      // den Betriebspunkten berechnet.
+      for (int i = 0; i < this.steigungen.length; i++)
+         {
+         xKomponentenSchnittpunkt[i] = 
+            (hilf + this.steigungen[i] * xDrehpunktSchlupfgerade) / (this.steigungen[i] - Math.tan(phi));
+         }
+      }
+   
+   // Die x-Komponenten der Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu den 
+   // Betriebspunkten wird zurückgegeben.
+   return xKomponentenSchnittpunkt;
    }
 }
