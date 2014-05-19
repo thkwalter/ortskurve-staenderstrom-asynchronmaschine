@@ -145,15 +145,15 @@ private double[] xKomponentenSchnittpunktBerechnen(double phi)
    else
       {
       // Eine Hilfsgröße wird berechnet.
-      double hilf = this.drehpunktSchlupfgerade.getY() - Math.tan(phi) * this.drehpunktSchlupfgerade.getX() - 
-         this.inversionszentrum.getY();
+      double hilf = 
+         this.drehpunktSchlupfgerade.getY() - Math.tan(phi) * xDrehpunktSchlupfgerade - this.inversionszentrum.getY();
       
       // In der folgenden Schleife werden die Schnittpunkte der Schlupfgeraden mit den Strahlen vom Inversionszentrum zu 
       // den Betriebspunkten berechnet.
       for (int i = 0; i < this.steigungen.length; i++)
          {
          xKomponentenSchnittpunkt[i] = 
-            (hilf + this.steigungen[i] * xDrehpunktSchlupfgerade) / (this.steigungen[i] - Math.tan(phi));
+            (hilf + this.steigungen[i] * this.inversionszentrum.getX()) / (this.steigungen[i] - Math.tan(phi));
          }
       }
    
