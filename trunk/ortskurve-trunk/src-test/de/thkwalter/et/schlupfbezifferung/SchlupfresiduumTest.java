@@ -154,7 +154,8 @@ public void testValue()
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Schlupfresiduum#xKomponentenSchnittpunktBerechnen(double)}
+ * Test der Methode {@link Schlupfresiduum#xKomponentenSchnittpunktBerechnen(double)} für den Fall, dass der 
+ * Steigungswinkel gleich pi ist.
  * 
  * @throws SecurityException 
  * @throws NoSuchMethodException 
@@ -163,7 +164,7 @@ public void testValue()
  * @throws IllegalAccessException 
  */
 @Test
-public void testXKomponentenSchnittpunktBerechnen() throws NoSuchMethodException, SecurityException, 
+public void testXKomponentenSchnittpunktBerechnen_pi() throws NoSuchMethodException, SecurityException, 
    IllegalAccessException, IllegalArgumentException, InvocationTargetException
    {
    // Der in diesem Test verwendete Steigungswinkel der Schlupfgeraden wird definiert.
@@ -180,5 +181,35 @@ public void testXKomponentenSchnittpunktBerechnen() throws NoSuchMethodException
    assertEquals(this.testDrehpunktSchlupfgerade.getX(), xKomponentenSchnittpunkte[0], 0.0);
    assertEquals(this.testDrehpunktSchlupfgerade.getX(), xKomponentenSchnittpunkte[1], 0.0);
    assertEquals(this.testDrehpunktSchlupfgerade.getX(), xKomponentenSchnittpunkte[2], 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Schlupfresiduum#xKomponentenSchnittpunktBerechnen(double)} für den Fall, dass der 
+ * Steigungswinkel ungleich pi ist.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testXKomponentenSchnittpunktBerechnen_ungleichPi() throws NoSuchMethodException, SecurityException, 
+   IllegalAccessException, IllegalArgumentException, InvocationTargetException
+   {   
+   // Die zu testende Methode wird aufgerufen.
+   Method methode = Schlupfresiduum.class.getDeclaredMethod("xKomponentenSchnittpunktBerechnen", double.class);
+   methode.setAccessible(true);
+   double[] xKomponentenSchnittpunkte = (double[]) methode.invoke(this.schlupfresiduum, 1.7426);
+   
+   // Es wird überprüft, ob die x-Komponenten der Schnittpunkte der Schlupfgeraden mit den Strahlen vom 
+   // Inversionszentrum zu den Betriebspunkten korrekt berechnet worden sind.
+   assertEquals(3, xKomponentenSchnittpunkte.length);
+   assertEquals(5.7183, xKomponentenSchnittpunkte[0], 5.7183 / 1000.0);
+   assertEquals(5.6310, xKomponentenSchnittpunkte[1], 5.6310 /1000.0);
+   assertEquals(5.4996, xKomponentenSchnittpunkte[2], 5.4996 / 1000.0);
    }
 }
