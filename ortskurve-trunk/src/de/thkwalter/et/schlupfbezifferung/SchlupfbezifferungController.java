@@ -15,6 +15,7 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
+import org.apache.commons.math3.analysis.solvers.BisectionSolver;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.jsf.ApplicationRuntimeException;
@@ -31,6 +32,42 @@ public class SchlupfbezifferungController
  */
 private SchlupfbezifferungModell schlupfbezifferungModell;
 
+/**
+ * Der Lösungsalgorithmus zur Bestimmung des Steigungswinkels der Schlupfgeraden
+ */
+private BisectionSolver bisectionSolver;
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Die absolute Genauigkeit der berechneten Schaltwinkel (im Bogenmaß), bei der die Iteration abgebrochen wird.
+ */
+private final static double ABBRUCHKRITERIUM_ABSOLUTE_GENAUIGKEIT_SCHALTWINKEL = 1e-6; 
+
+/**
+ * Die relative Genauigkeit der berechneten Schaltwinkel, bei der die Iteration abgebrochen wird.
+ */
+private final static double ABBRUCHKRITERIUM_RELATIVE_GENAUIGKEIT_SCHALTWINKEL = 0.0; 
+
+/**
+ * Die maximale Anzahl von Iterationen.
+ */
+private final static int MAX_ANZAHL_ITERATIONEN = 100;
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/** 
+ * Dieser Konstruktor initilisiert den Lösungsalgorithmus zur Bestimmung des Steigungswinkels der Schlupfgeraden
+ */
+public SchlupfbezifferungController()
+   {
+   // Der Lösungsalgorithmus zur Bestimmung des Steigungswinkels der Schlupfgeraden wird erzeugt.
+   this.bisectionSolver = new BisectionSolver(
+      SchlupfbezifferungController.ABBRUCHKRITERIUM_RELATIVE_GENAUIGKEIT_SCHALTWINKEL,
+      SchlupfbezifferungController.ABBRUCHKRITERIUM_ABSOLUTE_GENAUIGKEIT_SCHALTWINKEL);
+   }
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -40,14 +77,27 @@ private SchlupfbezifferungModell schlupfbezifferungModell;
 private void schlupfbezifferungBestimmenIntern()
    {
    // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
-   this.schlupfbezifferungModell.setInversionszentrum(this.inversionszentrumBerechnen());
+   Vector2D inversionszentrum = this.inversionszentrumBerechnen();
+   this.schlupfbezifferungModell.setInversionszentrum(inversionszentrum);
    
    // Der Drehpunkt der Schlupfgerade (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung 
    // gespeichert.
-   this.schlupfbezifferungModell.setDrehpunktSchlupfgerade(this.drehpunktSchlupfgeradeBerechnen());
+   Vector2D drehpunktSchlupfgerade = this.drehpunktSchlupfgeradeBerechnen();
+   this.schlupfbezifferungModell.setDrehpunktSchlupfgerade(drehpunktSchlupfgerade);
    
    // Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten werden berechnet.
    double[] steigungen = this.steigungenBerechnen();
+   
+   // Das Residuum des Schlupfs eines Betriebspunkts in Abhängigkeit vom Steigungswinkel der Schlupfgeraden wird
+   // erzeugt.
+   Schlupfresiduum schlupfresiduum = new Schlupfresiduum(steigungen, this.schlupfbezifferungModell.getBetriebspunkte(), 
+      inversionszentrum, drehpunktSchlupfgerade);
+   
+   // Der Steigungswinkel der Schlupfgeraden wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung 
+   // gespeichert.
+   double phi = 
+      bisectionSolver.solve(SchlupfbezifferungController.MAX_ANZAHL_ITERATIONEN, schlupfresiduum, 0.0, Math.PI);
+   this.schlupfbezifferungModell.setPhi(phi);
    }
 
 // =====================================================================================================================
@@ -135,7 +185,7 @@ private double[] steigungenBerechnen()
       nenner = (i_1.getX() - inversionszentrum.getX());
       
       // Falls die Hilfsfröße zu klein wird, wird eine Ausnahme geworfen.
-      if (Math.abs(nenner) / inversionszentrum.getX() < 1E-10)
+      if (Math.abs(nenner / inversionszentrum.getX()) < 1E-10)
          {
          // Die Fehlermeldung wird erstellt.
          String message = "Der Punkt " + betriebspunkte[i].getI_1() + " A liegt über dem Inversionszentrum und ist " +
