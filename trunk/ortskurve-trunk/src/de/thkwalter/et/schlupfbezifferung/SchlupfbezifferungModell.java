@@ -15,17 +15,39 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.logging.Logger;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
  * Diese Klasse ist das Datenmodell der Schlupfbezifferungsbestimmung.
  * 
  * @author Th. K. Walter
  */
-public class SchlupfbezifferungModell
+@SessionScoped
+@ManagedBean(name="schlupfbezifferungModell")
+public class SchlupfbezifferungModell implements Serializable
 {
+/**
+ * Die Serialisierungs-ID.
+ */
+private static final long serialVersionUID = -5355873972003968449L;
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger("SchlupfbezifferungModell.class");
+
+//---------------------------------------------------------------------------------------------------------------------
+
 /**
  * Die Ortskurve
  */
@@ -52,6 +74,23 @@ private Vector2D drehpunktSchlupfgerade;
  * Der Steigungswinkel der Schlupfgeraden
  */
 private double phi;
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode übernimmt die benötigten Daten des Datenmodells der Ortskurvenberechnung in dieses Datenmodell.
+ * 
+ * @param ortskurveModell Das Datenmodell der Ortskurvenberechnung
+ */
+public void datenUebernehmen(OrtskurveModell ortskurveModell)
+   {   
+   // Die Ortskurve wird in das Datenmodell des Ersatzschaltbildberechnung übertragen.
+   this.ortskurve = ortskurveModell.getOrtskurve();
+   
+   // Der Zustand des Datenmodells nach der Datenübernahme wird protokolliert.
+   SchlupfbezifferungModell.logger.info(this.toString());
+   }
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -193,5 +232,23 @@ public void setPhi(double phi)
    {
    // Der Steigungswinkel der Schlupfgeraden wird in diesem Datenmodell gespeichert.
    this.phi = phi;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * @see java.lang.Object#toString()
+ */
+@Override
+public String toString()
+   {
+   // Der Zustand wird zurückgegeben.
+   return "SchlupfbezifferungModell [" + 
+      (ortskurve != null ? "ortskurve=" + ortskurve + ", " : "") + 
+      (betriebspunkte != null ? "betriebspunkte=" + Arrays.toString(betriebspunkte) + ", " : "") + 
+      (inversionszentrum != null ? "inversionszentrum=" + inversionszentrum + ", " : "") + 
+      (drehpunktSchlupfgerade != null ? "drehpunktSchlupfgerade="+ drehpunktSchlupfgerade + ", " : "")  + 
+      "phi=" + phi + "]";
    }
 }
