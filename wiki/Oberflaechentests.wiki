@@ -21,7 +21,7 @@
    # [Berechnung2dOrtskurve Berechnung der Ortskurve der 2d-Ausgleichsrechnung]
    # [Berechnung2dOrtskurveRealistischeWerte Berechnung der Ortskurve der 2d-Ausgleichsrechnung mit realistischen Werten]
  * Bestimmung der Schlupfbezifferung prüfen
-   # [BerechneteWiderstaende Berechnete Widerstände überprüfen] 
+   # [VonOrtskurveUebergebeneWertePruefen Von der Seite Ortskurve übergebene Werte prüfen] 
  * Fehlerbehandlungen auf der Seite "Berechnung der Ortskurve"
    # [FehlerbehandlungFalschesFormat Fehlerbehandlung bei Eingabe im falschen Format überprüfen]
    # [FehlerbehandlungZuWenigeMesspunkte Fehlerbehandlung bei Eingabe zu weniger Messpunkte überprüfen]
@@ -29,9 +29,6 @@
    # [FehlerbehandlungPunktBeiMittelpunkt Fehlerbehandlung bei Punkt in der Nähe des Mittelpunkts überprüfen]
    # [FehlerbehandlungEinfachDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (1) überprüfen]
    # [FehlerbehandlungDoppelteEingabe Fehlerbehandlung bei doppelter Eingabe (2) überprüfen]
- * Fehlerbehandlung auf der Seite "Berechnung des Ersatzschaltbildes" 
-   # [FehlerbehandlungFehlendeNetzspannung Fehlerbehandlung bei fehlenden Eingaben]
-   # [FehlerbehandlungNegativeWerte Fehlerbehandlung bei Eingabe negativer Werte]
  * Test der Ortskurvengrafik
    # [Grafiktest1 Grafiktest 1]
    # [Grafiktest2 Grafiktest 2]
