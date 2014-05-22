@@ -27,11 +27,37 @@
          <h2>Schlupfbezifferung bestimmen</h2>
          <br/><br/>
         
-         <p>
-         Bla bla
-         </p>
-         <br/><br/>
-     
+         <!-- Die Ortskurve wird ausgegeben ======================================================================== -->
+         <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
+         <br/>
+                     
+         <h:panelGrid columns="8" styleClass="table-3-spalten" 
+            columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
+            text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
+            <h:outputText value="Mittelpunkt in A"/>
+            <h:panelGroup styleClass="zahl">
+               (<h:outputText value="#{schlupfbezifferungModell.ortskurve.mittelpunktOrtskurve.x}">
+                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+               </h:outputText>
+               <h:outputText value=", "/>
+               <h:outputText value="#{schlupfbezifferungModell.ortskurve.mittelpunktOrtskurve.y}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+               </h:outputText>)
+            </h:panelGroup>
+               
+            <h:outputText value=""/>
+          
+            <h:outputText value="Radius in A"/>
+            <h:panelGroup styleClass="zahl">
+               <h:outputText value="#{schlupfbezifferungModell.ortskurve.radiusOrtskurve}">
+                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+               </h:outputText>
+            </h:panelGroup>
+               
+            <h:outputText value=""/>
+            <h:outputText value=""/>
+            <h:outputText value=""/>
+         </h:panelGrid>
       </ui:define>
    </ui:composition>
 </h:body>
