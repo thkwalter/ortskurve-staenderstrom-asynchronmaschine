@@ -1,0 +1,13 @@
+=Von der Berechnung der Ortskurve übergebene Werte überprüfen=
+
+ # Die Seite http://ortskurve.appspot.com aufrufen -> Die Berechnungsseite wird angezeigt
+ # Die Punkte 
+{{{
+0.1, 0.0
+2.0, 2.1
+3.9, 0.0
+2.0, -2.1
+}}} 
+eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
+ # Den Knopf "Zur Schlupfbezifferung" drücken -> Die Seite "Bestimmung der Schlupfbezifferung" erscheint.
+ # Die übernommenen Ortskurvendaten überprüfen  -> Mittelpunkt (2, 0) und Radius 2
