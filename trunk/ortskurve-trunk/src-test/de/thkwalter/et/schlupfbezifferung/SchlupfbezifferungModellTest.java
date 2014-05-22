@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
+import de.thkwalter.et.ortskurve.OrtskurveModell;
 
 /**
  * Diese Klasse enthält Tests für die Klasse {@link SchlupfbezifferungModell}.
@@ -52,6 +53,29 @@ public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
    this.schlupfbezifferungModell = new SchlupfbezifferungModell();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link SchlupfbezifferungModell#datenUebernehmen(OrtskurveModell)}.
+ */
+@Test
+public void testDatenUebernehmen()
+   {
+   // Die in diesem Test verwendete Ortskurve wird erzeugt.
+   Ortskurve testOrtskurve = new Ortskurve(new Vector2D(2.0, 0.5),  1.0);
+   
+   // Das in diesem Test verwendete Datenmodell der Ortskurvenberechnung wird erzeugt und initialisiert.
+   OrtskurveModell testOrtskurveModell = new OrtskurveModell();
+   testOrtskurveModell.setOrtskurve(testOrtskurve);
+   
+   // Die zu testende Methode wird aufgerufen
+   this.schlupfbezifferungModell.datenUebernehmen(testOrtskurveModell);
+   
+   // Es wird überprüft, ob die Ortskurve korrekt initialisiert worden ist.
+   assertEquals(testOrtskurve, this.schlupfbezifferungModell.getOrtskurve());
    }
 
 // =====================================================================================================================
