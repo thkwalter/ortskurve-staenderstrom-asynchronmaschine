@@ -22,6 +22,36 @@ package de.thkwalter.et.betriebspunkt;
  */
 public class Betriebspunkt
 {
+/**
+ * Der Leiterstrom (in A).
+ */
+private double i_L;
 
+// =====================================================================================================================
+// =====================================================================================================================
 
+/**
+ * Der Konstruktor initialisiert den Betriebspunkt
+ * 
+ * @param i_l Der Leiterstrom (in A)
+ */
+public Betriebspunkt(double i_L)
+   {
+   // Die Attribute werden initialisiert.
+   this.i_L = i_L;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Leiterstrom (in A) zurück.
+ * 
+ * @return Der Leiterstrom (in A)
+ */
+public double i_L()
+   {
+   // Der Leiterstrom (in A) wird zurückgegeben.
+   return this.i_L;
+   }
 }
