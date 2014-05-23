@@ -15,7 +15,10 @@
  */
 package de.thkwalter.et.betriebspunkt;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.lang.reflect.Field;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +47,7 @@ private Betriebspunkt betriebspunkt;
 public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
-   this.betriebspunkt = new Betriebspunkt();
+   this.betriebspunkt = new Betriebspunkt(3.2546);
    }
 
 // =====================================================================================================================
@@ -57,5 +60,32 @@ public void setUp() throws Exception
 public void testBetriebspunkt()
    {
    // Es wird überprüft, ob der Prüfling erzeugt worden ist.
+   assertNotNull(this.betriebspunkt);
+   
+   // Es wird überprüft, ob der Leiterstrom (in A) korrekt initialisiert worden ist.
+   assertEquals(3.2546, this.betriebspunkt.i_L(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#i_L()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void test_i_L() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+   {
+   // Der in diesem Test verwendete Leiterstrom (in A) wird im Prüfling gespeichert.
+   Field betriebspunktFeld = Betriebspunkt.class.getDeclaredField("i_L");
+   betriebspunktFeld.setAccessible(true);
+   betriebspunktFeld.setDouble(this.betriebspunkt, 2.8769);
+   
+   // Es wird überprüft, ob der Leiterstrom (in A) korrekt zurückgegeben wird.
+   assertEquals(2.8769, this.betriebspunkt.i_L(), 0.0);
    }
 }
