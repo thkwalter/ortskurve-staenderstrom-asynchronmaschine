@@ -103,8 +103,7 @@ public void testBetriebspunkt() throws NoSuchFieldException, SecurityException, 
  * Test der Methode {@link Betriebspunkt#getI_1()}.
  */
 @Test
-public void testGetI_1() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
-   IllegalAccessException
+public void testGetI_1() 
    {
    // Es wird überprüft, ob die komplexe Ständerstromstärke (in A) korrekt zurückgegeben wird.
    assertEquals(this.test_i_1, this.betriebspunkt.getI_1());
@@ -117,10 +116,26 @@ public void testGetI_1() throws NoSuchFieldException, SecurityException, Illegal
  * Test der Methode {@link Betriebspunkt#getS()}.
  */
 @Test
-public void testGetS() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
-   IllegalAccessException
+public void testGetS()
    {
    // Es wird überprüft, ob der Schlupf korrekt zurückgegeben wird.
+   assertEquals(0.5, this.betriebspunkt.getS(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#setS(double)}.
+ */
+@Test
+public void testSetS() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.betriebspunkt.setS(0.5);
+   
+   // Es wird überprüft, ob der Schlupf korrekt im Prüfling gespeichert worden ist.
    assertEquals(0.5, this.betriebspunkt.getS(), 0.0);
    }
 }
