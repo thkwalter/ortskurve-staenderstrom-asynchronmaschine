@@ -16,12 +16,14 @@
 package de.thkwalter.et.schlupfbezifferung;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import de.thkwalter.et.ortskurve.Ortskurve;
@@ -87,6 +89,16 @@ public void datenUebernehmen(OrtskurveModell ortskurveModell)
    {   
    // Die Ortskurve wird in das Datenmodell des Ersatzschaltbildberechnung übertragen.
    this.ortskurve = ortskurveModell.getOrtskurve();
+   
+//   // Die Messpunkte werden in das Datenmodell der Ersatzschaltbildberechnung übertragen.
+//   Vector2D[] messpunkte = ortskurveModell.getMesspunkte();
+//   
+//   // Für jeden Messpunkt wird ein Betriebspunkt hinzugefügt.
+//   this.betriebspunkte = new Betriebspunkt[messpunkte.length];
+//   for (int i = 0; i < messpunkte.length; i++)
+//      {
+//      this.betriebspunkte[i] = new Betriebspunkt(new Vector2D(messpunkt.getY(), -messpunkt.getX()));
+//      }
    
    // Der Zustand des Datenmodells nach der Datenübernahme wird protokolliert.
    SchlupfbezifferungModell.logger.info(this.toString());

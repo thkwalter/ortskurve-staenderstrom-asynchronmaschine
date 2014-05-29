@@ -77,4 +77,18 @@ public double getS()
    // Der Schlupf wird zurückgegeben.
    return this.s;
    }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den Schlupf in diesem Objekt.
+ * 
+ * @param s Der Schlupf
+ */
+public void setS(double s)
+   {
+   // Der Schlupf wird in diesem Objekt gespeichert.
+   this.s = s;
+   }
 }

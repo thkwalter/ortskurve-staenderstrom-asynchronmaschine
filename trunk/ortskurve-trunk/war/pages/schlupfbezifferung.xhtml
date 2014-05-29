@@ -26,6 +26,37 @@
       <ui:define name="inhalt">         
          <h2>Schlupfbezifferung bestimmen</h2>
          <br/><br/>
+         
+         <!-- Die Tabelle der Betriebspunkt bietet die Möglichkeit zur Eingabe der Schlupfwerte ==================== -->
+         <!--  
+         <h:dataTable value="#{ersatzschaltbildModell.betriebspunkte}" var="betriebspunkt" styleClass="esb-tabelle">
+               <h:column headerClass="esb-tabelle-column">
+                  <f:facet name="header">
+                     -Im <span class="zeiger">I</span><sub>1</sub> in A
+                  </f:facet> 
+                  <h:outputText value="#{-betriebspunkt.i1.imaginary}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
+               </h:column>
+            
+               <h:column headerClass="esb-tabelle-column">
+                  <f:facet name="header">
+                     Re <span class="zeiger">I</span><sub>1</sub> in A
+                  </f:facet>   
+                  <h:outputText value="#{betriebspunkt.i1.real}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
+               </h:column>
+               
+               <h:column headerClass="esb-tabelle-column-letzte">
+                  <f:facet name="header">
+                     Drehzahl in Hz
+                  </f:facet> 
+                  <h:inputText value="#{betriebspunkt.n}" label="Drehzahl" size="8"/>  
+               </h:column>
+            </h:dataTable>
+            <br/><br/>
+            -->
         
          <!-- Die Ortskurve wird ausgegeben ======================================================================== -->
          <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
