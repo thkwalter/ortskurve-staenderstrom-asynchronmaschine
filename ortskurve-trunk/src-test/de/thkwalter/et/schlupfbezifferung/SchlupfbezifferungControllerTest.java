@@ -69,9 +69,9 @@ public void setUp() throws Exception
    // Die in den Tests verwendeten Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, werden
    // erzeugt.
    Betriebspunkt[] testBetriebspunkte = new Betriebspunkt[3];
-   testBetriebspunkte[0] = new Betriebspunkt(new Vector2D(1.8843, 0.22026), 3.2133E-3);
-   testBetriebspunkte[1] = new Betriebspunkt(new Vector2D(1.6135, 1.2989), 3.3633E-2);
-   testBetriebspunkte[2] = new Betriebspunkt(new Vector2D(1.6639, 2.7199), 7.9420E-2);
+   testBetriebspunkte[0] = new Betriebspunkt(new Vector2D(1.8843, 0.22026));
+   testBetriebspunkte[1] = new Betriebspunkt(new Vector2D(1.6135, 1.2989));
+   testBetriebspunkte[2] = new Betriebspunkt(new Vector2D(1.6639, 2.7199));
    
    // Das in den Tests verwendete Datenmodell der Schlupfbezifferungsbestimmung wird erzeugt und initialisiert.
    this.testSchlupfbezifferungModell = new SchlupfbezifferungModell();
@@ -257,7 +257,7 @@ public void testSteigungenBerechnenMitException() throws NoSuchMethodException, 
    
    // Ein in diesem Test verwendeter Betriebspunkt wird erzeugt und im Datenmodell der Schlupfbezifferungsbestimmung
    // gespeichert.
-   Betriebspunkt testBetriebspunkt = new Betriebspunkt(new Vector2D(inversionszentrum.getX(), 1.2989), 3.3633E-2);
+   Betriebspunkt testBetriebspunkt = new Betriebspunkt(new Vector2D(inversionszentrum.getX(), 1.2989));
    this.testSchlupfbezifferungModell.getBetriebspunkte()[1] = testBetriebspunkt;
    
    // Die zu testende Methode wird aufgerufen.
