@@ -41,13 +41,11 @@ private double s;
  * Dieser Konstruktor initialisiert den Betriebspunkt
  * 
  * @param i_1 Die komplexe Ständerstromstärke (in A)
- * @param s Der Schlupf
  */
-public Betriebspunkt(Vector2D i_1, double s)
+public Betriebspunkt(Vector2D i_1)
    {
-   // Die Attribute werden initialisiert.
+   // Einige Attribute werden mit den Parametern initialisiert.
    this.i_1 = i_1;
-   this.s = s;
    }
 
 // =====================================================================================================================

@@ -78,9 +78,9 @@ public void setUp() throws Exception
    // Die in den Tests verwendeten Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden, werden
    // erzeugt.
    this.testBetriebspunkte = new Betriebspunkt[3];
-   testBetriebspunkte[0] = new Betriebspunkt(new Vector2D(1.8843, 0.22026), 3.2133E-3);
-   testBetriebspunkte[1] = new Betriebspunkt(new Vector2D(1.6135, 1.2989), 3.3633E-2);
-   testBetriebspunkte[2] = new Betriebspunkt(new Vector2D(1.6639, 2.7199), 7.9420E-2);
+   testBetriebspunkte[0] = new Betriebspunkt(new Vector2D(1.8843, 0.22026));
+   testBetriebspunkte[1] = new Betriebspunkt(new Vector2D(1.6135, 1.2989));
+   testBetriebspunkte[2] = new Betriebspunkt(new Vector2D(1.6639, 2.7199));
    
    // Das in den Tests verwendete Inversionszentrum (in A) wird erzeugt.
    this.testInversionszentrum = new Vector2D(9.2570, -1.3389);
