@@ -88,15 +88,15 @@ public void datenUebernehmen(OrtskurveModell ortskurveModell)
    // Die Ortskurve wird in das Datenmodell des Ersatzschaltbildberechnung übertragen.
    this.ortskurve = ortskurveModell.getOrtskurve();
    
-//   // Die Messpunkte werden in das Datenmodell der Ersatzschaltbildberechnung übertragen.
-//   Vector2D[] messpunkte = ortskurveModell.getMesspunkte();
-//   
-//   // Für jeden Messpunkt wird ein Betriebspunkt hinzugefügt.
-//   this.betriebspunkte = new Betriebspunkt[messpunkte.length];
-//   for (int i = 0; i < messpunkte.length; i++)
-//      {
-//      this.betriebspunkte[i] = new Betriebspunkt(new Vector2D(messpunkt.getY(), -messpunkt.getX()));
-//      }
+   // Die Messpunkte werden in das Datenmodell der Ersatzschaltbildberechnung übertragen.
+   Vector2D[] messpunkte = ortskurveModell.getMesspunkte();
+   
+   // Für jeden Messpunkt wird ein Betriebspunkt hinzugefügt.
+   this.betriebspunkte = new Betriebspunkt[messpunkte.length];
+   for (int i = 0; i < messpunkte.length; i++)
+      {
+      this.betriebspunkte[i] = new Betriebspunkt(new Vector2D(messpunkte[i].getY(), -messpunkte[i].getX()));
+      }
    
    // Der Zustand des Datenmodells nach der Datenübernahme wird protokolliert.
    SchlupfbezifferungModell.logger.info(this.toString());
