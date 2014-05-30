@@ -71,11 +71,25 @@ public void testDatenUebernehmen()
    OrtskurveModell testOrtskurveModell = new OrtskurveModell();
    testOrtskurveModell.setOrtskurve(testOrtskurve);
    
+   // Der in diesem Test verwendete Messpunkt wird erzeugt.
+   Vector2D testMesspunkt = new Vector2D(4.0, 0.5);
+   
+   // Das in diesem Test verwendete Feld der Messpunkte wird erzeugt.
+   Vector2D[] testMesspunkte = new Vector2D[] {testMesspunkt};
+   
+   // Das in diesem Test verwendete Feld der Messpunkte wird im Datenmodell der Ortskurvenberechnung gespeichert.
+   testOrtskurveModell.setMesspunkte(testMesspunkte);
+   
    // Die zu testende Methode wird aufgerufen
    this.schlupfbezifferungModell.datenUebernehmen(testOrtskurveModell);
    
-   // Es wird überprüft, ob die Ortskurve korrekt initialisiert worden ist.
+   // Es wird überprüft, ob die Ortskurve korrekt übernommen worden ist.
    assertEquals(testOrtskurve, this.schlupfbezifferungModell.getOrtskurve());
+   
+   // Es wird überprüft, ob der Betriebspunkt korrekt übernommen worden ist.
+   Betriebspunkt[] betriebspunkte = this.schlupfbezifferungModell.getBetriebspunkte();
+   assertEquals(1, betriebspunkte.length);
+   assertEquals(new Vector2D(0.5, -4.0), betriebspunkte[0].getI_1());
    }
 
 // =====================================================================================================================
