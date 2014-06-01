@@ -10,4 +10,11 @@
 }}} 
 eingeben und den Knopf "Ortskurve berechnen" drücken -> Das Resultat wird angezeigt. 
  # Den Knopf "Zur Schlupfbezifferung" drücken -> Die Seite "Bestimmung der Schlupfbezifferung" erscheint.
+ # Die übernommenen Daten der Betriebspunkte überprüfen
+{{{
+0.10, 0.00
+2.00, 2.10
+3.90, 0.00
+2.00, -2.10
+}}} 
  # Die übernommenen Ortskurvendaten überprüfen  -> Mittelpunkt (2, 0) und Radius 2
