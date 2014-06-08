@@ -72,12 +72,13 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
       catch (NumberFormatException e)
          {
          // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
-         String fehlermeldung = "Die eingegebene Zeichenkette ("+ doubleString + ") ist keine reelle Zahl!";
+         String fehlermeldung = "Die eingegebene Zeichenkette "+ doubleString + " ist keine reelle Zahl!";
          NullZeroConverter.logger.log(Level.SEVERE, fehlermeldung);
          
          // Die Meldung für die Oberfläche und eine Ausnahme werden erzeugt und mit der Fehlermeldung für den Benutzer
          // initialisiert.
-         String jsfMeldung = "Der eingegebene Wert ist keine reelle Zahl! Geben Sie bitte eine reelle Zahl ein.";
+         String jsfMeldung = "Der eingegebene Wert "+ doubleString + " ist keine reelle Zahl! Geben Sie bitte eine "
+            + "reelle Zahl ein.";
          facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, jsfMeldung, ""));
          ConverterException converterException = new ConverterException(jsfMeldung);
          
@@ -103,7 +104,7 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
  */
 @Override
 public String getAsString(FacesContext arg0, UIComponent arg1, Object doubleValue)
-   {
+   {   
    // Die Gleitkommazahl wird in eine Zeichenkette konvertiert und zurückgegeben. Ist die Gleitkommazahl null, so wird
    // eine leere Zeichenkette zurückgegeben.
    return doubleValue != null ? ((Double) doubleValue).toString() : "";

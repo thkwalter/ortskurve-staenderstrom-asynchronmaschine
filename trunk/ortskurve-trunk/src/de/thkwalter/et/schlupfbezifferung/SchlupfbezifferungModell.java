@@ -49,24 +49,24 @@ private static Logger logger = Logger.getLogger("SchlupfbezifferungModell.class"
 //---------------------------------------------------------------------------------------------------------------------
 
 /**
- * Die Ortskurve
+ * Die Ortskurve (in A)
  */
 private Ortskurve ortskurve;
 
 /**
- * Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden.
+ * Die Betriebspunkte, die zur Bestimmung der Schlupfbezifferung verwendet werden
  */
 private Betriebspunkt[] betriebspunkte;
 
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
- * Der Inversionszentrum (in A)
+ * Das Inversionszentrum (in A)
  */
 private Vector2D inversionszentrum;
 
 /**
- * Der Drehpunkt der Schlupfgerade (in A)
+ * Der Drehpunkt der Schlupfgeraden (in A)
  */
 private Vector2D drehpunktSchlupfgerade;
 
@@ -95,7 +95,7 @@ public void datenUebernehmen(OrtskurveModell ortskurveModell)
    this.betriebspunkte = new Betriebspunkt[messpunkte.length];
    for (int i = 0; i < messpunkte.length; i++)
       {
-      this.betriebspunkte[i] = new Betriebspunkt(new Vector2D(messpunkte[i].getY(), -messpunkte[i].getX()));
+      this.betriebspunkte[i] = new Betriebspunkt(messpunkte[i].getX(), messpunkte[i].getY());
       }
    
    // Der Zustand des Datenmodells nach der Datenübernahme wird protokolliert.
@@ -248,17 +248,35 @@ public void setPhi(double phi)
 // =====================================================================================================================
 
 /**
+ * Diese Methode gibt den Zustand des Objekts als Zeichenkette zurück.
+ * 
  * @see java.lang.Object#toString()
  */
 @Override
 public String toString()
    {
-   // Der Zustand wird zurückgegeben.
-   return "SchlupfbezifferungModell [" + 
-      (ortskurve != null ? "ortskurve=" + ortskurve + ", " : "") + 
-      (betriebspunkte != null ? "betriebspunkte=" + Arrays.toString(betriebspunkte) + ", " : "") + 
-      (inversionszentrum != null ? "inversionszentrum=" + inversionszentrum + ", " : "") + 
-      (drehpunktSchlupfgerade != null ? "drehpunktSchlupfgerade="+ drehpunktSchlupfgerade + ", " : "")  + 
-      "phi=" + phi + "]";
+   // Die Zeichenkette, welche den Zustand dieses Objekts repräsentiert, wird erzeugt.
+   StringBuffer zustand = new StringBuffer("SchlupfbezifferungModell [");
+   
+   // Die Zeichenkette, welche die Ortskurve (in A) repräsentiert, wird angehängt.
+   zustand.append(ortskurve != null ? "ortskurve=" + ortskurve + ", " : "");
+   
+   // Die Zeichenkette, welche die Betriebspunkte repräsentiert, wird angehängt.
+   zustand.append(betriebspunkte != null ? "betriebspunkte=" + Arrays.toString(betriebspunkte) + ", " : "");
+   
+   // Die Zeichenkette, welche das Inversionszentrum repräsentiert, wird angehängt.
+   zustand.append(inversionszentrum != null ? "inversionszentrum=" + inversionszentrum + ", " : "");
+   
+   // Die Zeichenkette, welche den Drehpunkt der Schlupfgeraden repräsentiert, wird angehängt.
+   zustand.append(drehpunktSchlupfgerade != null ? "drehpunktSchlupfgerade=" + drehpunktSchlupfgerade + ", " : "");
+   
+   // Die Zeichenkette, welche Steigungswinkel der Schlupfgeraden repräsentiert, wird angehängt.
+   zustand.append("phi=" + phi);
+   
+   // Das Schlusszeichen wird angehängt.
+   zustand.append("]");
+   
+   // Die Zeichenkette, welche den Zustand dieses Objekts repräsentiert, wird zurückgegeben.
+   return zustand.toString();
    }
 }

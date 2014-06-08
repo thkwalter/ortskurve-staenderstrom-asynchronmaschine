@@ -15,7 +15,7 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.math3.complex.Complex;
 
 /**
  * Diese Klasse repräsentiert einen Betriebspunkt.
@@ -27,39 +27,54 @@ public class Betriebspunkt
 /**
  * Die komplexe Ständerstromstärke (in A)
  */
-private Vector2D i_1;
+private Complex i_1;
 
 /**
  * Der Schlupf
  */
-private double s;
+private Double s;
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Dieser Konstruktor initialisiert den Betriebspunkt
+ * Dieser Konstruktor initialisiert die komplexe Ständerstromstärke (in A)
  * 
- * @param i_1 Die komplexe Ständerstromstärke (in A)
+ * @param i_1x Die x-Komponente der komplexen Ständerstromstärke (in A; das Negative des Imaginärteils)
+ * @param i_1y Die y-Komponente der komplexen Ständerstromstärke (in A; der Realteil)
  */
-public Betriebspunkt(Vector2D i_1)
+public Betriebspunkt(double i_1x, double i_1y)
    {
-   // Einige Attribute werden mit den Parametern initialisiert.
-   this.i_1 = i_1;
+   // Die komplexe Ständerstromstärke (in A) wird initialisiert.
+   this.i_1 = new Complex(i_1y, -i_1x);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt die komplexe Ständerstromstärke (in A) zurück.
+ * Diese Methode gibt die x-Komponente der komplexen Ständerstromstärke (in A; das Negative des Imaginärteils) zurück.
  * 
- * @return Die komplexe Ständerstromstärke (in A)
+ * @return Die x-Komponente der komplexen Ständerstromstärke (in A)
  */
-public Vector2D getI_1()
+public double getI_1x()
    {
-   // Die komplexe Ständerstromstärke (in A) wird zurückgegeben.
-   return this.i_1;
+   // Die x-Komponente der komplexen Ständerstromstärke (in A) wird zurückgegeben.
+   return -this.i_1.getImaginary();
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt die y-Komponente der komplexen Ständerstromstärke (in A; der Realteil) zurück.
+ * 
+ * @return Die y-Komponente der komplexen Ständerstromstärke (in A)
+ */
+public double getI_1y()
+   {
+   // Die y-Komponente der komplexen Ständerstromstärke (in A) wird zurückgegeben.
+   return this.i_1.getReal();
    }
 
 // =====================================================================================================================
@@ -70,7 +85,7 @@ public Vector2D getI_1()
  * 
  * @return Der Schlupf
  */
-public double getS()
+public Double getS()
    {
    // Der Schlupf wird zurückgegeben.
    return this.s;
@@ -84,9 +99,36 @@ public double getS()
  * 
  * @param s Der Schlupf
  */
-public void setS(double s)
+public void setS(Double s)
    {
    // Der Schlupf wird in diesem Objekt gespeichert.
    this.s = s;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den Zustand des Objekts als Zeichenkette zurück.
+ * 
+ * @see java.lang.Object#toString()
+ */
+@Override
+public String toString()
+   {
+   // Die Zeichenkette, welche den Zustand dieses Objekts repräsentiert, wird erzeugt.
+   StringBuffer zustand = new StringBuffer("Betriebspunkt [");
+   
+   // Die Zeichenkette, welche die komplexe Ständerstromdichte (in A) repräsentiert, wird angehängt.
+   zustand.append(i_1 != null ? "i_1=" + i_1 + ", " : "");
+   
+   // Die Zeichenkette, welche den Schlupf repräsentiert, wird angehängt.
+   zustand.append(s != null ? "s=" + s : "");
+   
+   // Das Schlusszeichen wird angehängt.
+   zustand.append("]");
+   
+   // Die Zeichenkette, welche den Zustand dieses Objekts repräsentiert, wird zurückgegeben.
+   return zustand.toString();
    }
 }

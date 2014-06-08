@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.math3.complex.Complex;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,13 +36,6 @@ public class BetriebspunktTest
  */
 private Betriebspunkt betriebspunkt;
 
-// ---------------------------------------------------------------------------------------------------------------------
-
-/**
- * Die in diesem Test verwendete Ständerstromstärke (in A)
- */
-private Vector2D test_i_1;
-
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -53,12 +46,9 @@ private Vector2D test_i_1;
  */
 @Before
 public void setUp() throws Exception
-   {
-   // Die in diesem Test verwendete Ständerstromstärke (in A) wird erzeugt.
-   this.test_i_1 = new Vector2D(1.0, 0.5);
-   
+   {   
    // Der Prüfling wird erzeugt.
-   this.betriebspunkt = new Betriebspunkt(this.test_i_1);
+   this.betriebspunkt = new Betriebspunkt(1.0, 0.5);
    }
 
 // =====================================================================================================================
@@ -80,25 +70,66 @@ public void testBetriebspunkt() throws NoSuchFieldException, SecurityException, 
    assertNotNull(this.betriebspunkt);
    
    // Die im Prüfling gespeicherte, komplexe Ständerstromstärke (in A) wird gelesen.
-   Field feld_i_1 = Betriebspunkt.class.getDeclaredField("i_1");
-   feld_i_1.setAccessible(true);
-   Vector2D i_1 = (Vector2D) feld_i_1.get(this.betriebspunkt);
+   Field i_1Feld = Betriebspunkt.class.getDeclaredField("i_1");
+   i_1Feld.setAccessible(true);
+   Complex i_1 = (Complex) i_1Feld.get(this.betriebspunkt);
    
    // Es wird überprüft, ob die komplexe Ständerstromstärke (in A) korrekt initialisert worden ist.
-   assertEquals(this.test_i_1, i_1);
+   assertEquals(new Complex(0.5, -1.0), i_1);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#getI_1()}.
+ * Test der Methode {@link Betriebspunkt#getI_1x()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test
-public void testGetI_1() 
+public void testGetI_1x() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException 
    {
-   // Es wird überprüft, ob die komplexe Ständerstromstärke (in A) korrekt zurückgegeben wird.
-   assertEquals(this.test_i_1, this.betriebspunkt.getI_1());
+   // Die in diesem Test verwendete komplexe Ständerstromstärke (in A) wird erzeugt.
+   Complex testI_1 = new Complex(4.0, 2.0);
+   
+   // Die in diesem Test verwendete komplexe Ständerstromstärke (in A) wird im Prüfling gespeichert.
+   Field i_1Feld = Betriebspunkt.class.getDeclaredField("i_1");
+   i_1Feld.setAccessible(true);
+   i_1Feld.set(this.betriebspunkt, testI_1);
+   
+   // Es wird überprüft, ob die x-Komponente der komplexen Ständerstromstärke (in A) korrekt zurückgegeben wird.
+   assertEquals(-2.0, this.betriebspunkt.getI_1x(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#getI_1y()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetI_1y() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException 
+   {
+   // Die in diesem Test verwendete komplexe Ständerstromstärke (in A) wird erzeugt.
+   Complex testI_1 = new Complex(4.0, 2.0);
+   
+   // Die in diesem Test verwendete komplexe Ständerstromstärke (in A) wird im Prüfling gespeichert.
+   Field i_1Feld = Betriebspunkt.class.getDeclaredField("i_1");
+   i_1Feld.setAccessible(true);
+   i_1Feld.set(this.betriebspunkt, testI_1);
+   
+   // Es wird überprüft, ob die x-Komponente der komplexen Ständerstromstärke (in A) korrekt zurückgegeben wird.
+   assertEquals(4.0, this.betriebspunkt.getI_1y(), 0.0);
    }
 
 // =====================================================================================================================

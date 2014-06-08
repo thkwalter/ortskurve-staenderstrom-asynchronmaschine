@@ -89,7 +89,8 @@ public void testDatenUebernehmen()
    // Es wird überprüft, ob der Betriebspunkt korrekt übernommen worden ist.
    Betriebspunkt[] betriebspunkte = this.schlupfbezifferungModell.getBetriebspunkte();
    assertEquals(1, betriebspunkte.length);
-   assertEquals(new Vector2D(0.5, -4.0), betriebspunkte[0].getI_1());
+   assertEquals(4.0, betriebspunkte[0].getI_1x(), 0.0);
+   assertEquals(0.5, betriebspunkte[0].getI_1y(), 0.0);
    }
 
 // =====================================================================================================================

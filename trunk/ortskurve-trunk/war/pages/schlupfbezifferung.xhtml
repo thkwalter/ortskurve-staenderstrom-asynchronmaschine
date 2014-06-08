@@ -27,69 +27,95 @@
          <h2>Schlupfbezifferung bestimmen</h2>
          <br/><br/>
          
-         <!-- Die Tabelle der Betriebspunkt bietet die Möglichkeit zur Eingabe der Schlupfwerte ==================== -->
-         <h:dataTable value="#{schlupfbezifferungModell.betriebspunkte}" var="betriebspunkt" styleClass="esb-tabelle">
-            <h:column headerClass="esb-tabelle-column">
-               <f:facet name="header">
-                  -Im <span class="zeiger">I</span><sub>1</sub> in A
-               </f:facet> 
-               
-               <h:outputText value="#{-betriebspunkt.i_1.y}">
-                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-               </h:outputText>  
-            </h:column>
+         <h:form>
+         
+            <!-- Der Bereich, in dem die Fehlermeldungen angezeigt werden ========================================== -->
+            <h:panelGroup rendered="#{not empty facesContext.messageList}" styleClass="nachrichten" layout="block">
+               Die Schlupfbezifferung konnte aus folgenden Gründen leider nicht bestimmt werden:
+               <br/><br/>
             
-            <h:column headerClass="esb-tabelle-column">
-               <f:facet name="header">
-                  Re <span class="zeiger">I</span><sub>1</sub> in A
-               </f:facet> 
+               <h:messages errorClass="error-messages" tooltip="true"/>
+            </h:panelGroup>
+         
+            <!-- Die Tabelle der Betriebspunkt bietet die Möglichkeit zur Eingabe der Schlupfwerte ================= -->
+            <p>Geben Sie bitte die Schlupfwerte für genau drei Betriebspunkte ein:</p>
+            <br/>
+         
+            <h:dataTable value="#{schlupfbezifferungModell.betriebspunkte}" var="betriebspunkt" 
+               styleClass="esb-tabelle">
+               
+               <!-- Die x-Komponente (das Negative des Realteils) wird ausgegeben                                    -->
+               <h:column headerClass="esb-tabelle-column">
+                  <f:facet name="header">
+                     -Im <span class="zeiger">I</span><sub>1</sub> in A
+                  </f:facet> 
+               
+                  <h:outputText value="#{betriebspunkt.i_1x}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
+               </h:column>
+            
+               <!-- Die y-Komponente (der Imaginärteil) wird ausgegeben                                              -->
+               <h:column headerClass="esb-tabelle-column">
+                  <f:facet name="header">
+                     Re <span class="zeiger">I</span><sub>1</sub> in A
+                  </f:facet> 
                  
-               <h:outputText value="#{betriebspunkt.i_1.x}">
-                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-               </h:outputText>  
-            </h:column>
+                  <h:outputText value="#{betriebspunkt.i_1y}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>  
+               </h:column>
                
-            <h:column headerClass="esb-tabelle-column-letzte">
-               <f:facet name="header">
+               <!-- Der Schlupf wird eingegeben                                                                      -->
+               <h:column headerClass="esb-tabelle-column-letzte">
+                  <f:facet name="header">
                      s
-               </f:facet> 
+                  </f:facet> 
                
-               <h:inputText value="#{betriebspunkt.s}" label="Schlupf" size="8"/>  
-            </h:column>
-         </h:dataTable>
-         <br/><br/>
+                  <h:inputText value="#{betriebspunkt.s}" size="8" converter="NullZeroConverter"/>  
+               </h:column>
+            </h:dataTable>
+            <br/><br/>
         
-         <!-- Die Ortskurve wird ausgegeben ======================================================================== -->
-         <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
-         <br/>
+            <!-- Die Ortskurve wird ausgegeben                                                                       -->
+            <p>Die berechnete Ortskurve besitzt folgende Kreisparameter:</p>
+            <br/>
                      
-         <h:panelGrid columns="8" styleClass="table-3-spalten" 
-            columnClasses="text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,
-            text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,eingabe-3-spalten-empty">
-            <h:outputText value="Mittelpunkt in A"/>
-            <h:panelGroup styleClass="zahl">
-               (<h:outputText value="#{schlupfbezifferungModell.ortskurve.mittelpunktOrtskurve.x}">
-                   <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-               </h:outputText>
-               <h:outputText value=", "/>
-               <h:outputText value="#{schlupfbezifferungModell.ortskurve.mittelpunktOrtskurve.y}">
-                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-               </h:outputText>)
-            </h:panelGroup>
+            <h:panelGrid columns="8" styleClass="table-3-spalten" columnClasses="text-3-spalten,eingabe-3-spalten,
+               platzhalter-3-spalten,text-3-spalten,eingabe-3-spalten,platzhalter-3-spalten,text-3-spalten-empty,
+               eingabe-3-spalten-empty">
                
-            <h:outputText value=""/>
+               <h:outputText value="Mittelpunkt in A"/>
+               <h:panelGroup styleClass="zahl">
+                  (<h:outputText value="#{schlupfbezifferungModell.ortskurve.mittelpunktOrtskurve.x}">
+                      <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>
+                  <h:outputText value=", "/>
+                  <h:outputText value="#{schlupfbezifferungModell.ortskurve.mittelpunktOrtskurve.y}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>)
+               </h:panelGroup>
+               
+               <h:outputText value=""/>
           
-            <h:outputText value="Radius in A"/>
-            <h:panelGroup styleClass="zahl">
-               <h:outputText value="#{schlupfbezifferungModell.ortskurve.radiusOrtskurve}">
-                  <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
-               </h:outputText>
-            </h:panelGroup>
+               <h:outputText value="Radius in A"/>
+               <h:panelGroup styleClass="zahl">
+                  <h:outputText value="#{schlupfbezifferungModell.ortskurve.radiusOrtskurve}">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="en-US"/>
+                  </h:outputText>
+               </h:panelGroup>
                
-            <h:outputText value=""/>
-            <h:outputText value=""/>
-            <h:outputText value=""/>
-         </h:panelGrid>
+               <h:outputText value=""/>
+               <h:outputText value=""/>
+               <h:outputText value=""/>
+            </h:panelGrid>
+         
+            <h:panelGroup class="knopfzeile" layout="block">
+               <h:commandButton value="Schlupfbezifferung" 
+                  action="#{schlupfbezifferungController.schlupfbezifferungBestimmen}" class="knopf"/>
+               <p:spacer width="1" height="21" />
+            </h:panelGroup> 
+         </h:form>
       </ui:define>
    </ui:composition>
 </h:body>
