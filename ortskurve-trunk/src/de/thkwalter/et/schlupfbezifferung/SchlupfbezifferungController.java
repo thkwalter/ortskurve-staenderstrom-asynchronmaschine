@@ -15,6 +15,14 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
+import java.util.logging.Logger;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
 import org.apache.commons.math3.analysis.solvers.BisectionSolver;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
@@ -25,11 +33,14 @@ import de.thkwalter.jsf.ApplicationRuntimeException;
  * 
  * @author Th. K. Walter
  */
+@RequestScoped
+@ManagedBean
 public class SchlupfbezifferungController
 {
 /**
  * Das Datenmodell der Schlupfbezifferungsbestimmung.
  */
+@ManagedProperty(value="#{schlupfbezifferungModell}")
 private SchlupfbezifferungModell schlupfbezifferungModell;
 
 /**
@@ -54,6 +65,13 @@ private final static double ABBRUCHKRITERIUM_RELATIVE_GENAUIGKEIT_SCHALTWINKEL =
  */
 private final static int MAX_ANZAHL_ITERATIONEN = 100;
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/*
+ * Der Logger dieser Klasse.
+ */
+private static Logger logger = Logger.getLogger(SchlupfbezifferungController.class.getName());
+
 // =====================================================================================================================
 // =====================================================================================================================
 
@@ -72,10 +90,50 @@ public SchlupfbezifferungController()
 // =====================================================================================================================
 
 /**
+ * Diese Methode berechnet das Ersatzschaltbild.
+ * 
+ * @return Die Zeichenkette <tt>null</tt>
+ */
+public String schlupfbezifferungBestimmen()
+   {
+   try
+      {
+      // Das Datenmodell der Schlupfbezifferungsbestimmung wird protokolliert.
+      SchlupfbezifferungController.logger.info(this.schlupfbezifferungModell.toString());
+      
+      // Die Schlupfbezifferung wird bestimmt.
+      this.schlupfbezifferungBestimmenIntern();
+      
+      // Das Datenmodell der Schlupfbezifferungsbestimmung wird protokolliert.
+      SchlupfbezifferungController.logger.info(this.schlupfbezifferungModell.toString());
+      }
+   
+   // Falls eine Ausnahme geworfen worden ist, wird diese behandelt.
+   catch (ApplicationRuntimeException exception)
+      {
+      // Eine Fehlermeldung für die Oberfläche wird erstellt.
+      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+         exception.getMessage(), ""));
+      
+      // Der Nachrichtentext der Ausnahme wird protokolliert.
+      SchlupfbezifferungController.logger.severe(exception.getMessage());
+      }
+   
+   // Es wird wieder zur aufrufenden Seite weitergeleitet.
+   return null;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Diese Methode bestimmt die Schlupfbezifferung.
  */
 private void schlupfbezifferungBestimmenIntern()
    {
+   // Die eingegebenen Schlupfwerte werden validiert.
+   Betriebspunkt[] betriebspunkteSchlupfbezifferung = this.schlupfwerteValidieren();
+   
    // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
    Vector2D inversionszentrum = this.inversionszentrumBerechnen();
    this.schlupfbezifferungModell.setInversionszentrum(inversionszentrum);
@@ -165,41 +223,106 @@ private double[] steigungenBerechnen()
    // Das Feld der Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten wird erzeugt.
    double[] steigungen = new double[3];
    
-   // Die Betriebspunkte werden gelesen.
-   Betriebspunkt[] betriebspunkte = this.schlupfbezifferungModell.getBetriebspunkte();
-   
-   // Das Inversionszentrum (in A) wird gelesen.
-   Vector2D inversionszentrum = this.schlupfbezifferungModell.getInversionszentrum();
-   
-   // Eine Hilfsvariable wird deklariert.
-   double nenner = Double.NaN;
-   
-   // In der folgenden Schleife werden die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten 
-   // berechnet.
-   for (int i = 0; i < betriebspunkte.length; i++)
-      {
-      // Die komplexe Ständerstromstärke des aktuellen Betriebspunkts (in A) wird gelesen.
-      Vector2D i_1 = betriebspunkte[i].getI_1();
-      
-      // Eine Hilfsgröße (in A) wird berechnet.
-      nenner = (i_1.getX() - inversionszentrum.getX());
-      
-      // Falls die Hilfsfröße zu klein wird, wird eine Ausnahme geworfen.
-      if (Math.abs(nenner / inversionszentrum.getX()) < 1E-10)
-         {
-         // Die Fehlermeldung wird erstellt.
-         String message = "Der Punkt " + betriebspunkte[i].getI_1() + " A liegt über dem Inversionszentrum und ist " +
-            "daher zur Bestimmung der Schlupfbezifferung ungeeignet! Wählen Sie bitte einen anderen Punkt aus.";
-         
-         // Die Ausnahme wird geworfen.
-         throw new ApplicationRuntimeException(message);
-         }
-      
-      // Die Steigung des Strahls vom Inversionszentrum zum aktuellen Betriebspunkt wird berechnet.
-      steigungen[i] = (i_1.getY() - inversionszentrum.getY()) / nenner;
-      }
+//   // Die Betriebspunkte werden gelesen.
+//   Betriebspunkt[] betriebspunkte = this.schlupfbezifferungModell.getBetriebspunkte();
+//   
+//   // Das Inversionszentrum (in A) wird gelesen.
+//   Vector2D inversionszentrum = this.schlupfbezifferungModell.getInversionszentrum();
+//   
+//   // Eine Hilfsvariable wird deklariert.
+//   double nenner = Double.NaN;
+//   
+//   // In der folgenden Schleife werden die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten 
+//   // berechnet.
+//   for (int i = 0; i < betriebspunkte.length; i++)
+//      {
+//      // Die komplexe Ständerstromstärke des aktuellen Betriebspunkts (in A) wird gelesen.
+//      Vector2D i_1 = betriebspunkte[i].getI_1();
+//      
+//      // Eine Hilfsgröße (in A) wird berechnet.
+//      nenner = (i_1.getX() - inversionszentrum.getX());
+//      
+//      // Falls die Hilfsfröße zu klein wird, wird eine Ausnahme geworfen.
+//      if (Math.abs(nenner / inversionszentrum.getX()) < 1E-10)
+//         {
+//         // Die Fehlermeldung wird erstellt.
+//         String message = "Der Punkt " + betriebspunkte[i].getI_1() + " A liegt über dem Inversionszentrum und ist " +
+//            "daher zur Bestimmung der Schlupfbezifferung ungeeignet! Wählen Sie bitte einen anderen Punkt aus.";
+//         
+//         // Die Ausnahme wird geworfen.
+//         throw new ApplicationRuntimeException(message);
+//         }
+//      
+//      // Die Steigung des Strahls vom Inversionszentrum zum aktuellen Betriebspunkt wird berechnet.
+//      steigungen[i] = (i_1.getY() - inversionszentrum.getY()) / nenner;
+//      }
    
    // Die Steigungen der Strahlen vom Inversionszentrum zu den Betriebspunkten werden zurückgegeben.
    return steigungen;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert das Datenmodell der Schlupfbezifferungsbestimmung in diesem Controller.
+ * 
+ * @param schlupfbezifferungModell Das Datenmodell der Schlupfbezifferungsbestimmung
+ */
+public void setSchlupfbezifferungModell(SchlupfbezifferungModell schlupfbezifferungModell)
+   {
+   // Das Datenmodell der Ersatzschaltbildberechnung wird gespeichert.
+   this.schlupfbezifferungModell = schlupfbezifferungModell;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode validiert die eingegebenen Schlupfwerte.
+ */
+private Betriebspunkt[] schlupfwerteValidieren()
+   {
+   // Das Feld für die Betriebspunkte, die für die Schupfbezifferung verwendet werden, wird erzeugt.
+   Betriebspunkt[] betriebspunkteSchlupfbezifferung = new Betriebspunkt[3];
+   
+   // Der Zähler für die Betriebspunkte, die für die Schlupfbezifferung verwendet werde, wird initialisiert.
+   int nBetriebspunkte = 0;
+   
+   // In dieser Schleife wird über die Betriebspunkte iteriert.
+   for (Betriebspunkt betriebspunkt : this.schlupfbezifferungModell.getBetriebspunkte())
+      {
+      // Falls der Schlupf eines Betriebspunkts einen Wert besitzt, ...
+      if (betriebspunkt.getS() != null)
+         {
+         // Falls mehr als drei Betriebspunkte einen Schlupfwert besitzen, wird eine Ausnahme geworfen.
+         if (nBetriebspunkte == 3)
+            {
+            // Die Fehlermeldung wird erstellt.
+            String message = "Sie haben für mehr als drei Betriebspunkte einen Schlupfwert eingegeben! Geben Sie " + 
+               "bitte für genau drei Betriebspunkte einen Schlupfwert ein.";
+          
+            // Die Ausnahme wird geworfen.
+            throw new ApplicationRuntimeException(message);
+            }
+         
+         // Der Betriebspunkt wird für die Schlupfbezifferung verwendet.
+         betriebspunkteSchlupfbezifferung[nBetriebspunkte++] = betriebspunkt;
+         }
+      }
+   
+   // Falls weniger als drei Betriebspunkte einen Schlupfwert besitzen, wird eine Ausnahme geworfen.
+   if (nBetriebspunkte < 3)
+      {
+      // Die Fehlermeldung wird erstellt.
+      String message = "Sie haben für weniger als drei Betriebspunkte einen Schlupfwert eingegeben! Geben Sie bitte " + 
+         "für genau drei Betriebspunkte einen Schlupfwert ein.";
+    
+      // Die Ausnahme wird geworfen.
+      throw new ApplicationRuntimeException(message);
+      }
+   
+   // Das Feld mit den Betriebspunkten, die für die Schlupfbezifferung verwendet werden, wird zurückgegeben.
+   return betriebspunkteSchlupfbezifferung;
    }
 }
