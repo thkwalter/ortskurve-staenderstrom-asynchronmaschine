@@ -17,6 +17,7 @@ package de.thkwalter.et.schlupfbezifferung;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 
@@ -130,6 +131,9 @@ public void testGetI_1y() throws NoSuchFieldException, SecurityException, Illega
    
    // Es wird überprüft, ob die x-Komponente der komplexen Ständerstromstärke (in A) korrekt zurückgegeben wird.
    assertEquals(4.0, this.betriebspunkt.getI_1y(), 0.0);
+   
+   // Es wird überprüft, ob der Schlupf korrekt initialisiert worden ist.
+   assertTrue(Double.isNaN(this.betriebspunkt.getS()));
    }
 
 // =====================================================================================================================
