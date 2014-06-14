@@ -15,6 +15,7 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
@@ -132,7 +133,7 @@ public String schlupfbezifferungBestimmen()
 private void schlupfbezifferungBestimmenIntern()
    {
    // Die eingegebenen Schlupfwerte werden validiert.
-   Betriebspunkt[] betriebspunkteSchlupfbezifferung = this.schlupfwerteValidieren();
+   ArrayList<Betriebspunkt> betriebspunkteSchlupfbezifferung = this.schlupfwerteValidieren();
    
    // Das Inversionszentrum (in A) wird berechnet und im Datenmodell der Schlupfbezifferungsbestimmung gespeichert.
    Vector2D inversionszentrum = this.inversionszentrumBerechnen();
@@ -281,42 +282,39 @@ public void setSchlupfbezifferungModell(SchlupfbezifferungModell schlupfbeziffer
 /**
  * Diese Methode validiert die eingegebenen Schlupfwerte.
  */
-private Betriebspunkt[] schlupfwerteValidieren()
+private ArrayList<Betriebspunkt> schlupfwerteValidieren()
    {
-   // Das Feld für die Betriebspunkte, die für die Schupfbezifferung verwendet werden, wird erzeugt.
-   Betriebspunkt[] betriebspunkteSchlupfbezifferung = new Betriebspunkt[3];
-   
-   // Der Zähler für die Betriebspunkte, die für die Schlupfbezifferung verwendet werde, wird initialisiert.
-   int nBetriebspunkte = 0;
+   // Die Liste für die Betriebspunkte, die für die Schupfbezifferung verwendet werden, wird erzeugt.
+   ArrayList<Betriebspunkt> betriebspunkteSchlupfbezifferung = new ArrayList<>();
    
    // In dieser Schleife wird über die Betriebspunkte iteriert.
    for (Betriebspunkt betriebspunkt : this.schlupfbezifferungModell.getBetriebspunkte())
       {
       // Falls der Schlupf eines Betriebspunkts einen Wert besitzt, ...
-      if (betriebspunkt.getS() != null)
-         {
-         // Falls mehr als drei Betriebspunkte einen Schlupfwert besitzen, wird eine Ausnahme geworfen.
-         if (nBetriebspunkte == 3)
-            {
-            // Die Fehlermeldung wird erstellt.
-            String message = "Sie haben für mehr als drei Betriebspunkte einen Schlupfwert eingegeben! Geben Sie " + 
-               "bitte für genau drei Betriebspunkte einen Schlupfwert ein.";
-          
-            // Die Ausnahme wird geworfen.
-            throw new ApplicationRuntimeException(message);
-            }
-         
+      if (! Double.isNaN(betriebspunkt.getS()))
+         {         
          // Der Betriebspunkt wird für die Schlupfbezifferung verwendet.
-         betriebspunkteSchlupfbezifferung[nBetriebspunkte++] = betriebspunkt;
+         betriebspunkteSchlupfbezifferung.add(betriebspunkt);
          }
       }
    
    // Falls weniger als drei Betriebspunkte einen Schlupfwert besitzen, wird eine Ausnahme geworfen.
-   if (nBetriebspunkte < 3)
+   int nBetriebspunkte = betriebspunkteSchlupfbezifferung.size();
+   if (nBetriebspunkte == 1)
       {
       // Die Fehlermeldung wird erstellt.
-      String message = "Sie haben für weniger als drei Betriebspunkte einen Schlupfwert eingegeben! Geben Sie bitte " + 
-         "für genau drei Betriebspunkte einen Schlupfwert ein.";
+      String message = "Sie haben für einen Betriebspunkt einen Schlupfwert eingegeben! Geben Sie bitte für genau " + 
+         "drei Betriebspunkte einen Schlupfwert ein.";
+    
+      // Die Ausnahme wird geworfen.
+      throw new ApplicationRuntimeException(message);
+      }
+   
+   else if (nBetriebspunkte != 3)
+      {
+      // Die Fehlermeldung wird erstellt.
+      String message = "Sie haben für " + nBetriebspunkte + " Betriebspunkte einen Schlupfwert eingegeben! Geben Sie " +
+         "bitte für genau drei Betriebspunkte einen Schlupfwert ein.";
     
       // Die Ausnahme wird geworfen.
       throw new ApplicationRuntimeException(message);
