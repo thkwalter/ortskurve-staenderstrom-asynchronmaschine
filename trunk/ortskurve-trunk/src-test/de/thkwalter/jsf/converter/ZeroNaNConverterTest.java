@@ -25,16 +25,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Diese Klasse enthält Tests für die Klasse {@link NullZeroConverter}.
+ * Diese Klasse enthält Tests für die Klasse {@link ZeroNaNConverter}.
  * 
  * @author Th. K. Walter
  */
-public class NullZeroConverterTest
+public class ZeroNaNConverterTest
 {
 /**
- * Der Prüfling der Klasse {@link NullZeroConverter}.
+ * Der Prüfling der Klasse {@link ZeroNaNConverter}.
  */
-private NullZeroConverter nullZeroConverter;
+private ZeroNaNConverter zeroNaNConverter;
 
 // =====================================================================================================================
 // =====================================================================================================================
@@ -48,55 +48,55 @@ private NullZeroConverter nullZeroConverter;
 public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
-   this.nullZeroConverter = new NullZeroConverter();
+   this.zeroNaNConverter = new ZeroNaNConverter();
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link NullZeroConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
+ * Test der Methode {@link ZeroNaNConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
  * Zeichenkette <tt>null</tt> ist.
  */
 @Test
 public void testGetAsObjectNull()
    {
    // Die zu testende Methode wird ausgeführt.
-   Object doubleValue = this.nullZeroConverter.getAsObject(null, null, null);
+   Object doubleValue = this.zeroNaNConverter.getAsObject(null, null, null);
    
    // Es wird überprüft, ob eine leere Zeichenkette zurückgegeben wird.
-   assertEquals(null, doubleValue);
+   assertEquals(Double.NaN, doubleValue);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link NullZeroConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
+ * Test der Methode {@link ZeroNaNConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
  * Zeichenkette leer ist.
  */
 @Test
 public void testGetAsObjectLeer()
    {
    // Die zu testende Methode wird ausgeführt.
-   Object doubleValue = this.nullZeroConverter.getAsObject(null, null, "");
+   Object doubleValue = this.zeroNaNConverter.getAsObject(null, null, "");
    
    // Es wird überprüft, ob eine leere Zeichenkette zurückgegeben wird.
-   assertEquals(null, doubleValue);
+   assertEquals(Double.NaN, doubleValue);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link NullZeroConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
+ * Test der Methode {@link ZeroNaNConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
  * Zeichenkette eine reelle Zahl repräsentiert.
  */
 @Test
 public void testGetAsObjectDouble()
    {
    // Die zu testende Methode wird ausgeführt.
-   Object doubleValue = this.nullZeroConverter.getAsObject(null, null, "17.8");
+   Object doubleValue = this.zeroNaNConverter.getAsObject(null, null, "17.8");
    
    // Es wird überprüft, ob eine leere Zeichenkette zurückgegeben wird.
    assertEquals(17.8, (double) doubleValue, 0.0);
@@ -106,7 +106,7 @@ public void testGetAsObjectDouble()
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link NullZeroConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
+ * Test der Methode {@link ZeroNaNConverter#getAsObject(FacesContext, UIComponent, String)} für den Fall, dass die 
  * Zeichenkette keine reelle Zahl repräsentiert.
  */
 @Test(expected = ConverterException.class)
@@ -116,21 +116,21 @@ public void testGetAsObjectKeinDouble()
    FacesContext facesContextMock = new FacesContextMock();
    
    // Die zu testende Methode wird ausgeführt.
-   this.nullZeroConverter.getAsObject(facesContextMock, null, "abc");
+   this.zeroNaNConverter.getAsObject(facesContextMock, null, "abc");
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link NullZeroConverter#getAsString(FacesContext, UIComponent, Object)} für den Fall, dass der 
+ * Test der Methode {@link ZeroNaNConverter#getAsString(FacesContext, UIComponent, Object)} für den Fall, dass der 
  * {@link Double}--Wert <tt>null</tt> ist.
  */
 @Test
 public void testGetAsStringNull()
    {
    // Die zu testende Methode wird ausgeführt.
-   String doubleString = this.nullZeroConverter.getAsString(null, null, null);
+   String doubleString = this.zeroNaNConverter.getAsString(null, null, Double.NaN);
    
    // Es wird überprüft, ob eine leere Zeichenkette zurückgegeben wird.
    assertEquals("", doubleString);
@@ -140,14 +140,14 @@ public void testGetAsStringNull()
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link NullZeroConverter#getAsString(FacesContext, UIComponent, Object)} für den Fall, dass der 
+ * Test der Methode {@link ZeroNaNConverter#getAsString(FacesContext, UIComponent, Object)} für den Fall, dass der 
  * {@link Double}--Wert nicht <tt>null</tt> ist.
  */
 @Test
 public void testGetAsStringNotNull()
    {
    // Die zu testende Methode wird ausgeführt.
-   String doubleString = this.nullZeroConverter.getAsString(null, null, new Double(17.8));
+   String doubleString = this.zeroNaNConverter.getAsString(null, null, new Double(17.8));
    
    // Es wird überprüft, ob eine leere Zeichenkette zurückgegeben wird.
    assertEquals("17.8", doubleString);

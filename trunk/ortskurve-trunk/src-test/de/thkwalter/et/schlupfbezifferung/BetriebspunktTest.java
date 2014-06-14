@@ -149,7 +149,7 @@ public void testGetS() throws NoSuchFieldException, SecurityException, IllegalAr
    // Der in diesem Test verwendete Schlupf wird im Prüfling gespeichert.
    Field sFeld = Betriebspunkt.class.getDeclaredField("s");
    sFeld.setAccessible(true);
-   sFeld.setDouble(this.betriebspunkt, 0.1);
+   sFeld.set(this.betriebspunkt, new Double(0.1));
    
    // Es wird überprüft, ob der Schlupf korrekt zurückgegeben wird.
    assertEquals(0.1, this.betriebspunkt.getS(), 0.0);

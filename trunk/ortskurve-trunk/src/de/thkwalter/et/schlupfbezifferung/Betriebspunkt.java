@@ -15,6 +15,8 @@
  */
 package de.thkwalter.et.schlupfbezifferung;
 
+import java.io.Serializable;
+
 import org.apache.commons.math3.complex.Complex;
 
 /**
@@ -22,7 +24,7 @@ import org.apache.commons.math3.complex.Complex;
  * 
  * @author Th. K. Walter
  */
-public class Betriebspunkt
+public class Betriebspunkt implements Serializable
 {
 /**
  * Die komplexe Ständerstromstärke (in A)
@@ -33,6 +35,11 @@ private Complex i_1;
  * Der Schlupf
  */
 private Double s;
+
+/**
+ * Die Serialisierungs-Id.
+ */
+private static final long serialVersionUID = -779788128611202575L;
 
 // =====================================================================================================================
 // =====================================================================================================================

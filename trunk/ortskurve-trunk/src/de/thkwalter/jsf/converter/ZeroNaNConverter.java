@@ -30,20 +30,20 @@ import javax.faces.convert.FacesConverter;
  * 
  * @author Th. K. Walter
  */
-@FacesConverter("NullZeroConverter")
-public class NullZeroConverter implements Converter
+@FacesConverter("ZeroNaNConverter")
+public class ZeroNaNConverter implements Converter
 {
 /*
  * Der Logger dieser Klasse.
  */
-private static Logger logger = Logger.getLogger(NullZeroConverter.class.getName());
+private static Logger logger = Logger.getLogger(ZeroNaNConverter.class.getName());
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /* 
  * Diese Methode konvertiert einen {@link String} in einen {@link Double}, wobei eine leere Zeichenkette auf den Wert 
- * <tt>null</tt> abgebildet wird.
+ * <tt>NaN</tt> abgebildet wird.
  * 
  * @param facesContext Das Kontext-Objekt
  * @param uiComponent Die UI-Komponente, welche die Quelle der Zeichenkette ist.
@@ -57,7 +57,7 @@ private static Logger logger = Logger.getLogger(NullZeroConverter.class.getName(
 public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String doubleString)
    {
    // Der Wert der zurückgegeben wird, wird mit null initialisiert.
-   Double doubleValue = null;
+   Double doubleValue = Double.NaN;
    
    // Falls der Benutzer einen Wert eingegeben hat, ...
    if (doubleString != null && doubleString.length() > 0)
@@ -73,7 +73,7 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
          {
          // Die Fehlermeldung für den Entwickler wird erzeugt und protokolliert.
          String fehlermeldung = "Die eingegebene Zeichenkette "+ doubleString + " ist keine reelle Zahl!";
-         NullZeroConverter.logger.log(Level.SEVERE, fehlermeldung);
+         ZeroNaNConverter.logger.log(Level.SEVERE, fehlermeldung);
          
          // Die Meldung für die Oberfläche und eine Ausnahme werden erzeugt und mit der Fehlermeldung für den Benutzer
          // initialisiert.
@@ -95,7 +95,7 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
 // =====================================================================================================================
 
 /**
- * Diese Methode konvertiert einen {@link Double} in einen {@link String}, wobei der Wert <tt>null</tt> auf die leere
+ * Diese Methode konvertiert einen {@link Double} in einen {@link String}, wobei der Wert <tt>NaN</tt> auf die leere
  * Zeichenkette abgebildet wird.
  * 
  * @return Die Gleitkommazahl als Zeichenkette
@@ -105,8 +105,8 @@ public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, St
 @Override
 public String getAsString(FacesContext arg0, UIComponent arg1, Object doubleValue)
    {   
-   // Die Gleitkommazahl wird in eine Zeichenkette konvertiert und zurückgegeben. Ist die Gleitkommazahl null, so wird
+   // Die Gleitkommazahl wird in eine Zeichenkette konvertiert und zurückgegeben. Ist die Gleitkommazahl NaN, so wird
    // eine leere Zeichenkette zurückgegeben.
-   return doubleValue != null ? ((Double) doubleValue).toString() : "";
+   return Double.isNaN((double) doubleValue) ? "" : ((Double) doubleValue).toString();
    }
 }
