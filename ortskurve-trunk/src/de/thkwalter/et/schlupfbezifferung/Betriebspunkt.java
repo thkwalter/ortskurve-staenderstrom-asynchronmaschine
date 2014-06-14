@@ -34,7 +34,7 @@ private Complex i_1;
 /**
  * Der Schlupf
  */
-private Double s;
+private double s;
 
 /**
  * Die Serialisierungs-Id.
@@ -54,6 +54,9 @@ public Betriebspunkt(double i_1x, double i_1y)
    {
    // Die komplexe Ständerstromstärke (in A) wird initialisiert.
    this.i_1 = new Complex(i_1y, -i_1x);
+   
+   // Der Schlupf wird initialisiert.
+   this.s = Double.NaN;
    }
 
 // =====================================================================================================================
@@ -92,7 +95,7 @@ public double getI_1y()
  * 
  * @return Der Schlupf
  */
-public Double getS()
+public double getS()
    {
    // Der Schlupf wird zurückgegeben.
    return this.s;
@@ -106,7 +109,7 @@ public Double getS()
  * 
  * @param s Der Schlupf
  */
-public void setS(Double s)
+public void setS(double s)
    {
    // Der Schlupf wird in diesem Objekt gespeichert.
    this.s = s;
@@ -130,7 +133,7 @@ public String toString()
    zustand.append(i_1 != null ? "i_1=" + i_1 + ", " : "");
    
    // Die Zeichenkette, welche den Schlupf repräsentiert, wird angehängt.
-   zustand.append(s != null ? "s=" + s : "");
+   zustand.append("s=" + s);
    
    // Das Schlusszeichen wird angehängt.
    zustand.append("]");
