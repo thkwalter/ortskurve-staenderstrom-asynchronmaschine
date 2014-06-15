@@ -18,6 +18,7 @@ package de.thkwalter.et.betriebspunkt;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.Field;
 
@@ -109,6 +110,19 @@ public void testBetriebspunkt_rechnen()
    // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt zurückgegeben wird.
    assertEquals(2.801, testBetriebspunkt.getZ_i_s().getReal(), 2.801 / 1000.0);
    assertEquals(-1.657, testBetriebspunkt.getZ_i_s().getImaginary(), 1.657 / 1000.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#rechnen(Schaltungstyp)}.
+ */
+@Test
+public void testRechnen()
+   {
+   // Dieser Test muss noch implementiert werden.
+   fail();
    }
 
 // =====================================================================================================================
