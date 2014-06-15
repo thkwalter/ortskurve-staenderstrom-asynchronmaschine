@@ -18,9 +18,10 @@ package de.thkwalter.et.betriebspunkt;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.Before;
@@ -133,13 +134,77 @@ public void testBetriebspunkt_rechnen()
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#rechnen(Schaltungstyp)}.
+ * Test der Methode {@link Betriebspunkt#rechnen(Schaltungstyp)} für den Fall, dass der Schaltungstyp DREIECK ist.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
  */
 @Test
-public void testRechnen()
+public void testRechnen_Dreieck() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
+   IllegalArgumentException, InvocationTargetException
    {
-   // Dieser Test muss noch implementiert werden.
-   fail();
+   // Der Betriebspunkt wird initialisiert.
+   this.betriebspunkt.setI_L(3.2546);
+   this.betriebspunkt.setU_LL(396.98);
+   this.betriebspunkt.setP_el(1.9259);
+   this.betriebspunkt.setSchaltungstyp(Schaltungstyp.DREIECK);
+   
+   // Die zu testende Methode wird aufgerufen
+   Method rechnenMethode = Betriebspunkt.class.getDeclaredMethod("rechnen", (Class<?>[]) null);
+   rechnenMethode.setAccessible(true);
+   rechnenMethode.invoke(this.betriebspunkt, (Object[]) null);
+   
+   // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt berechnet worden ist.
+   assertEquals(2.238, this.betriebspunkt.getP_s(), 2.238 / 1000.0);
+   
+   // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt berechnet worden ist.
+   assertEquals(0.8606, this.betriebspunkt.getCosPhi(), 0.8606 / 1000.0);
+   
+   // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt berechnet worden ist..
+   assertEquals(1.617, this.betriebspunkt.getZ_i_s().getReal(), 1.617 / 1000.0);
+   assertEquals(-0.9569, this.betriebspunkt.getZ_i_s().getImaginary(), 0.9569 / 1000.0);
+   }
+
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#rechnen(Schaltungstyp)} für den Fall, dass der Schaltungstyp STERN ist.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchMethodException 
+ * @throws InvocationTargetException 
+ * @throws IllegalArgumentException 
+ * @throws IllegalAccessException 
+ */
+@Test
+public void testRechnen_Stern() throws NoSuchMethodException, SecurityException, IllegalAccessException, 
+   IllegalArgumentException, InvocationTargetException
+   {
+   // Der Betriebspunkt wird initialisiert.
+   this.betriebspunkt.setI_L(3.2546);
+   this.betriebspunkt.setU_LL(396.98);
+   this.betriebspunkt.setP_el(1.9259);
+   this.betriebspunkt.setSchaltungstyp(Schaltungstyp.STERN);
+   
+   // Die zu testende Methode wird aufgerufen
+   Method rechnenMethode = Betriebspunkt.class.getDeclaredMethod("rechnen", (Class<?>[]) null);
+   rechnenMethode.setAccessible(true);
+   rechnenMethode.invoke(this.betriebspunkt, (Object[]) null);
+   
+   // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt berechnet worden ist.
+   assertEquals(2.238, this.betriebspunkt.getP_s(), 2.238 / 1000.0);
+   
+   // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt berechnet worden ist.
+   assertEquals(0.8606, this.betriebspunkt.getCosPhi(), 0.8606 / 1000.0);
+   
+   // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt berechnet worden ist..
+   assertEquals(2.801, this.betriebspunkt.getZ_i_s().getReal(), 2.801 / 1000.0);
+   assertEquals(-1.657, this.betriebspunkt.getZ_i_s().getImaginary(), 1.657 / 1000.0);
    }
 
 // =====================================================================================================================
@@ -175,7 +240,7 @@ public void testGetI_L() throws NoSuchFieldException, SecurityException, Illegal
 public void testSetI_L()
    {
    // Die zu testende Methode wird aufgerufen.
-   this.betriebspunkt.setU_LL(2.8769);
+   this.betriebspunkt.setI_L(2.8769);
    
    // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt im Objekt gespeichert worden ist.
    assertEquals(2.8769, this.betriebspunkt.getI_L(), 0.0);
