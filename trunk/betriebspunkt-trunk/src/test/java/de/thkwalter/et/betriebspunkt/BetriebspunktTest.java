@@ -64,30 +64,30 @@ public void testBetriebspunkt()
    assertNotNull(this.betriebspunkt);
    
    // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt initialisiert worden ist.
-   assertEquals(3.2546, this.betriebspunkt.i_L(), 0.0);
+   assertEquals(3.2546, this.betriebspunkt.getI_L(), 0.0);
    
    // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt zurückgegeben wird.
-   assertEquals(396.98, this.betriebspunkt.u_LL(), 0.0);
+   assertEquals(396.98, this.betriebspunkt.getU_LL(), 0.0);
    
    // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt zurückgegeben wird.
-   assertEquals(1.9259, this.betriebspunkt.p_el(), 0.0);
+   assertEquals(1.9259, this.betriebspunkt.getP_el(), 0.0);
    
    // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt zurückgegeben wird.
-   assertEquals(2.238, this.betriebspunkt.p_s(), 2.238 / 1000.0);
+   assertEquals(2.238, this.betriebspunkt.getP_s(), 2.238 / 1000.0);
    
    // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt zurückgegeben wird.
-   assertEquals(0.8606, this.betriebspunkt.cosPhi(), 0.8606 / 1000.0);
+   assertEquals(0.8606, this.betriebspunkt.getCosPhi(), 0.8606 / 1000.0);
    
    // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt zurückgegeben wird.
-   assertEquals(2.801, this.betriebspunkt.z_i_s().getReal(), 2.801 / 1000.0);
-   assertEquals(-1.657, this.betriebspunkt.z_i_s().getImaginary(), 1.657 / 1000.0);
+   assertEquals(2.801, this.betriebspunkt.getZ_i_s().getReal(), 2.801 / 1000.0);
+   assertEquals(-1.657, this.betriebspunkt.getZ_i_s().getImaginary(), 1.657 / 1000.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#i_L()}.
+ * Test der Methode {@link Betriebspunkt#getI_L()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -95,7 +95,7 @@ public void testBetriebspunkt()
  * @throws IllegalArgumentException 
  */
 @Test
-public void test_i_L() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetI_L() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
    // Der in diesem Test verwendete effektive Leiterstrom (in A) wird im Prüfling gespeichert.
    Field i_L_Feld = Betriebspunkt.class.getDeclaredField("i_L");
@@ -103,14 +103,14 @@ public void test_i_L() throws NoSuchFieldException, SecurityException, IllegalAr
    i_L_Feld.setDouble(this.betriebspunkt, 2.8769);
    
    // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt zurückgegeben wird.
-   assertEquals(2.8769, this.betriebspunkt.i_L(), 0.0);
+   assertEquals(2.8769, this.betriebspunkt.getI_L(), 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#u_LL()}.
+ * Test der Methode {@link Betriebspunkt#getU_LL()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -118,22 +118,22 @@ public void test_i_L() throws NoSuchFieldException, SecurityException, IllegalAr
  * @throws IllegalArgumentException 
  */
 @Test
-public void test_u_LL() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetU_LL() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
    // Die in diesem Test verwendete effektive Leiter-Leiterspannung (in V) wird im Prüfling gespeichert.
-   Field u_LL_Feld = Betriebspunkt.class.getDeclaredField("u_LL");
-   u_LL_Feld.setAccessible(true);
-   u_LL_Feld.setDouble(this.betriebspunkt, 397.72);
+   Field u_LLFeld = Betriebspunkt.class.getDeclaredField("u_LL");
+   u_LLFeld.setAccessible(true);
+   u_LLFeld.setDouble(this.betriebspunkt, 397.72);
    
    // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt zurückgegeben wird.
-   assertEquals(397.72, this.betriebspunkt.u_LL(), 0.0);
+   assertEquals(397.72, this.betriebspunkt.getU_LL(), 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#p_el()}.
+ * Test der Methode {@link Betriebspunkt#getP_el()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -141,22 +141,22 @@ public void test_u_LL() throws NoSuchFieldException, SecurityException, IllegalA
  * @throws IllegalArgumentException 
  */
 @Test
-public void test_p_el() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetP_el() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
    // Die in diesem Test verwendete elektrische Leistung (in kW) wird im Prüfling gespeichert.
-   Field p_el_Feld = Betriebspunkt.class.getDeclaredField("p_el");
-   p_el_Feld.setAccessible(true);
-   p_el_Feld.setDouble(this.betriebspunkt, 1.6462);
+   Field p_elFeld = Betriebspunkt.class.getDeclaredField("p_el");
+   p_elFeld.setAccessible(true);
+   p_elFeld.setDouble(this.betriebspunkt, 1.6462);
    
    // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt zurückgegeben wird.
-   assertEquals(1.6462, this.betriebspunkt.p_el(), 0.0);
+   assertEquals(1.6462, this.betriebspunkt.getP_el(), 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#p_s()}.
+ * Test der Methode {@link Betriebspunkt#getP_s()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -164,22 +164,22 @@ public void test_p_el() throws NoSuchFieldException, SecurityException, IllegalA
  * @throws IllegalArgumentException 
  */
 @Test
-public void test_p_s() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetP_s() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
    {
    // Die in diesem Test verwendete Scheinleistung (in kVA) wird im Prüfling gespeichert.
-   Field p_s_Feld = Betriebspunkt.class.getDeclaredField("p_s");
-   p_s_Feld.setAccessible(true);
-   p_s_Feld.setDouble(this.betriebspunkt, 1.9820);
+   Field p_sFeld = Betriebspunkt.class.getDeclaredField("p_s");
+   p_sFeld.setAccessible(true);
+   p_sFeld.setDouble(this.betriebspunkt, 1.9820);
    
    // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt zurückgegeben wird.
-   assertEquals(1.9820, this.betriebspunkt.p_s(), 0.0);
+   assertEquals(1.9820, this.betriebspunkt.getP_s(), 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#cosPhi()}.
+ * Test der Methode {@link Betriebspunkt#getCosPhi()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -187,24 +187,24 @@ public void test_p_s() throws NoSuchFieldException, SecurityException, IllegalAr
  * @throws IllegalArgumentException 
  */
 @Test
-public void test_cosPhi() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+public void testGetCosPhi() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
    IllegalAccessException
    {
    // Die in diesem Test verwendete Phasenverschiebung zwischen Strangstrom und Strangspannung wird im Prüfling 
    // gespeichert.
-   Field cosPhi_Feld = Betriebspunkt.class.getDeclaredField("cosPhi");
-   cosPhi_Feld.setAccessible(true);
-   cosPhi_Feld.setDouble(this.betriebspunkt, 0.83062);
+   Field cosPhiFeld = Betriebspunkt.class.getDeclaredField("cosPhi");
+   cosPhiFeld.setAccessible(true);
+   cosPhiFeld.setDouble(this.betriebspunkt, 0.83062);
    
    // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt zurückgegeben wird.
-   assertEquals(0.83062, this.betriebspunkt.cosPhi(), 0.0);
+   assertEquals(0.83062, this.betriebspunkt.getCosPhi(), 0.0);
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test der Methode {@link Betriebspunkt#z_i_s()}.
+ * Test der Methode {@link Betriebspunkt#getZ_i_s()}.
  * 
  * @throws SecurityException 
  * @throws NoSuchFieldException 
@@ -212,18 +212,18 @@ public void test_cosPhi() throws NoSuchFieldException, SecurityException, Illega
  * @throws IllegalArgumentException 
  */
 @Test
-public void test_z_i_s() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+public void testZ_i_s() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
    IllegalAccessException
    {
    // Der in diesem Test verwendete komplexe Zeiger des Strangstroms (in A) wird erzeugt.
-   Complex test_z_i_s = new Complex(2.3897, -1.6020);
+   Complex testZ_i_s = new Complex(2.3897, -1.6020);
    
    // Der in diesem Test verwendete komplexe Zeiger des Strangstroms (in A) wird im Prüfling gespeichert.
-   Field z_i_s_Feld = Betriebspunkt.class.getDeclaredField("z_i_s");
-   z_i_s_Feld.setAccessible(true);
-   z_i_s_Feld.set(this.betriebspunkt, test_z_i_s);
+   Field z_i_sFeld = Betriebspunkt.class.getDeclaredField("z_i_s");
+   z_i_sFeld.setAccessible(true);
+   z_i_sFeld.set(this.betriebspunkt, testZ_i_s);
    
    // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt zurückgegeben wird.
-   assertEquals(test_z_i_s, this.betriebspunkt.z_i_s());
+   assertEquals(testZ_i_s, this.betriebspunkt.getZ_i_s());
    }
 }
