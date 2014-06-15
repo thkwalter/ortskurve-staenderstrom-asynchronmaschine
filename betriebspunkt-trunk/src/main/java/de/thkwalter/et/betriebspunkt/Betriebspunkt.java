@@ -90,6 +90,18 @@ public Betriebspunkt(double i_L, double u_LL, double p_el, Schaltungstyp schaltu
    this.u_LL = u_LL;
    this.p_el = p_el;
    
+   // Auf Basis der Eingabewerte werden alle fehlenden Größen berechnet.
+   this.rechnen(schaltungstyp);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode berechnet auf Basis der Eingabewerte alle fehlenden Größen.
+ */
+private void rechnen(Schaltungstyp schaltungstyp)
+   {
    // Die Scheinleistung (in kVA) wird berechnet.
    this.p_s = Math.sqrt(3.0) * this.getU_LL() * this.getI_L() / 1000.0;
    
