@@ -149,6 +149,20 @@ public double getI_L()
 // =====================================================================================================================
 
 /**
+ * Diese Methode speichert den effektiven Leiterstrom (in A) in diesem Objekt.
+ * 
+ * @param i_L Der effektive Leiterstrom (in A)
+ */
+public void setI_L(double i_L)
+   {
+   // Der effektive Leiterstrom (in A) wird in diesem Objekt gespeichert.
+   this.i_L = i_L;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Diese Methode gibt die effektive Leiter-Leiterspannung (in V) zurück.
  * 
  * @return Die effektive Leiter-Leiterspannung (in V)
@@ -163,7 +177,21 @@ public double getU_LL()
 // =====================================================================================================================
 
 /**
- * Diese Methode gibt die elektische Leistung (in kW) zurück.
+ * Diese Methode speichert die effektive Leiter-Leiterspannung (in V) in diesem Objekt.
+ * 
+ * @param u_LL Die effektive Leiter-Leiterspannung (in V)
+ */
+public void setU_LL(double u_LL)
+   {
+   // Die effektive Leiter-Leiterspannung (in V) wird in diesem Objekt gespeichert.
+   this.u_LL = u_LL;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die elektische Leistung (in kW) in diesem Objekt.
  * 
  * @return Die elektrische Leistung (in kW)
  */
@@ -171,6 +199,20 @@ public double getP_el()
    {
    // Die elektrische Leistung (in kW) wird zurückgegeben.
    return this.p_el;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert die elektische Leistung (in kW) in diesem Objekt.
+ * 
+ * @param p_el Die elektische Leistung (in kW)
+ */
+public void setP_el(double p_el)
+   {
+   // die elektische Leistung (in kW) wird in diesem Objekt gespeichert.
+   this.p_el = p_el;
    }
 
 // =====================================================================================================================

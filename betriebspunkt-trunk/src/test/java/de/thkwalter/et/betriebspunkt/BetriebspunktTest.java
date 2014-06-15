@@ -169,6 +169,22 @@ public void testGetI_L() throws NoSuchFieldException, SecurityException, Illegal
 // =====================================================================================================================
 
 /**
+ * Test der Methode {@link Betriebspunkt#setI_L(double)}. 
+ */
+@Test
+public void testSetI_L()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.betriebspunkt.setU_LL(2.8769);
+   
+   // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt im Objekt gespeichert worden ist.
+   assertEquals(2.8769, this.betriebspunkt.getI_L(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
  * Test der Methode {@link Betriebspunkt#getU_LL()}.
  * 
  * @throws SecurityException 
@@ -177,7 +193,8 @@ public void testGetI_L() throws NoSuchFieldException, SecurityException, Illegal
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetU_LL() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetU_LL() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Die in diesem Test verwendete effektive Leiter-Leiterspannung (in V) wird im Prüfling gespeichert.
    Field u_LLFeld = Betriebspunkt.class.getDeclaredField("u_LL");
@@ -185,6 +202,22 @@ public void testGetU_LL() throws NoSuchFieldException, SecurityException, Illega
    u_LLFeld.setDouble(this.betriebspunkt, 397.72);
    
    // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt zurückgegeben wird.
+   assertEquals(397.72, this.betriebspunkt.getU_LL(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#setU_LL(double)}. 
+ */
+@Test
+public void testSetU_LL()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.betriebspunkt.setU_LL(397.72);
+   
+   // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt im Objekt gespeichert worden ist.
    assertEquals(397.72, this.betriebspunkt.getU_LL(), 0.0);
    }
 
@@ -208,6 +241,22 @@ public void testGetP_el() throws NoSuchFieldException, SecurityException, Illega
    p_elFeld.setDouble(this.betriebspunkt, 1.6462);
    
    // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt zurückgegeben wird.
+   assertEquals(1.6462, this.betriebspunkt.getP_el(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#setP_el(double)}. 
+ */
+@Test
+public void testSetP_el()
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.betriebspunkt.setP_el(1.6462);
+   
+   // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt im Objekt gespeichert worden ist.
    assertEquals(1.6462, this.betriebspunkt.getP_el(), 0.0);
    }
 
