@@ -17,6 +17,7 @@ package de.thkwalter.et.betriebspunkt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 
@@ -48,39 +49,66 @@ private Betriebspunkt betriebspunkt;
 public void setUp() throws Exception
    {
    // Der Prüfling wird erzeugt.
-   this.betriebspunkt = new Betriebspunkt(3.2546, 396.98, 1.9259, Schaltungstyp.STERN);
+   this.betriebspunkt = new Betriebspunkt();
    }
 
 // =====================================================================================================================
 // =====================================================================================================================
 
 /**
- * Test des Konstruktors {@link Betriebspunkt#Betriebspunkt()}.
+ * Test des Konstruktors {@link Betriebspunkt#Betriebspunkt()}, der alle reellwertigen Größen mit {@link Double.NaN}
+ * initialisiert.
  */
 @Test
-public void testBetriebspunkt()
-   {
-   // Es wird überprüft, ob der Prüfling erzeugt worden ist.
-   assertNotNull(this.betriebspunkt);
-   
+public void testBetriebspunkt_NaN()
+   { 
    // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt initialisiert worden ist.
-   assertEquals(3.2546, this.betriebspunkt.getI_L(), 0.0);
+   assertTrue(Double.isNaN(this.betriebspunkt.getI_L()));
    
    // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt zurückgegeben wird.
-   assertEquals(396.98, this.betriebspunkt.getU_LL(), 0.0);
+   assertTrue(Double.isNaN(this.betriebspunkt.getU_LL()));
    
    // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt zurückgegeben wird.
-   assertEquals(1.9259, this.betriebspunkt.getP_el(), 0.0);
+   assertTrue(Double.isNaN(this.betriebspunkt.getP_el()));
    
    // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt zurückgegeben wird.
-   assertEquals(2.238, this.betriebspunkt.getP_s(), 2.238 / 1000.0);
+   assertTrue(Double.isNaN(this.betriebspunkt.getP_s()));
    
    // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt zurückgegeben wird.
-   assertEquals(0.8606, this.betriebspunkt.getCosPhi(), 0.8606 / 1000.0);
+   assertTrue(Double.isNaN(this.betriebspunkt.getCosPhi()));
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test des Konstruktors {@link Betriebspunkt#Betriebspunkt(double, double, double, Schaltungstyp)}, der auf Basis der 
+ * Eingabewerte alle fehlenden Größen berechnet.
+ */
+@Test
+public void testBetriebspunkt_rechnen()
+   {
+   // Der in diesem Test verwendete Prüfling wird erzeugt.
+   Betriebspunkt testBetriebspunkt = new Betriebspunkt(3.2546, 396.98, 1.9259, Schaltungstyp.STERN);
+   
+   // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt initialisiert worden ist.
+   assertEquals(3.2546, testBetriebspunkt.getI_L(), 0.0);
+   
+   // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt zurückgegeben wird.
+   assertEquals(396.98, testBetriebspunkt.getU_LL(), 0.0);
+   
+   // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt zurückgegeben wird.
+   assertEquals(1.9259, testBetriebspunkt.getP_el(), 0.0);
+   
+   // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt zurückgegeben wird.
+   assertEquals(2.238, testBetriebspunkt.getP_s(), 2.238 / 1000.0);
+   
+   // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt zurückgegeben wird.
+   assertEquals(0.8606, testBetriebspunkt.getCosPhi(), 0.8606 / 1000.0);
    
    // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt zurückgegeben wird.
-   assertEquals(2.801, this.betriebspunkt.getZ_i_s().getReal(), 2.801 / 1000.0);
-   assertEquals(-1.657, this.betriebspunkt.getZ_i_s().getImaginary(), 1.657 / 1000.0);
+   assertEquals(2.801, testBetriebspunkt.getZ_i_s().getReal(), 2.801 / 1000.0);
+   assertEquals(-1.657, testBetriebspunkt.getZ_i_s().getImaginary(), 1.657 / 1000.0);
    }
 
 // =====================================================================================================================

@@ -60,7 +60,23 @@ private Complex z_i_s;
 // =====================================================================================================================
 
 /**
- * Der Konstruktor initialisiert den Betriebspunkt
+ * Dieser Konstruktor erzeugt einen Betriebspunkt und initialisiert alle reellwertigen Größen mit {@link Double#NaN}.
+ */
+public Betriebspunkt()
+   {
+   // Alle reellwertigen Größen werden mit Double.NaN initialisiert.
+   this.u_LL = Double.NaN;
+   this.i_L = Double.NaN;
+   this.cosPhi = Double.NaN;
+   this.p_el = Double.NaN;
+   this.p_s = Double.NaN;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Dieser Konstruktor erzeugt einen Betriebspunkt und berechnet auf Basis der Eingabewerte alle fehlenden Größen.
  * 
  * @param i_l Der effektive Leiterstrom (in A)
  * @param u_LL Die effektive Leiter-Leiterspannung (in V)
