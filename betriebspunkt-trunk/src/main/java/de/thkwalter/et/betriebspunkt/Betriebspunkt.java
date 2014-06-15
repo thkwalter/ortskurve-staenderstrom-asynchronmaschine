@@ -75,7 +75,7 @@ public Betriebspunkt(double i_L, double u_LL, double p_el, Schaltungstyp schaltu
    this.p_el = p_el;
    
    // Die Scheinleistung (in kVA) wird berechnet.
-   this.p_s = Math.sqrt(3.0) * this.u_LL() * this.i_L() / 1000.0;
+   this.p_s = Math.sqrt(3.0) * this.getU_LL() * this.getI_L() / 1000.0;
    
    // Die Phasenverschiebung zwischen Strangstrom und Strangspannung wird berechnet.
    this.cosPhi = this.p_el / this.p_s;
@@ -102,7 +102,7 @@ public Betriebspunkt(double i_L, double u_LL, double p_el, Schaltungstyp schaltu
  * 
  * @return Der effektive Leiterstrom (in A)
  */
-public double i_L()
+public double getI_L()
    {
    // Der effektive Leiterstrom (in A) wird zurückgegeben.
    return this.i_L;
@@ -116,7 +116,7 @@ public double i_L()
  * 
  * @return Die effektive Leiter-Leiterspannung (in V)
  */
-public double u_LL()
+public double getU_LL()
    {
    // Die effektive Leiter-Leiterspannung (in V) wird zurückgegeben.
    return this.u_LL;
@@ -130,7 +130,7 @@ public double u_LL()
  * 
  * @return Die elektrische Leistung (in kW)
  */
-public double p_el()
+public double getP_el()
    {
    // Die elektrische Leistung (in kW) wird zurückgegeben.
    return this.p_el;
@@ -144,7 +144,7 @@ public double p_el()
  * 
  * @return Die Scheinleistung (in kVA)
  */
-public double p_s()
+public double getP_s()
    {
    // Die Scheinleistung (in kVA) wird zurückgegeben.
    return this.p_s;
@@ -158,7 +158,7 @@ public double p_s()
  * 
  * @return Die Phasenverschiebung zwischen Strangstrom und Strangspannung wird zurückgegeben.
  */
-public double cosPhi()
+public double getCosPhi()
    {
    // Die Phasenverschiebung zwischen Strangstrom und Strangspannung wird zurückgegeben.
    return this.cosPhi;
@@ -172,7 +172,7 @@ public double cosPhi()
  * 
  * @return Der komplexe Zeiger des Strangstroms (in A)
  */
-public Complex z_i_s()
+public Complex getZ_i_s()
    {
    // Der komplexe Zeiger des Strangstroms (in A) wird zurückgegeben
    return this.z_i_s;
