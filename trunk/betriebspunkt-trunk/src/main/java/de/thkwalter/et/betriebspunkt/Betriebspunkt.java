@@ -39,6 +39,11 @@ private double u_LL;
  */
 private double p_el;
 
+/**
+ * Der {@link Schaltungstyp}
+ */
+private Schaltungstyp schaltungstyp;
+
 // ---------------------------------------------------------------------------------------------------------------------
 
 /**
@@ -89,9 +94,10 @@ public Betriebspunkt(double i_L, double u_LL, double p_el, Schaltungstyp schaltu
    this.i_L = i_L;
    this.u_LL = u_LL;
    this.p_el = p_el;
+   this.schaltungstyp = schaltungstyp;
    
    // Auf Basis der Eingabewerte werden alle fehlenden Größen berechnet.
-   this.rechnen(schaltungstyp);
+   this.rechnen();
    }
 
 // =====================================================================================================================
@@ -100,7 +106,7 @@ public Betriebspunkt(double i_L, double u_LL, double p_el, Schaltungstyp schaltu
 /**
  * Diese Methode berechnet auf Basis der Eingabewerte alle fehlenden Größen.
  */
-private void rechnen(Schaltungstyp schaltungstyp)
+private void rechnen()
    {
    // Die Scheinleistung (in kVA) wird berechnet.
    this.p_s = Math.sqrt(3.0) * this.getU_LL() * this.getI_L() / 1000.0;
@@ -109,7 +115,7 @@ private void rechnen(Schaltungstyp schaltungstyp)
    this.cosPhi = this.p_el / this.p_s;
    
    // Ein vom Schaltungstyp abhängiger Faktor wird berechnet.
-   double faktor = schaltungstyp == Schaltungstyp.STERN ? 1.0 : 1.0 / Math.sqrt(3.0);
+   double faktor = this.schaltungstyp == Schaltungstyp.STERN ? 1.0 : 1.0 / Math.sqrt(3.0);
    
    // Der Realteil des Strangstroms (in A) wird berechnet.
    double i_s_re = faktor * this.i_L * this.cosPhi;
@@ -204,5 +210,33 @@ public Complex getZ_i_s()
    {
    // Der komplexe Zeiger des Strangstroms (in A) wird zurückgegeben
    return this.z_i_s;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode gibt den {@link Schaltungstyp} zurück.
+ * 
+ * @return Der {@link Schaltungstyp}
+ */
+public Schaltungstyp getSchaltungstyp()
+   {
+   // Der Schaltungstyp wird zurückgegeben.
+   return this.schaltungstyp;
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Diese Methode speichert den Schaltungstyp in diesem Objekt.
+ * 
+ * @param schaltungstyp Der {@link Schaltungstyp}
+ */
+public void setSchaltungstyp(Schaltungstyp schaltungstyp)
+   {
+   // Der Schaltungstyp wird in diesem Objekt gespeichert.
+   this.schaltungstyp = schaltungstyp;
    }
 }

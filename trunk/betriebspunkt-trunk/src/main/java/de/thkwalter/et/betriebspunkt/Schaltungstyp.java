@@ -16,7 +16,7 @@
 package de.thkwalter.et.betriebspunkt;
 
 /**
- * Diese KLasse repräsentiert den Schaltungstyp.
+ * Diese Klasse repräsentiert den Schaltungstyp.
  * 
  * @author Th. K. Walter
  */

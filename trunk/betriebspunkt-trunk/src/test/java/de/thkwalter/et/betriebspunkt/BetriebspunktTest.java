@@ -16,7 +16,7 @@
 package de.thkwalter.et.betriebspunkt;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -59,24 +59,40 @@ public void setUp() throws Exception
 /**
  * Test des Konstruktors {@link Betriebspunkt#Betriebspunkt()}, der alle reellwertigen Größen mit {@link Double.NaN}
  * initialisiert.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
  */
 @Test
-public void testBetriebspunkt_NaN()
+public void testBetriebspunkt_NaN() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
    { 
    // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.betriebspunkt.getI_L()));
    
-   // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt zurückgegeben wird.
+   // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.betriebspunkt.getU_LL()));
    
-   // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt zurückgegeben wird.
+   // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.betriebspunkt.getP_el()));
    
-   // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt zurückgegeben wird.
+   // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt initialisiert worden ist.
    assertTrue(Double.isNaN(this.betriebspunkt.getP_s()));
    
-   // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt zurückgegeben wird.
+   // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt initialisiert worden 
+   // ist.
    assertTrue(Double.isNaN(this.betriebspunkt.getCosPhi()));
+   
+   // Es wird überprüft, ob der Schaltungstyp den Wert null besitzt.
+   assertNull(this.betriebspunkt.getSchaltungstyp());
+   
+   // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) den Wert null besitzt.
+   Field z_i_sFeld = Betriebspunkt.class.getDeclaredField("z_i_s");
+   z_i_sFeld.setAccessible(true);
+   Complex z_i_s = (Complex) z_i_sFeld.get(this.betriebspunkt);
+   assertNull(z_i_s);
    }
 
 // =====================================================================================================================
@@ -95,19 +111,22 @@ public void testBetriebspunkt_rechnen()
    // Es wird überprüft, ob der effektive Leiterstrom (in A) korrekt initialisiert worden ist.
    assertEquals(3.2546, testBetriebspunkt.getI_L(), 0.0);
    
-   // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt zurückgegeben wird.
+   // Es wird überprüft, ob die effektive Leiter-Leiterspannung (in A) korrekt initialisiert worden ist.
    assertEquals(396.98, testBetriebspunkt.getU_LL(), 0.0);
    
-   // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt zurückgegeben wird.
+   // Es wird überprüft, ob die elektrische Leistung (in kW) korrekt initialisiert worden ist.
    assertEquals(1.9259, testBetriebspunkt.getP_el(), 0.0);
    
-   // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt zurückgegeben wird.
+   // Es wird überprüft, ob der Schaltungstyp korrekt initialisiert worden ist.
+   assertEquals(Schaltungstyp.STERN, testBetriebspunkt.getSchaltungstyp());
+   
+   // Es wird überprüft, ob die Scheinleistung (in kVA) korrekt berechnet worden ist.
    assertEquals(2.238, testBetriebspunkt.getP_s(), 2.238 / 1000.0);
    
-   // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt zurückgegeben wird.
+   // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt berechnet worden ist.
    assertEquals(0.8606, testBetriebspunkt.getCosPhi(), 0.8606 / 1000.0);
    
-   // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt zurückgegeben wird.
+   // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) korrekt berechnet worden ist..
    assertEquals(2.801, testBetriebspunkt.getZ_i_s().getReal(), 2.801 / 1000.0);
    assertEquals(-1.657, testBetriebspunkt.getZ_i_s().getImaginary(), 1.657 / 1000.0);
    }
@@ -206,7 +225,8 @@ public void testGetP_el() throws NoSuchFieldException, SecurityException, Illega
  * @throws IllegalArgumentException 
  */
 @Test
-public void testGetP_s() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+public void testGetP_s() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
    {
    // Die in diesem Test verwendete Scheinleistung (in kVA) wird im Prüfling gespeichert.
    Field p_sFeld = Betriebspunkt.class.getDeclaredField("p_s");
@@ -240,6 +260,47 @@ public void testGetCosPhi() throws NoSuchFieldException, SecurityException, Ille
    
    // Es wird überprüft, ob die Phasenverschiebung zwischen Strangstrom und Strangspannung korrekt zurückgegeben wird.
    assertEquals(0.83062, this.betriebspunkt.getCosPhi(), 0.0);
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#getSchaltungstyp()}.
+ * 
+ * @throws SecurityException 
+ * @throws NoSuchFieldException 
+ * @throws IllegalAccessException 
+ * @throws IllegalArgumentException 
+ */
+@Test
+public void testGetSchaltungstyp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die in diesem Test verwendete Schaltungstyp wird im Prüfling gespeichert.
+   Field schaltungstypFeld = Betriebspunkt.class.getDeclaredField("schaltungstyp");
+   schaltungstypFeld.setAccessible(true);
+   schaltungstypFeld.set(this.betriebspunkt, Schaltungstyp.DREIECK);
+   
+   // Es wird überprüft, ob der Schaltungstyp korrekt zurückgegeben wird.
+   assertEquals(Schaltungstyp.DREIECK, this.betriebspunkt.getSchaltungstyp());
+   }
+
+// =====================================================================================================================
+// =====================================================================================================================
+
+/**
+ * Test der Methode {@link Betriebspunkt#setSchaltungstyp(Schaltungstyp)}. 
+ */
+@Test
+public void testSetSchaltungstyp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, 
+   IllegalAccessException
+   {
+   // Die zu testende Methode wird aufgerufen.
+   this.betriebspunkt.setSchaltungstyp(Schaltungstyp.STERN);
+   
+   // Es wird überprüft, ob der Schaltungstyp korrekt im Objekt gespeichert worden ist.
+   assertEquals(Schaltungstyp.STERN, this.betriebspunkt.getSchaltungstyp());
    }
 
 // =====================================================================================================================
