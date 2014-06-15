@@ -89,10 +89,8 @@ public void testBetriebspunkt_NaN() throws NoSuchFieldException, SecurityExcepti
    assertNull(this.betriebspunkt.getSchaltungstyp());
    
    // Es wird überprüft, ob der komplexe Zeiger des Strangstroms (in A) den Wert null besitzt.
-   Field z_i_sFeld = Betriebspunkt.class.getDeclaredField("z_i_s");
-   z_i_sFeld.setAccessible(true);
-   Complex z_i_s = (Complex) z_i_sFeld.get(this.betriebspunkt);
-   assertNull(z_i_s);
+   assertTrue(Double.isNaN(this.betriebspunkt.getZ_i_s().getReal()));
+   assertTrue(Double.isNaN(this.betriebspunkt.getZ_i_s().getImaginary()));
    }
 
 // =====================================================================================================================
