@@ -75,6 +75,9 @@ public Betriebspunkt()
    this.cosPhi = Double.NaN;
    this.p_el = Double.NaN;
    this.p_s = Double.NaN;
+   
+   // Der komplexe Zeiger des Ständerstroms (in A) wird initialisiert.
+   this.z_i_s = Complex.NaN;
    }
 
 // =====================================================================================================================
